@@ -1,0 +1,14 @@
+.nlux-theme-langdb[data-color-scheme='light'] {
+  --nlux-ChatRoom--BackgroundColor: #f9f9f9;
+}
+
+.nlux-theme-langdb[data-color-scheme='dark'] {
+  --nlux-ChatRoom--BackgroundColor: #060524;
+}
+
+.nlux-theme-langdb {
+  /* Override top-level chat room colors */
+  --nlux-ChatRoom--BorderColor: #24233d;
+  --nlux-ChatRoom-Divider--Color: #24233d;
+  --nlux-ChatRoom--TextColor: #ffffff;
+}
