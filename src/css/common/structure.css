@@ -63,7 +63,7 @@
 
         > .nlux-conversation-container {
             overflow-x: hidden;
-            overflow-y: auto;
+            overflow-y: scroll;
             flex: 1;
             padding: var(--nlux-chtr--pdng) var(--nlux-chtr--pdng) var(--nlux-dvr--mrgBtm) var(--nlux-chtr--pdng);
 

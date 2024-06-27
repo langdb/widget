@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import WidgetExample from "./WidgetExample";
+
 const meta: Meta<typeof WidgetExample> = {
   title: "Widget",
   component: WidgetExample,
