@@ -2,7 +2,9 @@
   // Specify the environments where the code will run
   "env": {
     "jest": true, // Enable Jest for testing
-    "browser": true // Enable browser environment
+    "browser": true, // Enable browser environment
+    "node": true
+  }
   },
   // Stop ESLint from searching for configuration in parent folders
   "root": true,

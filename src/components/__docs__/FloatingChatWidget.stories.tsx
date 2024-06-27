@@ -1,20 +1,20 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import WidgetExample from "./WidgetExample";
-const meta: Meta<typeof WidgetExample> = {
-  title: "Widget",
-  component: WidgetExample,
+import FloatingChatWidgetExample from "./FloatingWidgetExample";
+const meta: Meta<typeof FloatingChatWidgetExample> = {
+  title: "FloatingChatWidget",
+  component: FloatingChatWidgetExample,
   parameters: {
     layout: "fullscreen",
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof WidgetExample>;
+type Story = StoryObj<typeof FloatingChatWidgetExample>;
 
-export const Simple: Story = {
+export const SimpleFloatingChatWidget: Story = {
   args: {},
 };
-export const Starters: Story = {
+export const StartersFloatingChatWidget: Story = {
   args: {
     advancedOptions: {
       conversationOptions: {

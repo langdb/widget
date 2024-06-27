@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .nlux-theme-langdb[data-color-scheme='light'] {
   --nlux-ChatRoom--BackgroundColor: #f9f9f9;
 }
