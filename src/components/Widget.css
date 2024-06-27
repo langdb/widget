@@ -4,6 +4,8 @@
 
 .nlux-theme-langdb[data-color-scheme='light'] {
   --nlux-ChatRoom--BackgroundColor: #f9f9f9;
+  --nlux-prmInp--txtClr: #000000;
+  
 }
 
 .nlux-theme-langdb[data-color-scheme='dark'] {

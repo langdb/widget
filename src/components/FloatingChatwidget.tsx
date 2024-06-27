@@ -7,6 +7,7 @@ export const FloatingChatWidget = (props: {
   color?: string;
   hoverColor?: string;
   children?: React.ReactNode;
+  theme?: 'light' | 'dark';
 }) => {
   const { buttonStyle, color, hoverColor } = props;
   const [isHovered, setIsHovered] = useState(false);
@@ -38,13 +39,15 @@ export const FloatingChatWidget = (props: {
     // Use a timeout if immediate state update doesn't show the animation
     setTimeout(() => setButtonOpacity(isChatOpen ? 0 : 1), 10);
   };
-  return <>
+  return <div className={props.theme || 'dark'}>
     {isChatOpen && (
-      <div style={{ position: 'absolute', bottom: '70px', right: '20px', height: '60vh', width: '40vw' }}> {/* Adjust positioning as needed */}
-        <div>
+      <div className='light:text-slate-900 border shadow-md dark:text-white h-[60vh] w-[40vw] min-h-[400px] flex flex-1 bg-white dark:bg-black flex-col absolute rounded p-[10px] ' style={{ bottom: '70px', right: '20px' }}>
+        <div style={{ zIndex: '99999' }}>
           <button onClick={() => setIsChatOpen(false)}>Close</button>
         </div>
-        {props.children}
+        <div className="h-full w-full">
+          {props.children}
+        </div>
       </div>
     )}
     {!isChatOpen && <button
@@ -53,13 +56,13 @@ export const FloatingChatWidget = (props: {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <ChatIcon/>
+      <ChatIcon />
     </button>}
 
-  </>
+  </div>
 };
 const ChatIcon = () => (
   <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 3C7.03 3 3 6.73 3 11c0 2.21 1.145 4.2 2.938 5.657L6 22l5.075-2.688c.51.09 1.034.138 1.57.138 4.97 0 9-3.73 9-8s-4.03-8-9-8z"/>
+    <path d="M12 3C7.03 3 3 6.73 3 11c0 2.21 1.145 4.2 2.938 5.657L6 22l5.075-2.688c.51.09 1.034.138 1.57.138 4.97 0 9-3.73 9-8s-4.03-8-9-8z" />
   </svg>
 );

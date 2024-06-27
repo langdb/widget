@@ -6,7 +6,8 @@ import {
   PersonaOptions,
   AiChatProps,
 } from "@nlux/react";
-import "@nlux/themes/nova.css";
+import '../css/langdb/main.css';
+// import "@nlux/themes/nova.css";
 import "../tailwind.css";
 
 // import '@nlux/themes/unstyled.css';
