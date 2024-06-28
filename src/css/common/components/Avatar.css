@@ -1,0 +1,28 @@
+.nlux-comp-avatar {
+    position: relative;
+    overflow: hidden;
+    width: var(--nlux-chItm-avtr--wd);
+
+    border-style: solid;
+    border-radius: var(--nlux-chItm-avtr--brdrRd);
+    border-width: var(--nlux-chItm-avtr--brdrWd);
+
+    aspect-ratio: 1;
+
+    > .nlux-comp-avatarContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        aspect-ratio: 1;
+
+        > .nlux-comp-avatarPicture {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-size: cover;
+        }
+    }
+}

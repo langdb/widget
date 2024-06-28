@@ -1,10 +1,11 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import Example from "./Example.tsx";
+import Example from "./WidgetExample.tsx";
 import * as Widget from "./Widget.stories.tsx";
 
 <Meta of={Widget} title="Widget" />
 
 # Using Langdb Chat Widget
+
 <Canvas of={Widget.Starters} />
 
 ## Usage
@@ -14,25 +15,35 @@ import { Widget } from "@langdb/widget";
 
 const Chat = () => {
   return (
-      <Widget 
-        publicId={publicId}
-        agentName={'cities_chat'}
-        advancedOptions={{
-          conversationOptions: {
-            conversationStarters: [
-              {
-                prompt: 'What is the most Populous City'
-              },
-              {
-                prompt: 'Tell me interesting facts about Tokyo.'
-              },
-              {
-                prompt: 'Give me some interesting cities to visit.'
-              }
-            ]
-          }
-        }}
-      />
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh",
+      }}
+    >
+      <div className="flex flex-1 ">
+        <Widget
+          publicId={publicId}
+          agentName={"cities_chat"}
+          advancedOptions={{
+            conversationOptions: {
+              conversationStarters: [
+                {
+                  prompt: "What is the most Populous City",
+                },
+                {
+                  prompt: "Tell me interesting facts about Tokyo.",
+                },
+                {
+                  prompt: "Give me some interesting cities to visit.",
+                },
+              ],
+            },
+          }}
+        />
+      </div>
+    </div>
   );
 };
 

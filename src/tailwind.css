@@ -1,0 +1,17 @@
+@tailwind base;
+
+@layer base {
+  html {
+    @apply text-gray-500;
+  }
+}
+
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+@tailwind colors;
+
+
+code {
+  font-family: 'Roboto Mono';
+}

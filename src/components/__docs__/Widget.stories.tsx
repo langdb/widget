@@ -1,22 +1,48 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Example from "./Example";
-const meta: Meta<typeof Example> = {
+import WidgetExample from "./WidgetExample";
+
+const meta: Meta<typeof WidgetExample> = {
   title: "Widget",
-  component: Example,
+  component: WidgetExample,
   parameters: {
     layout: "fullscreen",
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof Example>;
+type Story = StoryObj<typeof WidgetExample>;
 
 export const Simple: Story = {
-  args: {},
+  args: {
+    advancedOptions: {
+      displayOptions: {
+        themeId: 'langdb',
+        colorScheme: 'light',
+        height: '60vh'
+      }
+    }
+  },
+};
+
+export const Dark: Story = {
+  args: {
+    advancedOptions: {
+      displayOptions: {
+        themeId: 'nova',
+        colorScheme: 'dark',
+        height: '60vh'
+      }
+    }
+  },
 };
 export const Starters: Story = {
   args: {
     advancedOptions: {
+      displayOptions: {
+        themeId: 'langdb',
+        colorScheme: 'light',
+        height: '60vh'
+      },
       conversationOptions: {
         conversationStarters: [
           {
