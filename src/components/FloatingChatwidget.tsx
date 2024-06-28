@@ -11,8 +11,10 @@ export const FloatingChatWidget = (props: {
   onMaximize?: () => void;
   btnClassName?: string;
   title?: any;
+  maximizedPanelClassName?: string;
+  maximizedPanelStyle?: React.CSSProperties;
 }) => {
-  const { onMinimize, onMaximize, btnClassName, theme, children, title } = props;
+  const { onMinimize, onMaximize, btnClassName, theme, children, title, maximizedPanelClassName, maximizedPanelStyle } = props;
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isMaximized, setIsMaximized] = useState(false);
 
@@ -22,7 +24,10 @@ export const FloatingChatWidget = (props: {
 
   return <div className={classNames(theme || 'dark')}>
     {isChatOpen && (
-      <div className={classNames('light:text-slate-900 dark:text-white flex flex-1 bg-white dark:bg-black flex-col absolute p-[10px] pt-[0px] ', isMaximized ? 'h-full w-full bottom-0 right-0' : ' rounded border shadow-md h-[60vh] w-[40vw] min-h-[500px] bottom-16 right-16')}>
+      <div 
+      style={isMaximized ? maximizedPanelStyle : {}}
+      className={classNames('light:text-slate-900 dark:text-white flex flex-1 bg-white dark:bg-black flex-col absolute p-[10px] pt-[0px]',
+       isMaximized ? (maximizedPanelClassName || 'h-full w-full bottom-0 right-0') : 'rounded border shadow-md h-[60vh] w-[40vw] min-h-[500px] bottom-16 right-16')}>
         <div className='border-b py-[5px] flex justify-center items-center' style={{ zIndex: '99999' }}>
 
           <div className='flex gap-2'>

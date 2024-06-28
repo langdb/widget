@@ -8,7 +8,7 @@ import {
 } from "@nlux/react";
 import '../css/langdb/main.css';
 // import "@nlux/themes/nova.css";
- import "../tailwind.css";
+import "../tailwind.css";
 
 // import '@nlux/themes/unstyled.css';
 // import './Widget.css';
@@ -22,15 +22,15 @@ export interface WidgetProps {
   agentName: string;
   agentParams?: object;
   personaOptions?: PersonaOptions;
-  token?: string;
   messages?: ChatItem[];
   publicId?: string;
   style?: any;
   advancedOptions?: AdvancedOptions;
+  getAccessToken?: () => Promise<string>;
 }
 
 const DEV_SERVER_URL = "https://api.dev.langdb.ai";
-export default function Widget(props: WidgetProps) {
+export function Widget(props: WidgetProps) {
   const serverUrl = props.serverUrl || DEV_SERVER_URL;
   const apiUrl = `${serverUrl}/stream`;
 
@@ -38,10 +38,6 @@ export default function Widget(props: WidgetProps) {
   const headers: any = { "Content-Type": "application/json" };
   if (props.publicId) {
     headers["X-PUBLIC-APPLICATION-ID"] = props.publicId;
-  } else if (props.token) {
-    headers["Authorization"] = props.token;
-  } else {
-    throw new Error("Either `publicId` or `token` are to be provided");
   }
   const chatAdapter: ChatAdapter = {
     streamText: async (message: string, observer: StreamingAdapterObserver) => {
@@ -53,6 +49,14 @@ export default function Widget(props: WidgetProps) {
         } as ChatItem,
       ];
       setMessages(appended);
+      if (!props.publicId) {
+        const token = await props.getAccessToken?.();
+        if (!token) {
+          observer.error(new Error("Failed to get the user token"));
+          return;
+        }
+        headers.Authorization = `Bearer ${token}`;
+      }
       const response = await fetch(apiUrl, {
         method: "POST",
         body: JSON.stringify({
@@ -62,6 +66,7 @@ export default function Widget(props: WidgetProps) {
         }),
         headers,
       });
+
       if (response.status !== 200) {
         observer.error(new Error("Failed to connect to the server"));
         return;
@@ -82,11 +87,20 @@ export default function Widget(props: WidgetProps) {
           break;
         }
 
-        content = textDecoder.decode(value);
-        if (content) {
-          observer.next(content);
+        let textDecoded = textDecoder.decode(value);
+        content += textDecoded;
+        if (textDecoded) {
+          observer.next(textDecoded);
         }
       }
+
+      setMessages(prev => [
+        ...prev,
+        {
+          role: "assistant",
+          message: content,
+        } as ChatItem,
+      ])
       observer.complete();
     },
   };
