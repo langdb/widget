@@ -13,11 +13,36 @@ export default meta;
 type Story = StoryObj<typeof WidgetExample>;
 
 export const Simple: Story = {
-  args: {},
+  args: {
+    advancedOptions: {
+      displayOptions: {
+        themeId: 'langdb',
+        colorScheme: 'light',
+        height: '60vh'
+      }
+    }
+  },
+};
+
+export const Dark: Story = {
+  args: {
+    advancedOptions: {
+      displayOptions: {
+        themeId: 'nova',
+        colorScheme: 'dark',
+        height: '60vh'
+      }
+    }
+  },
 };
 export const Starters: Story = {
   args: {
     advancedOptions: {
+      displayOptions: {
+        themeId: 'langdb',
+        colorScheme: 'light',
+        height: '60vh'
+      },
       conversationOptions: {
         conversationStarters: [
           {
