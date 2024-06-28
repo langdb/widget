@@ -34,6 +34,7 @@ export function Widget(props: WidgetProps) {
   const serverUrl = props.serverUrl || DEV_SERVER_URL;
   const apiUrl = `${serverUrl}/stream`;
 
+  const { agentName, agentParams } = props;
   const [messages, setMessages] = useState(props.messages || []);
   const headers: any = { "Content-Type": "application/json" };
   if (props.publicId) {
@@ -57,11 +58,27 @@ export function Widget(props: WidgetProps) {
         }
         headers.Authorization = `Bearer ${token}`;
       }
+      const latestMessage = appended.filter((m) => m.role === "user").map((m) => m.message).pop();
+      let parameters: object = { input: latestMessage}
+      if(agentParams && Object.keys(agentParams).length > 0 ){
+        let keys = Object.keys(agentParams);
+        if(keys.length === 1) {
+          parameters = {
+            ...agentParams,
+            [keys[0]]: latestMessage
+          }
+        } else {
+          parameters = {
+            ...agentParams,
+            input: latestMessage,
+          }
+        }
+      }
       const response = await fetch(apiUrl, {
         method: "POST",
         body: JSON.stringify({
-          agent: props.agentName,
-          parameters: props.agentParams || { input: "hi" },
+          agent: agentName,
+          parameters,
           messages: appended,
         }),
         headers,
