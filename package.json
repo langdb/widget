@@ -1,5 +1,5 @@
 {
-  "name": "langdb-widget",
+  "name": "@langdb/chat-widget",
   "version": "1.0.0",
   "description": "Chat widget interacting with LangDB APIs",
   "type": "module",
@@ -63,5 +63,8 @@
   },
   "peerDependencies": {
     "react": "^18.2.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/@langdb"
   }
 }
