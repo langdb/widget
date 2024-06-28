@@ -6,7 +6,7 @@ import {
   PersonaOptions,
   AiChatProps,
 } from "@nlux/react";
-import '../css/langdb/main.css';
+import "../css/langdb/main.css";
 // import "@nlux/themes/nova.css";
 import "../tailwind.css";
 
@@ -57,20 +57,23 @@ export function Widget(props: WidgetProps) {
         }
         headers.Authorization = `Bearer ${token}`;
       }
-      const latestMessage = appended.filter((m) => m.role === "user").map((m) => m.message).pop();
-      let parameters: object = { input: latestMessage}
-      if(agentParams && Object.keys(agentParams).length > 0 ){
+      const latestMessage = appended
+        .filter((m) => m.role === "user")
+        .map((m) => m.message)
+        .pop();
+      let parameters: object = { input: latestMessage };
+      if (agentParams && Object.keys(agentParams).length > 0) {
         let keys = Object.keys(agentParams);
-        if(keys.length === 1) {
+        if (keys.length === 1) {
           parameters = {
             ...agentParams,
-            [keys[0]]: latestMessage
-          }
+            [keys[0]]: latestMessage,
+          };
         } else {
           parameters = {
             ...agentParams,
             input: latestMessage,
-          }
+          };
         }
       }
       const response = await fetch(apiUrl, {
@@ -110,13 +113,13 @@ export function Widget(props: WidgetProps) {
         }
       }
 
-      setMessages(prev => [
+      setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
           message: content,
         } as ChatItem,
-      ])
+      ]);
       observer.complete();
     },
   };
@@ -124,9 +127,12 @@ export function Widget(props: WidgetProps) {
   const conversationOptions = advancedOptions.conversationOptions || {
     layout: "bubbles",
   };
-  const displayOptions = advancedOptions.displayOptions || {
-    colorScheme: "dark",
-  };
+  const displayOptions = Object.assign(
+    {},
+    { colorScheme: "light", themeId: "langdb" },
+    advancedOptions.displayOptions,
+  );
+  console.log(displayOptions);
   const composerOptions = advancedOptions.composerOptions || {
     placeholder: "How can i help you today ?",
   };
