@@ -2,9 +2,8 @@ name: publish on github
 
 on:
   push:
-    branches:
-      - main
-      - feat/floating-widget
+    tags:
+      - '*'
 
 jobs:
   publish-gpr:
