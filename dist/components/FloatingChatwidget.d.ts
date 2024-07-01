@@ -8,3 +8,4 @@ export declare const FloatingChatWidget: (props: {
     maximizedPanelClassName?: string;
     maximizedPanelStyle?: React.CSSProperties;
 }) => import("react/jsx-runtime").JSX.Element;
+export declare const ChatIcon: () => import("react/jsx-runtime").JSX.Element;
