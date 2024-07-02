@@ -31,13 +31,10 @@ jobs:
           # Stage any changes, including potential changes from npm run build
           git add .
           # Bump version without committing
-          npm version patch --no-git-tag-version
-          node sync-version.js
+          npm version patch --no-git-tag-version && node sync-version.js
           # Stage updated package.json and package-lock.json
           git add package.json package-lock.json
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      
       - name: Commit and push changes
         run: |
             # Commit all staged changes, including the version bump
@@ -45,5 +42,8 @@ jobs:
             # Create tag for the new version
             git tag v$(node -p "require('./package.json').version")
             git push --follow-tags
+        env:
+            NODE_AUTH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      - run: npm publish
         env:
             NODE_AUTH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
