@@ -35,15 +35,15 @@ jobs:
           node sync-version.js
           # Stage updated package.json and package-lock.json
           git add package.json package-lock.json
-      - name: Commit and push changes
-        run: |
-          # Commit all staged changes, including the version bump
-          git commit -m "chore(release): $(node -p "require('./package.json').version")" || echo "No changes to commit"
-          # Create tag for the new version
-          git tag v$(node -p "require('./package.json').version")
-          git push --follow-tags
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      - name: Commit and push changes
+        run: |
+            # Commit all staged changes, including the version bump
+            git commit -m "chore(release): $(node -p "require('./package.json').version")" || echo "No changes to commit"
+            # Create tag for the new version
+            git tag v$(node -p "require('./package.json').version")
+            git push --follow-tags
+        env:
+            NODE_AUTH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
