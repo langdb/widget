@@ -1,13 +1,18 @@
-import fs from 'fs';
+import fsPromises from 'fs/promises';
+import fs from 'fs'; // For sync operations
 import path, { join } from 'path';
 import { fileURLToPath } from 'url';
+
+// Calculate __dirname equivalent for ES Module scope
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const sourcePath = join(__dirname, 'publish-package.json');
 const destPath = join(__dirname, 'dist', 'package.json');
 
 async function copyFile() {
   try {
-    await fs.copyFile(sourcePath, destPath);
+    await fsPromises.copyFile(sourcePath, destPath);
     console.log('File copied successfully.');
   } catch (err) {
     console.error('Error copying file:', err);
@@ -17,10 +22,6 @@ async function copyFile() {
 (async () => {
     await copyFile();
   })();
-
-// Calculate __dirname equivalent for ES Module scope
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // Path to the main package.json
 const mainPackageJsonPath = path.join(__dirname, 'package.json');
