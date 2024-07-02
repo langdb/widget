@@ -1,6 +1,6 @@
 {
   "name": "@langdb/widget",
-  "version": "1.0.14-beta.20240702.124628.0",
+  "version": "1.0.14-beta.20240702.124837.0",
   "description": "Chat widget interacting with LangDB APIs",
   "type": "module",
   "main": "dist/index.cjs.js",
