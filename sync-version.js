@@ -22,3 +22,4 @@ distPackageJson.version = mainPackageJson.version;
 
 // Write the updated dist package.json back to disk
 fs.writeFileSync(distPackageJsonPath, JSON.stringify(distPackageJson, null, 2) + '\n');
+console.log( "Finished updating dist package.json version to " + mainPackageJson.version + "!");
