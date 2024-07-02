@@ -21,18 +21,26 @@ jobs:
       - name: Create .npmrc
         run: |
               echo "@langdb:registry=https://npm.pkg.github.com" >> .npmrc
-              echo "//npm.pkg.github.com/:_authToken=${{ secrets.PERSONAL_ACCESS_TOKEN }}" >> .npmrc
+              echo "//npm.pkg.github.com/:_authToken=${{ secrets.PERSONAL_ACCESS_TOKEN }}" >> .npmrc      
       - run: npm install
       - run: npm run build
-      - name: Commit uncommitted changes (if any)
+      - name: Prepare for version bump
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
+          # Stage any changes, including potential changes from npm run build
           git add .
-          git commit -m "chore: commit changes before version bump" || echo "No changes to commit"
-      - name: Bump version and push tag
+          # Bump version without committing
+          npm version patch --no-git-tag-version
+          node sync-version.js
+          # Stage updated package.json and package-lock.json
+          git add package.json package-lock.json
+      - name: Commit and push changes
         run: |
-          npm version patch -m "chore(release): %s"
+          # Commit all staged changes, including the version bump
+          git commit -m "chore(release): $(node -p "require('./package.json').version")" || echo "No changes to commit"
+          # Create tag for the new version
+          git tag v$(node -p "require('./package.json').version")
           git push --follow-tags
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
