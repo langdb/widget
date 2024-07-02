@@ -1,12 +1,12 @@
 {
-    "name": "@langdb/widget",
-    "version": "1.0.0",
-    "main": "index.cjs.js",
-    "module": "index.es.js",
-    "types": "index.d.ts",
-    "scripts": {
-      "build": "tsc",
-      "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "dependencies": {}
-  }
+  "name": "@langdb/widget",
+  "version": "1.0.0",
+  "main": "index.cjs.js",
+  "module": "index.es.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {}
+}

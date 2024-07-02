@@ -44,6 +44,6 @@ jobs:
             git push --follow-tags
         env:
             NODE_AUTH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-      - run: npm publish
+      - run: npm publish --access public
         env:
             NODE_AUTH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
