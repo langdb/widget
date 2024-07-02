@@ -14,7 +14,6 @@
     "format": "prettier --write --parser typescript '**/*.{ts,tsx}'",
     "lint": "eslint . --ext .ts,.tsx --ignore-path .gitignore --fix",
     "build": "tsc && vite build",
-    "prepublishOnly": "cd dist && npm publish",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },

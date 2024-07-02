@@ -46,6 +46,6 @@ jobs:
             # Create tag for the new version
             git tag v$(node -p "require('./package.json').version")
             git push --follow-tags
-            npm publish
+            cd dist && npm publish
         env:
             NODE_AUTH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
