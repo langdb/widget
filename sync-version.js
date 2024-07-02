@@ -1,5 +1,5 @@
 import fs from 'fs';
-import path from 'path';
+import path, { join } from 'path';
 import { fileURLToPath } from 'url';
 
 const sourcePath = join(__dirname, 'publish-package.json');
