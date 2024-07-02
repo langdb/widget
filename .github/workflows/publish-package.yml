@@ -18,7 +18,7 @@ jobs:
           node-version: 18
           registry-url: https://npm.pkg.github.com/
           scope: '@langdb'
-          
+
       - name: Create .npmrc
         run: |
               echo "@langdb:registry=https://npm.pkg.github.com" >> .npmrc
@@ -43,6 +43,6 @@ jobs:
             # Create tag for the new version
             git tag v$(node -p "require('./package.json').version")
             git push --follow-tags
-            npm publish --access public
+            npm publish
         env:
             NODE_AUTH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
