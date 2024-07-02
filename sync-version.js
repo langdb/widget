@@ -2,6 +2,22 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+const sourcePath = join(__dirname, 'publish-package.json');
+const destPath = join(__dirname, 'dist', 'package.json');
+
+async function copyFile() {
+  try {
+    await fs.copyFile(sourcePath, destPath);
+    console.log('File copied successfully.');
+  } catch (err) {
+    console.error('Error copying file:', err);
+  }
+}
+
+(async () => {
+    await copyFile();
+  })();
+
 // Calculate __dirname equivalent for ES Module scope
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
