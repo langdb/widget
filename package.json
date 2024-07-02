@@ -1,6 +1,6 @@
 {
   "name": "@langdb/widget",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Chat widget interacting with LangDB APIs",
   "type": "module",
   "main": "dist/index.cjs.js",
@@ -65,6 +65,7 @@
     "react": "^18.2.0"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/langdb"
+    "registry": "https://npm.pkg.github.com",
+    "access": "public"
   }
 }

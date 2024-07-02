@@ -2,3 +2,5 @@ node_modules
 
 #storybook build directory
 storybook-static
+dist/*
+.npmrc

@@ -2,21 +2,46 @@ name: publish on github
 
 on:
   push:
-    tags:
-      - '*'
-
+    branches:
+      - main
 jobs:
   publish-gpr:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
           registry-url: https://npm.pkg.github.com/
-          scope: langdb
+          scope: '@langdb'
+
+      - name: Create .npmrc
+        run: |
+              echo "@langdb:registry=https://npm.pkg.github.com" >> .npmrc
+              echo "//npm.pkg.github.com/:_authToken=${{ secrets.PERSONAL_ACCESS_TOKEN }}" >> .npmrc      
       - run: npm install
       - run: npm run build
-      - run: npm publish
+      - name: Prepare for version bump
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          # Stage any changes, including potential changes from npm run build
+          git add .
+          # Bump version without committing
+          npm version patch --no-git-tag-version && node sync-version.js
+          # Stage updated package.json and package-lock.json
+          git add package.json package-lock.json
+      
+      - name: Commit and push changes
+        run: |
+            # Commit all staged changes, including the version bump
+            git commit -m "chore(release): $(node -p "require('./package.json').version")" || echo "No changes to commit"
+            # Create tag for the new version
+            git tag v$(node -p "require('./package.json').version")
+            git push --follow-tags
+            cd dist && npm publish
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+            NODE_AUTH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
