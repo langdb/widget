@@ -31,10 +31,13 @@ jobs:
           git config user.email github-actions@github.com
           # Stage any changes, including potential changes from npm run build
           git add .
-          # Bump version without committing
-          npm version patch --no-git-tag-version && node sync-version.js
-          # Stage updated package.json and package-lock.json
+          # Generate a unique pre-release version with a timestamp
+          # Example: 1.0.0-beta.0+20230915.123456
+          VERSION=$(npm version prerelease --preid=beta.$(date +%Y%m%d.%H%M%S) --no-git-tag-version)
+          echo "New version: $VERSION"
+          node sync-version.js
           git add package.json package-lock.json
+
       
       - name: Commit and push changes
         run: |
