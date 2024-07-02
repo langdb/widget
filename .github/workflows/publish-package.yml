@@ -2,21 +2,40 @@ name: publish on github
 
 on:
   push:
-    tags:
-      - '*'
-
+    branches:
+      - main
+      - chore/publish-package
 jobs:
   publish-gpr:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
           registry-url: https://npm.pkg.github.com/
-          scope: langdb
+          scope: '@langdb'
+      - name: Create .npmrc
+        run: |
+              echo "@langdb:registry=https://npm.pkg.github.com" >> .npmrc
+              echo "//npm.pkg.github.com/:_authToken=${{ secrets.PERSONAL_ACCESS_TOKEN }}" >> .npmrc
       - run: npm install
       - run: npm run build
+      - name: Commit uncommitted changes (if any)
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "chore: commit changes before version bump" || echo "No changes to commit"
+      - name: Bump version and push tag
+        run: |
+          npm version patch -m "chore(release): %s"
+          git push --follow-tags
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       - run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
