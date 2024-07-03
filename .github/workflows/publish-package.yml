@@ -38,6 +38,6 @@ jobs:
             # Create tag for the new version
             git tag v$(node -p "require('./package.json').version")
             git push --follow-tags
-            cd dist && npm publish
+            cd dist && npm publish --access public
         env:
             NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
