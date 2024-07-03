@@ -17,12 +17,7 @@ jobs:
         with:
           node-version: 18
           registry-url: https://npm.pkg.github.com/
-          scope: '@langdb/widget'
-
-      - name: Create .npmrc
-        run: |
-              echo "@langdb:registry=https://npm.pkg.github.com" >> .npmrc
-              echo "//npm.pkg.github.com/:_authToken=${{ secrets.PERSONAL_ACCESS_TOKEN }}" >> .npmrc      
+          scope: '@langdb'   
       - run: npm install
       - run: npm run build
       - name: Prepare for version bump
