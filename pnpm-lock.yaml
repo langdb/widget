@@ -64,6 +64,9 @@ devDependencies:
   '@storybook/blocks':
     specifier: ^8.1.10
     version: 8.1.11(@types/react@18.3.3)(prettier@3.3.2)(react-dom@18.3.1)(react@18.3.1)
+  '@storybook/manager-api':
+    specifier: ^8.1.11
+    version: 8.1.11(react-dom@18.3.1)(react@18.3.1)
   '@storybook/react':
     specifier: ^8.1.10
     version: 8.1.11(prettier@3.3.2)(react-dom@18.3.1)(react@18.3.1)(typescript@5.5.2)
@@ -73,6 +76,9 @@ devDependencies:
   '@storybook/test':
     specifier: ^8.1.10
     version: 8.1.11
+  '@storybook/theming':
+    specifier: ^8.1.11
+    version: 8.1.11(react-dom@18.3.1)(react@18.3.1)
   '@types/react':
     specifier: ^18.3.3
     version: 18.3.3

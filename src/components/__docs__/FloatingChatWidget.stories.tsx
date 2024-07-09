@@ -14,6 +14,7 @@ type Story = StoryObj<typeof FloatingChatWidgetExample>;
 export const SimpleFloatingChatWidget: Story = {
   args: {},
 };
+
 export const StartersFloatingChatWidget: Story = {
   args: {
     advancedOptions: {

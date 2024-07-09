@@ -17,6 +17,10 @@
     > .nlux-comp-welcomeMessage-text {
         font-size: var(--nlux-wlcMsg-txt--ftSz);
         font-weight: var(--nlux-wlcMsg-txt--ftWg);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: pre-wrap;
+        text-align: center;
     }
 
     > .nlux-comp-avatar {

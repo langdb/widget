@@ -8,7 +8,6 @@ import {
 } from "@nlux/react";
 import "../css/langdb/main.css";
 import '@nlux/themes/nova.css';
-// import "@nlux/themes/nova.css";
 import "../tailwind.css";
 
 
@@ -133,7 +132,6 @@ export function Widget(props: WidgetProps) {
     { colorScheme: "light", themeId: "langdb" },
     advancedOptions.displayOptions,
   );
-  console.log(displayOptions);
   const composerOptions = advancedOptions.composerOptions || {
     placeholder: "How can i help you today ?",
   };
@@ -149,7 +147,9 @@ export function Widget(props: WidgetProps) {
           props.personaOptions || {
             assistant: {
               name: "LangDB",
-              tagline: "Build and Publish AI Agents using SQL",
+              tagline: `
+              Easily build and deploy AI agents with SQL.
+              Customize with our React widget on`,
               avatar: <Avatar />,
             },
             user: {
