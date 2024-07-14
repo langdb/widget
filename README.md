@@ -30,10 +30,10 @@ yarn add @langdb/widget
 3. Ensure you have a chatbot agent created in your application. If you don't have one, you can create one by executing the following SQL code in the LangDB console.
 
 ```sql
-CHAT cities_chat
+CHAT cities_info_model
 ```
 
-4. Replace the `publicId` and `agentName` with your application `publicId` and `agentName` respectively.
+4. Replace the `publicId` and `modelName` with your application `publicId` and `modelName` respectively.
 
 ```ts
 import { Widget } from "@langdb/widget";
@@ -42,7 +42,7 @@ import '@langdb/widget/style.css';
 const LANGDB_CLOUD_SERVER = 'https://api.dev.langdb.ai';
 const user_picture_url = 'https://avatars.githubusercontent.com/u/1016591?v=4';
 const agent_logo = 'https://app.dev.langdb.ai/static/media/logo.0d259c55b001b212cc0a.png';
-const agent_name = 'cities_chat'; // replace with your agent name
+const model_name = 'cities_info_model'; // replace with your model name
 const publicId = '83186f34-84d7-4633-8da1-db3e579edeea'; // replace with your public app id
 const App = () => {
     return <div className="flex flex-1 h-full">
@@ -59,7 +59,7 @@ const App = () => {
                         name: 'Alice',
                     }
                 }}
-                agentName={agent_name}
+                modelName={model_name}
                 advancedOptions={{
                     displayOptions: {
                         themeId: 'langdb',
@@ -88,12 +88,12 @@ export default App;
 
 ### Props
 
-| Prop | Type | Description | Required |
-| --- | --- | --- | --- |
-| `publicId` | `string` | application id | `true` |
-| `agentName` | `string` | The agent name when you execute chat command  | `true` |
-| `personaOptions` | `PersonaOptions` | The persona options to custom display for the user and assistant. For example: `{ assistant: { name: "LangDB", tagline: "Build and Publish AI Agents using SQL", avatar: agent_logo, }, user: { avatar: user_picture_url, name: 'Alice', } }` | `false` |
-| `advancedOptions` | `AdvancedOptions` | The advanced options to custom display for the user and assistant. For example: `{ displayOptions: { themeId: 'langdb', colorScheme: 'light', }, conversationOptions: { conversationStarters: [ { prompt: 'What is the most Populous City' }, { prompt: 'Tell me interesting facts about Tokyo.' }, { prompt: 'Give me some interesting cities to visit.' } ] } }` | `false` |
-| `serverUrl` | `string` | The LangDB cloud server url | `false` |
-| agentParams | `AgentParams` | The agent parameters to pass to the agent. For example: `{ "city": "Tokyo" }` | `false` |
-| getAccessToken | `() => Promise<string>` | The function to get the access token | `false` |
+| Prop              | Type                    | Description                                                                                                                                                                                                                                                                                                                                                        | Required |
+| ----------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| `publicId`        | `string`                | application id                                                                                                                                                                                                                                                                                                                                                     | `true`   |
+| `modelName`       | `string`                | The agent name when you execute chat command                                                                                                                                                                                                                                                                                                                       | `true`   |
+| `personaOptions`  | `PersonaOptions`        | The persona options to custom display for the user and assistant. For example: `{ assistant: { name: "LangDB", tagline: "Build and Publish AI Agents using SQL", avatar: agent_logo, }, user: { avatar: user_picture_url, name: 'Alice', } }`                                                                                                                      | `false`  |
+| `advancedOptions` | `AdvancedOptions`       | The advanced options to custom display for the user and assistant. For example: `{ displayOptions: { themeId: 'langdb', colorScheme: 'light', }, conversationOptions: { conversationStarters: [ { prompt: 'What is the most Populous City' }, { prompt: 'Tell me interesting facts about Tokyo.' }, { prompt: 'Give me some interesting cities to visit.' } ] } }` | `false`  |
+| `serverUrl`       | `string`                | The LangDB cloud server url                                                                                                                                                                                                                                                                                                                                        | `false`  |
+| agentParams       | `AgentParams`           | The agent parameters to pass to the agent. For example: `{ "city": "Tokyo" }`                                                                                                                                                                                                                                                                                      | `false`  |
+| getAccessToken    | `() => Promise<string>` | The function to get the access token                                                                                                                                                                                                                                                                                                                               | `false`  |

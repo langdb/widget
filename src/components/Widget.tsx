@@ -18,7 +18,7 @@ import { FaUser } from "react-icons/fa";
 type AdvancedOptions = Omit<AiChatProps, "adapter">;
 export interface WidgetProps {
   serverUrl?: string;
-  agentName: string;
+  modelName: string;
   agentParams?: object;
   personaOptions?: PersonaOptions;
   messages?: ChatItem[];
@@ -33,7 +33,7 @@ export function Widget(props: WidgetProps) {
   const serverUrl = props.serverUrl || DEV_SERVER_URL;
   const apiUrl = `${serverUrl}/stream`;
 
-  const { agentName, agentParams } = props;
+  const { modelName, agentParams } = props;
   const [messages, setMessages] = useState(props.messages || []);
   const headers: any = { "Content-Type": "application/json" };
   if (props.publicId) {
@@ -79,7 +79,7 @@ export function Widget(props: WidgetProps) {
       const response = await fetch(apiUrl, {
         method: "POST",
         body: JSON.stringify({
-          agent: agentName,
+          model_name: modelName,
           parameters,
           messages: appended,
         }),

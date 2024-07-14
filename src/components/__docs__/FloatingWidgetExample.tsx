@@ -3,7 +3,7 @@ import { FloatingChatWidget } from "../FloatingChatwidget";
 import { Widget, WidgetProps } from "../Widget";
 const FloatingChatWidgetExample: FC<WidgetProps> = ({
   publicId = "ae6c32f0-ef4b-4f7f-86bd-9c1d54b2d865",
-  agentName = "cities_chat",
+  modelName = "cities_info_model",
   advancedOptions = {},
 }) => {
   const theme =
@@ -19,7 +19,7 @@ const FloatingChatWidgetExample: FC<WidgetProps> = ({
       >
         <Widget
           publicId={publicId}
-          agentName={agentName}
+          modelName={modelName}
           advancedOptions={advancedOptions}
         />
       </FloatingChatWidget>
