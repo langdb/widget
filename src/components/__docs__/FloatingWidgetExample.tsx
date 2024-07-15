@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { FloatingChatWidget } from "../FloatingChatwidget";
 import { Widget, WidgetProps } from "../Widget";
 const FloatingChatWidgetExample: FC<WidgetProps> = ({
-  publicId = "ae6c32f0-ef4b-4f7f-86bd-9c1d54b2d865",
+  publicId = "afae116b-ff46-46b4-b2ea-a444c1680552",
   modelName = "cities_info_model",
   advancedOptions = {},
 }) => {
