@@ -46,14 +46,14 @@ function po() {
     var y = r.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
     function x(m) {
       {
-        for (var C = arguments.length, P = new Array(C > 1 ? C - 1 : 0), O = 1; O < C; O++)
-          P[O - 1] = arguments[O];
+        for (var C = arguments.length, P = new Array(C > 1 ? C - 1 : 0), L = 1; L < C; L++)
+          P[L - 1] = arguments[L];
         k("error", m, P);
       }
     }
     function k(m, C, P) {
       {
-        var O = y.ReactDebugCurrentFrame, U = O.getStackAddendum();
+        var L = y.ReactDebugCurrentFrame, U = L.getStackAddendum();
         U !== "" && (C += "%s", P = P.concat([U]));
         var X = P.map(function(F) {
           return String(F);
@@ -61,19 +61,19 @@ function po() {
         X.unshift("Warning: " + C), Function.prototype.apply.call(console[m], console, X);
       }
     }
-    var S = !1, A = !1, E = !1, L = !1, R = !1, I;
+    var S = !1, A = !1, E = !1, O = !1, R = !1, I;
     I = Symbol.for("react.module.reference");
     function B(m) {
-      return !!(typeof m == "string" || typeof m == "function" || m === n || m === o || R || m === s || m === c || m === l || L || m === g || S || A || E || typeof m == "object" && m !== null && (m.$$typeof === d || m.$$typeof === h || m.$$typeof === i || m.$$typeof === a || m.$$typeof === u || // This needs to include all possible module reference object
+      return !!(typeof m == "string" || typeof m == "function" || m === n || m === o || R || m === s || m === c || m === l || O || m === g || S || A || E || typeof m == "object" && m !== null && (m.$$typeof === d || m.$$typeof === h || m.$$typeof === i || m.$$typeof === a || m.$$typeof === u || // This needs to include all possible module reference object
       // types supported by any Flight configuration anywhere since
       // we don't know which Flight build this will end up being used
       // with.
       m.$$typeof === I || m.getModuleId !== void 0));
     }
     function D(m, C, P) {
-      var O = m.displayName;
-      if (O)
-        return O;
+      var L = m.displayName;
+      if (L)
+        return L;
       var U = C.displayName || C.name || "";
       return U !== "" ? P + "(" + U + ")" : P;
     }
@@ -112,8 +112,8 @@ function po() {
           case u:
             return D(m, m.render, "ForwardRef");
           case h:
-            var O = m.displayName || null;
-            return O !== null ? O : q(m.type) || "Memo";
+            var L = m.displayName || null;
+            return L !== null ? L : q(m.type) || "Memo";
           case d: {
             var U = m, X = U._payload, F = U._init;
             try {
@@ -194,8 +194,8 @@ function po() {
           try {
             throw Error();
           } catch (U) {
-            var O = U.stack.trim().match(/\n( *(at )?)/);
-            b = O && O[1] || "";
+            var L = U.stack.trim().match(/\n( *(at )?)/);
+            b = L && L[1] || "";
           }
         return `
 ` + b + m;
@@ -214,7 +214,7 @@ function po() {
         if (P !== void 0)
           return P;
       }
-      var O;
+      var L;
       j = !0;
       var U = Error.prepareStackTrace;
       Error.prepareStackTrace = void 0;
@@ -233,14 +233,14 @@ function po() {
             try {
               Reflect.construct(F, []);
             } catch (me) {
-              O = me;
+              L = me;
             }
             Reflect.construct(m, [], F);
           } else {
             try {
               F.call();
             } catch (me) {
-              O = me;
+              L = me;
             }
             m.call(F.prototype);
           }
@@ -248,14 +248,14 @@ function po() {
           try {
             throw Error();
           } catch (me) {
-            O = me;
+            L = me;
           }
           m();
         }
       } catch (me) {
-        if (me && O && typeof me.stack == "string") {
+        if (me && L && typeof me.stack == "string") {
           for (var N = me.stack.split(`
-`), de = O.stack.split(`
+`), de = L.stack.split(`
 `), se = N.length - 1, ie = de.length - 1; se >= 1 && ie >= 0 && N[se] !== de[ie]; )
             ie--;
           for (; se >= 1 && ie >= 0; se--, ie--)
@@ -304,7 +304,7 @@ function po() {
           case h:
             return Pe(m.type, C, P);
           case d: {
-            var O = m, U = O._payload, X = O._init;
+            var L = m, U = L._payload, X = L._init;
             try {
               return Pe(X(U), C, P);
             } catch {
@@ -321,7 +321,7 @@ function po() {
       } else
         tt.setExtraStackFrame(null);
     }
-    function qs(m, C, P, O, U) {
+    function qs(m, C, P, L, U) {
       {
         var X = Function.call.bind(ze);
         for (var F in m)
@@ -329,14 +329,14 @@ function po() {
             var N = void 0;
             try {
               if (typeof m[F] != "function") {
-                var de = Error((O || "React class") + ": " + P + " type `" + F + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof m[F] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.");
+                var de = Error((L || "React class") + ": " + P + " type `" + F + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof m[F] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.");
                 throw de.name = "Invariant Violation", de;
               }
-              N = m[F](C, F, O, P, null, "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED");
+              N = m[F](C, F, L, P, null, "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED");
             } catch (se) {
               N = se;
             }
-            N && !(N instanceof Error) && (Ze(U), x("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", O || "React class", P, F, typeof N), Ze(null)), N instanceof Error && !(N.message in et) && (et[N.message] = !0, Ze(U), x("Failed %s type: %s", P, N.message), Ze(null));
+            N && !(N instanceof Error) && (Ze(U), x("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", L || "React class", P, F, typeof N), Ze(null)), N instanceof Error && !(N.message in et) && (et[N.message] = !0, Ze(U), x("Failed %s type: %s", P, N.message), Ze(null));
           }
       }
     }
@@ -415,7 +415,7 @@ function po() {
         });
       }
     }
-    var Js = function(m, C, P, O, U, X, F) {
+    var Js = function(m, C, P, L, U, X, F) {
       var N = {
         // This tag allows us to uniquely identify this as a React Element
         $$typeof: e,
@@ -436,7 +436,7 @@ function po() {
         configurable: !1,
         enumerable: !1,
         writable: !1,
-        value: O
+        value: L
       }), Object.defineProperty(N, "_source", {
         configurable: !1,
         enumerable: !1,
@@ -444,7 +444,7 @@ function po() {
         value: U
       }), Object.freeze && (Object.freeze(N.props), Object.freeze(N)), N;
     };
-    function Ks(m, C, P, O, U) {
+    function Ks(m, C, P, L, U) {
       {
         var X, F = {}, N = null, de = null;
         P !== void 0 && (Jn(P), N = "" + P), Xs(C) && (Jn(C.key), N = "" + C.key), Qs(C) && (de = C.ref, Zs(C, U));
@@ -459,7 +459,7 @@ function po() {
           var ie = typeof m == "function" ? m.displayName || m.name || "Unknown" : m;
           N && Ws(F, ie), de && Gs(F, ie);
         }
-        return Js(m, N, de, U, O, nt.current, F);
+        return Js(m, N, de, U, L, nt.current, F);
       }
     }
     var rn = y.ReactCurrentOwner, _n = y.ReactDebugCurrentFrame;
@@ -512,8 +512,8 @@ Check the top-level render call using <` + P + ">.");
         if (tr[P])
           return;
         tr[P] = !0;
-        var O = "";
-        m && m._owner && m._owner !== rn.current && (O = " It was passed a child from " + q(m._owner.type) + "."), We(m), x('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', P, O), We(null);
+        var L = "";
+        m && m._owner && m._owner !== rn.current && (L = " It was passed a child from " + q(m._owner.type) + "."), We(m), x('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', P, L), We(null);
       }
     }
     function rr(m, C) {
@@ -522,8 +522,8 @@ Check the top-level render call using <` + P + ">.");
           return;
         if (tn(m))
           for (var P = 0; P < m.length; P++) {
-            var O = m[P];
-            on(O) && nr(O, C);
+            var L = m[P];
+            on(L) && nr(L, C);
           }
         else if (on(m))
           m._store && (m._store.validated = !0);
@@ -550,8 +550,8 @@ Check the top-level render call using <` + P + ">.");
         else
           return;
         if (P) {
-          var O = q(C);
-          qs(P, m.props, "prop", O, m);
+          var L = q(C);
+          qs(P, m.props, "prop", L, m);
         } else if (C.PropTypes !== void 0 && !sn) {
           sn = !0;
           var U = q(C);
@@ -563,9 +563,9 @@ Check the top-level render call using <` + P + ">.");
     function to(m) {
       {
         for (var C = Object.keys(m.props), P = 0; P < C.length; P++) {
-          var O = C[P];
-          if (O !== "children" && O !== "key") {
-            We(m), x("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", O), We(null);
+          var L = C[P];
+          if (L !== "children" && L !== "key") {
+            We(m), x("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", L), We(null);
             break;
           }
         }
@@ -573,7 +573,7 @@ Check the top-level render call using <` + P + ">.");
       }
     }
     var sr = {};
-    function or(m, C, P, O, U, X) {
+    function or(m, C, P, L, U, X) {
       {
         var F = B(m);
         if (!F) {
@@ -590,7 +590,7 @@ Check the top-level render call using <` + P + ">.");
         if (F) {
           var ye = C.children;
           if (ye !== void 0)
-            if (O)
+            if (L)
               if (tn(ye)) {
                 for (var Ge = 0; Ge < ye.length; Ge++)
                   rr(ye[Ge], m);
@@ -2055,7 +2055,7 @@ const Go = (r, e) => {
     return (x) => {
       const k = x.target;
       if (!(k instanceof HTMLElement)) return;
-      const { scrollTop: S, clientHeight: A, scrollHeight: E } = k, L = E - 30, R = Math.ceil(S + A) >= L, I = w === void 0 || y === void 0 ? void 0 : S > w && y === E ? "down" : S < w && y === E ? "up" : void 0;
+      const { scrollTop: S, clientHeight: A, scrollHeight: E } = k, O = E - 30, R = Math.ceil(S + A) >= O, I = w === void 0 || y === void 0 ? void 0 : S > w && y === E ? "down" : S < w && y === E ? "up" : void 0;
       y = E, w = S, f({ scrolledToBottom: R, scrollDirection: I });
     };
   })(({ scrolledToBottom: f, scrollDirection: w }) => {
@@ -2506,10 +2506,10 @@ const An = (r) => {
     const k = /* @__PURE__ */ new Set(), S = Ae(), A = { uid: S, status: "error", items: [] };
     return le(() => {
       k.forEach((E) => E(x)), k.clear();
-    }), { segment: A, dataTransferMode: "stream", observable: { on: (E, L) => {
-      E === "error" && k.add(L);
-    }, removeListener: (E, L) => {
-      k.delete(L);
+    }), { segment: A, dataTransferMode: "stream", observable: { on: (E, O) => {
+      E === "error" && k.add(O);
+    }, removeListener: (E, O) => {
+      k.delete(O);
     }, destroy: () => {
       k.clear();
     }, get segmentId() {
@@ -2526,16 +2526,16 @@ const An = (r) => {
   const f = ((x) => {
     const k = [], S = x, A = x;
     (S == null ? void 0 : S.streamText) === void 0 && (A == null ? void 0 : A.streamServerComponent) === void 0 || k.push("stream"), (S == null ? void 0 : S.batchText) !== void 0 && k.push("batch");
-    const E = An(x) ? x : void 0, L = (E == null ? void 0 : E.dataTransferMode) ?? void 0, R = k.length === 1 ? k[0] : "stream";
-    return L ?? R;
+    const E = An(x) ? x : void 0, O = (E == null ? void 0 : E.dataTransferMode) ?? void 0, R = k.length === 1 ? k[0] : "stream";
+    return O ?? R;
   })(e);
-  ((x) => "streamServerComponent" in x ? "server-component" : "text")(e) === "server-component" ? (u = /* @__PURE__ */ new Set(), a = /* @__PURE__ */ new Set(), ((x, k, S, A, E, L, R, I) => new Promise((B, D) => {
+  ((x) => "streamServerComponent" in x ? "server-component" : "text")(e) === "server-component" ? (u = /* @__PURE__ */ new Set(), a = /* @__PURE__ */ new Set(), ((x, k, S, A, E, O, R, I) => new Promise((B, D) => {
     try {
       const H = k.content, q = Ae(), W = "assistant", te = "streaming", oe = /* @__PURE__ */ new Date(), $ = "stream";
       let _, V;
       const G = () => {
         le(() => {
-          L.forEach((he) => {
+          O.forEach((he) => {
             _ && V && he({ ..._, content: V, status: "complete" });
           });
         }, 20);
@@ -2564,7 +2564,7 @@ const An = (r) => {
     }
   }))(s, o, e, t, a, u, g, p).finally(() => {
     le(() => y());
-  })) : f === "batch" ? (i = /* @__PURE__ */ new Set(), (async (x, k, S, A, E, L, R) => {
+  })) : f === "batch" ? (i = /* @__PURE__ */ new Set(), (async (x, k, S, A, E, O, R) => {
     try {
       const I = k.content, B = An(S) ? S : void 0, D = B !== void 0, H = Ae(), q = "assistant", W = "complete", te = /* @__PURE__ */ new Date(), oe = "batch";
       let $;
@@ -2581,7 +2581,7 @@ const An = (r) => {
       });
       const V = { uid: x, status: "complete", items: [k, $] };
       le(() => {
-        L.forEach((G) => {
+        O.forEach((G) => {
           G(V);
         });
       });
@@ -4028,7 +4028,7 @@ const Fr = (r) => v.jsx(Ms, { children: v.jsx(Yi, { ...r }) }), Qi = (r, e) => {
   const s = typeof r.message == "function" ? v.jsx(r.message, {}) : r.message;
   return v.jsx("div", { className: n, children: s });
 }, Zi = function(r, e) {
-  var p, f, w, y, x, k, S, A, E, L, R, I, B;
+  var p, f, w, y, x, k, S, A, E, O, R, I, B;
   const t = z(() => v.jsxs("div", { className: "nlux-comp-chatItem-participantInfo", children: [r.avatar !== void 0 && v.jsx(js, { name: r.name, avatar: r.avatar }), v.jsx("span", { className: "nlux-comp-chatItem-participantName", children: r.name })] }), [r.avatar, r.name]), n = ee(null);
   Vt(e, () => ({ streamChunk: (D) => setTimeout(() => {
     var H;
@@ -4073,7 +4073,7 @@ const Fr = (r) => v.jsx(Ms, { children: v.jsx(Yi, { ...r }) }), Qi = (r, e) => {
     const D = r.messageOptions.promptRenderer;
     return v.jsx(D, { uid: r.uid, prompt: r.fetchedContent });
   }, [(x = r.messageOptions) == null ? void 0 : x.promptRenderer, r.fetchedContent, r.uid]), c = z(() => Kt(Xi), []), l = r.contentType === "server-component", h = r.direction === "received", d = r.direction === "sent", g = r.dataTransferMode === "stream";
-  return v.jsxs("div", { className: i, children: [t, h && g && !l && v.jsx(c, { uid: r.uid, status: r.status, ref: n, direction: r.direction, responseRenderer: (k = r.messageOptions) == null ? void 0 : k.responseRenderer, markdownContainersController: r.markdownContainersController, markdownOptions: { syntaxHighlighter: (S = r.messageOptions) == null ? void 0 : S.syntaxHighlighter, htmlSanitizer: (A = r.messageOptions) == null ? void 0 : A.htmlSanitizer, markdownLinkTarget: (E = r.messageOptions) == null ? void 0 : E.markdownLinkTarget, showCodeBlockCopyButton: (L = r.messageOptions) == null ? void 0 : L.showCodeBlockCopyButton, skipStreamingAnimation: (R = r.messageOptions) == null ? void 0 : R.skipStreamingAnimation, streamingAnimationSpeed: (I = r.messageOptions) == null ? void 0 : I.streamingAnimationSpeed, waitTimeBeforeStreamCompletion: (B = r.messageOptions) == null ? void 0 : B.waitTimeBeforeStreamCompletion } }, "do-not-change"), h && g && l && v.jsx(mn, { uid: r.uid, message: r.fetchedContent, status: r.status, contentType: "server-component", direction: r.direction }), h && !g && v.jsx(mn, { uid: r.uid, message: a, status: r.status, contentType: "text", direction: r.direction }), d && v.jsx(mn, { uid: r.uid, message: u, status: r.status, contentType: "text", direction: r.direction })] });
+  return v.jsxs("div", { className: i, children: [t, h && g && !l && v.jsx(c, { uid: r.uid, status: r.status, ref: n, direction: r.direction, responseRenderer: (k = r.messageOptions) == null ? void 0 : k.responseRenderer, markdownContainersController: r.markdownContainersController, markdownOptions: { syntaxHighlighter: (S = r.messageOptions) == null ? void 0 : S.syntaxHighlighter, htmlSanitizer: (A = r.messageOptions) == null ? void 0 : A.htmlSanitizer, markdownLinkTarget: (E = r.messageOptions) == null ? void 0 : E.markdownLinkTarget, showCodeBlockCopyButton: (O = r.messageOptions) == null ? void 0 : O.showCodeBlockCopyButton, skipStreamingAnimation: (R = r.messageOptions) == null ? void 0 : R.skipStreamingAnimation, streamingAnimationSpeed: (I = r.messageOptions) == null ? void 0 : I.streamingAnimationSpeed, waitTimeBeforeStreamCompletion: (B = r.messageOptions) == null ? void 0 : B.waitTimeBeforeStreamCompletion } }, "do-not-change"), h && g && l && v.jsx(mn, { uid: r.uid, message: r.fetchedContent, status: r.status, contentType: "server-component", direction: r.direction }), h && !g && v.jsx(mn, { uid: r.uid, message: a, status: r.status, contentType: "text", direction: r.direction }), d && v.jsx(mn, { uid: r.uid, message: u, status: r.status, contentType: "text", direction: r.direction })] });
 }, $r = (r) => typeof r == "string" || typeof r == "number" || typeof r == "boolean" || r == null, Ot = (r, e) => {
   var t, n;
   return r === "assistant" ? ((t = e == null ? void 0 : e.assistant) == null ? void 0 : t.name) ?? "Assistant" : r === "user" ? ((n = e == null ? void 0 : e.user) == null ? void 0 : n.name) ?? "User" : "";
@@ -4251,7 +4251,7 @@ const ta = (r, e) => {
     return (x) => {
       const k = x.target;
       if (!(k instanceof HTMLElement)) return;
-      const { scrollTop: S, clientHeight: A, scrollHeight: E } = k, L = E - 30, R = Math.ceil(S + A) >= L, I = w === void 0 || y === void 0 ? void 0 : S > w && y === E ? "down" : S < w && y === E ? "up" : void 0;
+      const { scrollTop: S, clientHeight: A, scrollHeight: E } = k, O = E - 30, R = Math.ceil(S + A) >= O, I = w === void 0 || y === void 0 ? void 0 : S > w && y === E ? "down" : S < w && y === E ? "up" : void 0;
       y = E, w = S, f({ scrolledToBottom: R, scrollDirection: I });
     };
   })(({ scrolledToBottom: f, scrollDirection: w }) => {
@@ -4349,10 +4349,10 @@ const ta = (r, e) => {
     const k = /* @__PURE__ */ new Set(), S = Be(), A = { uid: S, status: "error", items: [] };
     return ce(() => {
       k.forEach((E) => E(x)), k.clear();
-    }), { segment: A, dataTransferMode: "stream", observable: { on: (E, L) => {
-      E === "error" && k.add(L);
-    }, removeListener: (E, L) => {
-      k.delete(L);
+    }), { segment: A, dataTransferMode: "stream", observable: { on: (E, O) => {
+      E === "error" && k.add(O);
+    }, removeListener: (E, O) => {
+      k.delete(O);
     }, destroy: () => {
       k.clear();
     }, get segmentId() {
@@ -4369,16 +4369,16 @@ const ta = (r, e) => {
   const f = ((x) => {
     const k = [], S = x, A = x;
     (S == null ? void 0 : S.streamText) === void 0 && (A == null ? void 0 : A.streamServerComponent) === void 0 || k.push("stream"), (S == null ? void 0 : S.batchText) !== void 0 && k.push("batch");
-    const E = Wt(x) ? x : void 0, L = (E == null ? void 0 : E.dataTransferMode) ?? void 0, R = k.length === 1 ? k[0] : "stream";
-    return L ?? R;
+    const E = Wt(x) ? x : void 0, O = (E == null ? void 0 : E.dataTransferMode) ?? void 0, R = k.length === 1 ? k[0] : "stream";
+    return O ?? R;
   })(e);
-  ((x) => "streamServerComponent" in x ? "server-component" : "text")(e) === "server-component" ? (u = /* @__PURE__ */ new Set(), a = /* @__PURE__ */ new Set(), ((x, k, S, A, E, L, R, I) => new Promise((B, D) => {
+  ((x) => "streamServerComponent" in x ? "server-component" : "text")(e) === "server-component" ? (u = /* @__PURE__ */ new Set(), a = /* @__PURE__ */ new Set(), ((x, k, S, A, E, O, R, I) => new Promise((B, D) => {
     try {
       const H = k.content, q = Be(), W = "assistant", te = "streaming", oe = /* @__PURE__ */ new Date(), $ = "stream";
       let _, V;
       const G = () => {
         ce(() => {
-          L.forEach((he) => {
+          O.forEach((he) => {
             _ && V && he({ ..._, content: V, status: "complete" });
           });
         }, 20);
@@ -4407,7 +4407,7 @@ const ta = (r, e) => {
     }
   }))(s, o, e, t, a, u, g, p).finally(() => {
     ce(() => y());
-  })) : f === "batch" ? (i = /* @__PURE__ */ new Set(), (async (x, k, S, A, E, L, R) => {
+  })) : f === "batch" ? (i = /* @__PURE__ */ new Set(), (async (x, k, S, A, E, O, R) => {
     try {
       const I = k.content, B = Wt(S) ? S : void 0, D = B !== void 0, H = Be(), q = "assistant", W = "complete", te = /* @__PURE__ */ new Date(), oe = "batch";
       let $;
@@ -4424,7 +4424,7 @@ const ta = (r, e) => {
       });
       const V = { uid: x, status: "complete", items: [k, $] };
       ce(() => {
-        L.forEach((G) => {
+        O.forEach((G) => {
           G(V);
         });
       });
@@ -4459,9 +4459,9 @@ const ta = (r, e) => {
     p.current = { chatSegments: i, setChatSegments: u, setComposerStatus: c, showException: o, setPrompt: l };
   }, [i, u, c, o, l]);
   const w = ((x, k, S) => z(() => {
-    const A = ((L) => {
+    const A = ((O) => {
       const R = [];
-      return L.forEach((I) => {
+      return O.forEach((I) => {
         I.items.forEach((B) => {
           if (B.status === "complete") {
             if (B.participantRole === "assistant") R.push({ role: "assistant", message: B.content });
@@ -4480,19 +4480,19 @@ const ta = (r, e) => {
     c("submitting-prompt");
     const x = n, k = /* @__PURE__ */ new Set(), S = Wt(t) ? t : t.streamServerComponent ? { streamServerComponent: t.streamServerComponent } : { batchText: t.batchText, streamText: t.streamText }, { segment: A, observable: E } = ra(x, S, w);
     if (A.status === "error") return ge("Error occurred while submitting prompt"), o("Error occurred while submitting prompt"), c("typing"), void (g.current === "" && l(x));
-    const L = (R) => {
+    const O = (R) => {
       const I = p.current.chatSegments.map((B) => B.uid !== E.segmentId ? B : { ...B, items: [...B.items, { ...R }] });
       p.current.setChatSegments(I);
     };
     E.on("userMessageReceived", (R) => {
       var I;
-      L(R), (I = f.current) != null && I.messageSent && f.current.messageSent({ uid: R.uid, message: R.content });
+      O(R), (I = f.current) != null && I.messageSent && f.current.messageSent({ uid: R.uid, message: R.content });
     }), E.on("aiMessageStreamStarted", (R) => {
       var I;
-      L(R), p.current.setComposerStatus("waiting"), g.current === x && p.current.setPrompt(""), k.add(R.uid), (I = f.current) != null && I.messageStreamStarted && f.current.messageStreamStarted({ uid: R.uid });
+      O(R), p.current.setComposerStatus("waiting"), g.current === x && p.current.setPrompt(""), k.add(R.uid), (I = f.current) != null && I.messageStreamStarted && f.current.messageStreamStarted({ uid: R.uid });
     }), E.on("aiServerComponentStreamStarted", (R) => {
       var I, B;
-      L(R), p.current.setComposerStatus("waiting"), g.current === x && p.current.setPrompt(""), k.add(R.uid), (I = f.current) != null && I.serverComponentStreamStarted && ((B = f.current) == null || B.serverComponentStreamStarted({ uid: R.uid }));
+      O(R), p.current.setComposerStatus("waiting"), g.current === x && p.current.setPrompt(""), k.add(R.uid), (I = f.current) != null && I.serverComponentStreamStarted && ((B = f.current) == null || B.serverComponentStreamStarted({ uid: R.uid }));
     }), E.on("aiServerComponentStreamed", (R) => {
       var I, B;
       (I = f.current) != null && I.serverComponentRendered && ((B = f.current) == null || B.serverComponentRendered({ uid: R.uid }));
@@ -4565,7 +4565,7 @@ const ta = (r, e) => {
     return Z(() => {
       j(b);
     }, [(ne = b == null ? void 0 : b.messageOptions) == null ? void 0 : ne.htmlSanitizer, (fe = b == null ? void 0 : b.messageOptions) == null ? void 0 : fe.syntaxHighlighter, (ue = b == null ? void 0 : b.messageOptions) == null ? void 0 : ue.markdownLinkTarget, (re = b == null ? void 0 : b.messageOptions) == null ? void 0 : re.showCodeBlockCopyButton, (xe = b == null ? void 0 : b.messageOptions) == null ? void 0 : xe.skipStreamingAnimation, (Pe = b == null ? void 0 : b.messageOptions) == null ? void 0 : Pe.streamingAnimationSpeed, (ze = b == null ? void 0 : b.messageOptions) == null ? void 0 : ze.waitTimeBeforeStreamCompletion, (et = b == null ? void 0 : b.messageOptions) == null ? void 0 : et.responseRenderer, (tt = b == null ? void 0 : b.messageOptions) == null ? void 0 : tt.promptRenderer]), { PrimitivesContextProvider: z(() => ({ children: Ze }) => v.jsx(Zr.Provider, { value: T, children: Ze }), [T]), primitivesContext: Zr };
-  }({ messageOptions: r.messageOptions }), [y, x] = ke(""), [k, S] = ke("typing"), [A, E] = ke(), [L, R] = ke([]), I = z(() => A ? [A, ...L] : L, [A, L]), B = z(() => ((b) => {
+  }({ messageOptions: r.messageOptions }), [y, x] = ke(""), [k, S] = ke("typing"), [A, E] = ke(), [O, R] = ke([]), I = z(() => A ? [A, ...O] : O, [A, O]), B = z(() => ((b) => {
     const T = b;
     if (typeof (T == null ? void 0 : T.create) == "function") return T.create();
     if (typeof (T == null ? void 0 : T.batchText) == "function" || typeof (T == null ? void 0 : T.streamText) == "function" || typeof (T == null ? void 0 : T.streamServerComponent) == "function") return b;
@@ -4579,7 +4579,7 @@ const ta = (r, e) => {
   })({ className: t, themeId: a }).join(" "), [t, a]), q = z(() => {
     var b;
     return u !== "auto" && u ? u : typeof globalThis !== void 0 && globalThis.matchMedia && ((b = globalThis.matchMedia("(prefers-color-scheme: dark)")) != null && b.matches) ? "dark" : "light";
-  }, [u]), W = Ye((b) => p == null ? void 0 : p.displayException(b), [p]), te = Ye((b) => x(b), [x]), oe = oa({ aiChatProps: r, adapterToUse: B, conversationRef: c, initialSegment: A, chatSegments: L, prompt: y, composerOptions: o, showException: W, setChatSegments: R, setComposerStatus: S, setPrompt: x }), $ = Ye((b) => {
+  }, [u]), W = Ye((b) => p == null ? void 0 : p.displayException(b), [p]), te = Ye((b) => x(b), [x]), oe = oa({ aiChatProps: r, adapterToUse: B, conversationRef: c, initialSegment: A, chatSegments: O, prompt: y, composerOptions: o, showException: W, setChatSegments: R, setComposerStatus: S, setPrompt: x }), $ = Ye((b) => {
     x(b.prompt), S("submitting-conversation-starter");
   }, [x, S]), _ = ((b, T) => Ye((j) => {
     b && j && (T.current = j.uid, b.handleNewChatSegmentAdded(j.uid, j.div));
@@ -4756,7 +4756,7 @@ function ja(r) {
   r.publicId && (a["X-PUBLIC-APPLICATION-ID"] = r.publicId);
   const u = {
     streamText: async (g, p) => {
-      var E;
+      var x;
       const f = [
         ...o,
         {
@@ -4765,56 +4765,62 @@ function ja(r) {
         }
       ];
       if (i(f), !r.publicId) {
-        const L = await ((E = r.getAccessToken) == null ? void 0 : E.call(r));
-        if (!L) {
+        const k = await ((x = r.getAccessToken) == null ? void 0 : x.call(r));
+        if (!k) {
           p.error(new Error("Failed to get the user token"));
           return;
         }
-        a.Authorization = `Bearer ${L}`;
+        a.Authorization = `Bearer ${k}`;
       }
-      const w = f.filter((L) => L.role === "user").map((L) => L.message).pop();
+      const w = f.filter((k) => k.role === "user").map((k) => k.message).pop();
       let y = { input: w };
       if (s && Object.keys(s).length > 0) {
-        let L = Object.keys(s);
-        L.length === 1 ? y = {
+        let k = Object.keys(s);
+        k.length === 1 ? y = {
           ...s,
-          [L[0]]: w
+          [k[0]]: w
         } : y = {
           ...s,
           input: w
         };
       }
-      const x = await fetch(t, {
-        method: "POST",
-        body: JSON.stringify({
-          model_name: n,
-          parameters: y,
-          messages: f
-        }),
-        headers: a
-      });
-      if (x.status !== 200) {
-        p.error(new Error("Failed to connect to the server"));
-        return;
-      }
-      if (!x.body)
-        return;
-      const k = x.body.getReader(), S = new TextDecoder();
-      let A = "";
-      for (; ; ) {
-        const { value: L, done: R } = await k.read();
-        if (R)
-          break;
-        let I = S.decode(L);
-        A += I, I && p.next(I);
-      }
-      i((L) => [
-        ...L,
-        {
-          role: "assistant",
-          message: A
+      try {
+        const k = await fetch(t, {
+          method: "POST",
+          body: JSON.stringify({
+            model_name: n,
+            parameters: y,
+            messages: f
+          }),
+          headers: a
+        });
+        if (r.responseCallback && r.responseCallback({ response: k, modelName: n }), k.status !== 200) {
+          p.error(new Error("Failed to connect to the server"));
+          return;
         }
-      ]), p.complete();
+        if (!k.body)
+          return;
+        const S = k.body.getReader(), A = new TextDecoder();
+        let E = "";
+        for (; ; ) {
+          const { value: O, done: R } = await S.read();
+          if (R)
+            break;
+          let I = A.decode(O);
+          E += I, I && p.next(I);
+        }
+        i((O) => [
+          ...O,
+          {
+            role: "assistant",
+            message: E
+          }
+        ]);
+      } catch (k) {
+        const S = new Error(k.toString());
+        r.responseCallback && r.responseCallback({ error: S, modelName: n }), p.error(S);
+      }
+      p.complete();
     }
   }, c = r.advancedOptions || {}, l = c.conversationOptions || {
     layout: "bubbles"

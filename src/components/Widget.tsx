@@ -16,6 +16,12 @@ import { useState } from "react";
 import { FaUser } from "react-icons/fa";
 
 type AdvancedOptions = Omit<AiChatProps, "adapter">;
+
+export type ResponseCallbackOptions = {
+  response?: Response
+  modelName: string
+  error?: Error
+};
 export interface WidgetProps {
   serverUrl?: string;
   modelName: string;
@@ -25,6 +31,7 @@ export interface WidgetProps {
   publicId?: string;
   style?: any;
   advancedOptions?: AdvancedOptions;
+  responseCallback?: (_opts: ResponseCallbackOptions) => void;
   getAccessToken?: () => Promise<string>;
 }
 
@@ -76,50 +83,64 @@ export function Widget(props: WidgetProps) {
           };
         }
       }
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        body: JSON.stringify({
-          model_name: modelName,
-          parameters,
-          messages: appended,
-        }),
-        headers,
-      });
 
-      if (response.status !== 200) {
-        observer.error(new Error("Failed to connect to the server"));
-        return;
-      }
+      try {
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          body: JSON.stringify({
+            model_name: modelName,
+            parameters,
+            messages: appended,
+          }),
+          headers,
+        });
 
-      if (!response.body) {
-        return;
-      }
-
-      // Read a stream of server-sent events
-      // and feed them to the observer as they are being generated
-      const reader = response.body.getReader();
-      const textDecoder = new TextDecoder();
-      let content = "";
-      while (true) {
-        const { value, done } = await reader.read();
-        if (done) {
-          break;
+        if (props.responseCallback) {
+          props.responseCallback({ response, modelName });
         }
 
-        let textDecoded = textDecoder.decode(value);
-        content += textDecoded;
-        if (textDecoded) {
-          observer.next(textDecoded);
+        if (response.status !== 200) {
+          observer.error(new Error("Failed to connect to the server"));
+          return;
         }
+
+        if (!response.body) {
+          return;
+        }
+
+        // Read a stream of server-sent events
+        // and feed them to the observer as they are being generated
+        const reader = response.body.getReader();
+        const textDecoder = new TextDecoder();
+        let content = "";
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) {
+            break;
+          }
+
+          let textDecoded = textDecoder.decode(value);
+          content += textDecoded;
+          if (textDecoded) {
+            observer.next(textDecoded);
+          }
+        }
+
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "assistant",
+            message: content,
+          } as ChatItem,
+        ]);
+      } catch (e: any) {
+        const error = new Error(e.toString());
+        if (props.responseCallback) {
+          props.responseCallback({ error, modelName });
+        }
+        observer.error(error);
       }
 
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "assistant",
-          message: content,
-        } as ChatItem,
-      ]);
       observer.complete();
     },
   };
