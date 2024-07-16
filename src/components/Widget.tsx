@@ -17,7 +17,7 @@ import { FaUser } from "react-icons/fa";
 
 type AdvancedOptions = Omit<AiChatProps, "adapter">;
 
-type ResponseCallbackOptions = {
+export type ResponseCallbackOptions = {
   response?: Response
   error?: Error
 };
