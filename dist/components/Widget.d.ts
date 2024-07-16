@@ -1,8 +1,9 @@
 import { ChatItem, PersonaOptions, AiChatProps } from '@nlux/react';
 
 type AdvancedOptions = Omit<AiChatProps, "adapter">;
-type ResponseCallbackOptions = {
+export type ResponseCallbackOptions = {
     response?: Response;
+    modelName: string;
     error?: Error;
 };
 export interface WidgetProps {
@@ -14,7 +15,7 @@ export interface WidgetProps {
     publicId?: string;
     style?: any;
     advancedOptions?: AdvancedOptions;
-    responseCallback?: (_opts: ResponseCallbackOptions) => {};
+    responseCallback?: (_opts: ResponseCallbackOptions) => void;
     getAccessToken?: () => Promise<string>;
 }
 export declare function Widget(props: WidgetProps): import("react/jsx-runtime").JSX.Element;

@@ -4794,7 +4794,7 @@ function ja(r) {
           }),
           headers: a
         });
-        if (r.responseCallback && r.responseCallback({ response: k }), k.status !== 200) {
+        if (r.responseCallback && r.responseCallback({ response: k, modelName: n }), k.status !== 200) {
           p.error(new Error("Failed to connect to the server"));
           return;
         }
@@ -4818,7 +4818,7 @@ function ja(r) {
         ]);
       } catch (k) {
         const S = new Error(k.toString());
-        r.responseCallback && r.responseCallback({ error: S }), p.error(S);
+        r.responseCallback && r.responseCallback({ error: S, modelName: n }), p.error(S);
       }
       p.complete();
     }

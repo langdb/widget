@@ -19,6 +19,7 @@ type AdvancedOptions = Omit<AiChatProps, "adapter">;
 
 export type ResponseCallbackOptions = {
   response?: Response
+  modelName: string
   error?: Error
 };
 export interface WidgetProps {
@@ -30,7 +31,7 @@ export interface WidgetProps {
   publicId?: string;
   style?: any;
   advancedOptions?: AdvancedOptions;
-  responseCallback?: (_opts: ResponseCallbackOptions) => {};
+  responseCallback?: (_opts: ResponseCallbackOptions) => void;
   getAccessToken?: () => Promise<string>;
 }
 
@@ -95,7 +96,7 @@ export function Widget(props: WidgetProps) {
         });
 
         if (props.responseCallback) {
-          props.responseCallback({ response });
+          props.responseCallback({ response, modelName });
         }
 
         if (response.status !== 200) {
@@ -135,7 +136,7 @@ export function Widget(props: WidgetProps) {
       } catch (e: any) {
         const error = new Error(e.toString());
         if (props.responseCallback) {
-          props.responseCallback({ error });
+          props.responseCallback({ error, modelName });
         }
         observer.error(error);
       }
