@@ -12,7 +12,9 @@ export interface WidgetProps {
     agentParams?: object;
     personaOptions?: PersonaOptions;
     messages?: ChatItem[];
+    threadId?: string;
     publicId?: string;
+    userId?: string;
     style?: any;
     advancedOptions?: AdvancedOptions;
     responseCallback?: (_opts: ResponseCallbackOptions) => void;

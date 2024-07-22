@@ -10,10 +10,9 @@ import "../css/langdb/main.css";
 import '@nlux/themes/nova.css';
 import "../tailwind.css";
 
-
-// import './Widget.css';
-import { useState } from "react";
 import { FaUser } from "react-icons/fa";
+import { ContentType, MessageRequest, MessageType } from "./types";
+import { useState } from "react";
 
 type AdvancedOptions = Omit<AiChatProps, "adapter">;
 
@@ -28,7 +27,9 @@ export interface WidgetProps {
   agentParams?: object;
   personaOptions?: PersonaOptions;
   messages?: ChatItem[];
+  threadId?: string;
   publicId?: string;
+  userId?: string;
   style?: any;
   advancedOptions?: AdvancedOptions;
   responseCallback?: (_opts: ResponseCallbackOptions) => void;
@@ -40,22 +41,14 @@ export function Widget(props: WidgetProps) {
   const serverUrl = props.serverUrl || DEV_SERVER_URL;
   const apiUrl = `${serverUrl}/stream`;
 
+  const [threadId, setThreadId] = useState<string | undefined>(props.threadId);
   const { modelName, agentParams } = props;
-  const [messages, setMessages] = useState(props.messages || []);
   const headers: any = { "Content-Type": "application/json" };
   if (props.publicId) {
     headers["X-PUBLIC-APPLICATION-ID"] = props.publicId;
   }
   const chatAdapter: ChatAdapter = {
     streamText: async (message: string, observer: StreamingAdapterObserver) => {
-      const appended = [
-        ...messages,
-        {
-          role: "user",
-          message: message,
-        } as ChatItem,
-      ];
-      setMessages(appended);
       if (!props.publicId) {
         const token = await props.getAccessToken?.();
         if (!token) {
@@ -64,36 +57,45 @@ export function Widget(props: WidgetProps) {
         }
         headers.Authorization = `Bearer ${token}`;
       }
-      const latestMessage = appended
-        .filter((m) => m.role === "user")
-        .map((m) => m.message)
-        .pop();
-      let parameters: object = { input: latestMessage };
+      let parameters: object = { input: message };
       if (agentParams && Object.keys(agentParams).length > 0) {
         let keys = Object.keys(agentParams);
         if (keys.length === 1) {
           parameters = {
             ...agentParams,
-            [keys[0]]: latestMessage,
+            [keys[0]]: message,
           };
         } else {
           parameters = {
             ...agentParams,
-            input: latestMessage,
+            input: message,
           };
         }
       }
-
       try {
+        const request: MessageRequest = {
+          model_name: modelName,
+          parameters,
+          message: {
+            model_name: modelName,
+            user_id: props.userId || "",
+            thread_id: threadId,
+            content: message,
+            content_metadata: JSON.stringify({ typ: ContentType.Text }),
+            type: MessageType.HumanMessage
+          },
+        };
         const response = await fetch(apiUrl, {
           method: "POST",
-          body: JSON.stringify({
-            model_name: modelName,
-            parameters,
-            messages: appended,
-          }),
+          body: JSON.stringify(request),
           headers,
         });
+
+        const threadIdHeader = response.headers.get('X-Thread-Id');
+        if (threadIdHeader) {
+          setThreadId(threadIdHeader); // Call setThreadId with the extracted value
+        }
+
 
         if (props.responseCallback) {
           props.responseCallback({ response, modelName });
@@ -115,24 +117,16 @@ export function Widget(props: WidgetProps) {
         let content = "";
         while (true) {
           const { value, done } = await reader.read();
+
+          let textDecoded = textDecoder.decode(value, { stream: true });
+          if (textDecoded) {
+            content += textDecoded;
+            observer.next(textDecoded);
+          }
           if (done) {
             break;
           }
-
-          let textDecoded = textDecoder.decode(value);
-          content += textDecoded;
-          if (textDecoded) {
-            observer.next(textDecoded);
-          }
         }
-
-        setMessages((prev) => [
-          ...prev,
-          {
-            role: "assistant",
-            message: content,
-          } as ChatItem,
-        ]);
       } catch (e: any) {
         const error = new Error(e.toString());
         if (props.responseCallback) {
