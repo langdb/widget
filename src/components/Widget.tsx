@@ -1,18 +1,19 @@
 import {
   AiChat,
-  ChatAdapter,
-  StreamingAdapterObserver,
   ChatItem,
   PersonaOptions,
   AiChatProps,
+  MessageSentCallback,
+  PromptRendererProps,
 } from "@nlux/react";
 import "../css/langdb/main.css";
 import '@nlux/themes/nova.css';
 import "../tailwind.css";
 
 import { FaUser } from "react-icons/fa";
-import { ContentType, MessageRequest, MessageType } from "./types";
-import { useState } from "react";
+import { useAdapter } from "./adapter";
+import { FileWithPreview, ResizeOptions } from "../types";
+import { useCallback, useState } from "react";
 
 type AdvancedOptions = Omit<AiChatProps, "adapter">;
 
@@ -29,119 +30,49 @@ export interface WidgetProps {
   messages?: ChatItem[];
   threadId?: string;
   publicId?: string;
+  files?: FileWithPreview[];
   userId?: string;
   style?: any;
   advancedOptions?: AdvancedOptions;
   responseCallback?: (_opts: ResponseCallbackOptions) => void;
   getAccessToken?: () => Promise<string>;
+  resizeOptions?: ResizeOptions
 }
 
-const DEV_SERVER_URL = "https://api.dev.langdb.ai";
+const Thumbnails = ({ files }: { files: FileWithPreview[] }) => {
+  return (<>{
+    files.map(file => (
+      <div key={file.name} className="thumbnail m-3">
+        <div className="thumbnailInner">
+          <img src={file.preview} alt={file.name} className="w-[200px]" />
+        </div>
+
+      </div>
+    ))
+  }</>)
+}
 export function Widget(props: WidgetProps) {
-  const serverUrl = props.serverUrl || DEV_SERVER_URL;
-  const apiUrl = `${serverUrl}/stream`;
-
-  const [threadId, setThreadId] = useState<string | undefined>(props.threadId);
-  const { modelName, agentParams } = props;
-  const headers: any = { "Content-Type": "application/json" };
-  if (props.publicId) {
-    headers["X-PUBLIC-APPLICATION-ID"] = props.publicId;
-  }
-  const chatAdapter: ChatAdapter = {
-    streamText: async (message: string, observer: StreamingAdapterObserver) => {
-      if (!props.publicId) {
-        const token = await props.getAccessToken?.();
-        if (!token) {
-          observer.error(new Error("Failed to get the user token"));
-          return;
-        }
-        headers.Authorization = `Bearer ${token}`;
-      }
-      let parameters: object = { input: message };
-      if (agentParams && Object.keys(agentParams).length > 0) {
-        let keys = Object.keys(agentParams);
-        if (keys.length === 1) {
-          parameters = {
-            ...agentParams,
-            [keys[0]]: message,
-          };
-        } else {
-          parameters = {
-            ...agentParams,
-            input: message,
-          };
-        }
-      }
-      try {
-        const request: MessageRequest = {
-          model_name: modelName,
-          parameters,
-          message: {
-            model_name: modelName,
-            user_id: props.userId || "",
-            thread_id: threadId,
-            content: message,
-            content_metadata: JSON.stringify({ typ: ContentType.Text }),
-            type: MessageType.HumanMessage
-          },
-        };
-        const response = await fetch(apiUrl, {
-          method: "POST",
-          body: JSON.stringify(request),
-          headers,
-        });
-
-        const threadIdHeader = response.headers.get('X-Thread-Id');
-        if (threadIdHeader) {
-          setThreadId(threadIdHeader); // Call setThreadId with the extracted value
-        }
-
-
-        if (props.responseCallback) {
-          props.responseCallback({ response, modelName });
-        }
-
-        if (response.status !== 200) {
-          observer.error(new Error("Failed to connect to the server"));
-          return;
-        }
-
-        if (!response.body) {
-          return;
-        }
-
-        // Read a stream of server-sent events
-        // and feed them to the observer as they are being generated
-        const reader = response.body.getReader();
-        const textDecoder = new TextDecoder();
-        let content = "";
-        while (true) {
-          const { value, done } = await reader.read();
-
-          let textDecoded = textDecoder.decode(value, { stream: true });
-          if (textDecoded) {
-            content += textDecoded;
-            observer.next(textDecoded);
-          }
-          if (done) {
-            break;
-          }
-        }
-      } catch (e: any) {
-        const error = new Error(e.toString());
-        if (props.responseCallback) {
-          props.responseCallback({ error, modelName });
-        }
-        observer.error(error);
-      }
-
-      observer.complete();
-    },
-  };
+  const adapter = useAdapter(props);
   const advancedOptions = props.advancedOptions || {};
   const conversationOptions = advancedOptions.conversationOptions || {
     layout: "bubbles",
   };
+  const { files } = props;
+  const [fileMap, setFileMap] = useState(new Map());
+
+  const updateMap = (key: string, value: FileWithPreview[] | undefined) => {
+    setFileMap(map => new Map(map.set(key, value)));
+  }
+  const PromptRender = ({ prompt, uid }: PromptRendererProps) => {
+    const files: FileWithPreview[] | undefined = fileMap.get(uid);
+    return <div>
+      <span className="user-prompt">{prompt}</span>
+      <div>
+        {files && <Thumbnails files={files} />}
+      </div>
+    </div>
+  }
+
   const displayOptions = Object.assign(
     {},
     { colorScheme: "light", themeId: "langdb" },
@@ -150,14 +81,28 @@ export function Widget(props: WidgetProps) {
   const composerOptions = advancedOptions.composerOptions || {
     placeholder: "How can i help you today ?",
   };
+
+  const messageSentCallback = useCallback<MessageSentCallback>((eventDetails) => {
+
+    if (files) {
+      updateMap(eventDetails.uid, [...files]);
+    }
+  }, [updateMap]);
+
   return (
     <main
       className="flex flex-1 items-center justify-between"
       style={props.style || {}}
     >
       <AiChat
-        adapter={chatAdapter}
+        adapter={adapter}
         initialConversation={props.messages}
+        events={{
+          messageSent: messageSentCallback
+        }}
+        messageOptions={{
+          promptRenderer: PromptRender
+        }}
         personaOptions={
           props.personaOptions || {
             assistant: {
