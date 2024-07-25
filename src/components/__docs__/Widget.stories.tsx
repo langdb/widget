@@ -18,7 +18,6 @@ export const Simple: Story = {
       displayOptions: {
         themeId: 'langdb',
         colorScheme: 'light',
-        height: '60vh'
       }
     }
   },
@@ -30,7 +29,6 @@ export const Dark: Story = {
       displayOptions: {
         themeId: 'nova',
         colorScheme: 'dark',
-        height: '60vh'
       }
     }
   },
@@ -41,7 +39,6 @@ export const Starters: Story = {
       displayOptions: {
         themeId: 'langdb',
         colorScheme: 'light',
-        height: '60vh'
       },
       conversationOptions: {
         conversationStarters: [

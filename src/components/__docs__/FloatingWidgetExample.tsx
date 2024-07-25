@@ -18,6 +18,7 @@ const FloatingChatWidgetExample: FC<WidgetProps> = ({
         title={<span className="font-bold">Floating widget example</span>}
       >
         <Widget
+          className={"w-full"}
           publicId={publicId}
           modelName={modelName}
           advancedOptions={advancedOptions}

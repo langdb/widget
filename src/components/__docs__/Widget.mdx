@@ -19,11 +19,12 @@ const Chat = () => {
       style={{
         display: "flex",
         flexDirection: "column",
-        height: "100vh",
+        height: "60vh",
       }}
     >
       <div className="flex flex-1 ">
         <Widget
+          className={"w-full h-full"}
           publicId={publicId}
           modelName={"cities_info_model"}
           advancedOptions={{
