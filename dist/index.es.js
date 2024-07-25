@@ -4847,17 +4847,17 @@ const Ea = "https://api.dev.langdb.ai", Pa = (r) => {
       }
     }
   };
-}, Ia = ({ files: r }) => /* @__PURE__ */ v.jsx(v.Fragment, { children: r.map((e) => /* @__PURE__ */ v.jsx("div", { className: "thumbnail m-3", children: /* @__PURE__ */ v.jsx("div", { className: "thumbnailInner", children: /* @__PURE__ */ v.jsx("img", { src: e.preview, alt: e.name, className: "w-[200px]" }) }) }, e.name)) });
+}, Ia = ({ files: r }) => /* @__PURE__ */ v.jsx(v.Fragment, { children: r.map((e) => /* @__PURE__ */ v.jsx("div", { className: "thumbnail m-2", children: /* @__PURE__ */ v.jsx("div", { className: "thumbnailInner", children: /* @__PURE__ */ v.jsx("img", { src: e.preview, alt: e.name, className: "w-[150px]" }) }) }, e.name)) });
 function $a(r) {
   const e = Pa(r), t = r.advancedOptions || {}, n = t.conversationOptions || {
     layout: "bubbles"
-  }, { files: s } = r, [o, i] = ge(/* @__PURE__ */ new Map()), a = (d, m) => {
-    i((p) => new Map(p.set(d, m)));
-  }, u = ({ prompt: d, uid: m }) => {
-    const p = o.get(m);
-    return /* @__PURE__ */ v.jsxs("div", { children: [
-      /* @__PURE__ */ v.jsx("span", { className: "user-prompt", children: d }),
-      /* @__PURE__ */ v.jsx("div", { children: p && /* @__PURE__ */ v.jsx(Ia, { files: p }) })
+  }, { files: s } = r, [o, i] = ge(/* @__PURE__ */ new Map()), a = (m, p) => {
+    i((f) => new Map(f.set(m, p)));
+  }, u = ({ prompt: m, uid: p }) => {
+    const f = o.get(p);
+    return /* @__PURE__ */ v.jsxs("div", { className: "rounded-lg shadow-sm", children: [
+      /* @__PURE__ */ v.jsx("span", { className: "block", children: m }),
+      /* @__PURE__ */ v.jsx("div", { className: "mt-2", children: f && /* @__PURE__ */ v.jsx(Ia, { files: f }) })
     ] });
   }, c = Object.assign(
     {},
@@ -4865,13 +4865,13 @@ function $a(r) {
     t.displayOptions
   ), l = t.composerOptions || {
     placeholder: "How can i help you today ?"
-  }, h = He((d) => {
-    s && a(d.uid, [...s]);
-  }, [a]);
+  }, h = He((m) => {
+    s && a(m.uid, [...s]);
+  }, [a]), d = r.className || "";
   return /* @__PURE__ */ v.jsx(
     "main",
     {
-      className: "flex flex-1 items-center justify-between",
+      className: `items-center justify-between  ${d}`,
       style: r.style || {},
       children: /* @__PURE__ */ v.jsx(
         ua,

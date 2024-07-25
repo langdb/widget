@@ -1,9 +1,9 @@
 .nlux-comp-chatItem {
     display: flex;
-    margin-bottom: 0.5em;
+    margin-bottom: 1em;
     gap: 0.5em;
 
-    > .nlux-comp-message {
+    >.nlux-comp-message {
         display: flex;
         overflow: hidden;
         align-items: flex-start;
@@ -19,14 +19,14 @@
         gap: var(--nlux-chItm-msg--gap);
     }
 
-    > .nlux-comp-chatItem-participantInfo {
+    >.nlux-comp-chatItem-participantInfo {
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center;
         gap: var(--nlux-comp-chatItem-participantInfo--gap);
 
-        > .nlux-comp-chatItem-participantName {
+        >.nlux-comp-chatItem-participantName {
             font-size: var(--nlux-prtInfo-prtNm--ftSz);
             font-weight: var(--nlux-prtInfo-prtNm--ftWg);
             color: var(--nlux-prtInfo-prtNm--clr);
@@ -36,10 +36,10 @@
 
 /** OUT Chat item */
 .nlux-comp-chatItem.nlux-comp-chatItem--sent {
-    > .nlux-comp-chatItem-participantInfo > .nlux-comp-avatar {
+    >.nlux-comp-chatItem-participantInfo>.nlux-comp-avatar {
         border-color: var(--nlux-hmMsg--brdClr);
 
-        > .nlux-comp-avatarContainer > .nlux-comp-avatarPicture {
+        >.nlux-comp-avatarContainer>.nlux-comp-avatarPicture {
             background-color: var(--nlux-hmMsg--bgClr);
         }
     }
@@ -47,10 +47,10 @@
 
 /** IN Chat item */
 .nlux-comp-chatItem.nlux-comp-chatItem--received {
-    > .nlux-comp-chatItem-participantInfo > .nlux-comp-avatar {
+    >.nlux-comp-chatItem-participantInfo>.nlux-comp-avatar {
         border-color: var(--nlux-aiMsg--brdClr);
 
-        > .nlux-comp-avatarContainer > .nlux-comp-avatarPicture {
+        >.nlux-comp-avatarContainer>.nlux-comp-avatarPicture {
             background-color: var(--nlux-aiMsg--bgClr);
         }
     }

@@ -33,6 +33,7 @@ export interface WidgetProps {
   files?: FileWithPreview[];
   userId?: string;
   style?: any;
+  className?: any;
   advancedOptions?: AdvancedOptions;
   responseCallback?: (_opts: ResponseCallbackOptions) => void;
   getAccessToken?: () => Promise<string>;
@@ -42,9 +43,9 @@ export interface WidgetProps {
 const Thumbnails = ({ files }: { files: FileWithPreview[] }) => {
   return (<>{
     files.map(file => (
-      <div key={file.name} className="thumbnail m-3">
+      <div key={file.name} className="thumbnail m-2">
         <div className="thumbnailInner">
-          <img src={file.preview} alt={file.name} className="w-[200px]" />
+          <img src={file.preview} alt={file.name} className="w-[150px]" />
         </div>
 
       </div>
@@ -65,9 +66,9 @@ export function Widget(props: WidgetProps) {
   }
   const PromptRender = ({ prompt, uid }: PromptRendererProps) => {
     const files: FileWithPreview[] | undefined = fileMap.get(uid);
-    return <div>
-      <span className="user-prompt">{prompt}</span>
-      <div>
+    return <div className="rounded-lg shadow-sm">
+      <span className="block">{prompt}</span>
+      <div className="mt-2">
         {files && <Thumbnails files={files} />}
       </div>
     </div>
@@ -89,9 +90,10 @@ export function Widget(props: WidgetProps) {
     }
   }, [updateMap]);
 
+  const className = props.className || "";
   return (
     <main
-      className="flex flex-1 items-center justify-between"
+      className={`items-center justify-between  ${className}`}
       style={props.style || {}}
     >
       <AiChat

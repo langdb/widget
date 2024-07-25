@@ -18,6 +18,7 @@ export interface WidgetProps {
     files?: FileWithPreview[];
     userId?: string;
     style?: any;
+    className?: any;
     advancedOptions?: AdvancedOptions;
     responseCallback?: (_opts: ResponseCallbackOptions) => void;
     getAccessToken?: () => Promise<string>;

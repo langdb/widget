@@ -3,7 +3,7 @@
      * Theme-specific local variables.
      */
 
-    --nlux-langdb--FontFamily: 'Inter', sans-serif;
+    --nlux-langdb--FontFamily: 'Roboto Mono';
     --nlux-langdb--MonoFontFamily: monospace;
 
     --nlux-langdb--BorderWidth: 0;
@@ -59,7 +59,8 @@
     --nlux-ChatItem-Avatar--BorderWidth: var(--nlux-langdb--BorderWidth);
 
     /** Chat item message */
-    --nlux-ChatItem-Message--Gap: var(--nlux-langdb--FlexGap); /** Gap between elements within message */
+    --nlux-ChatItem-Message--Gap: var(--nlux-langdb--FlexGap);
+    /** Gap between elements within message */
 
     /** Chat item message in bubbles display layout */
     --nlux-ChatItem-Message-BubbleLayout--BorderWidth: 0px;
