@@ -47,7 +47,7 @@ export const Files = ({ files, setFiles }: FilesProps) => {
             <MinusIcon className="w-4 h-4" />
           </button>
           <div className="border p-1 rounded-lg">
-            <img src={file.preview} alt={file.name} className="w-32 h-32 object-cover rounded-lg" />
+            <img src={file.preview} alt={file.name} className="w-12 h-12 object-cover rounded-lg" />
           </div>
         </div>
       ))}

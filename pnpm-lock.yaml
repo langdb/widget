@@ -11,6 +11,9 @@ dependencies:
   '@ai-sdk/react':
     specifier: ^0.0.10
     version: 0.0.10(react@18.3.1)(zod@3.23.8)
+  '@microsoft/fetch-event-source':
+    specifier: ^2.0.1
+    version: 2.0.1
   '@nlux/react':
     specifier: ^2.9.2
     version: 2.11.1(react-dom@18.3.1)(react@18.3.1)
@@ -2243,6 +2246,10 @@ packages:
     transitivePeerDependencies:
       - '@types/node'
     dev: true
+
+  /@microsoft/fetch-event-source@2.0.1:
+    resolution: {integrity: sha512-W6CLUJ2eBMw3Rec70qrsEW0jOm/3twwJv21mrmj2yORiaVmVYGS4sSS5yUwvQc1ZlDLYGPnClVWmUUMagKNsfA==}
+    dev: false
 
   /@microsoft/tsdoc-config@0.16.2:
     resolution: {integrity: sha512-OGiIzzoBLgWWR0UdRJX98oYO+XKGf7tiK4Zk6tQ/E4IJqGCe7dvkTvgDZV5cFJUzLGDOjeAXrnZoA6QkVySuxw==}

@@ -70,7 +70,6 @@ export async function createInnerMessage(props: {
       if (!imageUrl) {
         throw new Error("base64 failed");
       }
-      console.log(imageUrl);
       return [
         MessageContentType.ImageUrl,
         imageUrl as string,
