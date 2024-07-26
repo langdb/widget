@@ -1,12 +1,23 @@
 import { ChatAdapter, StreamingAdapterObserver } from "@nlux/react";
-import { WidgetProps } from "./Widget";
-import { MessageRequest, createInnerMessage } from "../types";
+import { FileWithPreview, MessageRequest, ResizeOptions, ResponseCallbackOptions, createInnerMessage } from "../types";
 import { useState } from "react";
 
 const DEV_SERVER_URL = "https://api.dev.langdb.ai";
 
-export const useAdapter = (props: WidgetProps): ChatAdapter => {
-  const { files, resizeOptions } = props;
+export interface AdapterProps {
+  files?: FileWithPreview[],
+  fileResizeOptions?: ResizeOptions,
+  serverUrl?: string,
+  modelName: string,
+  agentParams?: object;
+  threadId?: string;
+  publicId?: string;
+  userId?: string;
+  getAccessToken?: () => Promise<string>;
+  responseCallback?: (_opts: ResponseCallbackOptions) => void;
+}
+export const useAdapter = (props: AdapterProps): ChatAdapter => {
+  const { files, fileResizeOptions: resizeOptions } = props;
   const serverUrl = props.serverUrl || DEV_SERVER_URL;
   const apiUrl = `${serverUrl}/stream`;
 

@@ -42,6 +42,14 @@ export enum ImageDetail {
 
 export type FileWithPreview = File & { preview: string };
 
+
+export type ResponseCallbackOptions = {
+  response?: Response
+  modelName: string
+  error?: Error
+};
+
+
 export async function createInnerMessage(props: {
   files?: FileWithPreview[],
   message: string,
