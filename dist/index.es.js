@@ -4981,18 +4981,20 @@ const Ya = (r) => {
     children: o,
     title: i,
     maximizedPanelClassName: a,
-    maximizedPanelStyle: u
-  } = r, [c, l] = ge(!1), [h, d] = ge(!1), m = He(() => {
-    l((p) => !p);
+    maximizedPanelStyle: u,
+    showFullScreen: c,
+    controls: l
+  } = r, [h, d] = ge(!1), [m, p] = ge(c || !1), f = He(() => {
+    d((w) => !w);
   }, []);
   return /* @__PURE__ */ v.jsxs("div", { className: gn(s || "dark"), children: [
-    c && /* @__PURE__ */ v.jsxs(
+    h && /* @__PURE__ */ v.jsxs(
       "div",
       {
-        style: h ? u : {},
+        style: m ? u : {},
         className: gn(
           "light:text-slate-900 dark:text-white flex flex-1 bg-white dark:bg-black flex-col absolute p-[10px] pt-[0px]",
-          h ? a || "h-full w-full bottom-0 right-0" : "rounded border shadow-md h-[60vh] w-[40vw] min-h-[500px] bottom-16 right-16"
+          m ? a || "h-full w-full bottom-0 right-0" : "rounded border shadow-md h-[60vh] w-[40vw] min-h-[500px] bottom-16 right-16"
         ),
         children: [
           /* @__PURE__ */ v.jsxs(
@@ -5006,18 +5008,18 @@ const Ya = (r) => {
                     "button",
                     {
                       onClick: () => {
-                        l(!1), e && e();
+                        d(!1), e && e();
                       },
                       children: /* @__PURE__ */ v.jsx(Ba, {})
                     }
                   ),
-                  /* @__PURE__ */ v.jsx(
+                  !(l != null && l.hideMaximise) && /* @__PURE__ */ v.jsx(
                     "button",
                     {
                       onClick: () => {
-                        d((p) => !p), t && t();
+                        p((w) => !w), t && t();
                       },
-                      children: h ? /* @__PURE__ */ v.jsx(Oa, {}) : /* @__PURE__ */ v.jsx(La, {})
+                      children: m ? /* @__PURE__ */ v.jsx(Oa, {}) : /* @__PURE__ */ v.jsx(La, {})
                     }
                   )
                 ] }),
@@ -5029,14 +5031,14 @@ const Ya = (r) => {
         ]
       }
     ),
-    !c && /* @__PURE__ */ v.jsx(
+    !h && /* @__PURE__ */ v.jsx(
       "button",
       {
         className: gn(
           n || "",
           "fixed text-white bg-primary hover:bg-primary-800 bottom-5 right-5 flex w-[50px] hover:scale-110 scale-100 h-[50px] justify-center items-center p-[10px] rounded-full cursor-pointer shadow-none hover:shadow-xl transition ease-in-out"
         ),
-        onClick: m,
+        onClick: f,
         children: /* @__PURE__ */ v.jsx(Ra, {})
       }
     )

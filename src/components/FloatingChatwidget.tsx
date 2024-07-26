@@ -13,6 +13,10 @@ export const FloatingChatWidget = (props: {
   title?: any;
   maximizedPanelClassName?: string;
   maximizedPanelStyle?: React.CSSProperties;
+  showFullScreen?: boolean,
+  controls?: {
+    hideMaximise?: boolean
+  }
 }) => {
   const {
     onMinimize,
@@ -23,9 +27,11 @@ export const FloatingChatWidget = (props: {
     title,
     maximizedPanelClassName,
     maximizedPanelStyle,
+    showFullScreen: maximised,
+    controls
   } = props;
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [isMaximized, setIsMaximized] = useState(false);
+  const [isMaximized, setIsMaximized] = useState<boolean>(maximised ? maximised : false);
 
   const handleChatToggle = useCallback(() => {
     setIsChatOpen((prev) => !prev);
@@ -56,14 +62,14 @@ export const FloatingChatWidget = (props: {
               >
                 <MinusIcon />
               </button>
-              <button
+              {!controls?.hideMaximise && <button
                 onClick={() => {
                   setIsMaximized((prev) => !prev);
                   onMaximize && onMaximize();
                 }}
               >
                 {isMaximized ? <MinimizeIcon /> : <MaximizeIcon />}
-              </button>
+              </button>}
             </div>
             {<div className="flex flex-1 justify-center">{title}</div>}
           </div>
