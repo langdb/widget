@@ -15,12 +15,11 @@ export interface AdapterProps {
   userId?: string;
   getAccessToken?: () => Promise<string>;
   responseCallback?: (_opts: ResponseCallbackOptions) => void;
-  onError?: (errorMsg: string) => void;
 }
 
 class FatalError extends Error { }
 export const useAdapter = (props: AdapterProps): ChatAdapter => {
-  const { files, fileResizeOptions: resizeOptions, onError } = props;
+  const { files, fileResizeOptions: resizeOptions } = props;
   const serverUrl = props.serverUrl || DEV_SERVER_URL;
   const apiUrl = `${serverUrl}/stream`;
 
@@ -72,7 +71,6 @@ export const useAdapter = (props: AdapterProps): ChatAdapter => {
             } else if (response.status >= 400 && response.status < 500 && response.status !== 429) {
               // client-side errors are usually non-retriable:
               const text = await response.text();
-              if (onError) { onError(text) };
               throw new FatalError(text || `${response.status}: Failed to send message to the server`);
             } else {
               return;
@@ -86,7 +84,6 @@ export const useAdapter = (props: AdapterProps): ChatAdapter => {
 
 
             if (msg.event) {
-              if (onError) { onError(msg.data) };
               throw new FatalError(msg.data);
             } else {
               observer.next(msg.data);
@@ -103,7 +100,6 @@ export const useAdapter = (props: AdapterProps): ChatAdapter => {
           }
         });
       } catch (e: any) {
-        console.log(e);
         const error = new Error(e.toString());
         if (props.responseCallback) {
           props.responseCallback({ error, modelName });
