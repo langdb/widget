@@ -6941,18 +6941,18 @@ function ku(r) {
   ), p = e.composerOptions || {
     placeholder: "How can i help you today ?"
   }, m = Object.assign({}, {
-    assistant: Object.assign({}, (C = r.personaOptions) == null ? void 0 : C.assistant, {
+    assistant: Object.assign({}, {
       name: "LangDB",
       tagline: `
               Easily build and deploy AI agents with SQL.
               Customize with our React widget on`,
       avatar: /* @__PURE__ */ w.jsx(iu, {})
-    }),
-    user: Object.assign({}, (v = r.personaOptions) == null ? void 0 : v.user, {
+    }, (C = r.personaOptions) == null ? void 0 : C.assistant),
+    user: Object.assign({}, {
       name: "User",
       avatar: /* @__PURE__ */ w.jsx($c, {})
     })
-  }), h = he((y) => {
+  }, (v = r.personaOptions) == null ? void 0 : v.user), h = he((y) => {
     n && (l(y.uid, [...n]), s([]));
   }, [l]), f = he(() => {
   }, []), b = r.className || "";

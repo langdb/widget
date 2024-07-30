@@ -69,18 +69,18 @@ export function Widget(props: WidgetProps) {
   };
 
   const personaOptions = Object.assign({}, {
-    assistant: Object.assign({}, props.personaOptions?.assistant, {
+    assistant: Object.assign({}, {
       name: "LangDB",
       tagline: `
               Easily build and deploy AI agents with SQL.
               Customize with our React widget on`,
       avatar: <Avatar />,
-    }),
-    user: Object.assign({}, props.personaOptions?.user, {
+    }, props.personaOptions?.assistant),
+    user: Object.assign({}, {
       name: "User",
       avatar: <FaUser />,
     }),
-  });
+  }, props.personaOptions?.user);
   const messageSentCallback = useCallback<MessageSentCallback>((eventDetails) => {
     if (files) {
       updateMap(eventDetails.uid, [...files]);
