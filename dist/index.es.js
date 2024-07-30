@@ -4961,18 +4961,22 @@ const Jc = (r) => {
           async onopen(x) {
             if (x.ok && x.headers.get("content-type") === "text/event-stream") {
               const C = x.headers.get("X-Thread-Id");
-              if (C && a(C), r.responseCallback && r.responseCallback({ response: x, modelName: u }), !x.body)
+              if (C && a(C), r.responseCallback) {
+                const v = x == null ? void 0 : x.headers.get("x-trace-id");
+                r.responseCallback({ traceId: v, modelName: u });
+              }
+              if (!x.body)
                 throw new Wn("No body found");
               return;
             } else if (x.status >= 400 && x.status < 500 && x.status !== 429) {
               const C = await x.text();
-              throw new Wn(C || `${x.status}: Failed to send message to the server`);
+              throw n && n(C), new Wn(C || `${x.status}: Failed to send message to the server`);
             } else
               return;
           },
           onmessage(x) {
             if (x.event)
-              throw n && n(x), new Wn(x.data);
+              throw n && n(x.data), new Wn(x.data);
             p.next(x.data);
           },
           onclose() {

@@ -1,7 +1,7 @@
 import { ChatAdapter, StreamingAdapterObserver } from "@nlux/react";
 import { FileWithPreview, MessageRequest, ResizeOptions, ResponseCallbackOptions, createInnerMessage } from "../types";
 import { useState } from "react";
-import { EventSourceMessage, fetchEventSource } from '@microsoft/fetch-event-source';
+import { fetchEventSource } from '@microsoft/fetch-event-source';
 const DEV_SERVER_URL = "https://api.dev.langdb.ai";
 
 export interface AdapterProps {
@@ -15,7 +15,7 @@ export interface AdapterProps {
   userId?: string;
   getAccessToken?: () => Promise<string>;
   responseCallback?: (_opts: ResponseCallbackOptions) => void;
-  onError?: (msg: EventSourceMessage) => void;
+  onError?: (errorMsg: string) => void;
 }
 
 class FatalError extends Error { }
@@ -62,7 +62,8 @@ export const useAdapter = (props: AdapterProps): ChatAdapter => {
                 setThreadId(threadIdHeader as string | undefined); // Call setThreadId with the extracted value
               }
               if (props.responseCallback) {
-                props.responseCallback({ response, modelName });
+                const traceId = response?.headers.get('x-trace-id') as string | undefined;
+                props.responseCallback({ traceId, modelName });
               }
               if (!response.body) {
                 throw new FatalError("No body found");
@@ -71,6 +72,7 @@ export const useAdapter = (props: AdapterProps): ChatAdapter => {
             } else if (response.status >= 400 && response.status < 500 && response.status !== 429) {
               // client-side errors are usually non-retriable:
               const text = await response.text();
+              if (onError) { onError(text) };
               throw new FatalError(text || `${response.status}: Failed to send message to the server`);
             } else {
               return;
@@ -84,7 +86,7 @@ export const useAdapter = (props: AdapterProps): ChatAdapter => {
 
 
             if (msg.event) {
-              if (onError) { onError(msg) };
+              if (onError) { onError(msg.data) };
               throw new FatalError(msg.data);
             } else {
               observer.next(msg.data);

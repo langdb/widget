@@ -44,7 +44,7 @@ export type FileWithPreview = File & { preview: string };
 
 
 export type ResponseCallbackOptions = {
-  response?: Response
+  traceId?: string
   modelName: string
   error?: Error
 };
