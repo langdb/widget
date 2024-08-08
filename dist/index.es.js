@@ -5021,6 +5021,7 @@ const nl = (r) => {
           method: "POST",
           body: JSON.stringify(h),
           headers: l,
+          credentials: "include",
           async onopen(f) {
             if (f.ok && f.headers.get("content-type") === "text/event-stream") {
               const b = f.headers.get("X-Thread-Id");

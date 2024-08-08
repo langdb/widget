@@ -54,6 +54,7 @@ export const useAdapter = (props: AdapterProps): ChatAdapter => {
           method: "POST",
           body: JSON.stringify(request),
           headers,
+          credentials: 'include',
           async onopen(response) {
             if (response.ok && response.headers.get('content-type') === "text/event-stream") {
               const threadIdHeader = response.headers.get('X-Thread-Id');
