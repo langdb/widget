@@ -4909,8 +4909,9 @@ function Zc(r, e, t) {
       const u = s.decode(i.subarray(0, a)), l = a + (i[a + 1] === 32 ? 2 : 1), c = s.decode(i.subarray(l));
       switch (u) {
         case "data":
-          n.data = n.data ? n.data + `
-` + c : c;
+          n.data = n.data ? n.data + (c || `
+`) : c || `
+`;
           break;
         case "event":
           n.event = c;
