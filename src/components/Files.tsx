@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { FileWithPreview } from "../types";
+import { FileWithPreview, Preview } from "../types";
 import { useDropzone } from "react-dropzone";
 import { MinusIcon } from "./Icons";
 interface FilesProps {
@@ -7,12 +7,12 @@ interface FilesProps {
   setFiles: React.Dispatch<React.SetStateAction<FileWithPreview[]>>
 }
 
-export const Thumbnails = ({ files }: { files: FileWithPreview[] }) => {
+export const Thumbnails = ({ files }: { files: Preview[] }) => {
   return (<>{
-    files.map(file => (
-      <div key={file.name} className="thumbnail m-2">
+    files.map((file, idx) => (
+      <div key={idx} className="thumbnail m-2">
         <div className="thumbnailInner">
-          <img src={file.preview} alt={file.name} className="w-[150px]" />
+          <img src={file.preview} alt={file.preview} className="w-[150px]" />
         </div>
 
       </div>
@@ -36,9 +36,9 @@ export const Files = ({ files, setFiles }: FilesProps) => {
   };
   return <div className="flex flex-col w-[100%] dropzone border">
 
-    <div {...getRootProps()} className="flex items-center justify-center p-4 border-2 border-dashed border-gray-400 rounded-lg cursor-pointer hover:border-gray-500">
+    <div {...getRootProps()} className="flex items-center justify-center p-4 rounded-lg cursor-pointer hover:border-gray-500">
       <input {...getInputProps()} />
-      <p className="text-gray-600">Drag & drop images, or click to select files</p>
+      <p className="text-gray-500">Drag & drop images, or click to select files</p>
     </div>
     <aside className="flex flex-wrap mt-4">
       {files.map(file => (
