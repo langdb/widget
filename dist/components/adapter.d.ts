@@ -1,6 +1,7 @@
 import { ChatAdapter } from '@nlux/react';
 import { FileWithPreview, ResizeOptions, ResponseCallbackOptions } from '../types';
 
+export declare const DEV_SERVER_URL = "https://api.dev.langdb.ai";
 export interface AdapterProps {
     files?: FileWithPreview[];
     fileResizeOptions?: ResizeOptions;
@@ -13,4 +14,9 @@ export interface AdapterProps {
     getAccessToken?: () => Promise<string>;
     responseCallback?: (_opts: ResponseCallbackOptions) => void;
 }
-export declare const useAdapter: (props: AdapterProps) => ChatAdapter;
+export declare const getHeaders: (props: AdapterProps) => Promise<any>;
+export declare const useAdapter: (props: AdapterProps) => {
+    adapter: ChatAdapter;
+    threadId?: string;
+    messageId?: string;
+};

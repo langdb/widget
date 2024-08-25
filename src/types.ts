@@ -40,11 +40,14 @@ export enum ImageDetail {
   High = "High",
 }
 
-export type FileWithPreview = File & { preview: string };
+export type Preview = { preview: string };
+export type FileWithPreview = File & Preview;
 
 
 export type ResponseCallbackOptions = {
   traceId?: string
+  messageId?: string
+  threadId?: string
   modelName: string
   error?: Error
 };
@@ -124,4 +127,21 @@ async function blobToBase64(blob: Blob): Promise<string | ArrayBuffer | null> {
     reader.onloadend = () => resolve(reader.result);
     reader.readAsDataURL(blob);
   });
+}
+
+export interface Message {
+  model_name: string;        // Corresponding LangDB model
+  thread_id?: string;       // Identifier of the thread to which this message belongs
+  user_id: string;          // UUID
+  content_type: MessageContentType;
+  content?: string;
+  content_array: MessageContentPart[];
+  type: MessageType;        // Human / AI Message
+}
+
+
+export interface MessageWithIds {
+  threadId: string;
+  messageId: string;
+  content: string;
 }

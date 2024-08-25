@@ -30,11 +30,14 @@ export declare enum ImageDetail {
     Low = "Low",
     High = "High"
 }
-export type FileWithPreview = File & {
+export type Preview = {
     preview: string;
 };
+export type FileWithPreview = File & Preview;
 export type ResponseCallbackOptions = {
     traceId?: string;
+    messageId?: string;
+    threadId?: string;
     modelName: string;
     error?: Error;
 };
@@ -45,4 +48,18 @@ export declare function createInnerMessage(props: {
 }): Promise<InnerMessage>;
 export interface IResizeImageOptions {
     maxSize: number;
+}
+export interface Message {
+    model_name: string;
+    thread_id?: string;
+    user_id: string;
+    content_type: MessageContentType;
+    content?: string;
+    content_array: MessageContentPart[];
+    type: MessageType;
+}
+export interface MessageWithIds {
+    threadId: string;
+    messageId: string;
+    content: string;
 }

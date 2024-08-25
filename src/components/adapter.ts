@@ -2,8 +2,8 @@ import { ChatAdapter, StreamingAdapterObserver } from "@nlux/react";
 import { FileWithPreview, MessageRequest, ResizeOptions, ResponseCallbackOptions, createInnerMessage } from "../types";
 import { useState } from "react";
 import { fetchEventSource } from '@microsoft/fetch-event-source';
-const DEV_SERVER_URL = "https://api.dev.langdb.ai";
 
+export const DEV_SERVER_URL = "https://api.dev.langdb.ai";
 export interface AdapterProps {
   files?: FileWithPreview[],
   fileResizeOptions?: ResizeOptions,
@@ -17,31 +17,32 @@ export interface AdapterProps {
   responseCallback?: (_opts: ResponseCallbackOptions) => void;
 }
 
+export const getHeaders = async (props: AdapterProps): Promise<any> => {
+  const headers: any = { "Content-Type": "application/json" };
+  if (props.publicId) {
+    headers["X-PUBLIC-APPLICATION-ID"] = props.publicId;
+  } else {
+    const token = await props.getAccessToken?.();
+    if (!token)
+      throw new Error("Failed to get the user token");
+
+    headers.Authorization = `Bearer ${token}`;
+  }
+  return headers;
+}
 class FatalError extends Error { }
-export const useAdapter = (props: AdapterProps): ChatAdapter => {
+export const useAdapter = (props: AdapterProps): { adapter: ChatAdapter, threadId?: string, messageId?: string } => {
   const { files, fileResizeOptions: resizeOptions } = props;
   const serverUrl = props.serverUrl || DEV_SERVER_URL;
   const apiUrl = `${serverUrl}/stream`;
 
   const [threadId, setThreadId] = useState<string | undefined>(props.threadId);
+  const [messageId, setMessageId] = useState<string | undefined>();
   const { modelName, agentParams } = props;
-  const headers: any = { "Content-Type": "application/json" };
-  if (props.publicId) {
-    headers["X-PUBLIC-APPLICATION-ID"] = props.publicId;
-  }
-
-  return {
+  const adapter = {
     streamText: async (message: string, observer: StreamingAdapterObserver) => {
-      if (!props.publicId) {
-        const token = await props.getAccessToken?.();
-        if (!token) {
-          observer.error(new Error("Failed to get the user token"));
-          return;
-        }
-        headers.Authorization = `Bearer ${token}`;
-      }
-
       try {
+        const headers = await getHeaders(props);
         const innerMsg = await createInnerMessage({ files, message, resizeOptions });
         const request: MessageRequest = {
           model_name: modelName,
@@ -57,13 +58,19 @@ export const useAdapter = (props: AdapterProps): ChatAdapter => {
           credentials: 'include',
           async onopen(response) {
             if (response.ok && response.headers.get('content-type') === "text/event-stream") {
-              const threadIdHeader = response.headers.get('X-Thread-Id');
-              if (threadIdHeader) {
-                setThreadId(threadIdHeader as string | undefined); // Call setThreadId with the extracted value
-              }
+              const threadIdHeader = response.headers.get('X-Thread-Id') as string | undefined;
+              const messageIdHeader = response.headers.get('X-Message-Id') as string | undefined;
+              setMessageId(messageIdHeader);
+              setThreadId(threadIdHeader);
+
               if (props.responseCallback) {
                 const traceId = response?.headers.get('x-trace-id') as string | undefined;
-                props.responseCallback({ traceId, modelName });
+                props.responseCallback({
+                  traceId,
+                  modelName,
+                  threadId: threadIdHeader,
+                  messageId: messageIdHeader
+                });
               }
               if (!response.body) {
                 throw new FatalError("No body found");
@@ -110,4 +117,9 @@ export const useAdapter = (props: AdapterProps): ChatAdapter => {
       observer.complete();
     },
   };
+  return {
+    adapter,
+    threadId,
+    messageId
+  }
 }

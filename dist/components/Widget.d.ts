@@ -8,6 +8,7 @@ export interface WidgetProps extends AdapterProps {
         user?: Partial<UserPersona>;
     }>;
     messages?: ChatItem[];
+    rawMessages?: any[];
     style?: any;
     className?: any;
     controls?: {
