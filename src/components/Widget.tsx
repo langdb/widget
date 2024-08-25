@@ -21,8 +21,8 @@ import { Files, Thumbnails } from "./Files";
 import { Avatar } from "./Icons";
 import { HandThumbDownIcon, HandThumbUpIcon } from "@heroicons/react/24/outline";
 import { HandThumbDownIcon as SHandThumbDownIcon, HandThumbUpIcon as SHandThumbUpIcon } from "@heroicons/react/24/solid";
-import MarkdownView from 'react-showdown';
-
+import showdownHighlight from 'showdown-highlight';
+import showdown from 'showdown';
 type AdvancedOptions = Omit<AiChatProps, "adapter">;
 
 export interface WidgetProps extends AdapterProps {
@@ -118,10 +118,10 @@ export function Widget(props: WidgetProps) {
     return (
       <div className="space-y-2">
         {responseProps.status === "complete" &&
-          <MarkdownView
-            markdown={responseProps.content.join("")}
-            options={{ tables: true, emoji: true }}
-          />
+          <div className="langdb-markdown p-2 m-2">
+            <MarkdownView
+              content={responseProps.content.join("")}
+            /></div>
         }
         {responseProps.status !== "complete" && <div className="p-2 bg-gray-100 rounded-lg shadow-md" ref={responseProps.containerRef}></div>}
 
@@ -210,4 +210,21 @@ export function Widget(props: WidgetProps) {
       </div>
     </div>
   );
+}
+
+const MarkdownView = ({ content }: { content: string }) => {
+  const converter = new showdown.Converter({
+    extensions: [
+      showdownHighlight({
+        pre: true,
+        auto_detection: true
+      })
+    ]
+  });
+
+  const html = converter.makeHtml(content);
+
+  return <div className="flex flex-col">
+    <div dangerouslySetInnerHTML={{ __html: html }}></div>
+  </div>
 }

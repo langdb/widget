@@ -34,6 +34,7 @@
     "@storybook/test": "^8.1.10",
     "@storybook/theming": "^8.1.11",
     "@types/react": "^18.3.3",
+    "@types/showdown": "^2.0.6",
     "@typescript-eslint/eslint-plugin": "^7.14.1",
     "@typescript-eslint/parser": "^7.14.1",
     "eslint": "^8.57.0",
@@ -64,7 +65,8 @@
     "langdb-cloud-ui": "link:/Users/vivek/projects/dozer/nodejs/langdb-cloud-ui",
     "react-dropzone": "^14.2.3",
     "react-icons": "^5.2.1",
-    "react-showdown": "^2.3.1",
+    "showdown": "^2.1.0",
+    "showdown-highlight": "^3.1.0",
     "tailwindcss": "^3.4.4",
     "tailwindcss-animate": "^1.0.7"
   },
