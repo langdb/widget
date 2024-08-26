@@ -1,5 +1,5 @@
 import * as ze from "react";
-import _e, { createContext as vo, useRef as ue, useState as ye, useEffect as te, useMemo as G, useCallback as ve, forwardRef as Kt, useContext as Dr, lazy as ji, isValidElement as Wt, Suspense as Bi, createRef as sr, useImperativeHandle as Gt, Component as Li, useReducer as Mi, Fragment as zi } from "react";
+import _e, { createContext as vo, useRef as ue, useState as ye, useEffect as te, useMemo as G, useCallback as ve, forwardRef as Kt, useContext as Dr, lazy as ji, isValidElement as Wt, Suspense as Bi, createRef as sr, useImperativeHandle as Gt, Component as Mi, useReducer as Li, Fragment as zi } from "react";
 function $i(r) {
   return r && r.__esModule && Object.prototype.hasOwnProperty.call(r, "default") ? r.default : r;
 }
@@ -65,10 +65,10 @@ function Hi() {
         we.unshift("Warning: " + E), Function.prototype.apply.call(console[f], console, we);
       }
     }
-    var A = !1, w = !1, R = !1, L = !1, F = !1, T;
+    var A = !1, w = !1, R = !1, M = !1, F = !1, T;
     T = Symbol.for("react.module.reference");
     function I(f) {
-      return !!(typeof f == "string" || typeof f == "function" || f === n || f === o || F || f === s || f === l || f === c || L || f === h || A || w || R || typeof f == "object" && f !== null && (f.$$typeof === p || f.$$typeof === d || f.$$typeof === i || f.$$typeof === a || f.$$typeof === u || // This needs to include all possible module reference object
+      return !!(typeof f == "string" || typeof f == "function" || f === n || f === o || F || f === s || f === l || f === c || M || f === h || A || w || R || typeof f == "object" && f !== null && (f.$$typeof === p || f.$$typeof === d || f.$$typeof === i || f.$$typeof === a || f.$$typeof === u || // This needs to include all possible module reference object
       // types supported by any Flight configuration anywhere since
       // we don't know which Flight build this will end up being used
       // with.
@@ -317,7 +317,7 @@ function Hi() {
         }
       return "";
     }
-    var C = Object.prototype.hasOwnProperty, M = {}, Q = k.ReactDebugCurrentFrame;
+    var C = Object.prototype.hasOwnProperty, L = {}, Q = k.ReactDebugCurrentFrame;
     function ce(f) {
       if (f) {
         var E = f._owner, $ = He(f.type, f._source, E ? E.type : null);
@@ -340,7 +340,7 @@ function Hi() {
             } catch (Pe) {
               ie = Pe;
             }
-            ie && !(ie instanceof Error) && (ce(me), y("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", Z || "React class", $, ae, typeof ie), ce(null)), ie instanceof Error && !(ie.message in M) && (M[ie.message] = !0, ce(me), y("Failed %s type: %s", $, ie.message), ce(null));
+            ie && !(ie instanceof Error) && (ce(me), y("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", Z || "React class", $, ae, typeof ie), ce(null)), ie instanceof Error && !(ie.message in L) && (L[ie.message] = !0, ce(me), y("Failed %s type: %s", $, ie.message), ce(null));
           }
       }
     }
@@ -914,8 +914,8 @@ function sn(r, e, t) {
   }
   return r.slice(0, n - s);
 }
-const Jt = /^ {0,3}((?:-[\t ]*){3,}|(?:_[ \t]*){3,}|(?:\*[ \t]*){3,})(?:\n+|$)/, Co = /(?:[*+-]|\d{1,9}[.)])/, So = xe(/^(?!bull |blockCode|fences|blockquote|heading|html)((?:.|\n(?!\s*?\n|bull |blockCode|fences|blockquote|heading|html))+?)\n {0,3}(=+|-+) *(?:\n+|$)/).replace(/bull/g, Co).replace(/blockCode/g, / {4}/).replace(/fences/g, / {0,3}(?:`{3,}|~{3,})/).replace(/blockquote/g, / {0,3}>/).replace(/heading/g, / {0,3}#{1,6}/).replace(/html/g, / {0,3}<[^\n>]+>\n/).getRegex(), jr = /^([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html|table| +\n)[^\n]+)*)/, Br = /(?!\s*\])(?:\\.|[^\[\]\\])+/, Ki = xe(/^ {0,3}\[(label)\]: *(?:\n *)?([^<\s][^\s]*|<.*?>)(?:(?: +(?:\n *)?| *\n *)(title))? *(?:\n+|$)/).replace("label", Br).replace("title", /(?:"(?:\\"?|[^"\\])*"|'[^'\n]*(?:\n[^'\n]+)*\n?'|\([^()]*\))/).getRegex(), Gi = xe(/^( {0,3}bull)([ \t][^\n]+?)?(?:\n|$)/).replace(/bull/g, Co).getRegex(), zn = "address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h[1-6]|head|header|hr|html|iframe|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option|p|param|search|section|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul", Lr = /<!--(?:-?>|[\s\S]*?(?:-->|$))/, Ji = xe("^ {0,3}(?:<(script|pre|style|textarea)[\\s>][\\s\\S]*?(?:</\\1>[^\\n]*\\n+|$)|comment[^\\n]*(\\n+|$)|<\\?[\\s\\S]*?(?:\\?>\\n*|$)|<![A-Z][\\s\\S]*?(?:>\\n*|$)|<!\\[CDATA\\[[\\s\\S]*?(?:\\]\\]>\\n*|$)|</?(tag)(?: +|\\n|/?>)[\\s\\S]*?(?:(?:\\n *)+\\n|$)|<(?!script|pre|style|textarea)([a-z][\\w-]*)(?:attribute)*? */?>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$)|</(?!script|pre|style|textarea)[a-z][\\w-]*\\s*>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$))", "i").replace("comment", Lr).replace("tag", zn).replace("attribute", / +[a-zA-Z:_][\w.:-]*(?: *= *"[^"\n]*"| *= *'[^'\n]*'| *= *[^\s"'=<>`]+)?/).getRegex(), ls = xe(jr).replace("hr", Jt).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("|lheading", "").replace("|table", "").replace("blockquote", " {0,3}>").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", zn).getRegex(), Mr = { blockquote: xe(/^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/).replace("paragraph", ls).getRegex(), code: /^( {4}[^\n]+(?:\n(?: *(?:\n|$))*)?)+/, def: Ki, fences: /^ {0,3}(`{3,}(?=[^`\n]*(?:\n|$))|~{3,})([^\n]*)(?:\n|$)(?:|([\s\S]*?)(?:\n|$))(?: {0,3}\1[~`]* *(?=\n|$)|$)/, heading: /^ {0,3}(#{1,6})(?=\s|$)(.*)(?:\n+|$)/, hr: Jt, html: Ji, lheading: So, list: Gi, newline: /^(?: *(?:\n|$))+/, paragraph: ls, table: Ht, text: /^[^\n]+/ }, us = xe("^ *([^\\n ].*)\\n {0,3}((?:\\| *)?:?-+:? *(?:\\| *:?-+:? *)*(?:\\| *)?)(?:\\n((?:(?! *\\n|hr|heading|blockquote|code|fences|list|html).*(?:\\n|$))*)\\n*|$)").replace("hr", Jt).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("blockquote", " {0,3}>").replace("code", " {4}[^\\n]").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", zn).getRegex(), Vi = { ...Mr, table: us, paragraph: xe(jr).replace("hr", Jt).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("|lheading", "").replace("table", us).replace("blockquote", " {0,3}>").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", zn).getRegex() }, ea = { ...Mr, html: xe(`^ *(?:comment *(?:\\n|\\s*$)|<(tag)[\\s\\S]+?</\\1> *(?:\\n{2,}|\\s*$)|<tag(?:"[^"]*"|'[^']*'|\\s[^'"/>\\s]*)*?/?> *(?:\\n{2,}|\\s*$))`).replace("comment", Lr).replace(/tag/g, "(?!(?:a|em|strong|small|s|cite|q|dfn|abbr|data|time|code|var|samp|kbd|sub|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo|span|br|wbr|ins|del|img)\\b)\\w+(?!:|[^\\w\\s@]*@)\\b").getRegex(), def: /^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +(["(][^\n]+[")]))? *(?:\n+|$)/, heading: /^(#{1,6})(.*)(?:\n+|$)/, fences: Ht, lheading: /^(.+?)\n {0,3}(=+|-+) *(?:\n+|$)/, paragraph: xe(jr).replace("hr", Jt).replace("heading", ` *#{1,6} *[^
-]`).replace("lheading", So).replace("|table", "").replace("blockquote", " {0,3}>").replace("|fences", "").replace("|list", "").replace("|html", "").replace("|tag", "").getRegex() }, Ao = /^\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/, Eo = /^( {2,}|\\)\n(?!\s*$)/, Vt = "\\p{P}\\p{S}", ta = xe(/^((?![*_])[\spunctuation])/, "u").replace(/punctuation/g, Vt).getRegex(), na = xe(/^(?:\*+(?:((?!\*)[punct])|[^\s*]))|^_+(?:((?!_)[punct])|([^\s_]))/, "u").replace(/punct/g, Vt).getRegex(), ra = xe("^[^_*]*?__[^_*]*?\\*[^_*]*?(?=__)|[^*]+(?=[^*])|(?!\\*)[punct](\\*+)(?=[\\s]|$)|[^punct\\s](\\*+)(?!\\*)(?=[punct\\s]|$)|(?!\\*)[punct\\s](\\*+)(?=[^punct\\s])|[\\s](\\*+)(?!\\*)(?=[punct])|(?!\\*)[punct](\\*+)(?!\\*)(?=[punct])|[^punct\\s](\\*+)(?=[^punct\\s])", "gu").replace(/punct/g, Vt).getRegex(), sa = xe("^[^_*]*?\\*\\*[^_*]*?_[^_*]*?(?=\\*\\*)|[^_]+(?=[^_])|(?!_)[punct](_+)(?=[\\s]|$)|[^punct\\s](_+)(?!_)(?=[punct\\s]|$)|(?!_)[punct\\s](_+)(?=[^punct\\s])|[\\s](_+)(?!_)(?=[punct])|(?!_)[punct](_+)(?!_)(?=[punct])", "gu").replace(/punct/g, Vt).getRegex(), oa = xe(/\\([punct])/, "gu").replace(/punct/g, Vt).getRegex(), ia = xe(/^<(scheme:[^\s\x00-\x1f<>]*|email)>/).replace("scheme", /[a-zA-Z][a-zA-Z0-9+.-]{1,31}/).replace("email", /[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+(@)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+(?![-_])/).getRegex(), aa = xe(Lr).replace("(?:-->|$)", "-->").getRegex(), ca = xe("^comment|^</[a-zA-Z][\\w:-]*\\s*>|^<[a-zA-Z][\\w-]*(?:attribute)*?\\s*/?>|^<\\?[\\s\\S]*?\\?>|^<![a-zA-Z]+\\s[\\s\\S]*?>|^<!\\[CDATA\\[[\\s\\S]*?\\]\\]>").replace("comment", aa).replace("attribute", /\s+[a-zA-Z:_][\w.:-]*(?:\s*=\s*"[^"]*"|\s*=\s*'[^']*'|\s*=\s*[^\s"'=<>`]+)?/).getRegex(), Sn = /(?:\[(?:\\.|[^\[\]\\])*\]|\\.|`[^`]*`|[^\[\]\\`])*?/, la = xe(/^!?\[(label)\]\(\s*(href)(?:\s+(title))?\s*\)/).replace("label", Sn).replace("href", /<(?:\\.|[^\n<>\\])+>|[^\s\x00-\x1f]*/).replace("title", /"(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)/).getRegex(), ds = xe(/^!?\[(label)\]\[(ref)\]/).replace("label", Sn).replace("ref", Br).getRegex(), ps = xe(/^!?\[(ref)\](?:\[\])?/).replace("ref", Br).getRegex(), zr = { _backpedal: Ht, anyPunctuation: oa, autolink: ia, blockSkip: /\[[^[\]]*?\]\([^\(\)]*?\)|`[^`]*?`|<[^<>]*?>/g, br: Eo, code: /^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/, del: Ht, emStrongLDelim: na, emStrongRDelimAst: ra, emStrongRDelimUnd: sa, escape: Ao, link: la, nolink: ps, punctuation: ta, reflink: ds, reflinkSearch: xe("reflink|nolink(?!\\()", "g").replace("reflink", ds).replace("nolink", ps).getRegex(), tag: ca, text: /^(`+|[^`])(?:(?= {2,}\n)|[\s\S]*?(?:(?=[\\<!\[`*_]|\b_|$)|[^ ](?= {2,}\n)))/, url: Ht }, ua = { ...zr, link: xe(/^!?\[(label)\]\((.*?)\)/).replace("label", Sn).getRegex(), reflink: xe(/^!?\[(label)\]\s*\[([^\]]*)\]/).replace("label", Sn).getRegex() }, ar = { ...zr, escape: xe(Ao).replace("])", "~|])").getRegex(), url: xe(/^((?:ftp|https?):\/\/|www\.)(?:[a-zA-Z0-9\-]+\.?)+[^\s<]*|^email/, "i").replace("email", /[A-Za-z0-9._+-]+(@)[a-zA-Z0-9-_]+(?:\.[a-zA-Z0-9-_]*[a-zA-Z0-9])+(?![-_])/).getRegex(), _backpedal: /(?:[^?!.,:;*_'"~()&]+|\([^)]*\)|&(?![a-zA-Z0-9]+;$)|[?!.,:;*_'"~)]+(?!$))+/, del: /^(~~?)(?=[^\s~])([\s\S]*?[^\s~])\1(?=[^~]|$)/, text: /^([`~]+|[^`~])(?:(?= {2,}\n)|(?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)|[\s\S]*?(?:(?=[\\<!\[`*~_]|\b_|https?:\/\/|ftp:\/\/|www\.|$)|[^ ](?= {2,}\n)|[^a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-](?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)))/ }, da = { ...ar, br: xe(Eo).replace("{2,}", "*").getRegex(), text: xe(ar.text).replace("\\b_", "\\b_| {2,}\\n").replace(/\{2,\}/g, "*").getRegex() }, on = { normal: Mr, gfm: Vi, pedantic: ea }, jt = { normal: zr, gfm: ar, breaks: da, pedantic: ua };
+const Jt = /^ {0,3}((?:-[\t ]*){3,}|(?:_[ \t]*){3,}|(?:\*[ \t]*){3,})(?:\n+|$)/, Co = /(?:[*+-]|\d{1,9}[.)])/, So = xe(/^(?!bull |blockCode|fences|blockquote|heading|html)((?:.|\n(?!\s*?\n|bull |blockCode|fences|blockquote|heading|html))+?)\n {0,3}(=+|-+) *(?:\n+|$)/).replace(/bull/g, Co).replace(/blockCode/g, / {4}/).replace(/fences/g, / {0,3}(?:`{3,}|~{3,})/).replace(/blockquote/g, / {0,3}>/).replace(/heading/g, / {0,3}#{1,6}/).replace(/html/g, / {0,3}<[^\n>]+>\n/).getRegex(), jr = /^([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html|table| +\n)[^\n]+)*)/, Br = /(?!\s*\])(?:\\.|[^\[\]\\])+/, Ki = xe(/^ {0,3}\[(label)\]: *(?:\n *)?([^<\s][^\s]*|<.*?>)(?:(?: +(?:\n *)?| *\n *)(title))? *(?:\n+|$)/).replace("label", Br).replace("title", /(?:"(?:\\"?|[^"\\])*"|'[^'\n]*(?:\n[^'\n]+)*\n?'|\([^()]*\))/).getRegex(), Gi = xe(/^( {0,3}bull)([ \t][^\n]+?)?(?:\n|$)/).replace(/bull/g, Co).getRegex(), zn = "address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h[1-6]|head|header|hr|html|iframe|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option|p|param|search|section|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul", Mr = /<!--(?:-?>|[\s\S]*?(?:-->|$))/, Ji = xe("^ {0,3}(?:<(script|pre|style|textarea)[\\s>][\\s\\S]*?(?:</\\1>[^\\n]*\\n+|$)|comment[^\\n]*(\\n+|$)|<\\?[\\s\\S]*?(?:\\?>\\n*|$)|<![A-Z][\\s\\S]*?(?:>\\n*|$)|<!\\[CDATA\\[[\\s\\S]*?(?:\\]\\]>\\n*|$)|</?(tag)(?: +|\\n|/?>)[\\s\\S]*?(?:(?:\\n *)+\\n|$)|<(?!script|pre|style|textarea)([a-z][\\w-]*)(?:attribute)*? */?>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$)|</(?!script|pre|style|textarea)[a-z][\\w-]*\\s*>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$))", "i").replace("comment", Mr).replace("tag", zn).replace("attribute", / +[a-zA-Z:_][\w.:-]*(?: *= *"[^"\n]*"| *= *'[^'\n]*'| *= *[^\s"'=<>`]+)?/).getRegex(), ls = xe(jr).replace("hr", Jt).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("|lheading", "").replace("|table", "").replace("blockquote", " {0,3}>").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", zn).getRegex(), Lr = { blockquote: xe(/^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/).replace("paragraph", ls).getRegex(), code: /^( {4}[^\n]+(?:\n(?: *(?:\n|$))*)?)+/, def: Ki, fences: /^ {0,3}(`{3,}(?=[^`\n]*(?:\n|$))|~{3,})([^\n]*)(?:\n|$)(?:|([\s\S]*?)(?:\n|$))(?: {0,3}\1[~`]* *(?=\n|$)|$)/, heading: /^ {0,3}(#{1,6})(?=\s|$)(.*)(?:\n+|$)/, hr: Jt, html: Ji, lheading: So, list: Gi, newline: /^(?: *(?:\n|$))+/, paragraph: ls, table: Ht, text: /^[^\n]+/ }, us = xe("^ *([^\\n ].*)\\n {0,3}((?:\\| *)?:?-+:? *(?:\\| *:?-+:? *)*(?:\\| *)?)(?:\\n((?:(?! *\\n|hr|heading|blockquote|code|fences|list|html).*(?:\\n|$))*)\\n*|$)").replace("hr", Jt).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("blockquote", " {0,3}>").replace("code", " {4}[^\\n]").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", zn).getRegex(), Vi = { ...Lr, table: us, paragraph: xe(jr).replace("hr", Jt).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("|lheading", "").replace("table", us).replace("blockquote", " {0,3}>").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", zn).getRegex() }, ea = { ...Lr, html: xe(`^ *(?:comment *(?:\\n|\\s*$)|<(tag)[\\s\\S]+?</\\1> *(?:\\n{2,}|\\s*$)|<tag(?:"[^"]*"|'[^']*'|\\s[^'"/>\\s]*)*?/?> *(?:\\n{2,}|\\s*$))`).replace("comment", Mr).replace(/tag/g, "(?!(?:a|em|strong|small|s|cite|q|dfn|abbr|data|time|code|var|samp|kbd|sub|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo|span|br|wbr|ins|del|img)\\b)\\w+(?!:|[^\\w\\s@]*@)\\b").getRegex(), def: /^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +(["(][^\n]+[")]))? *(?:\n+|$)/, heading: /^(#{1,6})(.*)(?:\n+|$)/, fences: Ht, lheading: /^(.+?)\n {0,3}(=+|-+) *(?:\n+|$)/, paragraph: xe(jr).replace("hr", Jt).replace("heading", ` *#{1,6} *[^
+]`).replace("lheading", So).replace("|table", "").replace("blockquote", " {0,3}>").replace("|fences", "").replace("|list", "").replace("|html", "").replace("|tag", "").getRegex() }, Ao = /^\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/, Eo = /^( {2,}|\\)\n(?!\s*$)/, Vt = "\\p{P}\\p{S}", ta = xe(/^((?![*_])[\spunctuation])/, "u").replace(/punctuation/g, Vt).getRegex(), na = xe(/^(?:\*+(?:((?!\*)[punct])|[^\s*]))|^_+(?:((?!_)[punct])|([^\s_]))/, "u").replace(/punct/g, Vt).getRegex(), ra = xe("^[^_*]*?__[^_*]*?\\*[^_*]*?(?=__)|[^*]+(?=[^*])|(?!\\*)[punct](\\*+)(?=[\\s]|$)|[^punct\\s](\\*+)(?!\\*)(?=[punct\\s]|$)|(?!\\*)[punct\\s](\\*+)(?=[^punct\\s])|[\\s](\\*+)(?!\\*)(?=[punct])|(?!\\*)[punct](\\*+)(?!\\*)(?=[punct])|[^punct\\s](\\*+)(?=[^punct\\s])", "gu").replace(/punct/g, Vt).getRegex(), sa = xe("^[^_*]*?\\*\\*[^_*]*?_[^_*]*?(?=\\*\\*)|[^_]+(?=[^_])|(?!_)[punct](_+)(?=[\\s]|$)|[^punct\\s](_+)(?!_)(?=[punct\\s]|$)|(?!_)[punct\\s](_+)(?=[^punct\\s])|[\\s](_+)(?!_)(?=[punct])|(?!_)[punct](_+)(?!_)(?=[punct])", "gu").replace(/punct/g, Vt).getRegex(), oa = xe(/\\([punct])/, "gu").replace(/punct/g, Vt).getRegex(), ia = xe(/^<(scheme:[^\s\x00-\x1f<>]*|email)>/).replace("scheme", /[a-zA-Z][a-zA-Z0-9+.-]{1,31}/).replace("email", /[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+(@)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+(?![-_])/).getRegex(), aa = xe(Mr).replace("(?:-->|$)", "-->").getRegex(), ca = xe("^comment|^</[a-zA-Z][\\w:-]*\\s*>|^<[a-zA-Z][\\w-]*(?:attribute)*?\\s*/?>|^<\\?[\\s\\S]*?\\?>|^<![a-zA-Z]+\\s[\\s\\S]*?>|^<!\\[CDATA\\[[\\s\\S]*?\\]\\]>").replace("comment", aa).replace("attribute", /\s+[a-zA-Z:_][\w.:-]*(?:\s*=\s*"[^"]*"|\s*=\s*'[^']*'|\s*=\s*[^\s"'=<>`]+)?/).getRegex(), Sn = /(?:\[(?:\\.|[^\[\]\\])*\]|\\.|`[^`]*`|[^\[\]\\`])*?/, la = xe(/^!?\[(label)\]\(\s*(href)(?:\s+(title))?\s*\)/).replace("label", Sn).replace("href", /<(?:\\.|[^\n<>\\])+>|[^\s\x00-\x1f]*/).replace("title", /"(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)/).getRegex(), ds = xe(/^!?\[(label)\]\[(ref)\]/).replace("label", Sn).replace("ref", Br).getRegex(), ps = xe(/^!?\[(ref)\](?:\[\])?/).replace("ref", Br).getRegex(), zr = { _backpedal: Ht, anyPunctuation: oa, autolink: ia, blockSkip: /\[[^[\]]*?\]\([^\(\)]*?\)|`[^`]*?`|<[^<>]*?>/g, br: Eo, code: /^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/, del: Ht, emStrongLDelim: na, emStrongRDelimAst: ra, emStrongRDelimUnd: sa, escape: Ao, link: la, nolink: ps, punctuation: ta, reflink: ds, reflinkSearch: xe("reflink|nolink(?!\\()", "g").replace("reflink", ds).replace("nolink", ps).getRegex(), tag: ca, text: /^(`+|[^`])(?:(?= {2,}\n)|[\s\S]*?(?:(?=[\\<!\[`*_]|\b_|$)|[^ ](?= {2,}\n)))/, url: Ht }, ua = { ...zr, link: xe(/^!?\[(label)\]\((.*?)\)/).replace("label", Sn).getRegex(), reflink: xe(/^!?\[(label)\]\s*\[([^\]]*)\]/).replace("label", Sn).getRegex() }, ar = { ...zr, escape: xe(Ao).replace("])", "~|])").getRegex(), url: xe(/^((?:ftp|https?):\/\/|www\.)(?:[a-zA-Z0-9\-]+\.?)+[^\s<]*|^email/, "i").replace("email", /[A-Za-z0-9._+-]+(@)[a-zA-Z0-9-_]+(?:\.[a-zA-Z0-9-_]*[a-zA-Z0-9])+(?![-_])/).getRegex(), _backpedal: /(?:[^?!.,:;*_'"~()&]+|\([^)]*\)|&(?![a-zA-Z0-9]+;$)|[?!.,:;*_'"~)]+(?!$))+/, del: /^(~~?)(?=[^\s~])([\s\S]*?[^\s~])\1(?=[^~]|$)/, text: /^([`~]+|[^`~])(?:(?= {2,}\n)|(?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)|[\s\S]*?(?:(?=[\\<!\[`*~_]|\b_|https?:\/\/|ftp:\/\/|www\.|$)|[^ ](?= {2,}\n)|[^a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-](?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)))/ }, da = { ...ar, br: xe(Eo).replace("{2,}", "*").getRegex(), text: xe(ar.text).replace("\\b_", "\\b_| {2,}\\n").replace(/\{2,\}/g, "*").getRegex() }, on = { normal: Lr, gfm: Vi, pedantic: ea }, jt = { normal: zr, gfm: ar, breaks: da, pedantic: ua };
 var pa = Object.defineProperty, Un = (r, e, t) => ((n, s, o) => s in n ? pa(n, s, { enumerable: !0, configurable: !0, writable: !0, value: o }) : n[s] = o)(r, typeof e != "symbol" ? e + "" : e, t);
 function hs(r, e, t, n) {
   const s = e.href, o = e.title ? Ne(e.title) : null, i = r[1].replace(/\\([\[\]])/g, "$1");
@@ -1876,11 +1876,11 @@ const Io = (r, e) => {
     return o;
   }
   return document.createTextNode(r);
-}, Bo = "nlux-comp-message", cn = { received: "nlux-comp-chatItem--received", sent: "nlux-comp-chatItem--sent" }, Lo = (r, e) => {
+}, Bo = "nlux-comp-message", cn = { received: "nlux-comp-chatItem--received", sent: "nlux-comp-chatItem--sent" }, Mo = (r, e) => {
   Object.keys(cn).forEach((t) => {
     r.classList.remove(cn[t]);
   }), cn[e] && r.classList.add(cn[e]);
-}, ln = { bubbles: "nlux-comp-chatItem--bubblesLayout", list: "nlux-comp-chatItem--listLayout" }, Mo = (r, e) => {
+}, ln = { bubbles: "nlux-comp-chatItem--bubblesLayout", list: "nlux-comp-chatItem--listLayout" }, Lo = (r, e) => {
   Object.keys(ln).forEach((t) => {
     r.classList.remove(ln[t]);
   }), ln[e] && r.classList.add(ln[e]);
@@ -1899,7 +1899,7 @@ const Io = (r, e) => {
     const i = document.createElement("div");
     i.classList.add(zo), n !== void 0 && i.append(n), i.append(s), e.append(i);
   }
-  Lo(e, r.direction), Mo(e, r.layout);
+  Mo(e, r.direction), Lo(e, r.layout);
   const o = ((i) => {
     const a = document.createElement("div");
     a.classList.add(Bo);
@@ -2012,7 +2012,7 @@ ys([Xe("markdown-stream-complete")], wn.prototype, "onMarkdownStreamComplete", 1
   }, updateDomProps: (c, d) => {
     ((p, h, m) => {
       if ((h.direction !== m.direction || h.layout !== m.layout || h.status !== m.status || h.message !== m.message || h.name !== m.name || h.avatar !== m.avatar) && m && (m.hasOwnProperty("direction") || m.hasOwnProperty("layout") || m.hasOwnProperty("status") || m.hasOwnProperty("message") || m.hasOwnProperty("loader") || m.hasOwnProperty("name") || m.hasOwnProperty("avatar"))) {
-        if (h.direction !== m.direction && Lo(p, m.direction), h.layout !== m.layout && Mo(p, m.layout), h.direction !== m.direction || h.status !== m.status || h.message !== m.message) {
+        if (h.direction !== m.direction && Mo(p, m.direction), h.layout !== m.layout && Lo(p, m.layout), h.direction !== m.direction || h.status !== m.status || h.message !== m.message) {
           const g = p.querySelector(`.${Bo}`);
           g && ba(g, { direction: h.direction, status: h.status, message: h.message, htmlSanitizer: h.htmlSanitizer }, { direction: m.direction, status: m.status, message: m.message, htmlSanitizer: h.htmlSanitizer });
         }
@@ -2061,7 +2061,7 @@ const Ca = (r, e) => {
     return (y) => {
       const x = y.target;
       if (!(x instanceof HTMLElement)) return;
-      const { scrollTop: A, clientHeight: w, scrollHeight: R } = x, L = R - 30, F = Math.ceil(A + w) >= L, T = b === void 0 || k === void 0 ? void 0 : A > b && k === R ? "down" : A < b && k === R ? "up" : void 0;
+      const { scrollTop: A, clientHeight: w, scrollHeight: R } = x, M = R - 30, F = Math.ceil(A + w) >= M, T = b === void 0 || k === void 0 ? void 0 : A > b && k === R ? "down" : A < b && k === R ? "up" : void 0;
       k = R, b = A, g({ scrolledToBottom: F, scrollDirection: T });
     };
   })(({ scrolledToBottom: g, scrollDirection: b }) => {
@@ -2362,7 +2362,7 @@ const qn = { typing: "nlux-composer--typing", "submitting-prompt": "nlux-compose
   } };
   return u;
 };
-var Pa = Object.defineProperty, Ra = Object.getOwnPropertyDescriptor, Lt = (r, e, t, n) => {
+var Pa = Object.defineProperty, Ra = Object.getOwnPropertyDescriptor, Mt = (r, e, t, n) => {
   for (var s, o = n > 1 ? void 0 : n ? Ra(e, t) : e, i = r.length - 1; i >= 0; i--) (s = r[i]) && (o = (n ? s(e, t, o) : s(o)) || o);
   return n && o && Pa(e, t, o), o;
 };
@@ -2404,7 +2404,7 @@ let ut = class extends We {
     this.setProp("domCompProps", e);
   }
 };
-Lt([Xe("command-enter-key-pressed")], ut.prototype, "handleCommandEnterKeyPressed", 1), Lt([Xe("enter-key-pressed")], ut.prototype, "handleEnterKeyPressed", 1), Lt([Xe("send-message-clicked")], ut.prototype, "handleSendButtonClick", 1), Lt([Xe("text-updated")], ut.prototype, "handleTextInputUpdated", 1), ut = Lt([ot("composer", ({ appendToRoot: r, props: e, compEvent: t }) => {
+Mt([Xe("command-enter-key-pressed")], ut.prototype, "handleCommandEnterKeyPressed", 1), Mt([Xe("enter-key-pressed")], ut.prototype, "handleEnterKeyPressed", 1), Mt([Xe("send-message-clicked")], ut.prototype, "handleSendButtonClick", 1), Mt([Xe("text-updated")], ut.prototype, "handleTextInputUpdated", 1), ut = Mt([ot("composer", ({ appendToRoot: r, props: e, compEvent: t }) => {
   const n = Ia(e.domCompProps);
   r(n);
   const [s, o] = Tn(n, ":scope > textarea").on("input", t("text-updated")).on("keydown", (c) => {
@@ -2512,10 +2512,10 @@ const hr = (r) => {
     const x = /* @__PURE__ */ new Set(), A = Ze(), w = { uid: A, status: "error", items: [] };
     return Be(() => {
       x.forEach((R) => R(y)), x.clear();
-    }), { segment: w, dataTransferMode: "stream", observable: { on: (R, L) => {
-      R === "error" && x.add(L);
-    }, removeListener: (R, L) => {
-      x.delete(L);
+    }), { segment: w, dataTransferMode: "stream", observable: { on: (R, M) => {
+      R === "error" && x.add(M);
+    }, removeListener: (R, M) => {
+      x.delete(M);
     }, destroy: () => {
       x.clear();
     }, get segmentId() {
@@ -2532,16 +2532,16 @@ const hr = (r) => {
   const g = ((y) => {
     const x = [], A = y, w = y;
     (A == null ? void 0 : A.streamText) === void 0 && (w == null ? void 0 : w.streamServerComponent) === void 0 || x.push("stream"), (A == null ? void 0 : A.batchText) !== void 0 && x.push("batch");
-    const R = hr(y) ? y : void 0, L = (R == null ? void 0 : R.dataTransferMode) ?? void 0, F = x.length === 1 ? x[0] : "stream";
-    return L ?? F;
+    const R = hr(y) ? y : void 0, M = (R == null ? void 0 : R.dataTransferMode) ?? void 0, F = x.length === 1 ? x[0] : "stream";
+    return M ?? F;
   })(e);
-  ((y) => "streamServerComponent" in y ? "server-component" : "text")(e) === "server-component" ? (u = /* @__PURE__ */ new Set(), a = /* @__PURE__ */ new Set(), ((y, x, A, w, R, L, F, T) => new Promise((I, _) => {
+  ((y) => "streamServerComponent" in y ? "server-component" : "text")(e) === "server-component" ? (u = /* @__PURE__ */ new Set(), a = /* @__PURE__ */ new Set(), ((y, x, A, w, R, M, F, T) => new Promise((I, _) => {
     try {
       const D = x.content, z = Ze(), B = "assistant", X = "streaming", re = /* @__PURE__ */ new Date(), oe = "stream";
       let le, N;
       const S = () => {
         Be(() => {
-          L.forEach((q) => {
+          M.forEach((q) => {
             le && N && q({ ...le, content: N, status: "complete" });
           });
         }, 20);
@@ -2570,7 +2570,7 @@ const hr = (r) => {
     }
   }))(s, o, e, t, a, u, h, m).finally(() => {
     Be(() => k());
-  })) : g === "batch" ? (i = /* @__PURE__ */ new Set(), (async (y, x, A, w, R, L, F) => {
+  })) : g === "batch" ? (i = /* @__PURE__ */ new Set(), (async (y, x, A, w, R, M, F) => {
     try {
       const T = x.content, I = hr(A) ? A : void 0, _ = I !== void 0, D = Ze(), z = "assistant", B = "complete", X = /* @__PURE__ */ new Date(), re = "batch";
       let oe;
@@ -2587,7 +2587,7 @@ const hr = (r) => {
       });
       const N = { uid: y, status: "complete", items: [x, oe] };
       Be(() => {
-        L.forEach((S) => {
+        M.forEach((S) => {
           S(N);
         });
       });
@@ -2629,8 +2629,8 @@ const hr = (r) => {
   const n = document.createElement("div"), s = document.createTextNode(r.name);
   return n.append(s), n.classList.add(_o), e.append(n), Uo(e, r.message), e;
 }, ws = () => fr({ name: "", avatar: "data:image/png;base64,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" });
-var Ba = Object.defineProperty, La = Object.getOwnPropertyDescriptor, ks = (r, e, t, n) => {
-  for (var s, o = n > 1 ? void 0 : n ? La(e, t) : e, i = r.length - 1; i >= 0; i--) (s = r[i]) && (o = (n ? s(e, t, o) : s(o)) || o);
+var Ba = Object.defineProperty, Ma = Object.getOwnPropertyDescriptor, ks = (r, e, t, n) => {
+  for (var s, o = n > 1 ? void 0 : n ? Ma(e, t) : e, i = r.length - 1; i >= 0; i--) (s = r[i]) && (o = (n ? s(e, t, o) : s(o)) || o);
   return n && o && Ba(e, t, o), o;
 };
 let kn = class extends We {
@@ -2732,9 +2732,9 @@ gr = ((r, e, t, n) => {
   } };
 }, ({}) => {
 })], gr);
-var Ma = Object.defineProperty, za = Object.getOwnPropertyDescriptor, Yn = (r, e, t, n) => {
+var La = Object.defineProperty, za = Object.getOwnPropertyDescriptor, Yn = (r, e, t, n) => {
   for (var s, o = n > 1 ? void 0 : n ? za(e, t) : e, i = r.length - 1; i >= 0; i--) (s = r[i]) && (o = (n ? s(e, t, o) : s(o)) || o);
-  return n && o && Ma(e, t, o), o;
+  return n && o && La(e, t, o), o;
 };
 let pn = class extends We {
   constructor(r, { conversationLayout: e, autoScroll: t, streamingAnimationSpeed: n, visible: s = !0, composer: o, assistantPersona: i, userPersona: a, showGreeting: u, conversationStarters: l, initialConversationContent: c, syntaxHighlighter: d, htmlSanitizer: p, markdownLinkTarget: h, showCodeBlockCopyButton: m, skipStreamingAnimation: g }) {
@@ -3360,10 +3360,10 @@ const _a = (r) => {
 }, tt = () => "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (r) => {
   const e = 16 * Math.random() | 0;
   return (r == "x" ? e : 3 & e | 8).toString(16);
-}), Me = (r) => {
+}), Le = (r) => {
   typeof r != "string" ? r && typeof r.toString == "function" ? console.warn(`[nlux] ${r.toString()}`) : console.warn("[nlux]") : console.warn(`[nlux] ${r}`);
 }, Ts = [], Zt = (r) => {
-  Ts.includes(r) || (Ts.push(r), Me(r));
+  Ts.includes(r) || (Ts.push(r), Le(r));
 }, qa = (r) => {
   const e = "nlux-chatSegment";
   return r === "complete" ? `${e} nlux-chatSegment--complete` : r === "error" ? `${e} nlux-chatSegment--error` : `${e} nlux-chatSegment--active`;
@@ -3461,7 +3461,7 @@ function hn(r, e, t) {
   return r.slice(0, n - s);
 }
 const en = /^ {0,3}((?:-[\t ]*){3,}|(?:_[ \t]*){3,}|(?:\*[ \t]*){3,})(?:\n+|$)/, Zo = /(?:[*+-]|\d{1,9}[.)])/, Xo = be(/^(?!bull |blockCode|fences|blockquote|heading|html)((?:.|\n(?!\s*?\n|bull |blockCode|fences|blockquote|heading|html))+?)\n {0,3}(=+|-+) *(?:\n+|$)/).replace(/bull/g, Zo).replace(/blockCode/g, / {4}/).replace(/fences/g, / {0,3}(?:`{3,}|~{3,})/).replace(/blockquote/g, / {0,3}>/).replace(/heading/g, / {0,3}#{1,6}/).replace(/html/g, / {0,3}<[^\n>]+>\n/).getRegex(), Nr = /^([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html|table| +\n)[^\n]+)*)/, Ur = /(?!\s*\])(?:\\.|[^\[\]\\])+/, Va = be(/^ {0,3}\[(label)\]: *(?:\n *)?([^<\s][^\s]*|<.*?>)(?:(?: +(?:\n *)?| *\n *)(title))? *(?:\n+|$)/).replace("label", Ur).replace("title", /(?:"(?:\\"?|[^"\\])*"|'[^'\n]*(?:\n[^'\n]+)*\n?'|\([^()]*\))/).getRegex(), ec = be(/^( {0,3}bull)([ \t][^\n]+?)?(?:\n|$)/).replace(/bull/g, Zo).getRegex(), $n = "address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h[1-6]|head|header|hr|html|iframe|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option|p|param|search|section|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul", _r = /<!--(?:-?>|[\s\S]*?(?:-->|$))/, tc = be("^ {0,3}(?:<(script|pre|style|textarea)[\\s>][\\s\\S]*?(?:</\\1>[^\\n]*\\n+|$)|comment[^\\n]*(\\n+|$)|<\\?[\\s\\S]*?(?:\\?>\\n*|$)|<![A-Z][\\s\\S]*?(?:>\\n*|$)|<!\\[CDATA\\[[\\s\\S]*?(?:\\]\\]>\\n*|$)|</?(tag)(?: +|\\n|/?>)[\\s\\S]*?(?:(?:\\n *)+\\n|$)|<(?!script|pre|style|textarea)([a-z][\\w-]*)(?:attribute)*? */?>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$)|</(?!script|pre|style|textarea)[a-z][\\w-]*\\s*>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$))", "i").replace("comment", _r).replace("tag", $n).replace("attribute", / +[a-zA-Z:_][\w.:-]*(?: *= *"[^"\n]*"| *= *'[^'\n]*'| *= *[^\s"'=<>`]+)?/).getRegex(), js = be(Nr).replace("hr", en).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("|lheading", "").replace("|table", "").replace("blockquote", " {0,3}>").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", $n).getRegex(), qr = { blockquote: be(/^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/).replace("paragraph", js).getRegex(), code: /^( {4}[^\n]+(?:\n(?: *(?:\n|$))*)?)+/, def: Va, fences: /^ {0,3}(`{3,}(?=[^`\n]*(?:\n|$))|~{3,})([^\n]*)(?:\n|$)(?:|([\s\S]*?)(?:\n|$))(?: {0,3}\1[~`]* *(?=\n|$)|$)/, heading: /^ {0,3}(#{1,6})(?=\s|$)(.*)(?:\n+|$)/, hr: en, html: tc, lheading: Xo, list: ec, newline: /^(?: *(?:\n|$))+/, paragraph: js, table: qt, text: /^[^\n]+/ }, Bs = be("^ *([^\\n ].*)\\n {0,3}((?:\\| *)?:?-+:? *(?:\\| *:?-+:? *)*(?:\\| *)?)(?:\\n((?:(?! *\\n|hr|heading|blockquote|code|fences|list|html).*(?:\\n|$))*)\\n*|$)").replace("hr", en).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("blockquote", " {0,3}>").replace("code", " {4}[^\\n]").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", $n).getRegex(), nc = { ...qr, table: Bs, paragraph: be(Nr).replace("hr", en).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("|lheading", "").replace("table", Bs).replace("blockquote", " {0,3}>").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", $n).getRegex() }, rc = { ...qr, html: be(`^ *(?:comment *(?:\\n|\\s*$)|<(tag)[\\s\\S]+?</\\1> *(?:\\n{2,}|\\s*$)|<tag(?:"[^"]*"|'[^']*'|\\s[^'"/>\\s]*)*?/?> *(?:\\n{2,}|\\s*$))`).replace("comment", _r).replace(/tag/g, "(?!(?:a|em|strong|small|s|cite|q|dfn|abbr|data|time|code|var|samp|kbd|sub|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo|span|br|wbr|ins|del|img)\\b)\\w+(?!:|[^\\w\\s@]*@)\\b").getRegex(), def: /^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +(["(][^\n]+[")]))? *(?:\n+|$)/, heading: /^(#{1,6})(.*)(?:\n+|$)/, fences: qt, lheading: /^(.+?)\n {0,3}(=+|-+) *(?:\n+|$)/, paragraph: be(Nr).replace("hr", en).replace("heading", ` *#{1,6} *[^
-]`).replace("lheading", Xo).replace("|table", "").replace("blockquote", " {0,3}>").replace("|fences", "").replace("|list", "").replace("|html", "").replace("|tag", "").getRegex() }, Ko = /^\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/, Go = /^( {2,}|\\)\n(?!\s*$)/, tn = "\\p{P}\\p{S}", sc = be(/^((?![*_])[\spunctuation])/, "u").replace(/punctuation/g, tn).getRegex(), oc = be(/^(?:\*+(?:((?!\*)[punct])|[^\s*]))|^_+(?:((?!_)[punct])|([^\s_]))/, "u").replace(/punct/g, tn).getRegex(), ic = be("^[^_*]*?__[^_*]*?\\*[^_*]*?(?=__)|[^*]+(?=[^*])|(?!\\*)[punct](\\*+)(?=[\\s]|$)|[^punct\\s](\\*+)(?!\\*)(?=[punct\\s]|$)|(?!\\*)[punct\\s](\\*+)(?=[^punct\\s])|[\\s](\\*+)(?!\\*)(?=[punct])|(?!\\*)[punct](\\*+)(?!\\*)(?=[punct])|[^punct\\s](\\*+)(?=[^punct\\s])", "gu").replace(/punct/g, tn).getRegex(), ac = be("^[^_*]*?\\*\\*[^_*]*?_[^_*]*?(?=\\*\\*)|[^_]+(?=[^_])|(?!_)[punct](_+)(?=[\\s]|$)|[^punct\\s](_+)(?!_)(?=[punct\\s]|$)|(?!_)[punct\\s](_+)(?=[^punct\\s])|[\\s](_+)(?!_)(?=[punct])|(?!_)[punct](_+)(?!_)(?=[punct])", "gu").replace(/punct/g, tn).getRegex(), cc = be(/\\([punct])/, "gu").replace(/punct/g, tn).getRegex(), lc = be(/^<(scheme:[^\s\x00-\x1f<>]*|email)>/).replace("scheme", /[a-zA-Z][a-zA-Z0-9+.-]{1,31}/).replace("email", /[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+(@)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+(?![-_])/).getRegex(), uc = be(_r).replace("(?:-->|$)", "-->").getRegex(), dc = be("^comment|^</[a-zA-Z][\\w:-]*\\s*>|^<[a-zA-Z][\\w-]*(?:attribute)*?\\s*/?>|^<\\?[\\s\\S]*?\\?>|^<![a-zA-Z]+\\s[\\s\\S]*?>|^<!\\[CDATA\\[[\\s\\S]*?\\]\\]>").replace("comment", uc).replace("attribute", /\s+[a-zA-Z:_][\w.:-]*(?:\s*=\s*"[^"]*"|\s*=\s*'[^']*'|\s*=\s*[^\s"'=<>`]+)?/).getRegex(), In = /(?:\[(?:\\.|[^\[\]\\])*\]|\\.|`[^`]*`|[^\[\]\\`])*?/, pc = be(/^!?\[(label)\]\(\s*(href)(?:\s+(title))?\s*\)/).replace("label", In).replace("href", /<(?:\\.|[^\n<>\\])+>|[^\s\x00-\x1f]*/).replace("title", /"(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)/).getRegex(), Ls = be(/^!?\[(label)\]\[(ref)\]/).replace("label", In).replace("ref", Ur).getRegex(), Ms = be(/^!?\[(ref)\](?:\[\])?/).replace("ref", Ur).getRegex(), Yr = { _backpedal: qt, anyPunctuation: cc, autolink: lc, blockSkip: /\[[^[\]]*?\]\([^\(\)]*?\)|`[^`]*?`|<[^<>]*?>/g, br: Go, code: /^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/, del: qt, emStrongLDelim: oc, emStrongRDelimAst: ic, emStrongRDelimUnd: ac, escape: Ko, link: pc, nolink: Ms, punctuation: sc, reflink: Ls, reflinkSearch: be("reflink|nolink(?!\\()", "g").replace("reflink", Ls).replace("nolink", Ms).getRegex(), tag: dc, text: /^(`+|[^`])(?:(?= {2,}\n)|[\s\S]*?(?:(?=[\\<!\[`*_]|\b_|$)|[^ ](?= {2,}\n)))/, url: qt }, hc = { ...Yr, link: be(/^!?\[(label)\]\((.*?)\)/).replace("label", In).getRegex(), reflink: be(/^!?\[(label)\]\s*\[([^\]]*)\]/).replace("label", In).getRegex() }, xr = { ...Yr, escape: be(Ko).replace("])", "~|])").getRegex(), url: be(/^((?:ftp|https?):\/\/|www\.)(?:[a-zA-Z0-9\-]+\.?)+[^\s<]*|^email/, "i").replace("email", /[A-Za-z0-9._+-]+(@)[a-zA-Z0-9-_]+(?:\.[a-zA-Z0-9-_]*[a-zA-Z0-9])+(?![-_])/).getRegex(), _backpedal: /(?:[^?!.,:;*_'"~()&]+|\([^)]*\)|&(?![a-zA-Z0-9]+;$)|[?!.,:;*_'"~)]+(?!$))+/, del: /^(~~?)(?=[^\s~])([\s\S]*?[^\s~])\1(?=[^~]|$)/, text: /^([`~]+|[^`~])(?:(?= {2,}\n)|(?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)|[\s\S]*?(?:(?=[\\<!\[`*~_]|\b_|https?:\/\/|ftp:\/\/|www\.|$)|[^ ](?= {2,}\n)|[^a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-](?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)))/ }, mc = { ...xr, br: be(Go).replace("{2,}", "*").getRegex(), text: be(xr.text).replace("\\b_", "\\b_| {2,}\\n").replace(/\{2,\}/g, "*").getRegex() }, mn = { normal: qr, gfm: nc, pedantic: rc }, Mt = { normal: Yr, gfm: xr, breaks: mc, pedantic: hc };
+]`).replace("lheading", Xo).replace("|table", "").replace("blockquote", " {0,3}>").replace("|fences", "").replace("|list", "").replace("|html", "").replace("|tag", "").getRegex() }, Ko = /^\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/, Go = /^( {2,}|\\)\n(?!\s*$)/, tn = "\\p{P}\\p{S}", sc = be(/^((?![*_])[\spunctuation])/, "u").replace(/punctuation/g, tn).getRegex(), oc = be(/^(?:\*+(?:((?!\*)[punct])|[^\s*]))|^_+(?:((?!_)[punct])|([^\s_]))/, "u").replace(/punct/g, tn).getRegex(), ic = be("^[^_*]*?__[^_*]*?\\*[^_*]*?(?=__)|[^*]+(?=[^*])|(?!\\*)[punct](\\*+)(?=[\\s]|$)|[^punct\\s](\\*+)(?!\\*)(?=[punct\\s]|$)|(?!\\*)[punct\\s](\\*+)(?=[^punct\\s])|[\\s](\\*+)(?!\\*)(?=[punct])|(?!\\*)[punct](\\*+)(?!\\*)(?=[punct])|[^punct\\s](\\*+)(?=[^punct\\s])", "gu").replace(/punct/g, tn).getRegex(), ac = be("^[^_*]*?\\*\\*[^_*]*?_[^_*]*?(?=\\*\\*)|[^_]+(?=[^_])|(?!_)[punct](_+)(?=[\\s]|$)|[^punct\\s](_+)(?!_)(?=[punct\\s]|$)|(?!_)[punct\\s](_+)(?=[^punct\\s])|[\\s](_+)(?!_)(?=[punct])|(?!_)[punct](_+)(?!_)(?=[punct])", "gu").replace(/punct/g, tn).getRegex(), cc = be(/\\([punct])/, "gu").replace(/punct/g, tn).getRegex(), lc = be(/^<(scheme:[^\s\x00-\x1f<>]*|email)>/).replace("scheme", /[a-zA-Z][a-zA-Z0-9+.-]{1,31}/).replace("email", /[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+(@)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+(?![-_])/).getRegex(), uc = be(_r).replace("(?:-->|$)", "-->").getRegex(), dc = be("^comment|^</[a-zA-Z][\\w:-]*\\s*>|^<[a-zA-Z][\\w-]*(?:attribute)*?\\s*/?>|^<\\?[\\s\\S]*?\\?>|^<![a-zA-Z]+\\s[\\s\\S]*?>|^<!\\[CDATA\\[[\\s\\S]*?\\]\\]>").replace("comment", uc).replace("attribute", /\s+[a-zA-Z:_][\w.:-]*(?:\s*=\s*"[^"]*"|\s*=\s*'[^']*'|\s*=\s*[^\s"'=<>`]+)?/).getRegex(), In = /(?:\[(?:\\.|[^\[\]\\])*\]|\\.|`[^`]*`|[^\[\]\\`])*?/, pc = be(/^!?\[(label)\]\(\s*(href)(?:\s+(title))?\s*\)/).replace("label", In).replace("href", /<(?:\\.|[^\n<>\\])+>|[^\s\x00-\x1f]*/).replace("title", /"(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)/).getRegex(), Ms = be(/^!?\[(label)\]\[(ref)\]/).replace("label", In).replace("ref", Ur).getRegex(), Ls = be(/^!?\[(ref)\](?:\[\])?/).replace("ref", Ur).getRegex(), Yr = { _backpedal: qt, anyPunctuation: cc, autolink: lc, blockSkip: /\[[^[\]]*?\]\([^\(\)]*?\)|`[^`]*?`|<[^<>]*?>/g, br: Go, code: /^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/, del: qt, emStrongLDelim: oc, emStrongRDelimAst: ic, emStrongRDelimUnd: ac, escape: Ko, link: pc, nolink: Ls, punctuation: sc, reflink: Ms, reflinkSearch: be("reflink|nolink(?!\\()", "g").replace("reflink", Ms).replace("nolink", Ls).getRegex(), tag: dc, text: /^(`+|[^`])(?:(?= {2,}\n)|[\s\S]*?(?:(?=[\\<!\[`*_]|\b_|$)|[^ ](?= {2,}\n)))/, url: qt }, hc = { ...Yr, link: be(/^!?\[(label)\]\((.*?)\)/).replace("label", In).getRegex(), reflink: be(/^!?\[(label)\]\s*\[([^\]]*)\]/).replace("label", In).getRegex() }, xr = { ...Yr, escape: be(Ko).replace("])", "~|])").getRegex(), url: be(/^((?:ftp|https?):\/\/|www\.)(?:[a-zA-Z0-9\-]+\.?)+[^\s<]*|^email/, "i").replace("email", /[A-Za-z0-9._+-]+(@)[a-zA-Z0-9-_]+(?:\.[a-zA-Z0-9-_]*[a-zA-Z0-9])+(?![-_])/).getRegex(), _backpedal: /(?:[^?!.,:;*_'"~()&]+|\([^)]*\)|&(?![a-zA-Z0-9]+;$)|[?!.,:;*_'"~)]+(?!$))+/, del: /^(~~?)(?=[^\s~])([\s\S]*?[^\s~])\1(?=[^~]|$)/, text: /^([`~]+|[^`~])(?:(?= {2,}\n)|(?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)|[\s\S]*?(?:(?=[\\<!\[`*~_]|\b_|https?:\/\/|ftp:\/\/|www\.|$)|[^ ](?= {2,}\n)|[^a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-](?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)))/ }, mc = { ...xr, br: be(Go).replace("{2,}", "*").getRegex(), text: be(xr.text).replace("\\b_", "\\b_| {2,}\\n").replace(/\{2,\}/g, "*").getRegex() }, mn = { normal: qr, gfm: nc, pedantic: rc }, Lt = { normal: Yr, gfm: xr, breaks: mc, pedantic: hc };
 var fc = Object.defineProperty, Wn = (r, e, t) => ((n, s, o) => s in n ? fc(n, s, { enumerable: !0, configurable: !0, writable: !0, value: o }) : n[s] = o)(r, typeof e != "symbol" ? e + "" : e, t);
 function zs(r, e, t, n) {
   const s = e.href, o = e.title ? Ue(e.title) : null, i = r[1].replace(/\\([\[\]])/g, "$1");
@@ -3751,11 +3751,11 @@ var gc = Object.defineProperty, zt = (r, e, t) => ((n, s, o) => s in n ? gc(n, s
 class nt {
   constructor(e) {
     zt(this, "options"), zt(this, "state"), zt(this, "tokens"), zt(this, "inlineQueue"), zt(this, "tokenizer"), this.tokens = [], this.tokens.links = /* @__PURE__ */ Object.create(null), this.options = e || mt, this.options.tokenizer = this.options.tokenizer || new Pn(), this.tokenizer = this.options.tokenizer, this.tokenizer.options = this.options, this.tokenizer.lexer = this, this.inlineQueue = [], this.state = { inLink: !1, inRawBlock: !1, top: !0 };
-    const t = { block: mn.normal, inline: Mt.normal };
-    this.options.pedantic ? (t.block = mn.pedantic, t.inline = Mt.pedantic) : this.options.gfm && (t.block = mn.gfm, this.options.breaks ? t.inline = Mt.breaks : t.inline = Mt.gfm), this.tokenizer.rules = t;
+    const t = { block: mn.normal, inline: Lt.normal };
+    this.options.pedantic ? (t.block = mn.pedantic, t.inline = Lt.pedantic) : this.options.gfm && (t.block = mn.gfm, this.options.breaks ? t.inline = Lt.breaks : t.inline = Lt.gfm), this.tokenizer.rules = t;
   }
   static get rules() {
-    return { block: mn, inline: Mt };
+    return { block: mn, inline: Lt };
   }
   static lex(e, t) {
     return new nt(t).lex(e);
@@ -4365,7 +4365,7 @@ const Vo = (r, e) => {
     const h = s.shift();
     h !== void 0 && typeof h == "string" && o(() => {
       const m = l.currentMarkdown + h, g = Vo(m, e).trim();
-      if (typeof g != "string") return l.currentMarkdown = l.currentMarkdown.slice(0, -h.length), void Me("Markdown parsing failed");
+      if (typeof g != "string") return l.currentMarkdown = l.currentMarkdown.slice(0, -h.length), void Le("Markdown parsing failed");
       if (l.previousHtml && g.length > l.previousHtml.length && g.startsWith(l.previousHtml)) {
         a();
         const b = g.slice(l.previousHtml.length).trim();
@@ -4374,7 +4374,7 @@ const Vo = (r, e) => {
     });
   }, u);
   return { next: (d) => {
-    if (t) Me("Stream is already complete. No more chunks can be added");
+    if (t) Le("Stream is already complete. No more chunks can be added");
     else for (const p of d) s.push(p);
   }, complete: () => {
     s.push(`
@@ -4443,7 +4443,7 @@ const Vo = (r, e) => {
   }, [r.canResubmit]), u = r.canResubmit ? "editable-markdown-container" : "";
   return v.jsx(ni, { children: v.jsx("div", { className: "nlux-markdownStream-root" + (u ? ` ${u}` : ""), children: v.jsx("div", { className: "nlux-markdown-container", ref: t, dangerouslySetInnerHTML: { __html: s }, contentEditable: r.canResubmit, onKeyDown: o, onBlur: i, onFocus: a }) }) });
 };
-class ni extends Li {
+class ni extends Mi {
   constructor() {
     super(...arguments), this.state = { hasError: !1 };
   }
@@ -4451,7 +4451,7 @@ class ni extends Li {
     return { hasError: !0 };
   }
   componentDidCatch(e) {
-    Me("Markdown rendering error occurred. This could be due to a malformed markdown content, or it could be because the page requires an HTML sanitizer. Please check the error message for more details and consider configuring NLUX with a compatible sanitizer."), this.props.onMarkdownRenderingError && this.props.onMarkdownRenderingError(e);
+    Le("Markdown rendering error occurred. This could be due to a malformed markdown content, or it could be because the page requires an HTML sanitizer. Please check the error message for more details and consider configuring NLUX with a compatible sanitizer."), this.props.onMarkdownRenderingError && this.props.onMarkdownRenderingError(e);
   }
   render() {
     return this.state.hasError ? null : this.props.children;
@@ -4461,7 +4461,7 @@ const kr = (r) => v.jsx(ni, { children: v.jsx(Ac, { ...r }) }), ri = (r) => {
   const e = typeof r.avatar == "string", t = !e && Wt(r.avatar);
   return v.jsxs("div", { className: "nlux-comp-avatar", children: [t && r.avatar, !t && e && v.jsx("div", { className: "nlux-comp-avatarContainer", children: r.avatar && v.jsx("div", { className: "nlux-comp-avatarPicture", style: { backgroundImage: `url("${encodeURI(r.avatar)}")` } }) })] });
 }, Ec = function(r, e) {
-  var k, y, x, A, w, R, L, F;
+  var k, y, x, A, w, R, M, F;
   const t = ue(null);
   Gt(e, () => ({ streamChunk: (T) => setTimeout(() => {
     var I;
@@ -4525,7 +4525,7 @@ const kr = (r) => v.jsx(ni, { children: v.jsx(Ac, { ...r }) }), ri = (r) => {
     const I = G(() => v.jsxs("div", { className: "nlux-comp-chatItem-participantInfo", children: [T.avatar !== void 0 && v.jsx(ri, { name: T.name, avatar: T.avatar }), v.jsx("span", { className: "nlux-comp-chatItem-participantName", children: T.name })] }), [T.avatar, T.name]);
     return () => v.jsx(v.Fragment, { children: I });
   }(r), h = `nlux-comp-chatItem ${r.direction ? Fs[r.direction] : Fs.received} ${r.layout === "bubbles" ? wc : kc}`, m = r.status ? yr[r.status] : yr.rendered, g = r.direction ? vr[r.direction] : vr.received, b = `${ei} ${m} ${g}`;
-  return v.jsxs("div", { className: h, children: [v.jsx(p, {}), s && i && !n && v.jsx(d, { uid: r.uid, status: r.status, ref: t, direction: r.direction, responseRenderer: (k = r.messageOptions) == null ? void 0 : k.responseRenderer, markdownContainersController: r.markdownContainersController, markdownOptions: { syntaxHighlighter: (y = r.messageOptions) == null ? void 0 : y.syntaxHighlighter, htmlSanitizer: (x = r.messageOptions) == null ? void 0 : x.htmlSanitizer, markdownLinkTarget: (A = r.messageOptions) == null ? void 0 : A.markdownLinkTarget, showCodeBlockCopyButton: (w = r.messageOptions) == null ? void 0 : w.showCodeBlockCopyButton, skipStreamingAnimation: (R = r.messageOptions) == null ? void 0 : R.skipStreamingAnimation, streamingAnimationSpeed: (L = r.messageOptions) == null ? void 0 : L.streamingAnimationSpeed, waitTimeBeforeStreamCompletion: (F = r.messageOptions) == null ? void 0 : F.waitTimeBeforeStreamCompletion, onStreamComplete: u } }, "do-not-change"), s && i && n && v.jsx("div", { className: b, children: r.fetchedContent }), s && !i && v.jsx("div", { className: b, children: v.jsx(l, {}) }), o && v.jsx("div", { className: b, children: v.jsx(c, {}) })] });
+  return v.jsxs("div", { className: h, children: [v.jsx(p, {}), s && i && !n && v.jsx(d, { uid: r.uid, status: r.status, ref: t, direction: r.direction, responseRenderer: (k = r.messageOptions) == null ? void 0 : k.responseRenderer, markdownContainersController: r.markdownContainersController, markdownOptions: { syntaxHighlighter: (y = r.messageOptions) == null ? void 0 : y.syntaxHighlighter, htmlSanitizer: (x = r.messageOptions) == null ? void 0 : x.htmlSanitizer, markdownLinkTarget: (A = r.messageOptions) == null ? void 0 : A.markdownLinkTarget, showCodeBlockCopyButton: (w = r.messageOptions) == null ? void 0 : w.showCodeBlockCopyButton, skipStreamingAnimation: (R = r.messageOptions) == null ? void 0 : R.skipStreamingAnimation, streamingAnimationSpeed: (M = r.messageOptions) == null ? void 0 : M.streamingAnimationSpeed, waitTimeBeforeStreamCompletion: (F = r.messageOptions) == null ? void 0 : F.waitTimeBeforeStreamCompletion, onStreamComplete: u } }, "do-not-change"), s && i && n && v.jsx("div", { className: b, children: r.fetchedContent }), s && !i && v.jsx("div", { className: b, children: v.jsx(l, {}) }), o && v.jsx("div", { className: b, children: v.jsx(c, {}) })] });
 }, Hs = (r) => typeof r == "string" || typeof r == "number" || typeof r == "boolean" || r == null, fn = (r, e) => {
   var t, n;
   return r === "assistant" ? ((t = e == null ? void 0 : e.assistant) == null ? void 0 : t.name) ?? "Assistant" : r === "user" ? ((n = e == null ? void 0 : e.user) == null ? void 0 : n.name) ?? "User" : "";
@@ -4593,14 +4593,14 @@ const kr = (r) => v.jsx(ni, { children: v.jsx(Ac, { ...r }) }), ri = (r) => {
         if (c = v.jsx(g, {}), !c || !_e.isValidElement(c)) throw new Error("Invalid React element returned from the AI chat content function.");
         d = "server-component", i.current.set(n.uid, c), o.current.set(n.uid, g);
       } catch {
-        return Me(`The type of the AI chat content is an invalid function.
+        return Le(`The type of the AI chat content is an invalid function.
 If you're looking to render a React Server Components, please refer to docs.nlkit.com/nlux for more information.
 `), null;
       }
     }
   }
   if (n.participantRole === "user") return n.status !== "complete" ? (Zt(`User chat item should be always be in complete state — Current status: ${n.status} — Segment UID: ${t.uid}`), null) : Hs(c) ? v.jsx(e, { ref: l, uid: n.uid, status: "complete", direction: "sent", contentType: d, dataTransferMode: "batch", fetchedContent: n.content, markdownContainersController: r.markdownContainersController, layout: r.layout, messageOptions: r.messageOptions, isPartOfInitialSegment: u, name: fn(n.participantRole, r.personaOptions), avatar: gn(n.participantRole, r.personaOptions), submitShortcutKey: r.submitShortcutKey, onPromptResubmit: (h) => r.onPromptResubmit(r.chatSegment.uid, n.uid, h) }, n.uid) : (Zt(`User chat item should have primitive content (string, number, boolean, null) — Current content: ${JSON.stringify(c)} — Segment UID: ${t.uid}`), null);
-  if (n.status === "complete") return n.dataTransferMode === "stream" ? v.jsx(e, { ref: l, uid: n.uid, status: n.status, direction: "received", contentType: d, dataTransferMode: n.dataTransferMode, markdownContainersController: r.markdownContainersController, onMarkdownStreamRendered: a, streamedContent: c, streamedServerResponse: n.serverResponse, layout: r.layout, messageOptions: r.messageOptions, isPartOfInitialSegment: u, name: fn(n.participantRole, r.personaOptions), avatar: gn(n.participantRole, r.personaOptions) }, n.uid) : d !== "text" || Hs(c) || (p = r.messageOptions) != null && p.responseRenderer ? v.jsx(e, { ref: l, uid: n.uid, status: "complete", direction: "received", contentType: d, dataTransferMode: n.dataTransferMode, markdownContainersController: r.markdownContainersController, onMarkdownStreamRendered: a, fetchedContent: c, fetchedServerResponse: n.serverResponse, layout: r.layout, messageOptions: r.messageOptions, isPartOfInitialSegment: u, name: fn(n.participantRole, r.personaOptions), avatar: gn(n.participantRole, r.personaOptions) }, n.uid) : (Me(`When the type of the AI chat content is not primitive (object or array), a custom renderer must be provided — Current content: ${JSON.stringify(c)} — Segment UID: ${t.uid}`), null);
+  if (n.status === "complete") return n.dataTransferMode === "stream" ? v.jsx(e, { ref: l, uid: n.uid, status: n.status, direction: "received", contentType: d, dataTransferMode: n.dataTransferMode, markdownContainersController: r.markdownContainersController, onMarkdownStreamRendered: a, streamedContent: c, streamedServerResponse: n.serverResponse, layout: r.layout, messageOptions: r.messageOptions, isPartOfInitialSegment: u, name: fn(n.participantRole, r.personaOptions), avatar: gn(n.participantRole, r.personaOptions) }, n.uid) : d !== "text" || Hs(c) || (p = r.messageOptions) != null && p.responseRenderer ? v.jsx(e, { ref: l, uid: n.uid, status: "complete", direction: "received", contentType: d, dataTransferMode: n.dataTransferMode, markdownContainersController: r.markdownContainersController, onMarkdownStreamRendered: a, fetchedContent: c, fetchedServerResponse: n.serverResponse, layout: r.layout, messageOptions: r.messageOptions, isPartOfInitialSegment: u, name: fn(n.participantRole, r.personaOptions), avatar: gn(n.participantRole, r.personaOptions) }, n.uid) : (Le(`When the type of the AI chat content is not primitive (object or array), a custom renderer must be provided — Current content: ${JSON.stringify(c)} — Segment UID: ${t.uid}`), null);
   if (n.status === "streaming") {
     const h = d === "server-component" && Wt(c) ? c : void 0;
     return v.jsx(e, { ref: l, uid: n.uid, status: "streaming", direction: "received", contentType: d, dataTransferMode: n.dataTransferMode, markdownContainersController: r.markdownContainersController, onMarkdownStreamRendered: a, fetchedContent: h, layout: r.layout, messageOptions: r.messageOptions, isPartOfInitialSegment: u, name: fn(n.participantRole, r.personaOptions), avatar: gn(n.participantRole, r.personaOptions) }, n.uid);
@@ -4681,16 +4681,16 @@ If you're looking to render a React Server Components, please refer to docs.nlki
   return r.personaOptions && (e.personaOptions = {}, r.personaOptions.assistant && (e.personaOptions.assistant = { name: r.personaOptions.assistant.name, avatar: typeof r.personaOptions.assistant.avatar == "string" ? r.personaOptions.assistant.avatar : "<REACT ELEMENT />", tagline: r.personaOptions.assistant.tagline }), r.personaOptions.user && (e.personaOptions.user = { name: r.personaOptions.user.name, avatar: typeof r.personaOptions.user.avatar == "string" ? r.personaOptions.user.avatar : "<REACT ELEMENT />" })), r.messageOptions && (e.messageOptions = { ...r.messageOptions, responseRenderer: r.messageOptions.responseRenderer ? () => null : void 0, promptRenderer: r.messageOptions.promptRenderer ? () => null : void 0 }), (n = r.conversationOptions) != null && n.conversationStarters && (e.conversationOptions = { ...r.conversationOptions, conversationStarters: r.conversationOptions.conversationStarters.map((s) => ({ ...s, icon: s.icon ? "<REACT ELEMENT />" : void 0 })) }), e;
 };
 var Bc = Object.defineProperty, vn = (r, e, t) => ((n, s, o) => s in n ? Bc(n, s, { enumerable: !0, configurable: !0, writable: !0, value: o }) : n[s] = o)(r, typeof e != "symbol" ? e + "" : e, t);
-class Lc extends Error {
+class Mc extends Error {
   constructor(e = {}) {
     super(e.message), vn(this, "exceptionId"), vn(this, "message"), vn(this, "source"), vn(this, "type"), this.message = e.message ?? "", this.source = e.source, this.type = this.constructor.name, this.exceptionId = e.exceptionId;
   }
 }
-const Mc = (r, e) => {
+const Lc = (r, e) => {
   let t, n = e, s = r, o = !0;
   const i = ((g, b) => {
     let k = !1;
-    if (typeof g != "function") throw new Lc({ source: "x/throttle", message: "Callback must be a function" });
+    if (typeof g != "function") throw new Mc({ source: "x/throttle", message: "Callback must be a function" });
     return (...y) => {
       k || (g.apply(void 0, y), k = !0, setTimeout(function() {
         k = !1;
@@ -4701,7 +4701,7 @@ const Mc = (r, e) => {
     return (y) => {
       const x = y.target;
       if (!(x instanceof HTMLElement)) return;
-      const { scrollTop: A, clientHeight: w, scrollHeight: R } = x, L = R - 30, F = Math.ceil(A + w) >= L, T = b === void 0 || k === void 0 ? void 0 : A > b && k === R ? "down" : A < b && k === R ? "up" : void 0;
+      const { scrollTop: A, clientHeight: w, scrollHeight: R } = x, M = R - 30, F = Math.ceil(A + w) >= M, T = b === void 0 || k === void 0 ? void 0 : A > b && k === R ? "down" : A < b && k === R ? "up" : void 0;
       k = R, b = A, g({ scrolledToBottom: F, scrollDirection: T });
     };
   })(({ scrolledToBottom: g, scrollDirection: b }) => {
@@ -4734,7 +4734,7 @@ const Mc = (r, e) => {
   if (typeof r != "object" || r === null) return !1;
   const e = r;
   return (typeof e.streamText == "function" || typeof e.batchText == "function") && ["stream", "batch"].includes(e.dataTransferMode) && typeof e.id == "string" && typeof e.info == "object" && e.info !== null && typeof e.preProcessAiBatchedMessage == "function" && typeof e.preProcessAiStreamedChunk == "function";
-}, Le = (r, e = 1) => {
+}, Me = (r, e = 1) => {
   setTimeout(() => {
     r();
   }, e);
@@ -4748,29 +4748,29 @@ const Mc = (r, e) => {
       const w = y, R = t.preProcessAiStreamedChunk(w, n);
       R != null && (x = R, A = w, d.push(x), p.push(A));
     } else x = y, d.push(x);
-    x != null ? (h || h || (h = !0, Le(() => {
+    x != null ? (h || h || (h = !0, Me(() => {
       s.forEach((w) => {
         w({ uid: c, status: "streaming", time: /* @__PURE__ */ new Date(), participantRole: "assistant", dataTransferMode: "stream" });
       });
-    })), Le(() => {
+    })), Me(() => {
       i.forEach((w) => {
         w({ chunk: x, messageId: c, serverResponse: A });
       });
-    })) : Me("Adapter returned an undefined or null value from streamText. This chunk will be ignored.");
+    })) : Le("Adapter returned an undefined or null value from streamText. This chunk will be ignored.");
   }, complete: () => {
-    m || g || (g = !0, Le(() => {
+    m || g || (g = !0, Me(() => {
       const y = { uid: c, status: "complete", content: d, contentType: "text", serverResponse: void 0, time: /* @__PURE__ */ new Date(), participantRole: "assistant", dataTransferMode: "stream" };
       o.forEach((x) => {
         x(y);
       }), l();
-    }), Le(() => {
+    }), Me(() => {
       const y = { uid: r, status: "complete", items: [e, { uid: c, status: "complete", contentType: "text", content: d, serverResponse: p, time: /* @__PURE__ */ new Date(), participantRole: "assistant", dataTransferMode: "stream" }] };
       a.forEach((x) => {
         x(y);
       });
     }));
   }, error: (y) => {
-    m || g || (m = !0, Le(() => {
+    m || g || (m = !0, Me(() => {
       u.forEach((x) => {
         x("failed-to-stream-content", y);
       }), l();
@@ -4780,7 +4780,7 @@ const Mc = (r, e) => {
 }), $c = (r, e, t) => {
   if (!r) return (() => {
     const y = /* @__PURE__ */ new Set(), x = tt(), A = { uid: x, status: "complete", items: [] };
-    return Le(() => {
+    return Me(() => {
       y.forEach((w) => {
         w(A);
       }), y.clear();
@@ -4797,12 +4797,12 @@ const Mc = (r, e) => {
   const n = e;
   if (n.streamText === void 0 && n.batchText === void 0 && n.streamServerComponent === void 0) return ((y) => {
     const x = /* @__PURE__ */ new Set(), A = tt(), w = { uid: A, status: "error", items: [] };
-    return Le(() => {
+    return Me(() => {
       x.forEach((R) => R(y)), x.clear();
-    }), { segment: w, dataTransferMode: "stream", observable: { on: (R, L) => {
-      R === "error" && x.add(L);
-    }, removeListener: (R, L) => {
-      x.delete(L);
+    }), { segment: w, dataTransferMode: "stream", observable: { on: (R, M) => {
+      R === "error" && x.add(M);
+    }, removeListener: (R, M) => {
+      x.delete(M);
     }, destroy: () => {
       x.clear();
     }, get segmentId() {
@@ -4811,7 +4811,7 @@ const Mc = (r, e) => {
   })("no-data-transfer-mode-supported");
   const s = tt(), o = ((y) => ({ uid: tt(), time: /* @__PURE__ */ new Date(), status: "complete", participantRole: "user", content: y, contentType: "text" }))(r);
   let i, a, u, l, c, d, p = /* @__PURE__ */ new Set(), h = /* @__PURE__ */ new Set(), m = /* @__PURE__ */ new Set();
-  Le(() => {
+  Me(() => {
     p != null && p.size && (p.forEach((y) => {
       y(o);
     }), p.clear(), p = void 0);
@@ -4819,21 +4819,21 @@ const Mc = (r, e) => {
   const g = ((y) => {
     const x = [], A = y, w = y;
     (A == null ? void 0 : A.streamText) === void 0 && (w == null ? void 0 : w.streamServerComponent) === void 0 || x.push("stream"), (A == null ? void 0 : A.batchText) !== void 0 && x.push("batch");
-    const R = On(y) ? y : void 0, L = (R == null ? void 0 : R.dataTransferMode) ?? void 0, F = x.length === 1 ? x[0] : "stream";
-    return L ?? F;
+    const R = On(y) ? y : void 0, M = (R == null ? void 0 : R.dataTransferMode) ?? void 0, F = x.length === 1 ? x[0] : "stream";
+    return M ?? F;
   })(e);
-  ((y) => "streamServerComponent" in y ? "server-component" : "text")(e) === "server-component" ? (u = /* @__PURE__ */ new Set(), a = /* @__PURE__ */ new Set(), ((y, x, A, w, R, L, F, T) => new Promise((I, _) => {
+  ((y) => "streamServerComponent" in y ? "server-component" : "text")(e) === "server-component" ? (u = /* @__PURE__ */ new Set(), a = /* @__PURE__ */ new Set(), ((y, x, A, w, R, M, F, T) => new Promise((I, _) => {
     try {
       const D = x.content, z = tt(), B = "assistant", X = "streaming", re = /* @__PURE__ */ new Date(), oe = "stream";
       let le, N;
       const S = () => {
-        Le(() => {
-          L.forEach((q) => {
+        Me(() => {
+          M.forEach((q) => {
             le && N && q({ ...le, content: N, status: "complete" });
           });
         }, 20);
         const H = { uid: y, status: "complete", items: [x, le] };
-        Le(() => {
+        Me(() => {
           F.forEach((q) => {
             q(H);
           }), I();
@@ -4843,21 +4843,21 @@ const Mc = (r, e) => {
           H("failed-to-stream-server-component", new Error("Failed to load content"));
         });
       };
-      N = A.streamServerComponent(D, w, { onServerComponentReceived: S, onError: O }), le = { uid: z, content: N, contentType: "server-component", participantRole: B, status: X, time: re, dataTransferMode: oe }, Le(() => {
+      N = A.streamServerComponent(D, w, { onServerComponentReceived: S, onError: O }), le = { uid: z, content: N, contentType: "server-component", participantRole: B, status: X, time: re, dataTransferMode: oe }, Me(() => {
         R.forEach((H) => {
           H(le);
         });
       }, 10);
     } catch (D) {
-      Me(D);
+      Le(D);
       const z = D instanceof Error ? D : typeof D == "string" ? new Error(D) : new Error("Unknown error");
-      Le(() => {
+      Me(() => {
         T.forEach((B) => B("failed-to-load-content", z));
       });
     }
   }))(s, o, e, t, a, u, h, m).finally(() => {
-    Le(() => k());
-  })) : g === "batch" ? (i = /* @__PURE__ */ new Set(), (async (y, x, A, w, R, L, F) => {
+    Me(() => k());
+  })) : g === "batch" ? (i = /* @__PURE__ */ new Set(), (async (y, x, A, w, R, M, F) => {
     try {
       const T = x.content, I = On(A) ? A : void 0, _ = I !== void 0, D = tt(), z = "assistant", B = "complete", X = /* @__PURE__ */ new Date(), re = "batch";
       let oe;
@@ -4867,28 +4867,28 @@ const Mc = (r, e) => {
       } else oe = { uid: D, content: await A.batchText(T, w), contentType: "text", serverResponse: void 0, participantRole: z, status: B, time: X, dataTransferMode: re };
       if (!oe) throw new Error("Response from adapter was undefined or cannot be processed");
       const le = oe;
-      Le(() => {
+      Me(() => {
         R.forEach((S) => {
           S(le);
         });
       });
       const N = { uid: y, status: "complete", items: [x, oe] };
-      Le(() => {
-        L.forEach((S) => {
+      Me(() => {
+        M.forEach((S) => {
           S(N);
         });
       });
     } catch (T) {
-      Me(T);
+      Le(T);
       const I = T instanceof Error ? T : typeof T == "string" ? new Error(T) : new Error("Unknown error");
-      Le(() => {
+      Me(() => {
         F.forEach((_) => _("failed-to-load-content", I));
       });
     }
   })(s, o, e, t, i, h, m).finally(() => {
-    Le(() => k());
+    Me(() => k());
   })) : (l = /* @__PURE__ */ new Set(), c = /* @__PURE__ */ new Set(), d = /* @__PURE__ */ new Set(), zc(s, o, e, t, l, c, d, h, m).finally(() => {
-    Le(() => k());
+    Me(() => k());
   }));
   const k = () => {
     p == null || p.clear(), p = void 0, i == null || i.clear(), i = void 0, a == null || a.clear(), a = void 0, u == null || u.clear(), u = void 0, l == null || l.clear(), l = void 0, c == null || c.clear(), c = void 0, d == null || d.clear(), d = void 0, h == null || h.clear(), h = void 0, m == null || m.clear(), m = void 0;
@@ -4909,7 +4909,7 @@ const Mc = (r, e) => {
     b.current = { newSegments: a, cancelledSegmentIds: u, cancelledMessageIds: l, setChatSegments: c, setComposerStatus: d, showException: o, setPrompt: p };
   }, [a, u, l, c, d, o, p]);
   const y = ((A, w, R) => G(() => {
-    const L = ((T) => {
+    const M = ((T) => {
       const I = [];
       return T.forEach((_) => {
         _.items.forEach((D) => {
@@ -4919,17 +4919,17 @@ const Mc = (r, e) => {
           }
         });
       }), I;
-    })(w), F = R === "max" || R === void 0 ? L : R > 0 ? L.slice(-R) : void 0;
+    })(w), F = R === "max" || R === void 0 ? M : R > 0 ? M.slice(-R) : void 0;
     return { aiChatProps: Cr(A), conversationHistory: F };
   }, [A, w, R]))(e, i ? [i, ...a] : a, (x = e.conversationOptions) == null ? void 0 : x.historyPayloadSize);
   return te(() => {
     k.current = e.events || {};
   }, [e.events]), ve(() => {
-    if (!t) return void Me("No valid adapter was provided to AiChat component");
+    if (!t) return void Le("No valid adapter was provided to AiChat component");
     if (!m || s != null && s.disableSubmitButton) return;
     d("submitting-prompt");
-    const A = n, w = /* @__PURE__ */ new Set(), R = On(t) ? t : t.streamServerComponent ? { streamServerComponent: t.streamServerComponent } : { batchText: t.batchText, streamText: t.streamText }, { segment: L, observable: F } = $c(A, R, y);
-    if (L.status === "error") return Me("Error occurred while submitting prompt"), o("Error occurred while submitting prompt"), d("typing"), void (g.current === "" && p(A));
+    const A = n, w = /* @__PURE__ */ new Set(), R = On(t) ? t : t.streamServerComponent ? { streamServerComponent: t.streamServerComponent } : { batchText: t.batchText, streamText: t.streamText }, { segment: M, observable: F } = $c(A, R, y);
+    if (M.status === "error") return Le("Error occurred while submitting prompt"), o("Error occurred while submitting prompt"), d("typing"), void (g.current === "" && p(A));
     const T = (I) => {
       const _ = b.current.newSegments.map((D) => D.uid !== F.segmentId ? D : { ...D, items: [...D.items, { ...I }] });
       b.current.setChatSegments(_);
@@ -4964,15 +4964,15 @@ const Mc = (r, e) => {
       }), w.clear());
     }), F.on("aiChunkReceived", ({ messageId: I, chunk: _ }) => {
       var D, z;
-      (D = b.current) != null && D.cancelledMessageIds.includes(I) || ((z = h.current) == null || z.streamChunk(L.uid, I, _));
+      (D = b.current) != null && D.cancelledMessageIds.includes(I) || ((z = h.current) == null || z.streamChunk(M.uid, I, _));
     }), F.on("aiMessageStreamed", (I) => {
       var _, D, z;
       (_ = b.current) != null && _.cancelledMessageIds.includes(I.uid) || (D = k.current) != null && D.messageReceived && ((z = k.current) == null || z.messageReceived({ uid: I.uid, message: I.content }));
     }), F.on("error", (I, _) => {
       var B;
-      const D = b.current.newSegments.filter((X) => X.uid !== L.uid), z = Fc[I];
+      const D = b.current.newSegments.filter((X) => X.uid !== M.uid), z = Fc[I];
       b.current.setChatSegments(D), b.current.setComposerStatus("typing"), b.current.showException(z), g.current === "" && p(A), (B = k.current) != null && B.error && k.current.error({ errorId: I, message: z, errorObject: _ });
-    }), b.current.setChatSegments([...b.current.newSegments, L]);
+    }), b.current.setChatSegments([...b.current.newSegments, M]);
   }, [n, t, y, o, b, s == null ? void 0 : s.disableSubmitButton]);
 }, si = "nlux-comp-welcomeMessage", oi = (r) => v.jsxs("div", { className: si, children: [v.jsx(ri, { avatar: r.avatar, name: r.name }), v.jsx("div", { className: "nlux-comp-welcomeMessage-personaName", children: r.name }), r.message && v.jsx("div", { className: "nlux-comp-welcomeMessage-text", children: r.message })] }), Us = ({ children: r }) => v.jsx("div", { className: si, children: r }), Nc = () => {
   const r = G(() => "data:image/png;base64,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", []);
@@ -4989,58 +4989,58 @@ const Mc = (r, e) => {
   return v.jsxs(v.Fragment, { children: [i && v.jsx(Nc, {}), a && v.jsx(oi, { name: t.assistant.name, avatar: t.assistant.avatar, message: t.assistant.tagline }), l && v.jsx(Us, { children: s }), c && v.jsx(Us, { children: null }), v.jsx("div", { className: "nlux-conversationStarters-container", children: u && v.jsx(Uc, { items: n.conversationStarters ?? [], onConversationStarterSelected: r.onConversationStarterSelected }) })] });
 }, _s = () => v.jsx("div", { className: "nlux-comp-messageLoader", children: v.jsx("div", { className: "nlux-comp-loaderContainer", children: v.jsx("span", { className: "spinning-loader" }) }) }), qs = { Loader: (r) => v.jsx(v.Fragment, { children: r.children }), Greeting: (r) => v.jsx(v.Fragment, { children: r.children }) }, Sr = vo({}), Yc = function(r) {
   var Ae, j, je, qe, He;
-  const { adapter: e, className: t, initialConversation: n, conversationOptions: s, composerOptions: o, displayOptions: i } = r, { themeId: a, colorScheme: u } = i ?? {}, l = ue(null), c = ue(null), d = ue(void 0), p = ue(null), h = ((C, M) => {
-    const [Q, ce] = ye(), [Ce, Se] = ye(), de = ue(Q), Re = ue(M);
+  const { adapter: e, className: t, initialConversation: n, conversationOptions: s, composerOptions: o, displayOptions: i } = r, { themeId: a, colorScheme: u } = i ?? {}, l = ue(null), c = ue(null), d = ue(void 0), p = ue(null), h = ((C, L) => {
+    const [Q, ce] = ye(), [Ce, Se] = ye(), de = ue(Q), Re = ue(L);
     return te(() => {
       const P = C.current || void 0;
       P !== Ce && Se(P);
     }), te(() => {
-      Ce ? de.current ? de.current.updateConversationContainer(Ce) : (de.current = Mc(Ce, Re.current ?? Ns), ce(de.current)) : de.current && (de.current.destroy(), ce(void 0), de.current = void 0);
+      Ce ? de.current ? de.current.updateConversationContainer(Ce) : (de.current = Lc(Ce, Re.current ?? Ns), ce(de.current)) : de.current && (de.current.destroy(), ce(void 0), de.current = void 0);
     }, [Ce]), te(() => {
-      Re.current = M, de.current && de.current.updateProps({ autoScroll: M ?? Ns });
-    }, [M]), Q;
+      Re.current = L, de.current && de.current.updateProps({ autoScroll: L ?? Ns });
+    }, [L]), Q;
   })(c, s == null ? void 0 : s.autoScroll), m = G(() => p.current ? _a(p.current) : void 0, [p.current]), g = (() => {
-    const C = {}, M = /* @__PURE__ */ new Set();
+    const C = {}, L = /* @__PURE__ */ new Set();
     return G(() => ({ getStreamingDomElement: (Q) => {
-      if (M.has(Q) && M.delete(Q), C[Q] === void 0) {
+      if (L.has(Q) && L.delete(Q), C[Q] === void 0) {
         const ce = document.createElement("div");
         ce.setAttribute("nlux-message-id", Q), ce.className = "nlux-markdown-container", C[Q] = ce;
       }
       return C[Q];
     }, deleteStreamingDomElement: (Q) => {
-      M.add(Q), setTimeout(() => {
-        M.forEach((ce) => {
+      L.add(Q), setTimeout(() => {
+        L.forEach((ce) => {
           C[ce] && (C[ce].remove(), delete C[ce]);
-        }), M.clear();
+        }), L.clear();
       }, 1e3);
     } }), []);
   })(), { PrimitivesContextProvider: b } = function(C) {
     var ce, Ce, Se, de, Re, P, U, he, pe;
-    const [M, Q] = ye(C);
+    const [L, Q] = ye(C);
     return te(() => {
       Q(C);
-    }, [(ce = C == null ? void 0 : C.messageOptions) == null ? void 0 : ce.htmlSanitizer, (Ce = C == null ? void 0 : C.messageOptions) == null ? void 0 : Ce.syntaxHighlighter, (Se = C == null ? void 0 : C.messageOptions) == null ? void 0 : Se.markdownLinkTarget, (de = C == null ? void 0 : C.messageOptions) == null ? void 0 : de.showCodeBlockCopyButton, (Re = C == null ? void 0 : C.messageOptions) == null ? void 0 : Re.skipStreamingAnimation, (P = C == null ? void 0 : C.messageOptions) == null ? void 0 : P.streamingAnimationSpeed, (U = C == null ? void 0 : C.messageOptions) == null ? void 0 : U.waitTimeBeforeStreamCompletion, (he = C == null ? void 0 : C.messageOptions) == null ? void 0 : he.responseRenderer, (pe = C == null ? void 0 : C.messageOptions) == null ? void 0 : pe.promptRenderer]), { PrimitivesContextProvider: G(() => ({ children: De }) => v.jsx(Sr.Provider, { value: M, children: De }), [M]), primitivesContext: Sr };
-  }({ messageOptions: r.messageOptions }), [k, y] = ye(""), [x, A] = ye("typing"), [w, R] = ye(), [L, F] = ye([]), [T, I] = ye([]), [_, D] = ye([]), z = G(() => w ? [w, ...L] : L, [w, L]), B = G(() => ((C) => {
-    const M = C;
-    if (typeof (M == null ? void 0 : M.create) == "function") return M.create();
-    if (typeof (M == null ? void 0 : M.batchText) == "function" || typeof (M == null ? void 0 : M.streamText) == "function" || typeof (M == null ? void 0 : M.streamServerComponent) == "function") return C;
-    Me("Unable to determine the type of the adapter! Missing batchText or streamText method.");
+    }, [(ce = C == null ? void 0 : C.messageOptions) == null ? void 0 : ce.htmlSanitizer, (Ce = C == null ? void 0 : C.messageOptions) == null ? void 0 : Ce.syntaxHighlighter, (Se = C == null ? void 0 : C.messageOptions) == null ? void 0 : Se.markdownLinkTarget, (de = C == null ? void 0 : C.messageOptions) == null ? void 0 : de.showCodeBlockCopyButton, (Re = C == null ? void 0 : C.messageOptions) == null ? void 0 : Re.skipStreamingAnimation, (P = C == null ? void 0 : C.messageOptions) == null ? void 0 : P.streamingAnimationSpeed, (U = C == null ? void 0 : C.messageOptions) == null ? void 0 : U.waitTimeBeforeStreamCompletion, (he = C == null ? void 0 : C.messageOptions) == null ? void 0 : he.responseRenderer, (pe = C == null ? void 0 : C.messageOptions) == null ? void 0 : pe.promptRenderer]), { PrimitivesContextProvider: G(() => ({ children: De }) => v.jsx(Sr.Provider, { value: L, children: De }), [L]), primitivesContext: Sr };
+  }({ messageOptions: r.messageOptions }), [k, y] = ye(""), [x, A] = ye("typing"), [w, R] = ye(), [M, F] = ye([]), [T, I] = ye([]), [_, D] = ye([]), z = G(() => w ? [w, ...M] : M, [w, M]), B = G(() => ((C) => {
+    const L = C;
+    if (typeof (L == null ? void 0 : L.create) == "function") return L.create();
+    if (typeof (L == null ? void 0 : L.batchText) == "function" || typeof (L == null ? void 0 : L.streamText) == "function" || typeof (L == null ? void 0 : L.streamServerComponent) == "function") return C;
+    Le("Unable to determine the type of the adapter! Missing batchText or streamText method.");
   })(e), [e]), X = ((C) => G(() => {
-    const M = { minWidth: "280px", minHeight: "280px" };
-    return C != null && C.width && (M.width = C.width), C != null && C.height && (M.height = C.height), M;
+    const L = { minWidth: "280px", minHeight: "280px" };
+    return C != null && C.width && (L.width = C.width), C != null && C.height && (L.height = C.height), L;
   }, [C == null ? void 0 : C.width, C == null ? void 0 : C.height]))(i), re = G(() => ((C) => {
-    const M = ["nlux-AiChat-root"], Q = `nlux-theme-${C.themeId || "nova"}`;
-    return M.push(Q), C.className && M.push(C.className), M;
+    const L = ["nlux-AiChat-root"], Q = `nlux-theme-${C.themeId || "nova"}`;
+    return L.push(Q), C.className && L.push(C.className), L;
   })({ className: t, themeId: a }).join(" "), [t, a]), oe = G(() => {
     var C;
     return u !== "auto" && u ? u : typeof globalThis !== void 0 && globalThis.matchMedia && ((C = globalThis.matchMedia("(prefers-color-scheme: dark)")) != null && C.matches) ? "dark" : "light";
-  }, [u]), le = ve((C) => m == null ? void 0 : m.displayException(C), [m]), N = function(C, M, Q, ce, Ce, Se, de, Re) {
+  }, [u]), le = ve((C) => m == null ? void 0 : m.displayException(C), [m]), N = function(C, L, Q, ce, Ce, Se, de, Re) {
     return ve(() => {
       var U;
       const P = C.length > 0 ? C[C.length - 1] : void 0;
-      (P == null ? void 0 : P.status) === "active" && (ce(C.slice(0, -1)), Ce([...M, P.uid]), Se([...Q, ...P.items.map((he) => he.uid)]), (U = de.current) == null || U.cancelSegmentStreams(P.uid)), Re("typing");
-    }, [C, M, Q, ce, Ce, Se, de, Re]);
-  }(L, T, _, F, I, D, l, A), S = ve((C) => y(C), [y]), O = Hc({ aiChatProps: r, adapterToUse: B, conversationRef: l, initialSegment: w, newSegments: L, cancelledMessageIds: _, cancelledSegmentIds: T, prompt: k, composerOptions: o, showException: le, setChatSegments: F, setComposerStatus: A, setPrompt: y }), H = ((C, M, Q, ce, Ce, Se) => ve((de, Re, P) => {
+      (P == null ? void 0 : P.status) === "active" && (ce(C.slice(0, -1)), Ce([...L, P.uid]), Se([...Q, ...P.items.map((he) => he.uid)]), (U = de.current) == null || U.cancelSegmentStreams(P.uid)), Re("typing");
+    }, [C, L, Q, ce, Ce, Se, de, Re]);
+  }(M, T, _, F, I, D, l, A), S = ve((C) => y(C), [y]), O = Hc({ aiChatProps: r, adapterToUse: B, conversationRef: l, initialSegment: w, newSegments: M, cancelledMessageIds: _, cancelledSegmentIds: T, prompt: k, composerOptions: o, showException: le, setChatSegments: F, setComposerStatus: A, setPrompt: y }), H = ((C, L, Q, ce, Ce, Se) => ve((de, Re, P) => {
     if (de === "initial" && C) {
       const pe = [];
       for (const Qe of C.items) {
@@ -5048,23 +5048,23 @@ const Mc = (r, e) => {
         pe.push(Qe);
       }
       const De = { ...C, items: pe };
-      return M(De), ce([]), Ce(P), void Se("submitting-edit");
+      return L(De), ce([]), Ce(P), void Se("submitting-edit");
     }
     const U = Q.findIndex((pe) => pe.uid === de), he = Q.slice(0, U);
     ce(he), Ce(P), Se("submitting-edit");
-  }, [Q, ce, C, M, Ce, Se]))(w, R, L, F, y, A), q = ve((C, M) => {
+  }, [Q, ce, C, L, Ce, Se]))(w, R, M, F, y, A), q = ve((C, L) => {
     var Q;
-    (Q = r.events) != null && Q.messageRendered && r.events.messageRendered({ uid: M });
+    (Q = r.events) != null && Q.messageRendered && r.events.messageRendered({ uid: L });
   }, []), W = ve((C) => {
     y(C.prompt), A("submitting-conversation-starter");
-  }, [y, A]), ne = ((C, M) => ve((Q) => {
-    C && Q && (M.current = Q.uid, C.handleNewChatSegmentAdded(Q.uid, Q.div));
+  }, [y, A]), ne = ((C, L) => ve((Q) => {
+    C && Q && (L.current = Q.uid, C.handleNewChatSegmentAdded(Q.uid, Q.div));
   }, [C]))(h, d);
   te(() => {
     x !== "submitting-conversation-starter" && x !== "submitting-external-message" && x !== "submitting-edit" || O();
-  }, [x, O]), te(() => R(n ? { uid: "initial", status: "complete", items: n.map((C, M) => {
-    if (C.role === "assistant" || C.role === "user") return C.role === "user" ? typeof C.message != "string" ? void Me(`Invalid message type for item at index ${M} in initial conversation: When role is "user", message must be a string`) : { uid: tt(), time: /* @__PURE__ */ new Date(), status: "complete", participantRole: "user", content: C.message } : { uid: tt(), time: /* @__PURE__ */ new Date(), status: "complete", participantRole: "assistant", content: C.message, serverResponse: C.serverResponse, dataTransferMode: "batch" };
-    Me(`Invalid role for item at index ${M} in initial conversation: Role must be "assistant" or "user"`);
+  }, [x, O]), te(() => R(n ? { uid: "initial", status: "complete", items: n.map((C, L) => {
+    if (C.role === "assistant" || C.role === "user") return C.role === "user" ? typeof C.message != "string" ? void Le(`Invalid message type for item at index ${L} in initial conversation: When role is "user", message must be a string`) : { uid: tt(), time: /* @__PURE__ */ new Date(), status: "complete", participantRole: "user", content: C.message } : { uid: tt(), time: /* @__PURE__ */ new Date(), status: "complete", participantRole: "assistant", content: C.message, serverResponse: C.serverResponse, dataTransferMode: "batch" };
+    Le(`Invalid role for item at index ${L} in initial conversation: Role must be "assistant" or "user"`);
   }).filter((C) => C !== void 0) } : void 0), [n]), te(() => {
     var C;
     w && ((C = c.current) == null || C.scrollTo({ behavior: "smooth", top: 5e4 }));
@@ -5072,8 +5072,8 @@ const Mc = (r, e) => {
   const Y = ue(void 0);
   te(() => {
     const C = r.api;
-    Y.current = C, typeof (C == null ? void 0 : C.__setHost) == "function" ? C.__setHost({ sendMessage: (M) => {
-      y(M), A("submitting-external-message");
+    Y.current = C, typeof (C == null ? void 0 : C.__setHost) == "function" ? C.__setHost({ sendMessage: (L) => {
+      y(L), A("submitting-external-message");
     }, resetConversation: () => {
       F([]), R(void 0);
     }, cancelLastMessageRequest: N }) : Zt(`API object passed was is not compatible with AiChat.
@@ -5084,22 +5084,22 @@ Only use API objects created by the useAiChatApi() hook.`);
   }, []), ((C) => {
     te(() => {
       var Q;
-      const M = (Q = C.events) == null ? void 0 : Q.ready;
-      M && M({ aiChatProps: Cr(C) });
+      const L = (Q = C.events) == null ? void 0 : Q.ready;
+      L && L({ aiChatProps: Cr(C) });
     }, []);
-  })(r), ((C, M) => {
+  })(r), ((C, L) => {
     var Ce;
     const Q = ue(), ce = ue();
     te(() => {
       Q.current = () => {
         const Se = [];
-        return M.forEach((de) => {
+        return L.forEach((de) => {
           de.items && de.items.length !== 0 && de.items.forEach((Re) => {
             Re.status === "complete" && (Re.participantRole !== "assistant" ? Re.participantRole === "user" && Se.push({ role: "user", message: Re.content }) : Se.push({ role: "assistant", message: Re.content }));
           });
         }), Se;
       };
-    }, [M]), te(() => {
+    }, [L]), te(() => {
       var Se;
       ce.current = (Se = C.events) == null ? void 0 : Se.preDestroy;
     }, [(Ce = C.events) == null ? void 0 : Ce.preDestroy]), te(() => () => {
@@ -5109,10 +5109,10 @@ Only use API objects created by the useAiChatApi() hook.`);
     }, []);
   })(r, z);
   const K = G(() => Kt(Pc), []), J = ((C) => {
-    const M = G(() => C.children ? Array.isArray(C.children) ? C.children : [C.children] : [], [C.children]);
-    return { Loader: G(() => M.length === 0 ? v.jsx(_s, {}) : M.find((Q) => Q.type === qs.Loader) || v.jsx(_s, {}), [M]), Greeting: G(() => {
-      if (M.length !== 0) return M.find((Q) => Q.type === qs.Greeting);
-    }, [M]) };
+    const L = G(() => C.children ? Array.isArray(C.children) ? C.children : [C.children] : [], [C.children]);
+    return { Loader: G(() => L.length === 0 ? v.jsx(_s, {}) : L.find((Q) => Q.type === qs.Loader) || v.jsx(_s, {}), [L]), Greeting: G(() => {
+      if (L.length !== 0) return L.find((Q) => Q.type === qs.Greeting);
+    }, [L]) };
   })(r), se = k.length > 0, V = z.length === 0 ? "nlux-chatRoom-starting" : "nlux-chatRoom-active";
   return B ? v.jsx(b, { children: v.jsxs("div", { className: re, style: X, "data-color-scheme": oe, children: [v.jsx("div", { className: "nlux-comp-exceptionBox", ref: p }), v.jsxs("div", { className: `nlux-chatRoom-container ${V}`, children: [v.jsx("div", { className: "nlux-launchPad-container", children: v.jsx(qc, { segments: z, onConversationStarterSelected: W, conversationOptions: s, personaOptions: r.personaOptions, userDefinedGreeting: J.Greeting }) }), v.jsx("div", { className: "nlux-conversation-container", ref: c, children: v.jsx(K, { ref: l, segments: z, conversationOptions: r.conversationOptions, personaOptions: r.personaOptions, messageOptions: r.messageOptions, onLastActiveSegmentChange: ne, Loader: J.Loader, markdownContainersController: g, submitShortcutKey: (Ae = r.composerOptions) == null ? void 0 : Ae.submitShortcut, onPromptResubmit: H, onMarkdownStreamRendered: q }) }), v.jsx("div", { className: "nlux-composer-container", children: v.jsx(jc, { status: x, prompt: k, hasValidInput: se, placeholder: (j = r.composerOptions) == null ? void 0 : j.placeholder, autoFocus: (je = r.composerOptions) == null ? void 0 : je.autoFocus, submitShortcut: (qe = r.composerOptions) == null ? void 0 : qe.submitShortcut, hideStopButton: (He = r.composerOptions) == null ? void 0 : He.hideStopButton, onChange: S, onSubmit: O, onCancel: N, Loader: J.Loader }) })] })] }) }) : (Zt("AiChat: No valid adapter provided. The component will not render."), v.jsx(v.Fragment, {}));
 }, qu = () => {
@@ -5155,24 +5155,24 @@ Only use API objects created by the useAiChatApi() hook.`);
       i("loading"), r.then((l) => {
         if (typeof l.default != "function") {
           const c = "The module passed to useAsRscAdapter() as server component does not have a valid default export.";
-          return Me(c), i("error"), void s.onError(new Error(c));
+          return Le(c), i("error"), void s.onError(new Error(c));
         }
         i("success"), u(() => ji(async () => {
           let c, d;
           try {
             d = l.default({ message: t, extras: n }), c = await Promise.resolve(d);
           } catch {
-            Me(`An error occurred while rendering the React Server Component (RSC).
+            Le(`An error occurred while rendering the React Server Component (RSC).
 Please ensure that no server error has occurred.`), s.onError(new Error("Error while rendering RSC."));
           }
           return s.onServerComponentReceived(), c !== void 0 && Wt(c) ? { default: () => v.jsx(v.Fragment, { children: c }) } : (s.onError(new Error("Unable to render RSC. The RSC adapter should return a valid React element.")), { default: () => v.jsx(v.Fragment, {}) });
         }));
       }).catch((l) => {
-        Me(`The module passed to useAsRscAdapter() is not a valid ES module, or did not properly load! The first parameter passed to useAsRscAdapter() should be the result of a dynamic import() call [ without await or .then() ]. The module should also have a default export. Your bundler should be able to handle dynamic imports and ES modules.
+        Le(`The module passed to useAsRscAdapter() is not a valid ES module, or did not properly load! The first parameter passed to useAsRscAdapter() should be the result of a dynamic import() call [ without await or .then() ]. The module should also have a default export. Your bundler should be able to handle dynamic imports and ES modules.
 
 Reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#dynamic_imports`), i("error"), s.onError(l);
       });
-    }, []), o === "idle" || o === "loading" ? null : o === "error" ? (Me("Error loading RSC"), v.jsx(v.Fragment, { children: "Error loading RSC" })) : v.jsx(Bi, { fallback: e || null, children: a && v.jsx(a, {}) });
+    }, []), o === "idle" || o === "loading" ? null : o === "error" ? (Le("Error loading RSC"), v.jsx(v.Fragment, { children: "Error loading RSC" })) : v.jsx(Bi, { fallback: e || null, children: a && v.jsx(a, {}) });
   } };
 }, Zu = (r, e, t) => {
   const n = Dr(r.ref), [s] = ye(() => {
@@ -5495,16 +5495,16 @@ function ml(r, e) {
       var R;
       m = new AbortController();
       try {
-        const L = await x(r, Object.assign(Object.assign({}, c), { headers: h, signal: m.signal }));
-        await A(L), await cl(L.body, ll(ul((F) => {
+        const M = await x(r, Object.assign(Object.assign({}, c), { headers: h, signal: m.signal }));
+        await A(M), await cl(M.body, ll(ul((F) => {
           F ? h[Zs] = F : delete h[Zs];
         }, (F) => {
           b = F;
         }, o))), i == null || i(), y(), d();
-      } catch (L) {
+      } catch (M) {
         if (!m.signal.aborted)
           try {
-            const F = (R = a == null ? void 0 : a(L)) !== null && R !== void 0 ? R : b;
+            const F = (R = a == null ? void 0 : a(M)) !== null && R !== void 0 ? R : b;
             window.clearTimeout(k), k = window.setTimeout(w, F);
           } catch (F) {
             y(), p(F);
@@ -5719,7 +5719,7 @@ function yl() {
         }
       }
     }
-    var w = u, R = l, L = a, F = i, T = e, I = c, _ = n, D = m, z = h, B = t, X = o, re = s, oe = d, le = !1;
+    var w = u, R = l, M = a, F = i, T = e, I = c, _ = n, D = m, z = h, B = t, X = o, re = s, oe = d, le = !1;
     function N(j) {
       return le || (le = !0, console.warn("The ReactIs.isAsyncMode() alias has been deprecated, and will be removed in React 17+. Update your code to use ReactIs.isConcurrentMode() instead. It has the exact same API.")), S(j) || A(j) === u;
     }
@@ -5759,7 +5759,7 @@ function yl() {
     function Ae(j) {
       return A(j) === d;
     }
-    ge.AsyncMode = w, ge.ConcurrentMode = R, ge.ContextConsumer = L, ge.ContextProvider = F, ge.Element = T, ge.ForwardRef = I, ge.Fragment = _, ge.Lazy = D, ge.Memo = z, ge.Portal = B, ge.Profiler = X, ge.StrictMode = re, ge.Suspense = oe, ge.isAsyncMode = N, ge.isConcurrentMode = S, ge.isContextConsumer = O, ge.isContextProvider = H, ge.isElement = q, ge.isForwardRef = W, ge.isFragment = ne, ge.isLazy = Y, ge.isMemo = K, ge.isPortal = J, ge.isProfiler = se, ge.isStrictMode = V, ge.isSuspense = Ae, ge.isValidElementType = x, ge.typeOf = A;
+    ge.AsyncMode = w, ge.ConcurrentMode = R, ge.ContextConsumer = M, ge.ContextProvider = F, ge.Element = T, ge.ForwardRef = I, ge.Fragment = _, ge.Lazy = D, ge.Memo = z, ge.Portal = B, ge.Profiler = X, ge.StrictMode = re, ge.Suspense = oe, ge.isAsyncMode = N, ge.isConcurrentMode = S, ge.isContextConsumer = O, ge.isContextProvider = H, ge.isElement = q, ge.isForwardRef = W, ge.isFragment = ne, ge.isLazy = Y, ge.isMemo = K, ge.isPortal = J, ge.isProfiler = se, ge.isStrictMode = V, ge.isSuspense = Ae, ge.isValidElementType = x, ge.typeOf = A;
   }()), ge;
 }
 var Gs;
@@ -5917,7 +5917,7 @@ function wl() {
       instanceOf: R,
       node: I(),
       objectOf: F,
-      oneOf: L,
+      oneOf: M,
       oneOfType: T,
       shape: D,
       exact: z
@@ -6019,7 +6019,7 @@ function wl() {
       }
       return b(O);
     }
-    function L(S) {
+    function M(S) {
       if (!Array.isArray(S))
         return process.env.NODE_ENV !== "production" && (arguments.length > 1 ? o(
           "Invalid arguments supplied to oneOf, expected an array, got " + arguments.length + " arguments. A common mistake is to write oneOf(x, y, z) instead of oneOf([x, y, z])."
@@ -6526,7 +6526,7 @@ function Bl(r, e) {
         case 0:
           return r.items ? (t = Tr(r.items).filter(function(o) {
             return o.kind === "file";
-          }), e !== "drop" ? [2, t] : [4, Promise.all(t.map(Ll))]) : [3, 2];
+          }), e !== "drop" ? [2, t] : [4, Promise.all(t.map(Ml))]) : [3, 2];
         case 1:
           return n = s.sent(), [2, io(pi(n))];
         case 2:
@@ -6551,7 +6551,7 @@ function Tr(r) {
   }
   return e;
 }
-function Ll(r) {
+function Ml(r) {
   if (typeof r.webkitGetAsEntry != "function")
     return ao(r);
   var e = r.webkitGetAsEntry();
@@ -6569,7 +6569,7 @@ function ao(r) {
   var t = nn(e);
   return Promise.resolve(t);
 }
-function Ml(r) {
+function Ll(r) {
   return kt(this, void 0, void 0, function() {
     return Ct(this, function(e) {
       return [2, r.isDirectory ? hi(r) : zl(r)];
@@ -6599,7 +6599,7 @@ function hi(r) {
               case 4:
                 return [3, 6];
               case 5:
-                c = Promise.all(a.map(Ml)), s.push(c), o(), d.label = 6;
+                c = Promise.all(a.map(Ll)), s.push(c), o(), d.label = 6;
               case 6:
                 return [
                   2
@@ -6765,7 +6765,7 @@ function Gl(r) {
     return d && m && !g;
   });
 }
-function Ln(r) {
+function Mn(r) {
   return typeof r.isPropagationStopped == "function" ? r.isPropagationStopped() : typeof r.cancelBubble < "u" ? r.cancelBubble : !1;
 }
 function xn(r) {
@@ -6793,7 +6793,7 @@ function Je() {
     for (var s = arguments.length, o = new Array(s > 1 ? s - 1 : 0), i = 1; i < s; i++)
       o[i - 1] = arguments[i];
     return e.some(function(a) {
-      return !Ln(n) && a && a.apply(void 0, [n].concat(o)), Ln(n);
+      return !Mn(n) && a && a.apply(void 0, [n].concat(o)), Mn(n);
     });
   };
 }
@@ -6919,7 +6919,7 @@ function Ie(r) {
 function Rr(r, e, t) {
   return e in r ? Object.defineProperty(r, e, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : r[e] = t, r;
 }
-function Mn(r, e) {
+function Ln(r, e) {
   if (r == null) return {};
   var t = vu(r, e), n, s;
   if (Object.getOwnPropertySymbols) {
@@ -6937,7 +6937,7 @@ function vu(r, e) {
   return t;
 }
 var Zr = /* @__PURE__ */ Kt(function(r, e) {
-  var t = r.children, n = Mn(r, iu), s = ki(n), o = s.open, i = Mn(s, au);
+  var t = r.children, n = Ln(r, iu), s = ki(n), o = s.open, i = Ln(s, au);
   return Gt(e, function() {
     return {
       open: o
@@ -7142,7 +7142,7 @@ var Or = {
   fileRejections: []
 };
 function ki() {
-  var r = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {}, e = Ie(Ie({}, wi), r), t = e.accept, n = e.disabled, s = e.getFilesFromEvent, o = e.maxSize, i = e.minSize, a = e.multiple, u = e.maxFiles, l = e.onDragEnter, c = e.onDragLeave, d = e.onDragOver, p = e.onDrop, h = e.onDropAccepted, m = e.onDropRejected, g = e.onFileDialogCancel, b = e.onFileDialogOpen, k = e.useFsAccessApi, y = e.autoFocus, x = e.preventDropOnDocument, A = e.noClick, w = e.noKeyboard, R = e.noDrag, L = e.noDragEventsBubbling, F = e.onError, T = e.validator, I = G(function() {
+  var r = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {}, e = Ie(Ie({}, wi), r), t = e.accept, n = e.disabled, s = e.getFilesFromEvent, o = e.maxSize, i = e.minSize, a = e.multiple, u = e.maxFiles, l = e.onDragEnter, c = e.onDragLeave, d = e.onDragOver, p = e.onDrop, h = e.onDropAccepted, m = e.onDropRejected, g = e.onFileDialogCancel, b = e.onFileDialogOpen, k = e.useFsAccessApi, y = e.autoFocus, x = e.preventDropOnDocument, A = e.noClick, w = e.noKeyboard, R = e.noDrag, M = e.noDragEventsBubbling, F = e.onError, T = e.validator, I = G(function() {
     return ru(t);
   }, [t]), _ = G(function() {
     return nu(t);
@@ -7150,7 +7150,7 @@ function ki() {
     return typeof b == "function" ? b : go;
   }, [b]), z = G(function() {
     return typeof g == "function" ? g : go;
-  }, [g]), B = ue(null), X = ue(null), re = Mi(yu, Or), oe = nr(re, 2), le = oe[0], N = oe[1], S = le.isFocused, O = le.isFileDialogActive, H = ue(typeof window < "u" && window.isSecureContext && k && tu()), q = function() {
+  }, [g]), B = ue(null), X = ue(null), re = Li(yu, Or), oe = nr(re, 2), le = oe[0], N = oe[1], S = le.isFocused, O = le.isFileDialogActive, H = ue(typeof window < "u" && window.isSecureContext && k && tu()), q = function() {
     !H.current && O && setTimeout(function() {
       if (X.current) {
         var U = X.current.files;
@@ -7180,7 +7180,7 @@ function ki() {
     F ? F(P) : console.error(P);
   }, [F]), K = ve(function(P) {
     P.preventDefault(), P.persist(), Ce(P), W.current = [].concat(uu(W.current), [P.target]), xn(P) && Promise.resolve(s(P)).then(function(U) {
-      if (!(Ln(P) && !L)) {
+      if (!(Mn(P) && !M)) {
         var he = U.length, pe = he > 0 && Gl({
           files: U,
           accept: I,
@@ -7200,7 +7200,7 @@ function ki() {
     }).catch(function(U) {
       return Y(U);
     });
-  }, [s, l, Y, L, I, i, o, a, u, T]), J = ve(function(P) {
+  }, [s, l, Y, M, I, i, o, a, u, T]), J = ve(function(P) {
     P.preventDefault(), P.persist(), Ce(P);
     var U = xn(P);
     if (U && P.dataTransfer)
@@ -7209,7 +7209,7 @@ function ki() {
       } catch {
       }
     return U && d && d(P), !1;
-  }, [d, L]), se = ve(function(P) {
+  }, [d, M]), se = ve(function(P) {
     P.preventDefault(), P.persist(), Ce(P);
     var U = W.current.filter(function(pe) {
       return B.current && B.current.contains(pe);
@@ -7220,7 +7220,7 @@ function ki() {
       isDragAccept: !1,
       isDragReject: !1
     }), xn(P) && c && c(P));
-  }, [B, c, L]), V = ve(function(P, U) {
+  }, [B, c, M]), V = ve(function(P, U) {
     var he = [], pe = [];
     P.forEach(function(De) {
       var Qe = gi(De, I), et = nr(Qe, 2), it = et[0], St = et[1], At = vi(De, i, o), ft = nr(At, 2), Et = ft[0], Tt = ft[1], It = T ? T(De) : null;
@@ -7247,13 +7247,13 @@ function ki() {
     }), p && p(he, pe, U), pe.length > 0 && m && m(pe, U), he.length > 0 && h && h(he, U);
   }, [N, a, I, i, o, u, p, h, m, T]), Ae = ve(function(P) {
     P.preventDefault(), P.persist(), Ce(P), W.current = [], xn(P) && Promise.resolve(s(P)).then(function(U) {
-      Ln(P) && !L || V(U, P);
+      Mn(P) && !M || V(U, P);
     }).catch(function(U) {
       return Y(U);
     }), N({
       type: "reset"
     });
-  }, [s, V, Y, L]), j = ve(function() {
+  }, [s, V, Y, M]), j = ve(function() {
     if (H.current) {
       N({
         type: "openDialog"
@@ -7290,22 +7290,22 @@ function ki() {
     });
   }, []), C = ve(function() {
     A || (eu() ? setTimeout(j, 0) : j());
-  }, [A, j]), M = function(U) {
+  }, [A, j]), L = function(U) {
     return n ? null : U;
   }, Q = function(U) {
-    return w ? null : M(U);
+    return w ? null : L(U);
   }, ce = function(U) {
-    return R ? null : M(U);
+    return R ? null : L(U);
   }, Ce = function(U) {
-    L && U.stopPropagation();
+    M && U.stopPropagation();
   }, Se = G(function() {
     return function() {
-      var P = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {}, U = P.refKey, he = U === void 0 ? "ref" : U, pe = P.role, De = P.onKeyDown, Qe = P.onFocus, et = P.onBlur, it = P.onClick, St = P.onDragEnter, At = P.onDragOver, ft = P.onDragLeave, Et = P.onDrop, Tt = Mn(P, cu);
+      var P = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {}, U = P.refKey, he = U === void 0 ? "ref" : U, pe = P.role, De = P.onKeyDown, Qe = P.onFocus, et = P.onBlur, it = P.onClick, St = P.onDragEnter, At = P.onDragOver, ft = P.onDragLeave, Et = P.onDrop, Tt = Ln(P, cu);
       return Ie(Ie(Rr({
         onKeyDown: Q(Je(De, je)),
         onFocus: Q(Je(Qe, qe)),
         onBlur: Q(Je(et, He)),
-        onClick: M(Je(it, C)),
+        onClick: L(Je(it, C)),
         onDragEnter: ce(Je(St, K)),
         onDragOver: ce(Je(At, J)),
         onDragLeave: ce(Je(ft, se)),
@@ -7319,15 +7319,15 @@ function ki() {
     P.stopPropagation();
   }, []), Re = G(function() {
     return function() {
-      var P = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {}, U = P.refKey, he = U === void 0 ? "ref" : U, pe = P.onChange, De = P.onClick, Qe = Mn(P, lu), et = Rr({
+      var P = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {}, U = P.refKey, he = U === void 0 ? "ref" : U, pe = P.onChange, De = P.onClick, Qe = Ln(P, lu), et = Rr({
         accept: I,
         multiple: a,
         type: "file",
         style: {
           display: "none"
         },
-        onChange: M(Je(pe, Ae)),
-        onClick: M(Je(De, de)),
+        onChange: L(Je(pe, Ae)),
+        onClick: L(Je(De, de)),
         tabIndex: -1
       }, he, X);
       return Ie(Ie({}, et), Qe);
@@ -7339,7 +7339,7 @@ function ki() {
     getInputProps: Re,
     rootRef: B,
     inputRef: X,
-    open: M(j)
+    open: L(j)
   });
 }
 function yu(r, e) {
@@ -7552,19 +7552,19 @@ const Ru = /* @__PURE__ */ ze.forwardRef(Pu), Ju = _e.memo((r) => {
   var w, R;
   const [e] = ye(r.messages), t = r.advancedOptions || {}, n = t.conversationOptions || {
     layout: "bubbles"
-  }, [s, o] = ye([]), { adapter: i, threadId: a, messageId: u } = gl({ ...r, files: s }), { controls: l } = r, [c, d] = ye(/* @__PURE__ */ new Map()), p = (L, F) => {
-    d((T) => new Map(T.set(L, F)));
-  }, h = (L) => {
-    const { prompt: F, uid: T } = L, I = c.get(T);
+  }, [s, o] = ye([]), { adapter: i, threadId: a, messageId: u } = gl({ ...r, files: s }), { controls: l } = r, [c, d] = ye(/* @__PURE__ */ new Map()), p = (M, F) => {
+    d((T) => new Map(T.set(M, F)));
+  }, h = (M) => {
+    const { prompt: F, uid: T } = M, I = c.get(T);
     return /* @__PURE__ */ v.jsxs("div", { className: "rounded-lg shadow-sm", children: [
       /* @__PURE__ */ v.jsx("span", { className: "block", children: F }),
       /* @__PURE__ */ v.jsx("div", { className: "mt-2", children: I && /* @__PURE__ */ v.jsx(wu, { files: I }) })
     ] });
-  }, m = _e.memo((L) => {
+  }, m = _e.memo((M) => {
     const [F, T] = ye(), [I, _] = ye(), D = async (z) => {
       var X;
       let B;
-      if (L.dataTransferMode === "stream") {
+      if (M.dataTransferMode === "stream") {
         if (!a || !u) {
           _("streaming message doesnt have thread and messageIds");
           return;
@@ -7575,7 +7575,7 @@ const Ru = /* @__PURE__ */ ze.forwardRef(Pu), Ju = _e.memo((r) => {
           score: z
         };
       } else {
-        let re = (X = L.serverResponse) == null ? void 0 : X[0];
+        let re = (X = M.serverResponse) == null ? void 0 : X[0];
         if (re)
           B = {
             thread_id: re.threadId,
@@ -7601,8 +7601,12 @@ const Ru = /* @__PURE__ */ ze.forwardRef(Pu), Ju = _e.memo((r) => {
       }
     };
     return /* @__PURE__ */ v.jsxs("div", { className: "space-y-2", children: [
-      L.status === "complete" && /* @__PURE__ */ v.jsx(Wc, { children: L.content }),
-      L.status !== "complete" && /* @__PURE__ */ v.jsx("div", { className: "p-2 rounded-lg shadow-md", ref: L.containerRef }),
+      "STATUS: ",
+      M.status,
+      " ",
+      M.dataTransferMode,
+      M.dataTransferMode === "batch" && /* @__PURE__ */ v.jsx(Wc, { children: M.content }),
+      M.dataTransferMode === "stream" && /* @__PURE__ */ v.jsx("div", { className: "p-2 rounded-lg shadow-md", ref: M.containerRef }),
       /* @__PURE__ */ v.jsxs("div", { className: "flex items-center justify-start space-x-1", children: [
         /* @__PURE__ */ v.jsxs(
           "button",
@@ -7647,8 +7651,8 @@ const Ru = /* @__PURE__ */ ze.forwardRef(Pu), Ju = _e.memo((r) => {
       name: "User",
       avatar: /* @__PURE__ */ v.jsx(tl, {})
     })
-  }, (R = r.personaOptions) == null ? void 0 : R.user), y = ve((L) => {
-    s && (p(L.uid, [...s]), o([]));
+  }, (R = r.personaOptions) == null ? void 0 : R.user), y = ve((M) => {
+    s && (p(M.uid, [...s]), o([]));
   }, [p]), x = ve(() => {
   }, []), A = r.className || "";
   return /* @__PURE__ */ v.jsxs("div", { className: "flex flex-col w-[100%] h-full", children: [

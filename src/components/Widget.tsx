@@ -118,10 +118,9 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
     };
     return (
       <div className="space-y-2">
-        {responseProps.status === "complete" &&
-          <Markdown>{responseProps.content}</Markdown>
-        }
-        {responseProps.status !== "complete" && <div className="p-2 rounded-lg shadow-md" ref={responseProps.containerRef}></div>}
+        {responseProps.dataTransferMode === "batch" && <Markdown>{responseProps.content}</Markdown>}
+
+        {responseProps.dataTransferMode === "stream" && <div className="p-2 rounded-lg shadow-md" ref={responseProps.containerRef}></div>}
 
         <div className="flex items-center justify-start space-x-1">
           <button
