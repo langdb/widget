@@ -1,5 +1,6 @@
 import { ChatItem, AiChatProps, AssistantPersona, UserPersona } from '@nlux/react';
 import { AdapterProps } from './adapter';
+import { default as React } from 'react';
 
 type AdvancedOptions = Omit<AiChatProps, "adapter">;
 export interface WidgetProps extends AdapterProps {
@@ -16,5 +17,5 @@ export interface WidgetProps extends AdapterProps {
     };
     advancedOptions?: AdvancedOptions;
 }
-export declare function Widget(props: WidgetProps): import("react/jsx-runtime").JSX.Element;
+export declare const Widget: React.FC<WidgetProps>;
 export {};

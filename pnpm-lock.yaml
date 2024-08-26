@@ -38,6 +38,9 @@ importers:
       autoprefixer:
         specifier: ^10.4.19
         version: 10.4.19(postcss@8.4.38)
+      highlightjs-copy:
+        specifier: ^1.0.5
+        version: 1.0.5
       langdb-cloud-ui:
         specifier: link:/Users/vivek/projects/dozer/nodejs/langdb-cloud-ui
         version: link:../langdb-cloud-ui
@@ -47,9 +50,6 @@ importers:
       react-icons:
         specifier: ^5.2.1
         version: 5.2.1(react@18.3.1)
-      showdown:
-        specifier: ^2.1.0
-        version: 2.1.0
       showdown-highlight:
         specifier: ^3.1.0
         version: 3.1.0
@@ -3319,6 +3319,9 @@ packages:
   highlight.js@11.10.0:
     resolution: {integrity: sha512-SYVnVFswQER+zu1laSya563s+F8VDGt7o35d4utbamowvUNLLMovFqwCLSocpZTz3MgaSRA1IbqRWZv97dtErQ==}
     engines: {node: '>=12.0.0'}
+
+  highlightjs-copy@1.0.5:
+    resolution: {integrity: sha512-e7vXcq4HyMqXEw9omt8riYMxEGSanjY2bLQL91Jk0zGnqEhs/pO/6X4tC0PQEVkGBqUdYUyfr06V/VEfQZ7Pmg==}
 
   hosted-git-info@2.8.9:
     resolution: {integrity: sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==}
@@ -9233,6 +9236,8 @@ snapshots:
   he@1.2.0: {}
 
   highlight.js@11.10.0: {}
+
+  highlightjs-copy@1.0.5: {}
 
   hosted-git-info@2.8.9: {}
 

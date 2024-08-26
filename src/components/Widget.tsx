@@ -8,6 +8,7 @@ import {
   UserPersona,
   MessageStreamStartedCallback,
   ResponseRendererProps,
+  Markdown
 } from "@nlux/react";
 import "../css/langdb/main.css";
 import '@nlux/themes/nova.css';
@@ -21,8 +22,7 @@ import { Files, Thumbnails } from "./Files";
 import { Avatar } from "./Icons";
 import { HandThumbDownIcon, HandThumbUpIcon } from "@heroicons/react/24/outline";
 import { HandThumbDownIcon as SHandThumbDownIcon, HandThumbUpIcon as SHandThumbUpIcon } from "@heroicons/react/24/solid";
-import showdownHighlight from 'showdown-highlight';
-import showdown from 'showdown';
+import React from "react";
 type AdvancedOptions = Omit<AiChatProps, "adapter">;
 
 export interface WidgetProps extends AdapterProps {
@@ -40,11 +40,12 @@ export interface WidgetProps extends AdapterProps {
   advancedOptions?: AdvancedOptions;
 }
 
-export function Widget(props: WidgetProps) {
+export const Widget: React.FC<WidgetProps> = React.memo((props) => {
 
+  const [initialMessages] = useState(props.messages);
   const advancedOptions = props.advancedOptions || {};
   const conversationOptions = advancedOptions.conversationOptions || {
-    layout: "bubbles",
+    layout: "bubbles"
   };
   const [files, setFiles] = useState<FileWithPreview[]>([]);
   const { adapter, threadId, messageId } = useAdapter({ ...props, files });
@@ -64,7 +65,8 @@ export function Widget(props: WidgetProps) {
       </div>
     </div>
   }
-  const ResponseRenderer: React.FC<ResponseRendererProps<string>> = (responseProps) => {
+  const ResponseRenderer: React.FC<ResponseRendererProps<string>> = React.memo((responseProps) => {
+
     const [score, setScore] = useState<number | undefined>();
     const [error, setError] = useState<string | undefined>();
     const handleScore = async (score: number) => {
@@ -114,37 +116,33 @@ export function Widget(props: WidgetProps) {
       }
 
     };
-
     return (
       <div className="space-y-2">
         {responseProps.status === "complete" &&
-          <div className="langdb-markdown p-2 m-2">
-            <MarkdownView
-              content={responseProps.content.join("")}
-            /></div>
+          <Markdown>{responseProps.content}</Markdown>
         }
-        {responseProps.status !== "complete" && <div className="p-2 bg-gray-100 rounded-lg shadow-md" ref={responseProps.containerRef}></div>}
+        {responseProps.status !== "complete" && <div className="p-2 rounded-lg shadow-md" ref={responseProps.containerRef}></div>}
 
         <div className="flex items-center justify-start space-x-1">
           <button
             className="p-2 hover:bg-gray-200 rounded focus:outline-none"
             onClick={() => handleScore(1)}
           >
-            {score == undefined && <HandThumbUpIcon className="h-4 w-4 text-gray-600" />}
-            {score === 1 && <SHandThumbUpIcon className="h-4 w-4 text-gray-600 animate-fadeIn" />}
+            {score == undefined && <HandThumbUpIcon className="h-4 w-4" />}
+            {score === 1 && <SHandThumbUpIcon className="h-4 w-4 animate-fadeIn" />}
           </button>
           <button
             className="p-2 hover:bg-gray-200 rounded focus:outline-none"
             onClick={() => handleScore(-1)}
           >
-            {score == undefined && <HandThumbDownIcon className="h-4 w-4 text-gray-600" />}
-            {score === -1 && <SHandThumbDownIcon className="h-4 w-4 text-gray-600  animate-fadeIn" />}
+            {score == undefined && <HandThumbDownIcon className="h-4 w-4" />}
+            {score === -1 && <SHandThumbDownIcon className="h-4 w-4 animate-fadeIn" />}
           </button>
         </div>
         {error && <div className="text-red text-xs animate-fadeIn p-2 rounded-md">{error}</div>}
-      </div>
+      </div >
     );
-  };
+  });
 
   const displayOptions = Object.assign(
     {},
@@ -191,7 +189,7 @@ export function Widget(props: WidgetProps) {
         >
           <AiChat
             adapter={adapter}
-            initialConversation={props.messages}
+            initialConversation={initialMessages}
             events={{
               messageSent: messageSentCallback,
               messageStreamStarted
@@ -210,21 +208,4 @@ export function Widget(props: WidgetProps) {
       </div>
     </div>
   );
-}
-
-const MarkdownView = ({ content }: { content: string }) => {
-  const converter = new showdown.Converter({
-    extensions: [
-      showdownHighlight({
-        pre: true,
-        auto_detection: true
-      })
-    ]
-  });
-
-  const html = converter.makeHtml(content);
-
-  return <div className="flex flex-col">
-    <div dangerouslySetInnerHTML={{ __html: html }}></div>
-  </div>
-}
+});
