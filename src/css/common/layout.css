@@ -110,3 +110,7 @@
     --nlux-cvStrt--wd: var(--nlux-ConversationStarter--Width, 160px);
     --nlux-cvStrt--hg: var(--nlux-ConversationStarter--Height, 101px);
 }
+
+.nlux-comp-chatItem.nlux-comp-chatItem--bubblesLayout.nlux-comp-chatItem--received>.nlux-comp-message {
+    background-color: transparent !important;
+}

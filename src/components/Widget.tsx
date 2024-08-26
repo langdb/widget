@@ -120,14 +120,14 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
 
     };
     return (
-      <div className="space-y-2">
+      <div className="">
         {responseProps.dataTransferMode === "batch" && <Markdown>{responseProps.content}</Markdown>}
 
-        {responseProps.dataTransferMode === "stream" && <div className="p-2 rounded-lg shadow-md" ref={responseProps.containerRef}></div>}
+        {responseProps.dataTransferMode === "stream" && <div className="p-2 rounded-lg" ref={responseProps.containerRef}></div>}
 
         <div className="flex items-center justify-start space-x-1">
           <button
-            className="p-2 hover:bg-gray-600 hover:text-white rounded focus:outline-none"
+            className=" hover:bg-gray-600 hover:text-white rounded focus:outline-none"
             onClick={() => handleScore(1)}
           >
             {score == undefined && <HandThumbUpIcon className="h-4 w-4" />}

@@ -2,8 +2,8 @@ import React, { FC } from "react";
 import { FloatingChatWidget } from "../FloatingChatwidget";
 import { Widget, WidgetProps } from "../Widget";
 const FloatingChatWidgetExample: FC<WidgetProps> = ({
-  publicId = "afae116b-ff46-46b4-b2ea-a444c1680552",
-  modelName = "cities_info_model",
+  publicId = "f3f61d93-9128-4811-b575-429fa32d3a83",
+  modelName = "thu_super_assistant",
   advancedOptions = {},
 }) => {
   const theme =
