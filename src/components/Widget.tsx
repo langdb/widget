@@ -23,6 +23,9 @@ import { Avatar } from "./Icons";
 import { HandThumbDownIcon, HandThumbUpIcon } from "@heroicons/react/24/outline";
 import { HandThumbDownIcon as SHandThumbDownIcon, HandThumbUpIcon as SHandThumbUpIcon } from "@heroicons/react/24/solid";
 import React from "react";
+import { highlighter } from '@nlux/highlighter';
+import '@nlux/highlighter/dark-theme.css';
+
 type AdvancedOptions = Omit<AiChatProps, "adapter">;
 
 export interface WidgetProps extends AdapterProps {
@@ -124,14 +127,14 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
 
         <div className="flex items-center justify-start space-x-1">
           <button
-            className="p-2 hover:bg-gray-200 rounded focus:outline-none"
+            className="p-2 hover:bg-gray-600 hover:text-white rounded focus:outline-none"
             onClick={() => handleScore(1)}
           >
             {score == undefined && <HandThumbUpIcon className="h-4 w-4" />}
             {score === 1 && <SHandThumbUpIcon className="h-4 w-4 animate-fadeIn" />}
           </button>
           <button
-            className="p-2 hover:bg-gray-200 rounded focus:outline-none"
+            className="p-2 hover:bg-gray-600 rounded focus:outline-none"
             onClick={() => handleScore(-1)}
           >
             {score == undefined && <HandThumbDownIcon className="h-4 w-4" />}
@@ -195,7 +198,8 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
             }}
             messageOptions={{
               promptRenderer: PromptRender,
-              responseRenderer: ResponseRenderer
+              responseRenderer: ResponseRenderer,
+              syntaxHighlighter: highlighter
             }}
             personaOptions={personaOptions}
             conversationOptions={conversationOptions}
