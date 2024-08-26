@@ -1,6 +1,5 @@
-import { useCallback } from "react";
+
 import { FileWithPreview, Preview } from "../types";
-import { useDropzone } from "react-dropzone";
 import { MinusIcon } from "./Icons";
 interface FilesProps {
   files: FileWithPreview[];
@@ -21,25 +20,11 @@ export const Thumbnails = ({ files }: { files: Preview[] }) => {
 }
 
 export const Files = ({ files, setFiles }: FilesProps) => {
-
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    setFiles(prevFiles => [...prevFiles, ...acceptedFiles.map(file => Object.assign(file, {
-      preview: URL.createObjectURL(file)
-    }))]);
-  }, []);
-
-  const { getRootProps, getInputProps } = useDropzone({ onDrop });
-
   const removeFile = (file: FileWithPreview) => () => {
     const newFiles = files.filter(f => f !== file);
     setFiles(newFiles);
   };
-  return <div className="flex flex-col w-[100%] dropzone border">
-
-    <div {...getRootProps()} className="flex items-center justify-center p-4 rounded-lg cursor-pointer hover:border-gray-500">
-      <input {...getInputProps()} />
-      <p className="text-gray-500">Drag & drop images, or click to select files</p>
-    </div>
+  return <div className="flex flex-col w-[100%]">
     <aside className="flex flex-wrap mt-4">
       {files.map(file => (
         <div key={file.name} className="relative m-2">

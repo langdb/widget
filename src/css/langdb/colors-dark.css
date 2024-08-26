@@ -9,15 +9,15 @@
     --nlux-WelcomeMessage-Avatar--BackgroundColor: transparent;
 
     /** Divider between composer and messages */
-    --nlux-ChatRoom-Divider--Color: #71717a;
+    --nlux-ChatRoom-Divider--Color: transparent;
 
     /** Conversation loader */
     --nlux-ChatRoom-Loader--Color: #71717a;
 
     /** Conversation content color */
-    --nlux-ChatRoom--BackgroundColor: #151515;
+    --nlux-ChatRoom--BackgroundColor: #171717;
     --nlux-ChatRoom--BorderColor: transparent;
-    --nlux-ChatRoom--TextColor: #ffffff;
+    --nlux-ChatRoom--TextColor: rgb(155 155 155);
 
     /** Participant info in chat */
     --nlux-ChatItem-ParticipantName--Color: #ffffff;
@@ -25,12 +25,13 @@
     /* Human message in chat */
     --nlux-HumanMessage--BackgroundColor: #323232;
     --nlux-HumanMessage--BorderColor: transparent;
-    --nlux-HumanMessage--TextColor: #ffffff;
+    --nlux-HumanMessage--TextColor: rgb(236, 236, 236);
 
     /** AI message in chat */
     --nlux-AiMessage--BackgroundColor: #494949;
+    
     --nlux-AiMessage--BorderColor: transparent;
-    --nlux-AiMessage--TextColor: #ffffff;
+    --nlux-AiMessage--TextColor: rgb(236, 236, 236);
 
     /** Prompt input colors */
     --nlux-PromptInput--BackgroundColor: transparent;
@@ -45,7 +46,7 @@
     --nlux-PromptInput-Disabled--TextColor: transprent;
     --nlux-PromptInput-Disabled--BorderColor: transprent;
 
-    --nlux-PromptInput-Placeholder--TextColor: #71717a;
+    --nlux-PromptInput-Placeholder--TextColor: rgb(236, 236, 236);
     --nlux-PromptInput-Focus-Outline--Color: transparent;
 
     /** Submit button colors */

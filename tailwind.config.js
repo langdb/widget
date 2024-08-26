@@ -9,6 +9,8 @@ module.exports = {
     },
     colors: {
       ...colors,
+      darkContainer: '#202020',  
+      darkHeader: '#2c2c2c',
       primary: {
         100: '#f3d8e8',
         200: '#e5aed1',

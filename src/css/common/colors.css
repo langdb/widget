@@ -17,7 +17,7 @@
     --nlux-chtr--txtClr: var(--nlux-ChatRoom--TextColor, black);
 
     &[data-color-scheme='dark'] {
-        --nlux-chtr--txtClr: var(--nlux-ChatRoom--TextColor, white);
+        --nlux-chtr--txtClr: var(--nlux-ChatRoom--TextColor, rgb(236, 236, 236));
     }
 
     /** Divider between composer and messages */

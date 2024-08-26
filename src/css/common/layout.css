@@ -114,3 +114,57 @@
 .nlux-comp-chatItem.nlux-comp-chatItem--bubblesLayout.nlux-comp-chatItem--received>.nlux-comp-message {
     background-color: transparent !important;
 }
+.nlux-chatSegments-container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 1rem;
+    /* gap-4 */
+    font-size: 1rem;
+    /* text-base */
+}
+.nlux-composer-container {
+    margin-left: auto;
+    margin-right: auto;
+    border-top: none;
+    border: none;
+    background-color: var(--nlux-HumanMessage--BackgroundColor);
+    border-radius: var(--nlux-chItm-mmsg-bblLt--brdrRd);
+}
+
+/* Medium devices (md) */
+@media (min-width: 768px) {
+    .nlux-composer-container {
+        max-width: 48rem;
+    }
+    .nlux-chatSegments-container {
+        gap: 1.25rem;
+        /* gap-5 */
+        max-width: 48rem;
+        /* max-w-3xl */
+    }
+}
+
+/* Large devices (lg) */
+@media (min-width: 1024px) {
+    .nlux-composer-container {
+            max-width: 40rem;
+        }
+    .nlux-chatSegments-container {
+        gap: 1.5rem;
+        /* gap-6 */
+        max-width: 40rem;
+        /* max-w-[40rem] */
+    }
+}
+
+/* Extra large devices (xl) */
+@media (min-width: 1280px) {
+    .nlux-composer-container {
+        max-width: 48rem;
+    }
+    .nlux-chatSegments-container {
+        max-width: 48rem;
+        /* max-w-[48rem] */
+    }
+}

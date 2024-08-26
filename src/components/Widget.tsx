@@ -20,11 +20,12 @@ import { FileWithPreview } from "../types";
 import { useCallback, useState } from "react";
 import { Files, Thumbnails } from "./Files";
 import { Avatar } from "./Icons";
-import { HandThumbDownIcon, HandThumbUpIcon } from "@heroicons/react/24/outline";
+import { ArrowUpTrayIcon, HandThumbDownIcon, HandThumbUpIcon } from "@heroicons/react/24/outline";
 import { HandThumbDownIcon as SHandThumbDownIcon, HandThumbUpIcon as SHandThumbUpIcon } from "@heroicons/react/24/solid";
 import React from "react";
 import { highlighter } from '@nlux/highlighter';
 import '@nlux/highlighter/dark-theme.css';
+import { useDropzone } from "react-dropzone";
 
 type AdvancedOptions = Omit<AiChatProps, "adapter">;
 
@@ -63,9 +64,9 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
     const files: FileWithPreview[] | undefined = fileMap.get(uid);
     return <div className="rounded-lg shadow-sm">
       <span className="block">{prompt}</span>
-      <div className="mt-2">
-        {files && <Thumbnails files={files} />}
-      </div>
+      {files && <div className="mt-2">
+        <Thumbnails files={files} />
+      </div>}
     </div>
   }
   const ResponseRenderer: React.FC<ResponseRendererProps<string>> = React.memo((responseProps) => {
@@ -179,12 +180,35 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
 
   }, []);
 
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    setFiles(prevFiles => [...prevFiles, ...acceptedFiles.map(file => Object.assign(file, {
+      preview: URL.createObjectURL(file)
+    }))]);
+  }, []);
+
+  const { getRootProps, isDragActive } = useDropzone({
+    onDrop,
+    noClick: true,
+    noKeyboard: true
+  });
   const className = props.className || "";
   return (
-    <div className="flex flex-col w-[100%] h-full">
-      {controls?.enableFiles && <Files files={files} setFiles={setFiles} />}
+    <div className="flex flex-col w-[100%] h-full dropzone" {...getRootProps()}>
+      {controls?.enableFiles && <>
+        {isDragActive && (
+          <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-white bg-opacity-75 dark:bg-darkContainer dark:bg-opacity-75">
+            <div className="text-center flex flex-col items-center">
+              <ArrowUpTrayIcon className="h-12 w-12 text-primary dark:text-gray-200 mb-4 animate-bounce" />
+              <p className="text-lg font-semibold text-primary dark:text-gray-200 w-[400px] mx-auto">
+                Drop your images here to enhance your query with visual insights.
+              </p>
+            </div>
+          </div>
+        )}
+        <Files files={files} setFiles={setFiles} />
+      </>}
 
-      <div className="flex-1 w-full relative">
+      <div className={`flex-1 w-full relative ${isDragActive ? "hidden" : ""}`}>
         <main
           className={`items-center justify-between  ${className} h-full absolute`}
           style={props.style || {}}

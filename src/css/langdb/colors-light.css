@@ -9,7 +9,7 @@
     --nlux-WelcomeMessage-Avatar--BackgroundColor: transparent;
 
     /** Divider between composer and messages */
-    --nlux-ChatRoom-Divider--Color: #71717a;
+    --nlux-ChatRoom-Divider--Color: transparent;
 
     /** Conversation loader */
     --nlux-ChatRoom-Loader--Color: #71717a;
@@ -35,27 +35,27 @@
     /** Prompt input colors */
     --nlux-PromptInput--BackgroundColor: transparent;
     --nlux-PromptInput--BorderColor: transparent;
-    --nlux-PromptInput--TextColor: #71717a;
+    --nlux-PromptInput--TextColor: #ffffff;
 
     --nlux-PromptInput-Active--BackgroundColor: transparent;
     --nlux-PromptInput-Active--BorderColor: transparent;
-    --nlux-PromptInput-Active--TextColor: #000000;
+    --nlux-PromptInput-Active--TextColor: #ffffff;
 
-    --nlux-PromptInput-Disabled--BackgroundColor: transprent;
-    --nlux-PromptInput-Disabled--TextColor: #71717A;
-    --nlux-PromptInput-Disabled--BorderColor: transprent;
+    --nlux-PromptInput-Disabled--BackgroundColor: transparent;
+    --nlux-PromptInput-Disabled--TextColor: #b6b6bf;
+    --nlux-PromptInput-Disabled--BorderColor: transparent;
 
-    --nlux-PromptInput-Placeholder--TextColor: #71717a;
+    --nlux-PromptInput-Placeholder--TextColor: #ffffff;
     --nlux-PromptInput-Focus-Outline--Color: transparent;
 
     /** Submit button colors */
     --nlux-SubmitButton--BackgroundColor: transparent;
     --nlux-SubmitButton--BorderColor: transparent;
-    --nlux-SubmitButton--TextColor: #000000;
+    --nlux-SubmitButton--TextColor: #ffffff;
 
     --nlux-SubmitButton-Active--BackgroundColor: transparent;
     --nlux-SubmitButton-Active--BorderColor: transparent;
-    --nlux-SubmitButton-Active--TextColor: #000000;
+    --nlux-SubmitButton-Active--TextColor: #ffffff;
 
     --nlux-SubmitButton-Disabled--BackgroundColor: transparent;
     --nlux-SubmitButton-Disabled--BorderColor: transparent;
