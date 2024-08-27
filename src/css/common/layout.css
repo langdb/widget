@@ -111,6 +111,9 @@
     --nlux-cvStrt--hg: var(--nlux-ConversationStarter--Height, 101px);
 }
 
+.nlux-comp-chatItem.nlux-comp-chatItem .code-block pre {
+    white-space: pre-wrap;
+}
 .nlux-comp-chatItem.nlux-comp-chatItem--bubblesLayout.nlux-comp-chatItem--received>.nlux-comp-message {
     background-color: transparent !important;
 }
