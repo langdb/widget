@@ -51,6 +51,7 @@
     }
 
     > .nlux-chatRoom-container.nlux-chatRoom-starting {
+        background-color: var(--nlux-ChatRoom--BackgroundColor);
         > .nlux-conversation-container {
             display: none;
         }

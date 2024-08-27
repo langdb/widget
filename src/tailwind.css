@@ -12,6 +12,46 @@
 @tailwind colors;
 
 
+:root {
+  --primary-50: rgba(176, 72, 140, 0.1);
+  --primary-100: #f3d8e8;
+  --primary-200: #e5aed1;
+  --primary-300: #d983b9;
+  --primary-400: rgb(176, 72, 140);
+  --primary-500: #bf2e8a;
+  --primary-600: #a52675;
+  --primary-700: #811e5e;
+  --primary-800: #5d1647;
+  --primary-900: #370d2f;
+  --primary-default: rgb(176, 72, 140);
+
+  /* Light mode background and text colors */
+  --background-color: #ffffff;
+  --text-color: rgb(107 114 128/var(--tw-text-opacity));
+  --border-color: #e5e7eb;
+  --header-color: 'gray-50';
+}
+[data-mode="dark"] {
+  --primary-50: rgba(176, 72, 140, 0.1);
+  --primary-100: #f3d8e8;
+  --primary-200: #e5aed1;
+  --primary-300: #d983b9;
+  --primary-400: rgb(176, 72, 140);
+  --primary-500: #bf2e8a;
+  --primary-600: #a52675;
+  --primary-700: #811e5e;
+  --primary-800: #5d1647;
+  --primary-900: #370d2f;
+  --primary-default: rgb(176, 72, 140);
+  /* Dark mode background and text colors */
+  --background-color: #171717;
+  --text-color: rgb(156 163 175/var(--tw-text-opacity));
+  --border-color: #333333;
+  --header-color: #2c2c2c;
+  --border-color: #2c2c2c;
+}
+
+
 code {
   font-family: 'Roboto Mono';
 }

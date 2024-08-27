@@ -20370,14 +20370,14 @@ const $h = (n) => {
         style: m ? u : {},
         className: Jr(
           "light:text-slate-900 dark:text-white flex flex-1 bg-white dark:bg-darkContainer flex-col absolute p-[10px] pt-[0px]",
-          m ? o || "h-full w-full bottom-0 right-0" : "rounded border shadow-md h-[60vh] w-[40vw] min-h-[500px] bottom-16 right-16"
+          m ? o || "h-full w-full bottom-0 right-0" : "rounded border border-border shadow-md h-[60vh] w-[40vw] min-h-[500px] bottom-16 right-16"
         ),
         children: [
           /* @__PURE__ */ x.jsxs(
             "div",
             {
               className: "border-b py-[5px] flex justify-center items-center",
-              style: { zIndex: "99999" },
+              style: { zIndex: "9999" },
               children: [
                 /* @__PURE__ */ x.jsxs("div", { className: "flex gap-2", children: [
                   /* @__PURE__ */ x.jsx(
@@ -20399,11 +20399,11 @@ const $h = (n) => {
                     }
                   )
                 ] }),
-                /* @__PURE__ */ x.jsx("div", { className: "flex flex-1 justify-center", children: i })
+                /* @__PURE__ */ x.jsx("div", { className: "flex flex-1 justify-center dark:text-slate-200 ", children: i })
               ]
             }
           ),
-          /* @__PURE__ */ x.jsx("div", { className: "flex flex-1 overflow-scroll ", children: a })
+          /* @__PURE__ */ x.jsx("div", { className: "flex flex-1 overflow-scroll p-1 ", children: a })
         ]
       }
     ),

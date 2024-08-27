@@ -9,20 +9,27 @@ module.exports = {
     },
     colors: {
       ...colors,
-      darkContainer: '#202020',  
+      darkContainer: '#212121',  
       darkHeader: '#2c2c2c',
       primary: {
-        100: '#f3d8e8',
-        200: '#e5aed1',
-        300: '#d983b9',
-        400: 'rgb(176, 72, 140)',
-        500: '#bf2e8a',
-        600: '#a52675',
-        700: '#811e5e',
-        800: '#5d1647',
-        900: '#370d2f',
-        DEFAULT: 'rgb(176, 72, 140)'
-      }
+        50: 'var(--primary-50)',
+        100: 'var(--primary-100)',
+        200: 'var(--primary-200)',
+        300: 'var(--primary-300)',
+        400: 'var(--primary-400)',
+        500: 'var(--primary-500)',
+        600: 'var(--primary-600)',
+        700: 'var(--primary-700)',
+        800: 'var(--primary-800)',
+        900: 'var(--primary-900)',
+        DEFAULT: 'var(--primary-default)',
+      },
+      text: {
+        DEFAULT: 'var(--text-color)',
+      },
+      background: 'var(--background-color)',
+      header: 'var(--header-color)',
+      border: 'var(--border-color)',
     },
     keyframes: {
       slideDown: {

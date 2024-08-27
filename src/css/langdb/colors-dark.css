@@ -1,3 +1,7 @@
+.nlux-AiChat-root.nlux-theme-nova[data-color-scheme='dark'] {
+    --nlux-ChatRoom--BackgroundColor: #212121 !important;
+
+}
 .nlux-AiChat-root.nlux-theme-langdb[data-color-scheme='dark'] {
     /** Exceptions box */
     --nlux-Exceptions--BackgroundColor: tomato;
@@ -15,7 +19,7 @@
     --nlux-ChatRoom-Loader--Color: #71717a;
 
     /** Conversation content color */
-    --nlux-ChatRoom--BackgroundColor: #171717;
+    --nlux-ChatRoom--BackgroundColor: #212121;
     --nlux-ChatRoom--BorderColor: transparent;
     --nlux-ChatRoom--TextColor: rgb(155 155 155);
 

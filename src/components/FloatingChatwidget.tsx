@@ -46,12 +46,12 @@ export const FloatingChatWidget = (props: {
             "light:text-slate-900 dark:text-white flex flex-1 bg-white dark:bg-darkContainer flex-col absolute p-[10px] pt-[0px]",
             isMaximized
               ? maximizedPanelClassName || "h-full w-full bottom-0 right-0"
-              : "rounded border shadow-md h-[60vh] w-[40vw] min-h-[500px] bottom-16 right-16",
+              : "rounded border border-border shadow-md h-[60vh] w-[40vw] min-h-[500px] bottom-16 right-16",
           )}
         >
           <div
             className="border-b py-[5px] flex justify-center items-center"
-            style={{ zIndex: "99999" }}
+            style={{ zIndex: "9999" }}
           >
             <div className="flex gap-2">
               <button
@@ -71,9 +71,9 @@ export const FloatingChatWidget = (props: {
                 {isMaximized ? <MinimizeIcon /> : <MaximizeIcon />}
               </button>}
             </div>
-            {<div className="flex flex-1 justify-center">{title}</div>}
+            {<div className="flex flex-1 justify-center dark:text-slate-200 ">{title}</div>}
           </div>
-          <div className="flex flex-1 overflow-scroll ">{children}</div>
+          <div className="flex flex-1 overflow-scroll p-1 ">{children}</div>
         </div>
       )}
       {!isChatOpen && (

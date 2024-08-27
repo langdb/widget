@@ -15,6 +15,17 @@ export const SimpleFloatingChatWidget: Story = {
   args: {},
 };
 
+export const DarkFloatingChatWidget: Story = {
+  args: {
+    advancedOptions: {
+      displayOptions: {
+        themeId: 'nova',
+        colorScheme: 'dark',
+      }
+    }
+  },
+}
+
 export const StartersFloatingChatWidget: Story = {
   args: {
     advancedOptions: {
