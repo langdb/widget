@@ -15,10 +15,10 @@
     --nlux-chtr--bgClr: var(--nlux-ChatRoom--BackgroundColor);
     --nlux-chtr--brdClr: var(--nlux-ChatRoom--BorderColor);
     --nlux-chtr--txtClr: var(--nlux-ChatRoom--TextColor, black);
+    --nlux-border-color: #e0e0e0;
+    --nlux-textbox-bg: #f5f5f588;
 
-    &[data-color-scheme='dark'] {
-        --nlux-chtr--txtClr: var(--nlux-ChatRoom--TextColor, rgb(236, 236, 236));
-    }
+   
 
     /** Divider between composer and messages */
     --nlux-chtr-dvr--clr: var(--nlux-ChatRoom-Divider--Color);
@@ -92,4 +92,11 @@
     --nlux-cvStrt--bgClr: var(--nlux-ConversationStarter--BackgroundColor);
     --nlux-cvStrt--brdClr: var(--nlux-ConversationStarter--BorderColor);
     --nlux-cvStrt--txtClr: var(--nlux-ConversationStarter--TextColor);
+    
+
+    &[data-color-scheme='dark'] {
+        --nlux-chtr--txtClr: var(--nlux-ChatRoom--TextColor, rgb(236, 236, 236));
+        --nlux-border-color: #2f2f2f;
+        --nlux-textbox-bg: #2f2f2f;
+    }
 }

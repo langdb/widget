@@ -5,6 +5,7 @@
     flex-direction: row;
     justify-content: center;
     background-color: transparent;
+    
     gap: var(--nlux-prmBx--gap);
 
     >textarea {
