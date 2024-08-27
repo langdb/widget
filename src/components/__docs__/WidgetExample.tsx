@@ -2,8 +2,8 @@ import React, { FC } from "react";
 import { Widget, WidgetProps } from "../Widget";
 
 const Example: FC<WidgetProps> = ({
-  publicId = "ae6c32f0-ef4b-4f7f-86bd-9c1d54b2d865",
-  modelName = "cities_info_model",
+  publicId = "e2ceccd1-a76e-4875-83e0-25cefc836b79",
+  modelName = "my_super_assistant",
   advancedOptions = {},
 }) => {
   return (
