@@ -13,15 +13,22 @@
         border: var(--nlux-chtr--brdrWd) solid var(--nlux-chtr--brdClr);
         border-radius: 0px;
         background-color: var(--nlux-chtr--bgClr);
+        height: 40px;
 
         > .nlux-composer-container {
             border: 1px solid var(--nlux-border-color) !important;
             border-radius: 26px;
             background-color: var(--nlux-textbox-bg) !important;
             margin-bottom: 20px;
-            min-height: 40px;
             textarea {
                 color: var(--nlux-ConversationStarter--TextColor);
+                padding: 0px;
+                height: 40px;
+                padding-left: 10px;
+                box-sizing: border-box;
+                line-height: 1.5rem;
+                font-size: 1rem;
+                padding: .5rem .75rem;
             };
             textarea::placeholder {
                 color: var(--nlux-ConversationStarter--TextColor);
@@ -29,4 +36,12 @@
             };
         }
     }
+}
+.nlux-AiChat-root>.nlux-chatRoom-container>.nlux-composer-container {
+    height: 40px;
+    min-height: 40px !important;
+    padding-right: 5px;
+}
+.nlux-comp-composer.nlux-composer--typing button>.nlux-comp-sendIcon {
+    display: flex !important;
 }

@@ -92,11 +92,12 @@
     --nlux-cvStrt--bgClr: var(--nlux-ConversationStarter--BackgroundColor);
     --nlux-cvStrt--brdClr: var(--nlux-ConversationStarter--BorderColor);
     --nlux-cvStrt--txtClr: var(--nlux-ConversationStarter--TextColor);
-    
+    --nlux-SubmitButton--Width: 32px !important;
 
     &[data-color-scheme='dark'] {
         --nlux-chtr--txtClr: var(--nlux-ChatRoom--TextColor, rgb(236, 236, 236));
         --nlux-border-color: #2f2f2f;
         --nlux-textbox-bg: #2f2f2f;
+        --nlux-SubmitButton--Width: 32px !important;
     }
 }

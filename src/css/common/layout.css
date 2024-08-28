@@ -1,4 +1,5 @@
 .nlux-AiChat-root {
+    --nlux-prmInp-hg: var(--nlux-PromptInput--Height, 40px);
     /** Exceptions box */
     --nlux-exp--pdng: var(--nlux-Exceptions--Padding, 10px);
     --nlux-exp--brdrWd: var(--nlux-Exceptions--BorderWidth);
@@ -90,7 +91,7 @@
     --nlux-prmBx--gap: var(--nlux-Composer--Gap, 10px); /* Gap between prompt input and submit button */
 
     /** Submit button */
-    --nlux-sbmBt--wd: var(--nlux-SubmitButton--Width, 80px);
+    --nlux-sbmBt--wd: 32px;
     --nlux-sbmBt--brdrWd: var(--nlux-SubmitButton--BorderWidth);
     --nlux-sbmBt--brdrRd: var(--nlux-SubmitButton--BorderRadius);
     --nlux-sbmBt-fcs-otln--wd: var(--nlux-SubmitButton-Focus-Outline--Width, 6px);
