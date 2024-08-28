@@ -1,7 +1,7 @@
 import { ChatAdapter, StreamingAdapterObserver } from "@nlux/react";
 import { FileWithPreview, MessageRequest, ResizeOptions, ResponseCallbackOptions, createInnerMessage } from "../types";
 import { useState } from "react";
-import { fetchEventSource } from '@microsoft/fetch-event-source';
+import { fetchEventSource, FetchEventSourceInit } from '@microsoft/fetch-event-source';
 
 export const DEV_SERVER_URL = "https://api.dev.langdb.ai";
 export interface AdapterProps {
@@ -15,6 +15,12 @@ export interface AdapterProps {
   userId?: string;
   getAccessToken?: () => Promise<string>;
   responseCallback?: (_opts: ResponseCallbackOptions) => void;
+}
+
+export interface SubmitProps extends FetchEventSourceInit {
+  widgetProps: AdapterProps;
+  message: string;
+  threadId?: string;
 }
 
 export const getHeaders = async (props: AdapterProps): Promise<any> => {
@@ -31,6 +37,41 @@ export const getHeaders = async (props: AdapterProps): Promise<any> => {
   return headers;
 }
 class FatalError extends Error { }
+
+export const onSubmit = async (submitProps: SubmitProps) => {
+  const { widgetProps: props, message, threadId, onopen, onmessage, onerror, onclose } = submitProps;
+  const { files, fileResizeOptions: resizeOptions } = props;
+  const serverUrl = props.serverUrl || DEV_SERVER_URL;
+  const apiUrl = `${serverUrl}/stream`;
+  const { modelName, agentParams } = props;
+
+  try {
+    const headers = await getHeaders(props);
+    const innerMsg = await createInnerMessage({ files, message, resizeOptions });
+    const request: MessageRequest = {
+      model_name: modelName,
+      parameters: agentParams || {},
+      user_id: props.userId || "",
+      thread_id: threadId,
+      message: innerMsg,
+    };
+    await fetchEventSource(apiUrl, {
+      method: "POST",
+      body: JSON.stringify(request),
+      headers,
+      credentials: 'include',
+      onopen,
+      onmessage,
+      onclose,
+      onerror
+    });
+  } catch (e: any) {
+    const error = new Error(e.toString());
+    if (props.responseCallback) {
+      props.responseCallback({ error, modelName });
+    }
+  }
+}
 export const useAdapter = (props: AdapterProps): { adapter: ChatAdapter, threadId?: string, messageId?: string } => {
   const { files, fileResizeOptions: resizeOptions } = props;
   const serverUrl = props.serverUrl || DEV_SERVER_URL;
