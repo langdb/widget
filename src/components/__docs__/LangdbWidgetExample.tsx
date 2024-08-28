@@ -1,7 +1,8 @@
 import React, { FC } from "react";
 import { Widget, WidgetProps } from "../Widget";
+import { LangdbWidget } from "../LangdbWidget";
 
-const Example: FC<WidgetProps> = ({
+const LangdbWidgetExample: FC<WidgetProps> = ({
   publicId = "445e863b-83a9-4ec9-8041-aa0514239472",
   modelName = "thu_super_assistant",
   advancedOptions = {},
@@ -16,7 +17,7 @@ const Example: FC<WidgetProps> = ({
       }}
     >
       <div className="flex flex-1 ">
-        <Widget
+        <LangdbWidget
           className={"w-full h-full"}
           publicId={publicId}
           modelName={modelName}
@@ -27,4 +28,4 @@ const Example: FC<WidgetProps> = ({
   );
 };
 
-export default Example;
+export default LangdbWidgetExample;
