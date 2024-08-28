@@ -1,96 +1,93 @@
-.nlux-AiChat-root.nlux-theme-nova[data-color-scheme='dark'] {
-    --nlux-ChatRoom--BackgroundColor: #212121 !important;
 
-}
-.nlux-AiChat-root.nlux-theme-langdb[data-color-scheme='dark'] {
+.langdb-chat-1[data-color-scheme='dark'] {
     /** Exceptions box */
-    --nlux-Exceptions--BackgroundColor: tomato;
-    --nlux-Exceptions--BorderColor: darkred;
-    --nlux-Exceptions--TextColor: white;
+    --langdb-Exceptions--BackgroundColor: tomato;
+    --langdb-Exceptions--BorderColor: darkred;
+    --langdb-Exceptions--TextColor: white;
 
     /** Welcome message */
-    --nlux-WelcomeMessage-Avatar--BorderColor: transparent;
-    --nlux-WelcomeMessage-Avatar--BackgroundColor: transparent;
+    --langdb-WelcomeMessage-Avatar--BorderColor: transparent;
+    --langdb-WelcomeMessage-Avatar--BackgroundColor: transparent;
 
     /** Divider between composer and messages */
-    --nlux-ChatRoom-Divider--Color: transparent;
+    --langdb-ChatRoom-Divider--Color: transparent;
 
     /** Conversation loader */
-    --nlux-ChatRoom-Loader--Color: #71717a;
+    --langdb-ChatRoom-Loader--Color: #71717a;
 
     /** Conversation content color */
-    --nlux-ChatRoom--BackgroundColor: #212121;
-    --nlux-ChatRoom--BorderColor: transparent;
-    --nlux-ChatRoom--TextColor: rgb(155 155 155);
+    --langdb-ChatRoom--BackgroundColor: #212121;
+    --langdb-ChatRoom--BorderColor: transparent;
+    --langdb-ChatRoom--TextColor: rgb(155 155 155);
 
     /** Participant info in chat */
-    --nlux-ChatItem-ParticipantName--Color: #ffffff;
+    --langdb-ChatItem-ParticipantName--Color: #ffffff;
 
     /* Human message in chat */
-    --nlux-HumanMessage--BackgroundColor: #323232;
-    --nlux-HumanMessage--BorderColor: transparent;
-    --nlux-HumanMessage--TextColor: rgb(236, 236, 236);
+    --langdb-HumanMessage--BackgroundColor: #323232;
+    --langdb-HumanMessage--BorderColor: transparent;
+    --langdb-HumanMessage--TextColor: rgb(236, 236, 236);
 
     /** AI message in chat */
-    --nlux-AiMessage--BackgroundColor: #494949;
+    --langdb-AiMessage--BackgroundColor: #494949;
     
-    --nlux-AiMessage--BorderColor: transparent;
-    --nlux-AiMessage--TextColor: rgb(236, 236, 236);
+    --langdb-AiMessage--BorderColor: transparent;
+    --langdb-AiMessage--TextColor: rgb(236, 236, 236);
 
     /** Prompt input colors */
-    --nlux-PromptInput--BackgroundColor: transparent;
-    --nlux-PromptInput--BorderColor: transparent;
-    --nlux-PromptInput--TextColor: #71717a;
+    --langdb-PromptInput--BackgroundColor: transparent;
+    --langdb-PromptInput--BorderColor: transparent;
+    --langdb-PromptInput--TextColor: #71717a;
 
-    --nlux-PromptInput-Active--BackgroundColor: transparent;
-    --nlux-PromptInput-Active--BorderColor: transparent;
-    --nlux-PromptInput-Active--TextColor: #ffffff;
+    --langdb-PromptInput-Active--BackgroundColor: transparent;
+    --langdb-PromptInput-Active--BorderColor: transparent;
+    --langdb-PromptInput-Active--TextColor: #ffffff;
 
-    --nlux-PromptInput-Disabled--BackgroundColor: transprent;
-    --nlux-PromptInput-Disabled--TextColor: transprent;
-    --nlux-PromptInput-Disabled--BorderColor: transprent;
+    --langdb-PromptInput-Disabled--BackgroundColor: transprent;
+    --langdb-PromptInput-Disabled--TextColor: transprent;
+    --langdb-PromptInput-Disabled--BorderColor: transprent;
 
-    --nlux-PromptInput-Placeholder--TextColor: rgb(236, 236, 236);
-    --nlux-PromptInput-Focus-Outline--Color: transparent;
+    --langdb-PromptInput-Placeholder--TextColor: rgb(236, 236, 236);
+    --langdb-PromptInput-Focus-Outline--Color: transparent;
 
     /** Submit button colors */
-    --nlux-SubmitButton--BackgroundColor: transparent;
-    --nlux-SubmitButton--BorderColor: transparent;
-    --nlux-SubmitButton--TextColor: #71717a;
+    --langdb-SubmitButton--BackgroundColor: transparent;
+    --langdb-SubmitButton--BorderColor: transparent;
+    --langdb-SubmitButton--TextColor: #71717a;
 
-    --nlux-SubmitButton-Active--BackgroundColor: transparent;
-    --nlux-SubmitButton-Active--BorderColor: transparent;
-    --nlux-SubmitButton-Active--TextColor: #ffffff;
+    --langdb-SubmitButton-Active--BackgroundColor: transparent;
+    --langdb-SubmitButton-Active--BorderColor: transparent;
+    --langdb-SubmitButton-Active--TextColor: #ffffff;
 
-    --nlux-SubmitButton-Disabled--BackgroundColor: transparent;
-    --nlux-SubmitButton-Disabled--BorderColor: transparent;
-    --nlux-SubmitButton-Disabled--TextColor: #71717a;
+    --langdb-SubmitButton-Disabled--BackgroundColor: transparent;
+    --langdb-SubmitButton-Disabled--BorderColor: transparent;
+    --langdb-SubmitButton-Disabled--TextColor: #71717a;
 
-    --nlux-SubmitButton-Focus-Outline--Color: transparent;
+    --langdb-SubmitButton-Focus-Outline--Color: transparent;
 
     /** Code block */
-    --nlux-CodeBlock--BackgroundColor: #2b2b2b;
-    --nlux-CodeBlock--BorderColor: transparent;
-    --nlux-CodeBlock--TextColor: #ffffff;
-    --nlux-CodeBlock-Hover--BackgroundColor: #3b3b3b;
+    --langdb-CodeBlock--BackgroundColor: #2b2b2b;
+    --langdb-CodeBlock--BorderColor: transparent;
+    --langdb-CodeBlock--TextColor: #ffffff;
+    --langdb-CodeBlock-Hover--BackgroundColor: #3b3b3b;
 
     /** Code block copy button */
-    --nlux-CodeBlock-CopyButton--BackgroundColor: #434342;
-    --nlux-CodeBlock-CopyButton--BorderColor: #c5c5c3;
-    --nlux-CodeBlock-CopyButton--TextColor: #ffffff;
+    --langdb-CodeBlock-CopyButton--BackgroundColor: #434342;
+    --langdb-CodeBlock-CopyButton--BorderColor: #c5c5c3;
+    --langdb-CodeBlock-CopyButton--TextColor: #ffffff;
 
     /** Code block copy button in clicked state */
-    --nlux-CodeBlock-CopyButton-Clicked--BackgroundColor: #393930;
-    --nlux-CodeBlock-CopyButton-Clicked--BorderColor: #393930;
-    --nlux-CodeBlock-CopyButton-Clicked--TextColor: #ffffff;
+    --langdb-CodeBlock-CopyButton-Clicked--BackgroundColor: #393930;
+    --langdb-CodeBlock-CopyButton-Clicked--BorderColor: #393930;
+    --langdb-CodeBlock-CopyButton-Clicked--TextColor: #ffffff;
 
     /** Inline code in markdown */
-    --nlux-InlineCode--BackgroundColor: #393930;
-    --nlux-InlineCode--BorderColor: transparent;
-    --nlux-InlineCode--TextColor: #ffffff;
+    --langdb-InlineCode--BackgroundColor: #393930;
+    --langdb-InlineCode--BorderColor: transparent;
+    --langdb-InlineCode--TextColor: #ffffff;
 
     /** Conversation starters */
-    --nlux-ConversationStarter--BackgroundColor: var(--nlux-HumanMessage--BackgroundColor);
-    --nlux-ConversationStarter--BorderColor: transparent;
-    --nlux-ConversationStarter--TextColor: var(--nlux-HumanMessage--TextColor);
+    --langdb-ConversationStarter--BackgroundColor: var(--langdb-HumanMessage--BackgroundColor);
+    --langdb-ConversationStarter--BorderColor: transparent;
+    --langdb-ConversationStarter--TextColor: var(--langdb-HumanMessage--TextColor);
 }

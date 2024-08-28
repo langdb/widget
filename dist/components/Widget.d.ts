@@ -18,4 +18,7 @@ export interface WidgetProps extends AdapterProps {
     advancedOptions?: AdvancedOptions;
 }
 export declare const Widget: React.FC<WidgetProps>;
+export declare const CopyToClipboard: React.FC<{
+    content: string;
+} & React.HTMLAttributes<HTMLDivElement>>;
 export {};

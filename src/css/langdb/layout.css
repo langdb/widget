@@ -1,124 +1,120 @@
-.nlux-AiChat-root.nlux-theme-langdb {
-    /**
-     * Theme-specific local variables.
-     */
+.langdb-chat {
+    --langdb-langdb--FontFamily: 'Arial', sans-serif;
+    --langdb-langdb--MonoFontFamily: monospace;
 
-    --nlux-langdb--FontFamily: 'Arial', sans-serif;
-    --nlux-langdb--MonoFontFamily: monospace;
-
-    --nlux-langdb--BorderWidth: 0;
-    --nlux-langdb--LineHeight: 1.6;
-    --nlux-langdb--FlexGap: 12px;
+    --langdb-langdb--BorderWidth: 0;
+    --langdb-langdb--LineHeight: 1.6;
+    --langdb-langdb--FlexGap: 12px;
 
     /**
      * Definitions and overrides of required theme variables.
      */
 
     /** Exceptions box */
-    --nlux-Exceptions--Padding: 5px;
-    --nlux-Exceptions--BorderWidth: var(--nlux-langdb--BorderWidth);
-    --nlux-Exceptions--BorderRadius: 26px;
+    --langdb-Exceptions--Padding: 5px;
+    --langdb-Exceptions--BorderWidth: var(--langdb-langdb--BorderWidth);
+    --langdb-Exceptions--BorderRadius: 26px;
 
     /** Welcome message */
-    --nlux-WelcomeMessage-Avatar--Width: 48px;
-    --nlux-WelcomeMessage-PersonaName--FontSize: 18px;
-    --nlux-WelcomeMessage-PersonaName--FontWeight: 600;
-    --nlux-WelcomeMessage-Text--FontSize: 15px;
-    --nlux-WelcomeMessage-Text--FontWeight: 400;
-    --nlux-WelcomeMessage--Gap: 4px;
+    --langdb-WelcomeMessage-Avatar--Width: 48px;
+    --langdb-WelcomeMessage-PersonaName--FontSize: 18px;
+    --langdb-WelcomeMessage-PersonaName--FontWeight: 600;
+    --langdb-WelcomeMessage-Text--FontSize: 15px;
+    --langdb-WelcomeMessage-Text--FontWeight: 400;
+    --langdb-WelcomeMessage--Gap: 4px;
 
     /** Divider between conversation and composer */
-    --nlux-ChatRoom-Divider--MarginTop: 10px;
-    --nlux-ChatRoom-Divider--MarginBottom: 10px;
-    --nlux-ChatRoom-Divider--BorderWidth: 1px;
+    --langdb-ChatRoom-Divider--MarginTop: 10px;
+    --langdb-ChatRoom-Divider--MarginBottom: 10px;
+    --langdb-ChatRoom-Divider--BorderWidth: 1px;
 
     /** Chat-room container */
-    --nlux-ChatRoom--LineHeight: var(--nlux-langdb--LineHeight);
-    --nlux-ChatRoom--FontWeight: 400;
-    --nlux-ChatRoom--FontFamily: var(--nlux-langdb--FontFamily);
-    --nlux-ChatRoom--FontSize: 16px;
+    --langdb-ChatRoom--LineHeight: var(--langdb-langdb--LineHeight);
+    --langdb-ChatRoom--FontWeight: 400;
+    --langdb-ChatRoom--FontFamily: var(--langdb-langdb--FontFamily);
+    --langdb-ChatRoom--FontSize: 16px;
 
-    --nlux-ChatRoom--Padding: 20px;
-    --nlux-ChatRoom--BorderRadius: 18px;
-    --nlux-ChatRoom--BorderWidth: var(--nlux-langdb--BorderWidth);
+    --langdb-ChatRoom--Padding: 20px;
+    --langdb-ChatRoom--BorderRadius: 18px;
+    --langdb-ChatRoom--BorderWidth: var(--langdb-langdb--BorderWidth);
 
     /** Chat-room loader */
-    --nlux-ChatRoom-Loader--Width: 25px;
+    --langdb-ChatRoom-Loader--Width: 25px;
 
     /** Chat item */
-    --nlux-ChatItem--AlignItems: flex-end;
+    --langdb-ChatItem--AlignItems: flex-end;
 
     /** Chat item participant info */
-    --nlux-ChatItem-ParticipantInfo--Gap: var(--nlux-langdb--FlexGap);
-    --nlux-ChatItem-ParticipantName--FontSize: 16px;
-    --nlux-ChatItem-ParticipantName--FontWeight: 700;
+    --langdb-ChatItem-ParticipantInfo--Gap: var(--langdb-langdb--FlexGap);
+    --langdb-ChatItem-ParticipantName--FontSize: 16px;
+    --langdb-ChatItem-ParticipantName--FontWeight: 700;
 
     /** Chat item avatar */
-    --nlux-ChatItem-Avatar--Width: 30px;
-    --nlux-ChatItem-Avatar--BorderRadius: 50%;
-    --nlux-ChatItem-Avatar--BorderWidth: var(--nlux-langdb--BorderWidth);
+    --langdb-ChatItem-Avatar--Width: 30px;
+    --langdb-ChatItem-Avatar--BorderRadius: 50%;
+    --langdb-ChatItem-Avatar--BorderWidth: var(--langdb-langdb--BorderWidth);
 
     /** Chat item message */
-    --nlux-ChatItem-Message--Gap: var(--nlux-langdb--FlexGap);
+    --langdb-ChatItem-Message--Gap: var(--langdb-langdb--FlexGap);
     /** Gap between elements within message */
 
     /** Chat item message in bubbles display layout */
-    --nlux-ChatItem-Message-BubbleLayout--BorderWidth: 0px;
-    --nlux-ChatItem-Message-BubbleLayout--BorderRadius: 26px;
-    --nlux-ChatItem-Message-BubbleLayout--PaddingTopBottom: 10px;
-    --nlux-ChatItem-Message-BubbleLayout--PaddingLeftRight: 15px;
+    --langdb-ChatItem-Message-BubbleLayout--BorderWidth: 0px;
+    --langdb-ChatItem-Message-BubbleLayout--BorderRadius: 26px;
+    --langdb-ChatItem-Message-BubbleLayout--PaddingTopBottom: 10px;
+    --langdb-ChatItem-Message-BubbleLayout--PaddingLeftRight: 15px;
 
     /** Chat item message in list display layout */
-    --nlux-ChatItem-Message-ListLayout--BorderWidth: 0px;
-    --nlux-ChatItem-Message-ListLayout--BorderRadius: 26px;
-    --nlux-ChatItem-Message-ListLayout--PaddingTopBottom: 5px;
-    --nlux-ChatItem-Message-ListLayout--PaddingLeftRight: 10px;
-    --nlux-ChatItem-Message-ListLayout--MarginTop: -10px;
-    --nlux-ChatItem-Message-ListLayout--MarginBottom: 0px;
-    --nlux-ChatItem-Message-ListLayout--MarginLeft: 32px;
-    --nlux-ChatItem-Message-ListLayout--MarginRight: 0px;
+    --langdb-ChatItem-Message-ListLayout--BorderWidth: 0px;
+    --langdb-ChatItem-Message-ListLayout--BorderRadius: 26px;
+    --langdb-ChatItem-Message-ListLayout--PaddingTopBottom: 5px;
+    --langdb-ChatItem-Message-ListLayout--PaddingLeftRight: 10px;
+    --langdb-ChatItem-Message-ListLayout--MarginTop: -10px;
+    --langdb-ChatItem-Message-ListLayout--MarginBottom: 0px;
+    --langdb-ChatItem-Message-ListLayout--MarginLeft: 32px;
+    --langdb-ChatItem-Message-ListLayout--MarginRight: 0px;
 
     /** Chat item message code block */
-    --nlux-CodeBlock--FontSize: 14px;
-    --nlux-CodeBlock--FontFamily: 'Arial', sans-serif;
-    --nlux-CodeBlock--Padding: 10px;
-    --nlux-CodeBlock--BorderWidth: var(--nlux-langdb--BorderWidth);
-    --nlux-CodeBlock--BorderRadius: 12px;
+    --langdb-CodeBlock--FontSize: 14px;
+    --langdb-CodeBlock--FontFamily: 'Arial', sans-serif;
+    --langdb-CodeBlock--Padding: 10px;
+    --langdb-CodeBlock--BorderWidth: var(--langdb-langdb--BorderWidth);
+    --langdb-CodeBlock--BorderRadius: 12px;
 
     /** Code block copy button */
-    --nlux-CodeBlock-CopyButton--Width: 22px;
-    --nlux-CodeBlock-CopyButton--Height: 22px;
-    --nlux-CodeBlock-CopyButton--Padding: 2px;
-    --nlux-CodeBlock-CopyButton--BorderRadius: 4px;
-    --nlux-CodeBlock-CopyButton--BorderWidth: var(--nlux-langdb--BorderWidth);
+    --langdb-CodeBlock-CopyButton--Width: 22px;
+    --langdb-CodeBlock-CopyButton--Height: 22px;
+    --langdb-CodeBlock-CopyButton--Padding: 2px;
+    --langdb-CodeBlock-CopyButton--BorderRadius: 4px;
+    --langdb-CodeBlock-CopyButton--BorderWidth: var(--langdb-langdb--BorderWidth);
 
     /** Inline code in markdown */
-    --nlux-InlineCode--BorderRadius: 6px;
-    --nlux-InlineCode--BorderWidth: 2px;
-    --nlux-InlineCode--Padding: 0 2px;
-    --nlux-InlineCode--FontSize: 18px;
+    --langdb-InlineCode--BorderRadius: 6px;
+    --langdb-InlineCode--BorderWidth: 2px;
+    --langdb-InlineCode--Padding: 0 2px;
+    --langdb-InlineCode--FontSize: 18px;
 
     /** Composer */
-    --nlux-Composer--Gap: 5px;
+    --langdb-Composer--Gap: 5px;
 
     /** Submit button */
-    --nlux-SubmitButton--Width: 65px;
-    --nlux-SubmitButton--BorderWidth: var(--nlux-langdb--BorderWidth);
-    --nlux-SubmitButton--BorderRadius: 12px;
-    --nlux-SubmitButton-Focus-Outline--Width: 2px;
+    --langdb-SubmitButton--Width: 65px;
+    --langdb-SubmitButton--BorderWidth: var(--langdb-langdb--BorderWidth);
+    --langdb-SubmitButton--BorderRadius: 12px;
+    --langdb-SubmitButton-Focus-Outline--Width: 2px;
 
     /** Composer input */
-    --nlux-PromptInput--FontFamily: var(--nlux-langdb--FontFamily);
-    --nlux-PromptInput--FontSize: 16px;
-    --nlux-PromptInput--BorderWidth: 0;
-    --nlux-PromptInput--BorderRadius: 26px;
-    --nlux-PromptInput-Focus-Outline--Width: 2px;
+    --langdb-PromptInput--FontFamily: var(--langdb-langdb--FontFamily);
+    --langdb-PromptInput--FontSize: 16px;
+    --langdb-PromptInput--BorderWidth: 0;
+    --langdb-PromptInput--BorderRadius: 26px;
+    --langdb-PromptInput-Focus-Outline--Width: 2px;
 
     /** Conversation starters */
-    --nlux-ConversationStarter--Padding: 0 10px;
-    --nlux-ConversationStarter--BorderRadius: 6px;
-    --nlux-ConversationStarter--BorderWidth: 0;
-    --nlux-ConversationStarter--Gap: var(--nlux-langdb--FlexGap);
-    --nlux-ConversationStarter--Width: 160px;
-    --nlux-ConversationStarter--Height: 101px;
+    --langdb-ConversationStarter--Padding: 0 10px;
+    --langdb-ConversationStarter--BorderRadius: 6px;
+    --langdb-ConversationStarter--BorderWidth: 0;
+    --langdb-ConversationStarter--Gap: var(--langdb-langdb--FlexGap);
+    --langdb-ConversationStarter--Width: 160px;
+    --langdb-ConversationStarter--Height: 101px;
 }

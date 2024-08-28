@@ -11,6 +11,8 @@ module.exports = {
       ...colors,
       darkContainer: '#212121',  
       darkHeader: '#2c2c2c',
+      darkcolorGray: 'rgb(155 155 155)',
+      darkcolorWhite: 'rgb(236, 236, 236)',
       primary: {
         50: 'var(--primary-50)',
         100: 'var(--primary-100)',

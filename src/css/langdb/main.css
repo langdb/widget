@@ -3,4 +3,8 @@
 @import './colors-dark.css';
 @import './layout.css';
 @import './icons.css';
-@import '../common/main.css';
+
+.langdb-input {
+  background: transparent !important;
+  border: none;
+}
