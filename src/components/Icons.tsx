@@ -5,9 +5,9 @@ export const MinusIcon = (props: React.PropsWithoutRef<React.SVGProps<SVGSVGElem
   )
 }
 
-export const Avatar = () => {
+export const Avatar = (props: React.PropsWithoutRef<React.SVGProps<SVGSVGElement>>) => {
   return (
-    <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <circle cx="100" cy="100" r="99.5" stroke="#B0488C" />
       <g clipPath="url(#clip0_31_12)">
         <path
