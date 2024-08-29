@@ -2,9 +2,10 @@ import React, { FC } from "react";
 import { Widget, WidgetProps } from "../Widget";
 
 const Example: FC<WidgetProps> = ({
-  publicId = "e2ceccd1-a76e-4875-83e0-25cefc836b79",
-  modelName = "my_super_assistant",
-  advancedOptions = {},
+  publicId = "445e863b-83a9-4ec9-8041-aa0514239472",
+  modelName = "thu_super_assistant",
+  theme = 'light',
+  starters = []
 }) => {
   return (
     <div
@@ -20,7 +21,8 @@ const Example: FC<WidgetProps> = ({
           className={"w-full h-full"}
           publicId={publicId}
           modelName={modelName}
-          advancedOptions={advancedOptions}
+          theme={theme}
+          starters={starters}
         />
       </div>
     </div>

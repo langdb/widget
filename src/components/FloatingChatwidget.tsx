@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-
+import './FloatWidget.css';
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
@@ -38,20 +38,20 @@ export const FloatingChatWidget = (props: {
   }, []);
 
   return (
-    <div className={classNames(theme || "dark")}>
+    <div className={classNames( theme === 'dark' ? 'floating-dark' : '')}>
       {isChatOpen && (
         <div
           style={isMaximized ? maximizedPanelStyle : {}}
           className={classNames(
-            "light:text-slate-900 dark:text-white flex flex-1 bg-white dark:bg-darkContainer flex-col absolute p-[10px] pt-[0px]",
+            'langdb-floating-widget',
+            "flex flex-1 flex-col absolute p-[10px] pt-[0px]",
             isMaximized
               ? maximizedPanelClassName || "h-full w-full bottom-0 right-0"
-              : "rounded border border-border shadow-md h-[60vh] w-[40vw] min-h-[500px] bottom-16 right-16",
+              : "rounded border border-border shadow-md h-[60vh] w-[45vw] min-h-[500px] bottom-16 right-16",
           )}
         >
           <div
             className="border-b py-[5px] flex justify-center items-center"
-            style={{ zIndex: "9999" }}
           >
             <div className="flex gap-2">
               <button
@@ -71,7 +71,7 @@ export const FloatingChatWidget = (props: {
                 {isMaximized ? <MinimizeIcon /> : <MaximizeIcon />}
               </button>}
             </div>
-            {<div className="flex flex-1 justify-center dark:text-slate-200 ">{title}</div>}
+            {<div className="flex flex-1 justify-center header-title">{title}</div>}
           </div>
           <div className="flex flex-1 overflow-scroll p-1 ">{children}</div>
         </div>

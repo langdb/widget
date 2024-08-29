@@ -1,21 +1,18 @@
-import { ChatItem, AiChatProps, AssistantPersona, UserPersona } from '@nlux/react';
 import { AdapterProps } from './adapter';
 import { default as React } from 'react';
+import { ChatMessage } from '../dto/ChatMessage';
+import { PersonaOptions } from '../dto/PersonaOptions';
+import { ConversationStarter } from '../dto/ConversationStarter';
 
-type AdvancedOptions = Omit<AiChatProps, "adapter">;
 export interface WidgetProps extends AdapterProps {
-    personaOptions?: Partial<{
-        assistant?: Partial<AssistantPersona>;
-        user?: Partial<UserPersona>;
-    }>;
-    messages?: ChatItem[];
-    rawMessages?: any[];
-    style?: any;
-    className?: any;
+    personaOptions?: PersonaOptions;
+    messages?: ChatMessage[];
+    style?: React.CSSProperties;
+    className?: string;
     controls?: {
         enableFiles?: boolean;
     };
-    advancedOptions?: AdvancedOptions;
+    theme?: "light" | "dark";
+    starters?: ConversationStarter[];
 }
 export declare const Widget: React.FC<WidgetProps>;
-export {};
