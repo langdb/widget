@@ -2,63 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
-
-html[data-mode="dark"] .langdb-chat {
- /* Human message in chat */
---langdb-HumanMessage--BackgroundColor:rgb(44 44 44);
---langdb-HumanMessage--BorderColor: transparent;
---langdb-HumanMessage--TextColor: rgb(236, 236, 236);
-
- /** AI message in chat */
---langdb-AiMessage--BackgroundColor: transparent;
---langdb-AiMessage--TextColor: rgb(236, 236, 236);
-
---langdb-InputContainer--BackgroundColor: rgb(44 44 44);
---langdb-InputContainer--BorderColor: transparent;
---langdb-Input--TextColor: rgb(236, 236, 236);
-
- /** Submit button colors */
---langdb-SubmitButton--BackgroundColor: rgb(236, 236, 236);
-  --langdb-SubmitButton--BorderColor: transparent;
---langdb-SubmitButton--TextColor: black;
-
---langdb-SubmitButton-Disabled--BackgroundColor:rgb(103, 103, 103);
-  --langdb-SubmitButton-Disabled--BorderColor: transparent;
-  --langdb-SubmitButton-Disabled--TextColor:black;
-
- --langdb-SubmitButton-Focus-Outline--Color: transparent;
-}
-
 .langdb-chat {
   /* Human message in chat */
   --langdb-HumanMessage--BackgroundColor: #374151;
   --langdb-HumanMessage--BorderColor: transparent;
   --langdb-HumanMessage--TextColor: #ffffff;
 
-  /** AI message in chat */
+  /* AI message in chat */
   --langdb-AiMessage--BackgroundColor: transparent;
   --langdb-AiMessage--BorderColor: transparent;
   --langdb-AiMessage--TextColor: rgb(107 114 128);
 
+  /* Input container */
+  --langdb-InputContainer--BackgroundColor: white;
+  --langdb-InputContainer--BorderColor: #d3d3d3;
+  --langdb-Input--TextColor: #333333;
 
-  --langdb-InputContainer--BackgroundColor: #374151;
-  --langdb-InputContainer--BorderColor: transparent;
-  --langdb-Input--TextColor: rgb(236, 236, 236);
-
-  /** Submit button colors */
-  --langdb-SubmitButton--BackgroundColor: #b6b6bf;
-  --langdb-SubmitButton--BorderColor: transparent;
+  /* Submit button colors */
+  --langdb-SubmitButton--BackgroundColor: rgb(223, 219, 219);
+  --langdb-SubmitButton--BorderColor: var(--langdb-InputContainer--BorderColor);
   --langdb-SubmitButton--TextColor: black;
+  --langdb-SubmitButton-Hover--BackgroundColor: #9a9c9e42;
 
-  --langdb-SubmitButton-Disabled--BackgroundColor: rgb(103, 103, 103);
-  --langdb-SubmitButton-Disabled--BorderColor: transparent;
-  --langdb-SubmitButton-Disabled--TextColor: black;
-}
+  --langdb-SubmitButton-Disabled--BackgroundColor: rgba(134, 131, 131, 0.5);
+  --langdb-SubmitButton-Disabled--BorderColor: var(--langdb-InputContainer--BorderColor);
+  --langdb-SubmitButton-Disabled--TextColor: white;
 
-.langdb-chat {
+  --langdb-SubmitButton-Focus-Outline--Color: transparent;
+  --langdb-ChatRoom--BackgroundColor: white;
+
+  /* Apply base styles */
   background-color: var(--langdb-ChatRoom--BackgroundColor);
   border-color: var(--langdb-ChatRoom--BorderColor);
   color: var(--langdb-ChatRoom--TextColor);
+}
+
+.dark-theme .langdb-chat {
+  --langdb-HumanMessage--BackgroundColor: rgb(44 44 44);
+  --langdb-HumanMessage--TextColor: rgb(236, 236, 236);
+
+  --langdb-AiMessage--TextColor: rgb(236, 236, 236);
+
+  --langdb-InputContainer--BackgroundColor: rgb(44 44 44);
+  --langdb-Input--TextColor: rgb(236, 236, 236);
+  --langdb-InputContainer--BorderColor: transparent;
+
+  --langdb-SubmitButton--BackgroundColor: white;
+  --langdb-SubmitButton--BorderColor: transparent;
+  --langdb-SubmitButton--TextColor: black;
+  --langdb-SubmitButton-Hover--BackgroundColor: rgba(157, 153, 153, 0.553);
+  --langdb-SubmitButton-Disabled--BackgroundColor: rgb(103, 103, 103);
+  --langdb-SubmitButton-Disabled--BorderColor: transparent;
+  --langdb-SubmitButton-Disabled--TextColor: black;
+
+  --langdb-ChatRoom--BackgroundColor: black;
 }
 
 .human-message {
@@ -76,6 +73,10 @@ html[data-mode="dark"] .langdb-chat {
 .langdb-input-container {
   background-color: var(--langdb-InputContainer--BackgroundColor);
   border-color: var(--langdb-InputContainer--BorderColor);
+  border-width: 1px;
+}
+
+.langdb-input-container:focus-within {
   outline-color: var(--langdb-InputContainer-Focus-Outline--Color);
 }
 
@@ -89,12 +90,18 @@ html[data-mode="dark"] .langdb-chat {
   background-color: var(--langdb-SubmitButton--BackgroundColor);
   border-color: var(--langdb-SubmitButton--BorderColor);
   color: var(--langdb-SubmitButton--TextColor);
+  border-width: 1px;
 }
 
+.send-button:hover {
+  background-color: var(--langdb-SubmitButton-Hover--BackgroundColor);
+}
+
+
 .send-button:active {
-  background-color: var(--langdb-SubmitButton-Active--BackgroundColor);
-  border-color: var(--langdb-SubmitButton-Active--BorderColor);
-  color: var(--langdb-SubmitButton-Active--TextColor);
+  background-color: var(--langdb-SubmitButton-Active--BackgroundColor, var(--langdb-SubmitButton--BackgroundColor));
+  border-color: var(--langdb-SubmitButton-Active--BorderColor, var(--langdb-SubmitButton--BorderColor));
+  color: var(--langdb-SubmitButton-Active--TextColor, var(--langdb-SubmitButton--TextColor));
 }
 
 .send-button:disabled {

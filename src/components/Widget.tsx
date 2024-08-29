@@ -17,13 +17,15 @@ export interface WidgetProps extends AdapterProps {
   controls?: {
     enableFiles?: boolean;
   };
+  theme?: "light" | "dark";
 }
 
 
 export const Widget: React.FC<WidgetProps> = React.memo((props) => {
   const className = props.className || "";
+  const themeClass = props.theme === "dark" ? "dark-theme" : "light-theme"; 
   return (
-    <div className="flex flex-col w-[100%] h-full">
+    <div className={`flex flex-col w-[100%] h-full ${themeClass}`}>
       <div className="flex-1 w-full relative">
         <main
           className={`items-center justify-between ${className} h-full absolute`}

@@ -4,7 +4,7 @@ import { Widget, WidgetProps } from "../Widget";
 const Example: FC<WidgetProps> = ({
   publicId = "445e863b-83a9-4ec9-8041-aa0514239472",
   modelName = "thu_super_assistant",
-  advancedOptions = {},
+  theme = 'light'
 }) => {
   return (
     <div
@@ -20,7 +20,7 @@ const Example: FC<WidgetProps> = ({
           className={"w-full h-full"}
           publicId={publicId}
           modelName={modelName}
-          advancedOptions={advancedOptions}
+          theme={theme}
         />
       </div>
     </div>

@@ -14,45 +14,35 @@ type Story = StoryObj<typeof WidgetExample>;
 
 export const Simple: Story = {
   args: {
-    advancedOptions: {
-      displayOptions: {
-        themeId: 'langdb',
-        colorScheme: 'light',
-      }
-    }
+    theme: 'light'
   },
 };
 
 export const Dark: Story = {
   args: {
-    advancedOptions: {
-      displayOptions: {
-        themeId: 'nova',
-        colorScheme: 'dark',
-      }
-    }
+    theme: 'dark'
   },
 };
 export const Starters: Story = {
-  args: {
-    advancedOptions: {
-      displayOptions: {
-        themeId: 'langdb',
-        colorScheme: 'light',
-      },
-      conversationOptions: {
-        conversationStarters: [
-          {
-            prompt: "What is the most Populous City",
-          },
-          {
-            prompt: "Tell me interesting facts about Tokyo.",
-          },
-          {
-            prompt: "Give me some interesting cities to visit.",
-          },
-        ],
-      },
-    },
-  },
+  // args: {
+  //   advancedOptions: {
+  //     displayOptions: {
+  //       themeId: 'langdb',
+  //       colorScheme: 'light',
+  //     },
+  //     conversationOptions: {
+  //       conversationStarters: [
+  //         {
+  //           prompt: "What is the most Populous City",
+  //         },
+  //         {
+  //           prompt: "Tell me interesting facts about Tokyo.",
+  //         },
+  //         {
+  //           prompt: "Give me some interesting cities to visit.",
+  //         },
+  //       ],
+  //     },
+  //   },
+  // },
 };

@@ -114,26 +114,26 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
   }, [handleSubmit, currentInput]);
 
   return (
-    <div className="langdb-chat overflow-y-auto h-full">
-      <div className="mx-auto flex flex-col h-full md:gap-5 lg:gap-6 md:max-w-3xl lg:max-w-[40rem] xl:max-w-[48rem]">
-        <div className="flex flex-col flex-1 gap-4">
-          {messages.map((msg: ChatMessage) => (
-            <MessageRenderer key={msg.id} message={msg} personaOptions={personaOptions} />
-          ))}
-          {typing && (
-            <div key="typing-ai" className="flex justify-start">
-              <div className="max-w-3/4">
-                <AiMessage typing={true} avatar={personaOptions.assistant?.avatar} />
-              </div>
+    <div className="langdb-chat flex flex-col h-full">
+      <div className="langdb-message-section flex-1 overflow-y-auto p-4">
+        {messages.map((msg: ChatMessage) => (
+          <MessageRenderer key={msg.id} message={msg} personaOptions={personaOptions} />
+        ))}
+        {typing && (
+          <div key="typing-ai" className="flex justify-start">
+            <div className="max-w-3/4">
+              <AiMessage typing={true} avatar={personaOptions.assistant?.avatar} />
             </div>
-          )}
-          <div ref={messagesEndRef} />
-          {error && (
-            <div className="error-message bg-red-100 text-red-700 p-2 rounded-lg mb-4">
-              {error}
-            </div>
-          )}
-        </div>
+          </div>
+        )}
+        <div ref={messagesEndRef} />
+        {error && (
+          <div className="error-message bg-red-100 text-red-700 p-2 rounded-lg mb-4">
+            {error}
+          </div>
+        )}
+      </div>
+      <div className="langdb-chat-input sticky bottom-0 p-2 px-4">
         <ChatInput onSubmit={onSubmitWrapper} currentInput={currentInput} setCurrentInput={setCurrentInput} />
       </div>
     </div>
