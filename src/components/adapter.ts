@@ -37,7 +37,7 @@ export const getHeaders = async (props: AdapterProps): Promise<any> => {
 }
 
 export const onSubmit = async (submitProps: SubmitProps) => {
-  const { widgetProps, message, threadId, onopen, onmessage, onerror, onclose,  } = submitProps;
+  const { widgetProps, message, threadId, onopen, onmessage, onerror, onclose, } = submitProps;
   const { files, fileResizeOptions: resizeOptions, userId } = widgetProps;
   const serverUrl = widgetProps.serverUrl || DEV_SERVER_URL;
   const apiUrl = `${serverUrl}/stream`;

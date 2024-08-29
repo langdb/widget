@@ -16,7 +16,7 @@ import { PersonaOptions } from "../dto/PersonaOptions";
 const MessageRenderer: React.FC<{ message: ChatMessage; personaOptions: PersonaOptions }> = ({ message, personaOptions }) => (
   <div className={`flex mb-2 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
     <div className="max-w-3/4">
-      {message.role === 'user' 
+      {message.role === 'user'
         ? <HumanMessage msg={message} avatar={personaOptions.user?.avatar} />
         : <AiMessage message={message.message} avatar={personaOptions.assistant?.avatar} />
       }
