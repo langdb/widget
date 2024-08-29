@@ -5,7 +5,9 @@ import { CopyToClipboard } from "./CopyToClipboard";
 import { PencilIcon } from "@heroicons/react/24/outline";
 export const AiMessage: React.FC<{ message?: string; typing?: boolean; avatar: any }> = ({ message, typing, avatar: Avatar }) => (
   <div className="flex items-center gap-2">
-    <Avatar className="h-6 w-6 rounded-full" />
+    <div>
+      <Avatar className="h-6 w-6 rounded-full" />
+    </div>
     <div className="rounded-lg p-2 ai-message">
       <ReactMarkdown
         components={{

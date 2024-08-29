@@ -4,7 +4,8 @@ import { Widget, WidgetProps } from "../Widget";
 const Example: FC<WidgetProps> = ({
   publicId = "445e863b-83a9-4ec9-8041-aa0514239472",
   modelName = "thu_super_assistant",
-  theme = 'light'
+  theme = 'light',
+  starters = []
 }) => {
   return (
     <div
@@ -21,6 +22,7 @@ const Example: FC<WidgetProps> = ({
           publicId={publicId}
           modelName={modelName}
           theme={theme}
+          starters={starters}
         />
       </div>
     </div>

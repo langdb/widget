@@ -58,6 +58,10 @@
   --langdb-ChatRoom--BackgroundColor: black;
 }
 
+.starter-button {
+  border-color: var( --langdb-InputContainer--BorderColor);
+}
+
 .human-message {
   background-color: var(--langdb-HumanMessage--BackgroundColor);
   border-color: var(--langdb-HumanMessage--BorderColor);

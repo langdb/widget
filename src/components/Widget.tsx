@@ -5,7 +5,7 @@ import React from "react";
 import { ChatComponent } from "./ChatComponent";
 import { ChatMessage } from "../dto/ChatMessage";
 import { PersonaOptions } from "../dto/PersonaOptions";
-
+import {ConversationStarter} from "../dto/ConversationStarter";
 // Types
 
 
@@ -18,6 +18,7 @@ export interface WidgetProps extends AdapterProps {
     enableFiles?: boolean;
   };
   theme?: "light" | "dark";
+  starters?: ConversationStarter[]
 }
 
 

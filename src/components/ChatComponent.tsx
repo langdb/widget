@@ -115,17 +115,24 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
 
   return (
     <div className="langdb-chat flex flex-col h-full">
-      <div className="langdb-message-section flex-1 overflow-y-auto p-4">
-        {messages.map((msg: ChatMessage) => (
-          <MessageRenderer key={msg.id} message={msg} personaOptions={personaOptions} />
-        ))}
-        {typing && (
-          <div key="typing-ai" className="flex justify-start">
-            <div className="max-w-3/4">
-              <AiMessage typing={true} avatar={personaOptions.assistant?.avatar} />
+      <div className="langdb-message-section flex flex-col flex-1 justify-center overflow-y-auto p-4">
+        {messages.length === 0 && <StarterDisplay starters={props.starters} onStarterClick={(prompt: string) => {
+          setCurrentInput(prompt);
+          handleSubmit(prompt);
+        }} />}
+        <div className="flex flex-col flex-1">
+          {messages.map((msg: ChatMessage) => (
+            <MessageRenderer key={msg.id} message={msg} personaOptions={personaOptions} />
+          ))}
+          {typing && (
+            <div key="typing-ai" className="flex justify-start">
+              <div className="max-w-3/4">
+                <AiMessage typing={true} avatar={personaOptions.assistant?.avatar} />
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
+
         <div ref={messagesEndRef} />
         {error && (
           <div className="error-message bg-red-100 text-red-700 p-2 rounded-lg mb-4">
@@ -138,4 +145,28 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
       </div>
     </div>
   );
+};
+
+const StarterDisplay: React.FC<{ starters: WidgetProps['starters'], onStarterClick: (prompt: string) => void }> = ({ starters, onStarterClick }) => {
+  return <div className="flex  h-full self-center flex-1 flex-col justify-center items-center">
+    <div className="flex flex-2 gap-3 flex-col justify-center items-center">
+      <Avatar width={48} height={48} />
+      <span className="font-bold">LangDB</span>
+      <div className="flex flex-col justify-center items-center">
+        <span className="text-sm">Easily build and deploy AI agents with SQL</span>
+        <span className="text-sm">Customize with our React widget on</span>
+      </div>
+    </div>
+    <div className="flex p-8 justify-end items-end">
+      <div className="flex  flex-row gap-4">
+        {starters && starters.map((starter, index) => {
+          return (<button key={index} onClick={() => {
+            onStarterClick(starter.prompt);
+          }} className="bg-zinc-100 starter-button border bg-opacity-10  h-[101px] w-[160px] line-clamp-2 flex p-[12px] rounded-lg mb-2">
+            <div className="">{starter.prompt}</div>
+          </button>)
+        })}
+      </div>
+    </div>
+  </div>
 };

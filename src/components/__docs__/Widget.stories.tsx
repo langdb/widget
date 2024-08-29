@@ -24,25 +24,17 @@ export const Dark: Story = {
   },
 };
 export const Starters: Story = {
-  // args: {
-  //   advancedOptions: {
-  //     displayOptions: {
-  //       themeId: 'langdb',
-  //       colorScheme: 'light',
-  //     },
-  //     conversationOptions: {
-  //       conversationStarters: [
-  //         {
-  //           prompt: "What is the most Populous City",
-  //         },
-  //         {
-  //           prompt: "Tell me interesting facts about Tokyo.",
-  //         },
-  //         {
-  //           prompt: "Give me some interesting cities to visit.",
-  //         },
-  //       ],
-  //     },
-  //   },
-  // },
+  args: {
+    starters: [
+      {
+        prompt: "What is the most populous city?",
+      },
+      {
+        prompt: "Tell me interesting facts about Tokyo.",
+      },
+      {
+        prompt: "Give me some interesting cities to visit.",
+      },
+    ]
+  },
 };

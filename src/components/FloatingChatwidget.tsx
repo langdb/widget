@@ -47,7 +47,7 @@ export const FloatingChatWidget = (props: {
             "flex flex-1 flex-col absolute p-[10px] pt-[0px]",
             isMaximized
               ? maximizedPanelClassName || "h-full w-full bottom-0 right-0"
-              : "rounded border border-border shadow-md h-[60vh] w-[40vw] min-h-[500px] bottom-16 right-16",
+              : "rounded border border-border shadow-md h-[60vh] w-[45vw] min-h-[500px] bottom-16 right-16",
           )}
         >
           <div
