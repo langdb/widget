@@ -1,4 +1,3 @@
-import { ChatAdapter } from '@nlux/react';
 import { FileWithPreview, ResizeOptions, ResponseCallbackOptions } from '../types';
 import { FetchEventSourceInit } from '@microsoft/fetch-event-source';
 
@@ -22,8 +21,3 @@ export interface SubmitProps extends FetchEventSourceInit {
 }
 export declare const getHeaders: (props: AdapterProps) => Promise<any>;
 export declare const onSubmit: (submitProps: SubmitProps) => Promise<void>;
-export declare const useAdapter: (props: AdapterProps) => {
-    adapter: ChatAdapter;
-    threadId?: string;
-    messageId?: string;
-};

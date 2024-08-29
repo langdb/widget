@@ -1,3 +1,4 @@
+
 export declare const FloatingChatWidget: (props: {
     children?: React.ReactNode;
     theme?: "light" | "dark";

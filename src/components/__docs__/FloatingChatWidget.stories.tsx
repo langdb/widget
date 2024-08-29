@@ -17,31 +17,23 @@ export const SimpleFloatingChatWidget: Story = {
 
 export const DarkFloatingChatWidget: Story = {
   args: {
-    advancedOptions: {
-      displayOptions: {
-        themeId: 'nova',
-        colorScheme: 'dark',
-      }
-    }
+    theme: "dark",
   },
 }
 
 export const StartersFloatingChatWidget: Story = {
   args: {
-    advancedOptions: {
-      conversationOptions: {
-        conversationStarters: [
-          {
-            prompt: "What is the most Populous City",
-          },
-          {
-            prompt: "Tell me interesting facts about Tokyo.",
-          },
-          {
-            prompt: "Give me some interesting cities to visit.",
-          },
-        ],
+    starters: [
+      {
+        prompt: "What is the most populous city?",
       },
-    },
+      {
+        prompt: "Tell me interesting facts about Tokyo.",
+      },
+      {
+        prompt: "Give me some interesting cities to visit.",
+      },
+    ],
+    theme: "dark",
   },
 };
