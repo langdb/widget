@@ -1,0 +1,16 @@
+.langdb-floating-widget {
+    --langdb-Widget--BackgroundColor: #ffffff;
+    --langdb-Widget--HeaderTextColor: 'slate-800';
+    background-color: var(--langdb-Widget--BackgroundColor);
+    
+}
+.langdb-floating-widget .header-title {
+    color: var(--langdb-Widget--HeaderTextColor);
+}
+
+
+.floating-dark .langdb-floating-widget {
+    --langdb-Widget--BackgroundColor: black;
+    --langdb-Widget--HeaderTextColor: 'slate-100';
+
+}
