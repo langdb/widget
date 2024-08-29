@@ -6,7 +6,7 @@ import { UserCircleIcon } from "@heroicons/react/24/outline";
 import { v4 as uuidv4 } from 'uuid';
 import { useChatState } from "../hooks/ChatState";
 import { onSubmit } from "./adapter";
-import { ChatMessage } from "../dto/ChatMessage";
+import { ChatMessage, MessageContentType, MessageType } from "../dto/ChatMessage";
 import { HumanMessage } from "./Messages/Human";
 import { AiMessage } from "./Messages/Ai";
 import { ChatInput } from "./ChatInput";
@@ -14,9 +14,9 @@ import { PersonaOptions } from "../dto/PersonaOptions";
 
 // New component for rendering messages
 const MessageRenderer: React.FC<{ message: ChatMessage; personaOptions: PersonaOptions }> = ({ message, personaOptions }) => (
-  <div className={`flex mb-2 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+  <div className={`flex mb-2 ${message.type === MessageType.HumanMessage ? 'justify-end' : 'justify-start'}`}>
     <div className="max-w-3/4">
-      {message.role === 'user'
+      {message.type === MessageType.HumanMessage
         ? <HumanMessage msg={message} avatar={personaOptions.user?.avatar} />
         : <AiMessage message={message.message} avatar={personaOptions.assistant?.avatar} />
       }
@@ -33,7 +33,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
 
     setMessages((prevMessages) => [
       ...prevMessages,
-      { id: uuidv4(), message: currentInput, role: 'user' }
+      { id: uuidv4(), message: currentInput, type: MessageType.HumanMessage, content_type: MessageContentType.Text, role: 'user' },
     ]);
     setCurrentInput('');
     setTyping(true);
@@ -55,8 +55,8 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
           const newMessage = event.data;
           setMessages((prevMessages) => {
             const lastMessage = prevMessages[prevMessages.length - 1];
-            if (lastMessage.role === 'user') {
-              return [...prevMessages, { id: messageId || uuidv4(), message: newMessage, role: 'assistant' }];
+            if (lastMessage.type === MessageType.HumanMessage) {
+              return [...prevMessages, { id: messageId || uuidv4(), message: newMessage, type: MessageType.AIMessage, content_type: MessageContentType.Text }];
             } else {
               const updatedLastMessage = { ...lastMessage, message: lastMessage.message + newMessage };
               return [...prevMessages.slice(0, -1), updatedLastMessage];

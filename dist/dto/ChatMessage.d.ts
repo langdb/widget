@@ -1,5 +1,23 @@
 export interface ChatMessage {
     id: string;
-    message: string;
-    role: 'user' | 'assistant';
+    message?: string;
+    content_array?: MessageContentPart[];
+    content_type: MessageContentType;
+    type: MessageType;
+}
+export type MessageContentPart = [
+    MessageContentType,
+    TextType | ImageUrlType,
+    object | null
+];
+export type TextType = string;
+export type ImageUrlType = string;
+export declare enum MessageContentType {
+    Text = "Text",
+    ImageUrl = "ImageUrl"
+}
+export declare enum MessageType {
+    SystemMessage = "system",
+    AIMessage = "ai",
+    HumanMessage = "human"
 }
