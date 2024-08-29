@@ -30058,7 +30058,10 @@ const Ax = /* @__PURE__ */ be.forwardRef(Tx), Rx = (e) => /* @__PURE__ */ P.jsxs
   }, [t]);
   const w = sm(async (R) => {
     if (R.preventDefault(), r.trim() !== "") {
-      n((m) => [...m, { id: ch(), message: r, role: "user" }]), a(""), u(!0);
+      n((m) => [
+        ...m,
+        { id: ch(), message: r, role: "user" }
+      ]), a(""), u(!0);
       try {
         await ih({
           widgetProps: e,
@@ -30129,10 +30132,14 @@ const Ax = /* @__PURE__ */ be.forwardRef(Tx), Rx = (e) => /* @__PURE__ */ P.jsxs
   };
   return /* @__PURE__ */ P.jsx("div", { className: "langdb-chat overflow-y-auto h-full", children: /* @__PURE__ */ P.jsxs("div", { className: "mx-auto flex flex-col h-full md:gap-5 lg:gap-6 md:max-w-3xl lg:max-w-[40rem] xl:max-w-[48rem]", children: [
     /* @__PURE__ */ P.jsxs("div", { className: "flex flex-col flex-1 gap-4", children: [
-      t.map((R, m) => /* @__PURE__ */ P.jsx("div", { className: `flex ${R.role === "user" ? "justify-end" : "justify-start"}`, children: /* @__PURE__ */ P.jsxs("div", { className: "max-w-3/4", children: [
+      t.map((R) => /* @__PURE__ */ P.jsx("div", { className: `flex mb-2 ${R.role === "user" ? "justify-end" : "justify-start"}`, children: /* @__PURE__ */ P.jsxs("div", { className: "max-w-3/4", children: [
         R.role === "user" && /* @__PURE__ */ P.jsx(A, { msg: R }),
-        R.role !== "user" && /* @__PURE__ */ P.jsx(E, { typing: c && m == t.length - 1, message: R.message })
+        R.role !== "user" && /* @__PURE__ */ P.jsx(E, { typing: !1, message: R.message })
       ] }) }, R.id)),
+      c && /* @__PURE__ */ P.jsxs("div", { className: "flex justify-start", children: [
+        /* @__PURE__ */ P.jsx("div", {}),
+        /* @__PURE__ */ P.jsx("div", { className: "max-w-3/4", children: /* @__PURE__ */ P.jsx(E, { typing: !0 }) })
+      ] }, "typing-ai"),
       /* @__PURE__ */ P.jsx("div", { ref: p }),
       d && /* @__PURE__ */ P.jsx("div", { className: "error-message bg-red-100 text-red-700 p-2 rounded-lg mb-4", children: d })
     ] }),

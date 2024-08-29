@@ -115,7 +115,8 @@ const ChatComponent: React.FC<WidgetProps> = (props) => {
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     if (currentInput.trim() === '') return;
-    setMessages((prevMessages) => [...prevMessages, { id: uuidv4(), message: currentInput, role: 'user' }]);
+    setMessages((prevMessages) => [
+      ...prevMessages, { id: uuidv4(), message: currentInput, role: 'user' }]);
     setCurrentInput('');
     setTyping(true);
     try {
@@ -218,14 +219,20 @@ const ChatComponent: React.FC<WidgetProps> = (props) => {
     <div className="langdb-chat overflow-y-auto h-full">
       <div className="mx-auto flex flex-col h-full md:gap-5 lg:gap-6 md:max-w-3xl lg:max-w-[40rem] xl:max-w-[48rem]">
         <div className="flex flex-col flex-1 gap-4">
-          {messages.map((msg: ChatMessage, idx: number) => (
-            <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+          {messages.map((msg: ChatMessage) => (
+            <div key={msg.id} className={`flex mb-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div className={`max-w-3/4`}>
                 {msg.role === 'user' && <HumanMessage msg={msg} />}
-                {msg.role !== 'user' && <AiMessage typing={typing && idx == messages.length - 1} message={msg.message} />}
+                {msg.role !== 'user' && <AiMessage typing={false} message={msg.message} />}
               </div>
             </div>
           ))}
+          {typing && < div key={'typing-ai'} className={`flex justify-start`}>
+            <div></div>
+            <div className={`max-w-3/4`}>
+              <AiMessage typing={true} />
+            </div>
+          </div>}
 
 
           <div ref={messagesEndRef} />
@@ -252,6 +259,6 @@ const ChatComponent: React.FC<WidgetProps> = (props) => {
           </button>
         </form>
       </div>
-    </div>
+    </div >
   );
 };
