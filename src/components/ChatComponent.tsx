@@ -2,7 +2,6 @@ import React, { useCallback, useEffect } from "react";
 import { useScrollToBottom } from "../hooks/ScrollToBottom";
 import { WidgetProps } from "./Widget";
 import { Avatar } from "./Icons";
-import { UserCircleIcon } from "@heroicons/react/24/outline";
 import { v4 as uuidv4 } from 'uuid';
 import { useChatState } from "../hooks/ChatState";
 import { onSubmit } from "./adapter";
@@ -10,15 +9,15 @@ import { ChatMessage, MessageContentType, MessageType } from "../dto/ChatMessage
 import { HumanMessage } from "./Messages/Human";
 import { AiMessage } from "./Messages/Ai";
 import { ChatInput } from "./ChatInput";
-import { PersonaOptions } from "../dto/PersonaOptions";
+import { Persona, PersonaOptions } from "../dto/PersonaOptions";
 
 // New component for rendering messages
 const MessageRenderer: React.FC<{ message: ChatMessage; personaOptions: PersonaOptions }> = ({ message, personaOptions }) => (
   <div className={`flex mb-2 ${message.type === MessageType.HumanMessage ? 'justify-end' : 'justify-start'}`}>
     <div className="max-w-3/4">
       {message.type === MessageType.HumanMessage
-        ? <HumanMessage msg={message} avatar={personaOptions.user?.avatar} />
-        : <AiMessage message={message.message} avatar={personaOptions.assistant?.avatar} />
+        ? <HumanMessage msg={message} persona={personaOptions.user} />
+        : <AiMessage message={message.message} persona={personaOptions.assistant} />
       }
     </div>
   </div>
@@ -95,15 +94,14 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
   const personaOptions: PersonaOptions = {
     assistant: {
       name: "LangDB",
-      tagline: "Easily build and deploy AI agents with SQL. Customize with our React widget on",
       avatar: Avatar,
+
       ...props.personaOptions?.assistant,
-    },
+    } as Persona,
     user: {
       name: "User",
-      avatar: UserCircleIcon,
       ...props.personaOptions?.user,
-    },
+    } as Persona,
   };
 
   const handleSubmit = useMessageSubmission(props, chatState);
@@ -127,7 +125,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
           {typing && (
             <div key="typing-ai" className="flex justify-start">
               <div className="max-w-3/4">
-                <AiMessage typing={true} avatar={personaOptions.assistant?.avatar} />
+                <AiMessage typing={true} persona={personaOptions.assistant} />
               </div>
             </div>
           )}

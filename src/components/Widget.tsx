@@ -10,7 +10,7 @@ import {ConversationStarter} from "../dto/ConversationStarter";
 
 
 export interface WidgetProps extends AdapterProps {
-  personaOptions?: Partial<PersonaOptions>;
+  personaOptions?: PersonaOptions;
   messages?: ChatMessage[];
   style?: React.CSSProperties;
   className?: string;

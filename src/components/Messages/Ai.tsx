@@ -3,10 +3,15 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { CopyToClipboard } from "./CopyToClipboard";
 import { PencilIcon } from "@heroicons/react/24/outline";
-export const AiMessage: React.FC<{ message?: string; typing?: boolean; avatar: any }> = ({ message, typing, avatar: Avatar }) => (
+import { Persona } from "../../dto/PersonaOptions";
+import { Avatar } from "../Icons";
+import {AvatarItem} from "./AvatarItem";
+
+
+export const AiMessage: React.FC<{ message?: string; typing?: boolean; persona?: Persona }> = ({ message, typing, persona }) => (
   <div className="flex items-center gap-2">
     <div>
-      <Avatar className="h-6 w-6 rounded-full" />
+    {!persona ? <AvatarItem className="h-6 w-6 rounded-full" name={"User"} /> : ( persona.url ? <AvatarItem name={persona.name} imageUrl={persona.url} className="h-6 w-6 rounded-full" /> : <Avatar className="h-6 w-6 rounded-full"/>)}
     </div>
     <div className="rounded-lg p-2 ai-message">
       <ReactMarkdown

@@ -1,9 +1,9 @@
 export interface PersonaOptions {
-    assistant?: Partial<Persona>;
-    user?: Partial<Persona>;
+    assistant?: Persona;
+    user?: Persona;
 }
 export interface Persona {
-    avatar: string | React.ElementType;
+    url: string;
     name: string;
     tagline?: string;
 }
