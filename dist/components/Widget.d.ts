@@ -1,8 +1,6 @@
-import { AiChatProps } from '@nlux/react';
 import { AdapterProps } from './adapter';
 import { default as React } from 'react';
 
-type AdvancedOptions = Omit<AiChatProps, "adapter">;
 export interface Persona {
     avatar: string | JSX.Element;
     name: string;
@@ -23,7 +21,6 @@ export interface WidgetProps extends AdapterProps {
     controls?: {
         enableFiles?: boolean;
     };
-    advancedOptions?: AdvancedOptions;
 }
 export declare const Widget: React.FC<WidgetProps>;
 interface ChatMessage {

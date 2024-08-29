@@ -1,6 +1,4 @@
-import {
-  AiChatProps,
-} from "@nlux/react";
+
 import "../tailwind.css";
 import './Widget.css';
 import { AdapterProps, onSubmit } from "./adapter";
@@ -15,8 +13,6 @@ import { useEffect } from "react";
 import { ArrowUpIcon, CheckIcon, ClipboardDocumentIcon } from "@heroicons/react/24/outline";
 import { PencilIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { Avatar } from "./Icons";
-
-type AdvancedOptions = Omit<AiChatProps, "adapter">;
 
 export interface Persona {
   avatar: string | JSX.Element;
@@ -40,7 +36,6 @@ export interface WidgetProps extends AdapterProps {
   controls?: {
     enableFiles?: boolean
   }
-  advancedOptions?: AdvancedOptions;
 }
 
 export const Widget: React.FC<WidgetProps> = React.memo((props) => {
