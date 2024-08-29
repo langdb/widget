@@ -3,4 +3,5 @@ export declare const ChatInput: React.FC<{
     currentInput: string;
     className?: string;
     setCurrentInput: (input: string) => void;
+    onFileIconClick?: () => void;
 }>;

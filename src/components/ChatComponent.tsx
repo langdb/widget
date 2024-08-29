@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useScrollToBottom } from "../hooks/ScrollToBottom";
 import { WidgetProps } from "./Widget";
 import { Avatar } from "./Icons";
@@ -10,6 +10,10 @@ import { HumanMessage } from "./Messages/Human";
 import { AiMessage } from "./Messages/Ai";
 import { ChatInput } from "./ChatInput";
 import { Persona, PersonaOptions } from "../dto/PersonaOptions";
+import { useDropzone } from 'react-dropzone';
+import { FileWithPreview } from "../types";
+import { PaperClipIcon } from "@heroicons/react/24/outline";
+import { Files } from "./Files";
 
 // New component for rendering messages
 const MessageRenderer: React.FC<{ message: ChatMessage; personaOptions: PersonaOptions }> = ({ message, personaOptions }) => (
@@ -27,9 +31,9 @@ const MessageRenderer: React.FC<{ message: ChatMessage; personaOptions: PersonaO
 const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof useChatState>) => {
   const { setMessages, setCurrentInput, setTyping, setError, setMessageId, setThreadId, messageId } = chatState;
 
-  return useCallback(async (currentInput: string) => {
+  return useCallback(async (inputProps: { currentInput: string, files: FileWithPreview[] }) => {
+    const { currentInput, files } = inputProps;
     if (currentInput.trim() === '') return;
-
     setMessages((prevMessages) => [
       ...prevMessages,
       { id: uuidv4(), message: currentInput, type: MessageType.HumanMessage, content_type: MessageContentType.Text, role: 'user' },
@@ -40,6 +44,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
     try {
       await onSubmit({
         widgetProps: props,
+        files,
         message: currentInput,
         threadId: chatState.threadId,
         onopen: async (response) => {
@@ -77,6 +82,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
 
 export const ChatComponent: React.FC<WidgetProps> = (props) => {
   const chatState = useChatState({ initialMessages: props.messages || [] });
+
   const {
     messages,
     currentInput,
@@ -105,18 +111,37 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
   };
 
   const handleSubmit = useMessageSubmission(props, chatState);
+  const [files, setFiles] = useState<FileWithPreview[]>([]);
 
   const onSubmitWrapper = useCallback((e: React.FormEvent) => {
     e.preventDefault();
-    handleSubmit(currentInput);
-  }, [handleSubmit, currentInput]);
+    let currentFiles = files;
+    setFiles([]);
+    return handleSubmit({ currentInput, files: currentFiles });
+  }, [handleSubmit, currentInput, files]);
+
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    setFiles(prevFiles => [...prevFiles, ...acceptedFiles.map(file => Object.assign(file, {
+      preview: URL.createObjectURL(file)
+    }))]);
+  }, []);
+  const { getRootProps, isDragActive, open } = useDropzone({ onDrop, noClick: true, noKeyboard: true });
 
   return (
     <div className="langdb-chat flex flex-col h-full">
-      <div className="langdb-message-section flex flex-col flex-1 justify-center overflow-y-auto p-4">
+      <div {...getRootProps()} className="langdb-message-section flex flex-col flex-1 justify-center overflow-y-auto p-4">
+        {isDragActive && (
+          <div className="absolute gap-20 flex-col inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white text-xl z-50">
+            <PaperClipIcon className="h-12 w-12" />
+            <div className="flex flex-col justify-center items-center">
+              <span className=" font-bold">Add anything</span>
+              <span>Drop any file here to add it to conversation</span>
+            </div>
+          </div>
+        )}
         {messages.length === 0 && <StarterDisplay starters={props.starters} onStarterClick={(prompt: string) => {
           setCurrentInput(prompt);
-          handleSubmit(prompt);
+          handleSubmit({ currentInput: prompt, files: [] });
         }} />}
         <div className="flex flex-col flex-1">
           {messages.map((msg: ChatMessage) => (
@@ -139,7 +164,8 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
         )}
       </div>
       <div className="langdb-chat-input sticky bottom-0 p-2 px-4">
-        <ChatInput onSubmit={onSubmitWrapper} currentInput={currentInput} setCurrentInput={setCurrentInput} />
+        <Files files={files} setFiles={setFiles} />
+        <ChatInput onFileIconClick={open} onSubmit={onSubmitWrapper} currentInput={currentInput} setCurrentInput={setCurrentInput} />
       </div>
     </div>
   );

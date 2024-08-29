@@ -3,7 +3,6 @@ import { FetchEventSourceInit } from '@microsoft/fetch-event-source';
 
 export declare const DEV_SERVER_URL = "https://api.dev.langdb.ai";
 export interface AdapterProps {
-    files?: FileWithPreview[];
     fileResizeOptions?: ResizeOptions;
     serverUrl?: string;
     modelName: string;
@@ -17,6 +16,7 @@ export interface AdapterProps {
 export interface SubmitProps extends FetchEventSourceInit {
     widgetProps: AdapterProps;
     message: string;
+    files?: FileWithPreview[];
     threadId?: string;
 }
 export declare const getHeaders: (props: AdapterProps) => Promise<any>;
