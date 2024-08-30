@@ -21,7 +21,7 @@ const MessageRenderer: React.FC<{ message: ChatMessage; personaOptions: PersonaO
     <div className="max-w-3/4">
       {message.type === MessageType.HumanMessage
         ? <HumanMessage msg={message} persona={personaOptions.user} />
-        : <AiMessage message={message.message} persona={personaOptions.assistant} />
+        : <AiMessage msg={message} persona={personaOptions.assistant} />
       }
     </div>
   </div>

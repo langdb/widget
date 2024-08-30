@@ -6,9 +6,10 @@ import { PencilIcon } from "@heroicons/react/24/outline";
 import { Persona } from "../../dto/PersonaOptions";
 import { Avatar } from "../Icons";
 import {AvatarItem} from "./AvatarItem";
+import { ChatMessage } from "../../dto/ChatMessage";
 
 
-export const AiMessage: React.FC<{ message?: string; typing?: boolean; persona?: Persona }> = ({ message, typing, persona }) => (
+export const AiMessage: React.FC<{ msg?: ChatMessage; typing?: boolean; persona?: Persona }> = ({ msg, typing, persona }) => (
   <div className="flex items-center gap-2">
     <div>
     {!persona ? <AvatarItem className="h-6 w-6 rounded-full" name={"User"} /> : ( persona.url ? <AvatarItem name={persona.name} imageUrl={persona.url} className="h-6 w-6 rounded-full" /> : <Avatar className="h-6 w-6 rounded-full"/>)}
@@ -46,7 +47,7 @@ export const AiMessage: React.FC<{ message?: string; typing?: boolean; persona?:
           }
         }}
       >
-        {message}
+        {msg?.message}
       </ReactMarkdown>
     </div>
     {typing && (

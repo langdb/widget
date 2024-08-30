@@ -4,6 +4,7 @@ export interface ChatMessage {
   content_array?: MessageContentPart[];
   content_type: MessageContentType;
   type: MessageType;
+  threadId?: string;
 }
 
 export type MessageContentPart = [
