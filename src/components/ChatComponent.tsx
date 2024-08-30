@@ -54,6 +54,15 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
             currentThreadId = threadIdHeader || threadId;
             setMessageId(messageIdHeader || undefined);
             setThreadId(threadIdHeader || undefined);
+            if (props.responseCallback) {
+              const traceId = response?.headers.get('x-trace-id') as string | undefined;
+              props.responseCallback({
+                traceId,
+                modelName: props.modelName,
+                threadId: threadIdHeader as string,
+                messageId: messageIdHeader as string,
+              });
+            }
           }
         },
         onmessage: (event) => {
