@@ -139,46 +139,45 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
   const { getRootProps, isDragActive, open } = useDropzone({ onDrop, noClick: true, noKeyboard: true });
 
   return (
-    <div className="langdb-chat flex flex-col h-full">
-      <div className="mx-auto flex flex-col h-full  lg:max-w-[40rem] xl:max-w-[48rem] w-full">
-        <div {...getRootProps()} className="langdb-message-section flex flex-col flex-1 justify-center overflow-y-auto p-4">
-          {isDragActive && (
-            <div className="absolute gap-20 flex-col inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white text-xl z-50">
-              <PaperClipIcon className="h-12 w-12" />
-              <div className="flex flex-col justify-center items-center">
-                <span className=" font-bold">Add anything</span>
-                <span>Drop any file here to add it to conversation</span>
-              </div>
+    <div className="langdb-chat mx-auto flex flex-1 flex-col lg:max-w-[40rem] xl:max-w-[48rem] w-full h-full">
+      <div {...getRootProps()} className="langdb-message-section flex flex-col flex-1 justify-center overflow-y-auto p-4">
+        {isDragActive && (
+          <div className="absolute gap-20 flex-col inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white text-xl z-50">
+            <PaperClipIcon className="h-12 w-12" />
+            <div className="flex flex-col justify-center items-center">
+              <span className=" font-bold">Add anything</span>
+              <span>Drop any file here to add it to conversation</span>
             </div>
-          )}
-          {messages.length === 0 && <StarterDisplay starters={props.starters} onStarterClick={(prompt: string) => {
-            setCurrentInput(prompt);
-            handleSubmit({ currentInput: prompt, files: [] });
-          }} />}
-          <div className="flex flex-col flex-1">
-            {messages.map((msg: ChatMessage) => (
-              <MessageRenderer key={msg.id} message={msg} personaOptions={personaOptions} widgetProps={props} />
-            ))}
-            {typing && (
-              <div key="typing-ai" className="flex justify-start">
-                <div className="max-w-3/4">
-                  <AiMessage typing={true} persona={personaOptions.assistant} widgetProps={props} />
-                </div>
-              </div>
-            )}
           </div>
-
-          <div ref={messagesEndRef} />
-          {error && (
-            <div className="error-message bg-red-100 text-red-700 p-2 rounded-lg mb-4">
-              {error}
+        )}
+        {messages.length === 0 && <StarterDisplay starters={props.starters} onStarterClick={(prompt: string) => {
+          setCurrentInput(prompt);
+          handleSubmit({ currentInput: prompt, files: [] });
+        }} />}
+        <div className="langdb-message-render flex-1 overflow-auto">
+          {messages.map((msg: ChatMessage) => (
+            <MessageRenderer key={msg.id} message={msg} personaOptions={personaOptions} widgetProps={props} />
+          ))}
+          {typing && (
+            <div key="typing-ai" className="flex justify-start">
+              <div className="max-w-3/4">
+                <AiMessage typing={true} persona={personaOptions.assistant} widgetProps={props} />
+              </div>
             </div>
           )}
+          <div ref={messagesEndRef} />
+
         </div>
-        <div className="langdb-chat-input sticky bottom-0 pt-1 px-4">
-          {files && files.length > 0 && <Files files={files} setFiles={setFiles} />}
-          <ChatInput onFileIconClick={open} onSubmit={onSubmitWrapper} currentInput={currentInput} setCurrentInput={setCurrentInput} />
-        </div>
+
+        {error && (
+          <div className="error-message bg-red-100 text-red-700 p-2 rounded-lg mb-4">
+            {error}
+          </div>
+        )}
+      </div>
+      <div className="langdb-chat-input bg-inherit sticky bottom-0 pt-1 px-4">
+        {files && files.length > 0 && <Files files={files} setFiles={setFiles} />}
+        <ChatInput onFileIconClick={open} onSubmit={onSubmitWrapper} currentInput={currentInput} setCurrentInput={setCurrentInput} />
       </div>
     </div>
   );

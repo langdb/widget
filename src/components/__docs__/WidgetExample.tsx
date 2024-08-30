@@ -13,12 +13,11 @@ const Example: FC<WidgetProps> = ({
         display: "flex",
         flexDirection: "column",
         padding: "1rem",
-        height: '100vh'
+        height: '100vh',
       }}
     >
-      <div className="flex flex-1 ">
+      <div className="flex flex-1">
         <Widget
-          className={"w-full h-full"}
           publicId={publicId}
           modelName={modelName}
           theme={theme}

@@ -73,7 +73,7 @@ export const FloatingChatWidget = (props: {
             </div>
             {<div className="flex flex-1 justify-center header-title">{title}</div>}
           </div>
-          <div className="flex flex-1 overflow-scroll p-1 ">{children}</div>
+          <div className="flex flex-1 overflow-scroll">{children}</div>
         </div>
       )}
       {!isChatOpen && (
