@@ -16,12 +16,12 @@ import { PaperClipIcon } from "@heroicons/react/24/outline";
 import { Files } from "./Files";
 
 // New component for rendering messages
-const MessageRenderer: React.FC<{ message: ChatMessage; personaOptions: PersonaOptions }> = ({ message, personaOptions }) => (
+const MessageRenderer: React.FC<{ message: ChatMessage; personaOptions: PersonaOptions, widgetProps: WidgetProps }> = ({ message, personaOptions, widgetProps }) => (
   <div className={`flex mb-2 ${message.type === MessageType.HumanMessage ? 'justify-end' : 'justify-start'}`}>
     <div className="max-w-3/4">
       {message.type === MessageType.HumanMessage
         ? <HumanMessage msg={message} persona={personaOptions.user} />
-        : <AiMessage msg={message} persona={personaOptions.assistant} />
+        : <AiMessage msg={message} persona={personaOptions.assistant} widgetProps={widgetProps} />
       }
     </div>
   </div>
@@ -29,8 +29,7 @@ const MessageRenderer: React.FC<{ message: ChatMessage; personaOptions: PersonaO
 
 // Custom hook for handling message submission
 const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof useChatState>) => {
-  const { setMessages, setCurrentInput, setTyping, setError, setMessageId, setThreadId, messageId } = chatState;
-
+  const { setMessages, setCurrentInput, setTyping, setError, setMessageId, setThreadId, messageId, threadId } = chatState;
   return useCallback(async (inputProps: { currentInput: string, files: FileWithPreview[] }) => {
     const { currentInput, files } = inputProps;
     if (currentInput.trim() === '') return;
@@ -42,15 +41,18 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
     setTyping(true);
 
     try {
+      let currentThreadId = threadId;
       await onSubmit({
         widgetProps: props,
         files,
         message: currentInput,
-        threadId: chatState.threadId,
+        threadId: threadId,
         onopen: async (response) => {
           if (response.ok && response.headers.get('content-type') === "text/event-stream") {
             const threadIdHeader = response.headers.get('X-Thread-Id');
             const messageIdHeader = response.headers.get('X-Message-Id');
+            currentThreadId = threadIdHeader || threadId;
+
             setMessageId(messageIdHeader || undefined);
             setThreadId(threadIdHeader || undefined);
           }
@@ -60,7 +62,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
           setMessages((prevMessages) => {
             const lastMessage = prevMessages[prevMessages.length - 1];
             if (lastMessage.type === MessageType.HumanMessage) {
-              return [...prevMessages, { id: messageId || uuidv4(), message: newMessage, type: MessageType.AIMessage, content_type: MessageContentType.Text }];
+              return [...prevMessages, { id: messageId || uuidv4(), message: newMessage, type: MessageType.AIMessage, content_type: MessageContentType.Text, threadId: currentThreadId }];
             } else {
               const updatedLastMessage = { ...lastMessage, message: lastMessage.message + newMessage };
               return [...prevMessages.slice(0, -1), updatedLastMessage];
@@ -77,7 +79,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
       setError(e instanceof Error ? e.message : String(e));
       setTyping(false);
     }
-  }, [props, setMessages, setCurrentInput, setTyping, setError, setMessageId, setThreadId, messageId]);
+  }, [props, setMessages, setCurrentInput, setTyping, setError, setMessageId, setThreadId, messageId, threadId]);
 };
 
 export const ChatComponent: React.FC<WidgetProps> = (props) => {
@@ -110,15 +112,15 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
     } as Persona,
   };
 
-  const handleSubmit = useMessageSubmission(props, chatState);
   const [files, setFiles] = useState<FileWithPreview[]>([]);
+  const handleSubmit = useMessageSubmission(props, chatState)
 
   const onSubmitWrapper = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     let currentFiles = files;
     setFiles([]);
     return handleSubmit({ currentInput, files: currentFiles });
-  }, [handleSubmit, currentInput, files]);
+  }, [currentInput, files, chatState, props]);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setFiles(prevFiles => [...prevFiles, ...acceptedFiles.map(file => Object.assign(file, {
@@ -129,7 +131,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
 
   return (
     <div className="langdb-chat flex flex-col h-full">
-      <div className="mx-auto flex flex-col h-full md:gap-5 lg:gap-6 md:max-w-3xl lg:max-w-[40rem] xl:max-w-[48rem] w-full">
+      <div className="mx-auto flex flex-col h-full  lg:max-w-[40rem] xl:max-w-[48rem] w-full">
         <div {...getRootProps()} className="langdb-message-section flex flex-col flex-1 justify-center overflow-y-auto p-4">
           {isDragActive && (
             <div className="absolute gap-20 flex-col inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white text-xl z-50">
@@ -146,12 +148,12 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
           }} />}
           <div className="flex flex-col flex-1">
             {messages.map((msg: ChatMessage) => (
-              <MessageRenderer key={msg.id} message={msg} personaOptions={personaOptions} />
+              <MessageRenderer key={msg.id} message={msg} personaOptions={personaOptions} widgetProps={props} />
             ))}
             {typing && (
               <div key="typing-ai" className="flex justify-start">
                 <div className="max-w-3/4">
-                  <AiMessage typing={true} persona={personaOptions.assistant} />
+                  <AiMessage typing={true} persona={personaOptions.assistant} widgetProps={props} />
                 </div>
               </div>
             )}
@@ -164,8 +166,8 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
             </div>
           )}
         </div>
-        <div className="langdb-chat-input sticky bottom-0 p-2 px-4">
-          <Files files={files} setFiles={setFiles} />
+        <div className="langdb-chat-input sticky bottom-0 pt-1 px-4">
+          {files && files.length > 0 && <Files files={files} setFiles={setFiles} />}
           <ChatInput onFileIconClick={open} onSubmit={onSubmitWrapper} currentInput={currentInput} setCurrentInput={setCurrentInput} />
         </div>
       </div>
