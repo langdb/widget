@@ -1,3 +1,5 @@
+import { FileWithPreview } from "../types";
+
 export interface ChatMessage {
   id: string;
   message?: string;
@@ -5,6 +7,7 @@ export interface ChatMessage {
   content_type: MessageContentType;
   type: MessageType;
   threadId?: string;
+  files?: FileWithPreview[];
 }
 
 export type MessageContentPart = [

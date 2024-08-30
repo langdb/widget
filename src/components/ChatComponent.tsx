@@ -35,7 +35,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
     if (currentInput.trim() === '') return;
     setMessages((prevMessages) => [
       ...prevMessages,
-      { id: uuidv4(), message: currentInput, type: MessageType.HumanMessage, content_type: MessageContentType.Text, role: 'user' },
+      { id: uuidv4(), message: currentInput, type: MessageType.HumanMessage, content_type: MessageContentType.Text, role: 'user', threadId: threadId, files: files },
     ]);
     setCurrentInput('');
     setTyping(true);
@@ -52,7 +52,6 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
             const threadIdHeader = response.headers.get('X-Thread-Id');
             const messageIdHeader = response.headers.get('X-Message-Id');
             currentThreadId = threadIdHeader || threadId;
-
             setMessageId(messageIdHeader || undefined);
             setThreadId(threadIdHeader || undefined);
           }
@@ -62,7 +61,8 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
           setMessages((prevMessages) => {
             const lastMessage = prevMessages[prevMessages.length - 1];
             if (lastMessage.type === MessageType.HumanMessage) {
-              return [...prevMessages, { id: messageId || uuidv4(), message: newMessage, type: MessageType.AIMessage, content_type: MessageContentType.Text, threadId: currentThreadId }];
+              // also update lastMessage threadId
+              return [...prevMessages.slice(0, -1), { ...lastMessage, threadId: currentThreadId }, { id: messageId || uuidv4(), message: newMessage, type: MessageType.AIMessage, content_type: MessageContentType.Text, threadId: currentThreadId }];
             } else {
               const updatedLastMessage = { ...lastMessage, message: lastMessage.message + newMessage };
               return [...prevMessages.slice(0, -1), updatedLastMessage];

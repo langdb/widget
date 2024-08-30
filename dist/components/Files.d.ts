@@ -2,7 +2,7 @@ import { FileWithPreview, Preview } from '../types';
 
 interface FilesProps {
     files: FileWithPreview[];
-    setFiles: React.Dispatch<React.SetStateAction<FileWithPreview[]>>;
+    setFiles?: React.Dispatch<React.SetStateAction<FileWithPreview[]>>;
 }
 export declare const Thumbnails: ({ files }: {
     files: Preview[];
