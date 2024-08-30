@@ -32046,7 +32046,7 @@ const t1 = ({ files: e, setFiles: t }) => {
       preview: URL.createObjectURL(y)
     }))]);
   }, []), { getRootProps: v, isDragActive: w, open: R } = Yh({ onDrop: A, noClick: !0, noKeyboard: !0 });
-  return /* @__PURE__ */ x.jsxs("div", { className: "langdb-chat flex flex-col h-full", children: [
+  return /* @__PURE__ */ x.jsx("div", { className: "langdb-chat flex flex-col h-full", children: /* @__PURE__ */ x.jsxs("div", { className: "mx-auto flex flex-col h-full md:gap-5 lg:gap-6 md:max-w-3xl lg:max-w-[40rem] xl:max-w-[48rem] w-full", children: [
     /* @__PURE__ */ x.jsxs("div", { ...v(), className: "langdb-message-section flex flex-col flex-1 justify-center overflow-y-auto p-4", children: [
       w && /* @__PURE__ */ x.jsxs("div", { className: "absolute gap-20 flex-col inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white text-xl z-50", children: [
         /* @__PURE__ */ x.jsx(gb, { className: "h-12 w-12" }),
@@ -32069,7 +32069,7 @@ const t1 = ({ files: e, setFiles: t }) => {
       /* @__PURE__ */ x.jsx(t1, { files: d, setFiles: f }),
       /* @__PURE__ */ x.jsx(QO, { onFileIconClick: R, onSubmit: p, currentInput: r, setCurrentInput: a })
     ] })
-  ] });
+  ] }) });
 }, i1 = ({ starters: e, onStarterClick: t }) => /* @__PURE__ */ x.jsxs("div", { className: "flex  h-full self-center flex-1 flex-col justify-center items-center", children: [
   /* @__PURE__ */ x.jsxs("div", { className: "flex flex-2 gap-3 flex-col justify-center items-center", children: [
     /* @__PURE__ */ x.jsx(Ml, { width: 48, height: 48 }),
