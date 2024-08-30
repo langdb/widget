@@ -8,7 +8,7 @@ import { Avatar } from "../Icons";
 import { AvatarItem } from "./AvatarItem";
 import { ChatMessage } from "../../dto/ChatMessage";
 import { HandThumbDownIcon as SHandThumbDownIcon, HandThumbUpIcon as SHandThumbUpIcon } from "@heroicons/react/24/solid";
-import { ArrowUpTrayIcon, HandThumbDownIcon, HandThumbUpIcon } from "@heroicons/react/24/outline";
+import { HandThumbDownIcon, HandThumbUpIcon } from "@heroicons/react/24/outline";
 import { useCallback, useState } from "react";
 import { WidgetProps } from "../Widget";
 import { DEV_SERVER_URL, getHeaders } from "../adapter";
@@ -18,7 +18,7 @@ export const AiMessage: React.FC<{ msg?: ChatMessage; typing?: boolean; persona?
   const { threadId, id } = msg || {};
   const [score, setScore] = useState<number | undefined>();
   const [error, setError] = useState<string | undefined>();
-  const handleScore = useCallback( async (score: number) => {
+  const handleScore = useCallback(async (score: number) => {
     let scoreRequest;
     scoreRequest = {
       thread_id: threadId,
@@ -90,26 +90,26 @@ export const AiMessage: React.FC<{ msg?: ChatMessage; typing?: boolean; persona?
           {msg?.message}
         </ReactMarkdown>
         {
-        !typing && threadId && id && (<>
-        <div className=" mt-3 gap-3 flex items-center justify-start space-x-1">
-          <button
-            className="rounded focus:outline-none hover:text-primary-500"
-            onClick={() => handleScore(1)}
-          >
-            {score == undefined && <HandThumbUpIcon className="h-4 w-4" />}
-            {score === 1 && <SHandThumbUpIcon className="h-4 w-4 animate-fadeIn" />}
-          </button>
-          <button
-            className="rounded focus:outline-none hover:text-primary-500"
-            onClick={() => handleScore(-1)}
-          >
-            {score == undefined && <HandThumbDownIcon className="h-4 w-4" />}
-            {score === -1 && <SHandThumbDownIcon className="h-4 w-4 animate-fadeIn" />}
-          </button>
-          {error && <div className=" text-red-500 ">{error}</div>}
-        </div>
-        </>)
-      }
+          !typing && threadId && id && (<>
+            <div className=" mt-3 gap-3 flex items-center justify-start space-x-1">
+              <button
+                className="rounded focus:outline-none hover:text-primary-500"
+                onClick={() => handleScore(1)}
+              >
+                {score == undefined && <HandThumbUpIcon className="h-4 w-4" />}
+                {score === 1 && <SHandThumbUpIcon className="h-4 w-4 animate-fadeIn" />}
+              </button>
+              <button
+                className="rounded focus:outline-none hover:text-primary-500"
+                onClick={() => handleScore(-1)}
+              >
+                {score == undefined && <HandThumbDownIcon className="h-4 w-4" />}
+                {score === -1 && <SHandThumbDownIcon className="h-4 w-4 animate-fadeIn" />}
+              </button>
+              {error && <div className=" text-red-500 ">{error}</div>}
+            </div>
+          </>)
+        }
       </div>
       {typing && (
         <div className="rounded-lg p-2 ai-message flex items-center gap-2 animate-pulse">
@@ -117,7 +117,7 @@ export const AiMessage: React.FC<{ msg?: ChatMessage; typing?: boolean; persona?
           <span>Typing...</span>
         </div>
       )}
-      
+
     </div>
   )
 };
