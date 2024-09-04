@@ -140,7 +140,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
 
   return (
     <div className="langdb-chat mx-auto flex flex-1 flex-col lg:max-w-[40rem] xl:max-w-[48rem] w-full h-full">
-      <div {...getRootProps()} className="langdb-message-section flex flex-col flex-1 justify-center overflow-y-auto p-4">
+      <div {...getRootProps()} className="langdb-message-section flex flex-col flex-1 justify-center overflow-y-auto p-4 pb-0">
         {isDragActive && (
           <div className="absolute gap-20 flex-col inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white text-xl z-50">
             <PaperClipIcon className="h-12 w-12" />

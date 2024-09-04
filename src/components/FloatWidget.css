@@ -10,7 +10,7 @@
 
 
 .floating-dark .langdb-floating-widget {
-    --langdb-Widget--BackgroundColor: black;
+    --langdb-Widget--BackgroundColor: rgb(23 23 23);
     --langdb-Widget--HeaderTextColor: 'slate-100';
 
 }
