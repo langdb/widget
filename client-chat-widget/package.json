@@ -1,0 +1,48 @@
+{
+  "name": "my-chat-widget",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "rimraf public/dist && NODE_ENV=production pnpm exec webpack --config webpack.config.js && http-server public",
+    "build:widget-prod": "pnpm reset:env-prod && rimraf public/dist &&  NODE_ENV=production pnpm exec webpack --config webpack.config.js",
+    "build:widget-local": "pnpm reset:env-local && rimraf public/dist &&  NODE_ENV=production pnpm exec webpack --config webpack.config.js",
+    "clean:env": "rm -f .env",
+    "reset:env-local": "rm -f .env && cp .env.local .env",
+    "reset:env-prod": "rm -f .env && cp .env.prod .env"
+
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@langdb/widget": "github:langdb/widget",
+    "dotenv-webpack": "^8.1.0",
+    "postcss": "^8.4.41",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^3.4.8"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/preset-react": "^7.24.7",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.20",
+    "babel-loader": "^9.1.3",
+    "css-loader": "^7.1.2",
+    "html-webpack-plugin": "^5.6.0",
+    "postcss-loader": "^8.1.1",
+    "rimraf": "^6.0.1",
+    "style-loader": "^4.0.0",
+    "terser-webpack-plugin": "^5.3.10",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.5.4",
+    "webpack": "^5.93.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4",
+    "webpack-manifest-plugin": "^5.0.0"
+  }
+}
