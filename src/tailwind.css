@@ -4,6 +4,9 @@
   html {
     @apply text-gray-500;
   }
+  *, ::before, ::after {
+    border-color: var(--widget-border-color);
+  }
 }
 
 @tailwind components;
@@ -13,42 +16,42 @@
 
 
 :root {
-  --primary-50: rgba(176, 72, 140, 0.1);
-  --primary-100: #fde6e7;
-  --primary-200: #fbd0d5;
-  --primary-300: #f8a9b2;
-  --primary-400: #f3798a;
-  --primary-500: #e94560;
-  --primary-600: #d6284d;
-  --primary-700: #b41c40;
-  --primary-800: #971a3c;
-  --primary-900: #811a39;
-  --primary-default: #E94560;
+  --widget-primary-50: rgba(176, 72, 140, 0.1);
+  --widget-primary-100: #fde6e7;
+  --widget-primary-200: #fbd0d5;
+  --widget-primary-300: #f8a9b2;
+  --widget-primary-400: #f3798a;
+  --widget-primary-500: #e94560;
+  --widget-primary-600: #d6284d;
+  --widget-primary-700: #b41c40;
+  --widget-primary-800: #971a3c;
+  --widget-primary-900: #811a39;
+  --widget-primary-default: #E94560;
 
   /* Light mode background and text colors */
-  --background-color: #ffffff;
-  --text-color: rgb(107 114 128/var(--tw-text-opacity));
-  --border-color: #e5e7eb;
-  --header-color: 'gray-50';
+  --widget-background-color: #ffffff;
+  --widget-text-color: rgb(107 114 128/var(--tw-text-opacity));
+  --widget-border-color: #e5e7eb;
+  --widget-header-color: 'gray-50';
 }
 [data-mode="dark"] {
-  --primary-50: rgba(233, 69, 96, 0.1);    /* Lighter version with transparency */
-  --primary-100: #fde6e7;
-  --primary-200: #fbd0d5;
-  --primary-300: #f8a9b2;
-  --primary-400: #f3798a;
-  --primary-500: #e94560;
-  --primary-600: #d6284d;
-  --primary-700: #b41c40;
-  --primary-800: #971a3c;
-  --primary-900: #811a39;
-  --primary-default: #E94560;
+  --widget-primary-50: rgba(233, 69, 96, 0.1);    /* Lighter version with transparency */
+  --widget-primary-100: #fde6e7;
+  --widget-primary-200: #fbd0d5;
+  --widget-primary-300: #f8a9b2;
+  --widget-primary-400: #f3798a;
+  --widget-primary-500: #e94560;
+  --widget-primary-600: #d6284d;
+  --widget-primary-700: #b41c40;
+  --widget-primary-800: #971a3c;
+  --widget-primary-900: #811a39;
+  --widget-primary-default: #E94560;
   /* Dark mode background and text colors */
-  --background-color: #171717;
-  --text-color: rgb(156 163 175/var(--tw-text-opacity));
-  --border-color: #333333;
-  --header-color: #2c2c2c;
-  --border-color: #2c2c2c;
+  --widget-background-color: #171717;
+  --widget-text-color: rgb(156 163 175/var(--tw-text-opacity));
+  --widget-border-color: #333333;
+  --widget-header-color: #2c2c2c;
+  --widget-border-color: #2c2c2c;
 }
 
 
