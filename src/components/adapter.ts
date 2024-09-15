@@ -1,4 +1,5 @@
 // import { ChatAdapter, StreamingAdapterObserver } from "@nlux/react";
+import { ModelEvent } from "../events";
 import { FileWithPreview, MessageRequest, ResizeOptions, ResponseCallbackOptions, createInnerMessage } from "../types";
 import { fetchEventSource, FetchEventSourceInit } from '@microsoft/fetch-event-source';
 
@@ -14,6 +15,7 @@ export interface AdapterProps {
   projectId?: string;
   getAccessToken?: () => Promise<string>;
   responseCallback?: (_opts: ResponseCallbackOptions) => void;
+  onEvent?: (event: ModelEvent) => void;
 }
 
 export interface SubmitProps extends FetchEventSourceInit {
@@ -41,7 +43,7 @@ export const getHeaders = async (props: AdapterProps): Promise<any> => {
 }
 
 export const onSubmit = async (submitProps: SubmitProps) => {
-  const { widgetProps,files, message, threadId, onopen, onmessage, onerror, onclose, } = submitProps;
+  const { widgetProps, files, message, threadId, onopen, onmessage, onerror, onclose, } = submitProps;
   const { fileResizeOptions: resizeOptions, userId } = widgetProps;
   const serverUrl = widgetProps.serverUrl || DEV_SERVER_URL;
   const apiUrl = `${serverUrl}/stream`;

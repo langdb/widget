@@ -1,3 +1,4 @@
+import { ModelEvent } from '../events';
 import { FileWithPreview, ResizeOptions, ResponseCallbackOptions } from '../types';
 import { FetchEventSourceInit } from '@microsoft/fetch-event-source';
 
@@ -12,6 +13,7 @@ export interface AdapterProps {
     userId?: string;
     getAccessToken?: () => Promise<string>;
     responseCallback?: (_opts: ResponseCallbackOptions) => void;
+    onEvent?: (event: ModelEvent) => void;
 }
 export interface SubmitProps extends FetchEventSourceInit {
     widgetProps: AdapterProps;
