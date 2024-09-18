@@ -11,6 +11,7 @@ export interface AdapterProps {
   threadId?: string;
   publicId?: string;
   userId?: string;
+  projectId?: string;
   getAccessToken?: () => Promise<string>;
   responseCallback?: (_opts: ResponseCallbackOptions) => void;
 }
@@ -24,6 +25,9 @@ export interface SubmitProps extends FetchEventSourceInit {
 
 export const getHeaders = async (props: AdapterProps): Promise<any> => {
   const headers: any = { "Content-Type": "application/json" };
+  if (props.projectId) {
+    headers["x-project-id"] = props.projectId;
+  }
   if (props.publicId) {
     headers["X-PUBLIC-APPLICATION-ID"] = props.publicId;
   } else {
