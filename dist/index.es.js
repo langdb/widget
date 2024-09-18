@@ -871,7 +871,7 @@ function Ly(e) {
 const gb = "https://api.dev.langdb.ai", mb = async (e) => {
   var n;
   const t = { "Content-Type": "application/json" };
-  if (e.publicId)
+  if (e.projectId && (t["x-project-id"] = e.projectId), e.publicId)
     t["X-PUBLIC-APPLICATION-ID"] = e.publicId;
   else {
     const r = await ((n = e.getAccessToken) == null ? void 0 : n.call(e));

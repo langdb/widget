@@ -11,6 +11,7 @@ export interface AdapterProps {
     threadId?: string;
     publicId?: string;
     userId?: string;
+    projectId?: string;
     getAccessToken?: () => Promise<string>;
     responseCallback?: (_opts: ResponseCallbackOptions) => void;
     onEvent?: (event: ModelEvent) => void;
