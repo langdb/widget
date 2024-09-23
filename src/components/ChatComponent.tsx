@@ -14,6 +14,7 @@ import { useDropzone } from 'react-dropzone';
 import { FileWithPreview } from "../types";
 import { PaperClipIcon } from "@heroicons/react/24/outline";
 import { Files } from "./Files";
+import { ModelEvent } from "../events";
 
 // New component for rendering messages
 const MessageRenderer: React.FC<{ message: ChatMessage; personaOptions: PersonaOptions, widgetProps: WidgetProps }> = ({ message, personaOptions, widgetProps }) => (
@@ -65,8 +66,21 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
             }
           }
         },
-        onmessage: (event) => {
-          const newMessage = event.data;
+        onmessage: (msg) => {
+          let newMessage: string | undefined;
+          try {
+            const event = JSON.parse(msg.data) as ModelEvent;
+
+            props.onEvent?.(event);
+            if (event.event.type === 'llm_content') {
+              newMessage = event.event.data.content;
+            }
+          } catch (_e: any) {
+            newMessage = msg.data;
+          }
+          if (!newMessage) {
+            return;
+          }
           setMessages((prevMessages) => {
             const lastMessage = prevMessages[prevMessages.length - 1];
             if (lastMessage.type === MessageType.HumanMessage) {
@@ -190,7 +204,6 @@ const StarterDisplay: React.FC<{ starters: WidgetProps['starters'], onStarterCli
       <span className="font-bold">LangDB</span>
       <div className="flex flex-col justify-center items-center">
         <span className="text-sm">Easily build and deploy AI agents with SQL</span>
-        <span className="text-sm">Customize with our React widget on</span>
       </div>
     </div>
     <div className="flex p-8 justify-end items-end">
