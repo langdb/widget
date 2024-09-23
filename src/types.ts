@@ -41,8 +41,10 @@ export enum ImageDetail {
 }
 
 export type Preview = { preview: string };
-export type FileWithPreview = File & Preview;
-
+export interface FileWithPreview extends File {
+  preview: string;
+  type: string;
+}
 
 export type ResponseCallbackOptions = {
   traceId?: string

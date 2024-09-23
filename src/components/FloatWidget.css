@@ -8,7 +8,15 @@
     color: var(--langdb-Widget--HeaderTextColor);
 }
 
-
+.dark-theme .langdb-chat {
+    --langdb-Widget--BackgroundColor: rgb(23 23 23);
+    --langdb-Widget--HeaderTextColor: 'slate-100';
+    --widget-background-color: #171717;
+    --widget-text-color: rgb(156 163 175/var(--tw-text-opacity));
+    --widget-border-color: #333333;
+    --widget-header-color: #2c2c2c;
+    --widget-border-color: #2c2c2c;
+}
 .floating-dark .langdb-floating-widget {
     --langdb-Widget--BackgroundColor: rgb(23 23 23);
     --langdb-Widget--HeaderTextColor: 'slate-100';

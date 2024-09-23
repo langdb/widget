@@ -32,8 +32,20 @@ export const Files = ({ files, setFiles }: FilesProps) => {
           {setFiles && <button onClick={removeFile(file)} className="absolute right-1 top-1 -translate-y-1/2 translate-x-1/2 rounded-full bg-red-500 text-white  text-token-text-primary transition-colors hover:opacity-100 group-hover:opacity-100 md:opacity-0">
             <XMarkIcon className="w-4 h-4" />
           </button>}
-          <div className="">
-            <img src={file.preview} alt={file.name} className={`${sizePreview} border object-cover rounded-lg`} />
+          <div key={`preview-${file.name}`} className="">
+          {file.type === 'application/pdf' && (
+              <embed src={file.preview} className={`${sizePreview} border border-border object-cover rounded-lg overflow-hidden`} type="application/pdf" />
+            )}
+            {file.type === 'text/plain' && (
+              <iframe src={file.preview} className={`${sizePreview} border border-border object-cover rounded-lg overflow-hidden`}></iframe>
+            )}
+            {file.type.startsWith('image/') && (
+                <img
+                  src={file.preview}
+                  alt={file.name}
+                  className={`${sizePreview} border border-border object-cover rounded-lg`}
+                />
+              )}
           </div>
         </div>
       ))}

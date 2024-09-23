@@ -146,9 +146,14 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
   }, [currentInput, files, chatState, props]);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
-    setFiles(prevFiles => [...prevFiles, ...acceptedFiles.map(file => Object.assign(file, {
-      preview: URL.createObjectURL(file)
-    }))]);
+    setFiles(prevFiles => [
+      ...prevFiles,
+      ...acceptedFiles.map(file => ({
+        ...file,
+        preview: URL.createObjectURL(file),
+        type: file.type,
+      }))
+    ]);
   }, []);
   const { getRootProps, isDragActive, open } = useDropzone({ onDrop, noClick: true, noKeyboard: true });
 
