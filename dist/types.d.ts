@@ -30,12 +30,10 @@ export declare enum ImageDetail {
     Low = "Low",
     High = "High"
 }
-export type Preview = {
-    preview: string;
-};
 export interface FileWithPreview extends File {
     preview: string;
     type: string;
+    raw_file: File;
 }
 export type ResponseCallbackOptions = {
     traceId?: string;

@@ -40,10 +40,10 @@ export enum ImageDetail {
   High = "High",
 }
 
-export type Preview = { preview: string };
 export interface FileWithPreview extends File {
   preview: string;
   type: string;
+  raw_file: File;
 }
 
 export type ResponseCallbackOptions = {
@@ -64,9 +64,10 @@ export async function createInnerMessage(props: {
   if (!files || !files.length) {
     return message;
   } else {
-    let parts: MessageContentPart[] = await Promise.all(files.map(async (file): Promise<MessageContentPart> => {
-
-      // const base64Str = await convertToBase64(file);
+    let parts: MessageContentPart[] = await Promise.all(files
+      // only image files are supported
+      .filter(file => file && file.type && file.type.startsWith('image/'))
+      .map(async (file): Promise<MessageContentPart> => {
       const blob = await resizeImage(file, props.resizeOptions);
       if (!blob) {
         throw new Error("resize failed");
@@ -98,15 +99,18 @@ export interface IResizeImageOptions {
 
 const resizeImage = async (file: FileWithPreview, options?: ResizeOptions): Promise<Blob | null> => {
   const size = options?.maxSize || 256;
-
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
 
   if (!ctx) throw new Error("ctx is not available")
   canvas.width = size
   canvas.height = size
+  let raw_file = file.raw_file;
+  if (!(raw_file instanceof Blob)) {
+    return null;
+  }
+  let bitmap = await createImageBitmap(raw_file)
 
-  const bitmap = await createImageBitmap(file)
   const { width, height } = bitmap
 
   const ratio = Math.max(size / width, size / height)

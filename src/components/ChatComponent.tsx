@@ -149,13 +149,19 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
     setFiles(prevFiles => [
       ...prevFiles,
       ...acceptedFiles.map(file => ({
-        ...file,
         preview: URL.createObjectURL(file),
+        raw_file: file,
+        ...file,
         type: file.type,
       }))
     ]);
   }, []);
-  const { getRootProps, isDragActive, open } = useDropzone({ onDrop, noClick: true, noKeyboard: true });
+  const { getRootProps, isDragActive, open } = useDropzone({ onDrop, noClick: true, 
+    noKeyboard: true,
+    accept: {
+      "image/*": [],
+    }, // Accept only image files
+   });
 
   return (
     <div className="langdb-chat mx-auto flex flex-1 flex-col lg:max-w-[40rem] xl:max-w-[48rem] w-full h-full">
