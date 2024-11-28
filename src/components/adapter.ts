@@ -25,15 +25,20 @@ export interface SubmitProps extends FetchEventSourceInit {
   threadId?: string;
 }
 
-export const getHeaders = async (props: AdapterProps): Promise<any> => {
+export const getHeaders = async (props: {
+  projectId?: string;
+  publicId?: string;
+  getAccessToken?: () => Promise<string>;
+}): Promise<any> => {
+  const { projectId, publicId, getAccessToken } = props;
   const headers: any = { "Content-Type": "application/json" };
-  if (props.projectId) {
-    headers["x-project-id"] = props.projectId;
+  if (projectId) {
+    headers["x-project-id"] = projectId;
   }
-  if (props.publicId) {
-    headers["X-PUBLIC-APPLICATION-ID"] = props.publicId;
+  if (publicId) {
+    headers["X-PUBLIC-APPLICATION-ID"] = publicId;
   } else {
-    const token = await props.getAccessToken?.();
+    const token = await getAccessToken?.();
     if (!token)
       throw new Error("Failed to get the user token");
 

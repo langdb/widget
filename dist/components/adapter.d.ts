@@ -22,5 +22,9 @@ export interface SubmitProps extends FetchEventSourceInit {
     files?: FileWithPreview[];
     threadId?: string;
 }
-export declare const getHeaders: (props: AdapterProps) => Promise<any>;
+export declare const getHeaders: (props: {
+    projectId?: string;
+    publicId?: string;
+    getAccessToken?: () => Promise<string>;
+}) => Promise<any>;
 export declare const onSubmit: (submitProps: SubmitProps) => Promise<void>;
