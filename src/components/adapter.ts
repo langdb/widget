@@ -28,12 +28,16 @@ export interface SubmitProps extends FetchEventSourceInit {
 export const getHeaders = async (props: {
   projectId?: string;
   publicId?: string;
+  threadId?: string;
   getAccessToken?: () => Promise<string>;
 }): Promise<any> => {
-  const { projectId, publicId, getAccessToken } = props;
+  const { projectId, publicId, getAccessToken, threadId } = props;
   const headers: any = { "Content-Type": "application/json" };
   if (projectId) {
     headers["x-project-id"] = projectId;
+  }
+  if(threadId) {
+    headers["X-Thread-Id"] = threadId
   }
   if (publicId) {
     headers["X-PUBLIC-APPLICATION-ID"] = publicId;

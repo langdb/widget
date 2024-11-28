@@ -48,9 +48,10 @@ const getMessagesFromThread = async (props: {
   try {
     const { threadId, projectId, getAccessToken, publicId, serverUrl } = props;
     const headers = await getHeaders({
-      projectId: projectId,
-      publicId: publicId,
-      getAccessToken: getAccessToken,
+      projectId,
+      publicId,
+      getAccessToken,
+      threadId
     });
     const res = await axios.get(`${serverUrl}/threads/${threadId}/messages`, {
       headers,

@@ -763,16 +763,16 @@ function Iv(e) {
     throw new Error(`Expected content-type to be ${su}, Actual: ${t}`);
 }
 const Fu = "https://api.dev.langdb.ai", Pu = async (e) => {
-  const { projectId: t, publicId: n, getAccessToken: r } = e, a = { "Content-Type": "application/json" };
-  if (t && (a["x-project-id"] = t), n)
-    a["X-PUBLIC-APPLICATION-ID"] = n;
+  const { projectId: t, publicId: n, getAccessToken: r, threadId: a } = e, i = { "Content-Type": "application/json" };
+  if (t && (i["x-project-id"] = t), a && (i["X-Thread-Id"] = a), n)
+    i["X-PUBLIC-APPLICATION-ID"] = n;
   else {
-    const i = await (r == null ? void 0 : r());
-    if (!i)
+    const o = await (r == null ? void 0 : r());
+    if (!o)
       throw new Error("Failed to get the user token");
-    a.Authorization = `Bearer ${i}`;
+    i.Authorization = `Bearer ${o}`;
   }
-  return a;
+  return i;
 }, Cv = async (e) => {
   const { widgetProps: t, message: n, threadId: r, onopen: a, onmessage: i, onerror: o, onclose: s } = e, u = `${t.serverUrl || Fu}/chat/completions`, { modelName: c, agentParams: d, responseCallback: f } = t;
   try {
@@ -35613,7 +35613,8 @@ const vP = async (e) => {
     const { threadId: t, projectId: n, getAccessToken: r, publicId: a, serverUrl: i } = e, o = await Pu({
       projectId: n,
       publicId: a,
-      getAccessToken: r
+      getAccessToken: r,
+      threadId: t
     });
     let l = (await Le.get(`${i}/threads/${t}/messages`, {
       headers: o
