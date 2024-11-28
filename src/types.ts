@@ -1,10 +1,45 @@
 export interface MessageRequest {
-  model_name: string;
-  message: InnerMessage;
+  model: string;
+  messages: ChatCompletionMessage[];
   thread_id?: string;
-  user_id: string;          // UUID
   parameters: object;
+  include_history?: boolean;
+  stream?: boolean;
+  temperature?: number;
+  top_p?: number;
+  n?: number;
+  stop?: string[];
+  max_tokens?: number;
+  presence_penalty?: number;
+  frequency_penalty?: number;
+  logit_bias?: object;
+  user?: string;
+  response_format?: string;
+  functions?: {
+    name: string;
+    description: string;
+    parameters: {
+      type: string;
+      description: string;
+      required: boolean;
+    }[];
+  }[];
+  function_call?: {
+    name: string;
+    arguments: string;
+  }
 }
+
+export interface ChatCompletionMessage {
+  role: string;
+  content: string;
+  name?: string;
+  function_call?: {
+    name: string;
+    arguments: string;
+  };
+}
+
 export interface ResizeOptions {
   maxSize: number;
 }
@@ -54,6 +89,19 @@ export type ResponseCallbackOptions = {
   error?: Error
 };
 
+
+export const createImageUrl  = async (props: {file: FileWithPreview, resizeOptions?: ResizeOptions}) => {
+  const { file, resizeOptions } = props;
+  const blob = await resizeImage(file, resizeOptions);
+  if (!blob) {
+    throw new Error("resize failed");
+  }
+  const imageUrl = await blobToBase64(blob);
+  if (!imageUrl) {
+    throw new Error("base64 failed");
+  }
+  return imageUrl
+}
 
 export async function createInnerMessage(props: {
   files?: FileWithPreview[],

@@ -1,9 +1,22 @@
 import React, { FC } from "react";
+import axios from "axios";
 import { Widget, WidgetProps } from "../Widget";
 
+export const getAccessToken = async () => {
+   try {
+     const response = await axios.post('http://localhost:8083/oauth2/token', {
+       grant_type: 'client_credentials',
+       client_id: '58oc3lpiqs71dqtvme3r30im87',
+       client_secret: '1j6ln8i01hrdr12osilaa9re682aafjd3rgbqnm93f7e40h6843j',
+     });
+     return response.data.access_token;
+   } catch (error) {
+     console.error("Error fetching access token:", error);
+     throw error;
+   }
+}
+
 const Example: FC<WidgetProps> = ({
-  publicId = "445e863b-83a9-4ec9-8041-aa0514239472",
-  modelName = "thu_super_assistant",
   theme = 'light',
   starters = []
 }) => {
@@ -18,9 +31,12 @@ const Example: FC<WidgetProps> = ({
     >
       <div className="flex flex-1">
         <Widget
-          publicId={publicId}
-          modelName={modelName}
-          theme={theme}
+         modelName="gpt-4o"
+         projectId="419b04bb-4386-4d7e-ab09-02e81ba3a087"
+         threadId='2115b8e6-fbad-43c9-ae04-2a19d2ad72fc'
+         getAccessToken={getAccessToken}
+         serverUrl="http://localhost:8083"
+         theme={theme}
           starters={starters}
         />
       </div>
