@@ -1,9 +1,42 @@
 export interface MessageRequest {
-    model_name: string;
-    message: InnerMessage;
+    model: string;
+    messages: ChatCompletionMessage[];
     thread_id?: string;
-    user_id: string;
     parameters: object;
+    include_history?: boolean;
+    stream?: boolean;
+    temperature?: number;
+    top_p?: number;
+    n?: number;
+    stop?: string[];
+    max_tokens?: number;
+    presence_penalty?: number;
+    frequency_penalty?: number;
+    logit_bias?: object;
+    user?: string;
+    response_format?: string;
+    functions?: {
+        name: string;
+        description: string;
+        parameters: {
+            type: string;
+            description: string;
+            required: boolean;
+        }[];
+    }[];
+    function_call?: {
+        name: string;
+        arguments: string;
+    };
+}
+export interface ChatCompletionMessage {
+    role: string;
+    content: string;
+    name?: string;
+    function_call?: {
+        name: string;
+        arguments: string;
+    };
 }
 export interface ResizeOptions {
     maxSize: number;
@@ -42,6 +75,10 @@ export type ResponseCallbackOptions = {
     modelName: string;
     error?: Error;
 };
+export declare const createImageUrl: (props: {
+    file: FileWithPreview;
+    resizeOptions?: ResizeOptions;
+}) => Promise<string | ArrayBuffer>;
 export declare function createInnerMessage(props: {
     files?: FileWithPreview[];
     message: string;

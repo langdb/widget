@@ -1,6 +1,6 @@
 // import { ChatAdapter, StreamingAdapterObserver } from "@nlux/react";
 import { ModelEvent } from "../events";
-import { ChatCompletionMessage, createImageUrl, FileWithPreview, MessageRequest, ResizeOptions, ResponseCallbackOptions } from "../types";
+import { ChatCompletionMessage, FileWithPreview, MessageRequest, ResizeOptions, ResponseCallbackOptions } from "../types";
 import { fetchEventSource, FetchEventSourceInit } from '@microsoft/fetch-event-source';
 
 export const DEV_SERVER_URL = "https://api.dev.langdb.ai";
@@ -43,19 +43,19 @@ export const getHeaders = async (props: AdapterProps): Promise<any> => {
 }
 
 export const onSubmit = async (submitProps: SubmitProps) => {
-  const { widgetProps, files, message, threadId, onopen, onmessage, onerror, onclose, } = submitProps;
-  const { fileResizeOptions: resizeOptions } = widgetProps;
+  const { widgetProps, message, threadId, onopen, onmessage, onerror, onclose, } = submitProps;
+  // const { fileResizeOptions: resizeOptions } = widgetProps;
   const serverUrl = widgetProps.serverUrl || DEV_SERVER_URL;
   const apiUrl = `${serverUrl}/chat/completions`;
   const { modelName, agentParams, responseCallback } = widgetProps;
 
   try {
     const headers = await getHeaders(widgetProps);
-    if(files && files.length > 0) {
-      let imageUrls= await Promise.all(files.map(file => {
-        return createImageUrl({ file, resizeOptions })
-      }));
-    }
+    // if(files && files.length > 0) {
+    //   let _imageUrls= await Promise.all(files.map(file => {
+    //     return createImageUrl({ file, resizeOptions })
+    //   }));
+    // }
 
     const userCompletionMessage: ChatCompletionMessage = {
       role: 'user',
