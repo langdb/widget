@@ -1,13 +1,13 @@
 import "../tailwind.css";
 import './Widget.css';
 import { AdapterProps, DEV_SERVER_URL, getHeaders } from "./adapter";
-import React, { useEffect } from "react";
+import React from "react";
 import { ChatComponent } from "./ChatComponent";
 import { ChatMessage, MessageContentPart, MessageContentType, MessageType } from "../dto/ChatMessage";
 import { PersonaOptions } from "../dto/PersonaOptions";
 import { ConversationStarter } from "../dto/ConversationStarter";
 import axios from "axios";
-import { useRequest } from "ahooks";
+import { useMount, useRequest } from "ahooks";
 // Types
 
 export interface WidgetProps extends AdapterProps {
@@ -83,7 +83,7 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
   const { run: triggerGetMessages, loading: messagesLoading, data } = useRequest(getMessagesFromThread, {
     manual: true
   });
-  useEffect(() => {
+  useMount(() => {
     if (threadId && projectId && (getAccessToken || publicId) && (!messages || messages.length === 0)) {
       triggerGetMessages({
         threadId,
@@ -93,7 +93,7 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
         serverUrl: props.serverUrl || DEV_SERVER_URL
       });
     }
-  }, [threadId, projectId, getAccessToken, publicId, messages, props.serverUrl]);
+  });
   if (messagesLoading) {
     return <div>Loading...</div>;
   }
