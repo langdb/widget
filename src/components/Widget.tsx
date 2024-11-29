@@ -95,7 +95,9 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
     }
   });
   if (messagesLoading) {
-    return <div>Loading...</div>;
+    return <div className={`${themeClass} w-full h-full justify-center items-center`}>
+     <span className="animate-pulse"> Loading...</span>
+      </div>;
   }
 
   return (

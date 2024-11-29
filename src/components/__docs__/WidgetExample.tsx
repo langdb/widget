@@ -33,7 +33,7 @@ const Example: FC<WidgetProps> = ({
         <Widget
          modelName="gpt-4o"
          projectId="419b04bb-4386-4d7e-ab09-02e81ba3a087"
-         threadId='2cd89bc5-b05c-4e49-ae96-5e765affcab3'
+         threadId='f678d2d2-b96b-439b-8af8-a24d04216ec7'
          getAccessToken={getAccessToken}
          serverUrl="http://localhost:8083"
          theme={theme}

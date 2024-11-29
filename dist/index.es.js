@@ -862,7 +862,7 @@ const Pv = (e) => {
     setError: p
   };
 };
-var lu = /* @__PURE__ */ ((e) => (e.Text = "Text", e.ImageUrl = "ImageUrl", e))(lu || {}), en = /* @__PURE__ */ ((e) => (e.SystemMessage = "system", e.AIMessage = "ai", e.HumanMessage = "human", e))(en || {});
+var lu = /* @__PURE__ */ ((e) => (e.Text = "Text", e.ImageUrl = "ImageUrl", e))(lu || {}), en = /* @__PURE__ */ ((e) => (e.SystemMessage = "system", e.AIMessage = "ai", e.HumanMessage = "human", e.ToolMessage = "tool", e))(en || {});
 function Uv({
   title: e,
   titleId: t,
@@ -35645,7 +35645,7 @@ const vP = async (e) => {
       publicId: i,
       serverUrl: e.serverUrl || Fu
     });
-  }), l ? /* @__PURE__ */ N.jsx("div", { children: "Loading..." }) : /* @__PURE__ */ N.jsx("div", { className: `${t} w-full h-full`, children: /* @__PURE__ */ N.jsx(m0, { ...e, messages: o || u || [] }) });
+  }), l ? /* @__PURE__ */ N.jsx("div", { className: `${t} w-full h-full justify-center items-center`, children: /* @__PURE__ */ N.jsx("span", { className: "animate-pulse", children: " Loading..." }) }) : /* @__PURE__ */ N.jsx("div", { className: `${t} w-full h-full`, children: /* @__PURE__ */ N.jsx(m0, { ...e, messages: o || u || [] }) });
 });
 function iu(...e) {
   return e.filter(Boolean).join(" ");
@@ -35786,7 +35786,7 @@ const DP = (e) => {
     )
   }
 );
-var AP = /* @__PURE__ */ ((e) => (e.Text = "Text", e.ImageUrl = "ImageUrl", e))(AP || {}), RP = /* @__PURE__ */ ((e) => (e.SystemMessage = "system", e.AIMessage = "ai", e.HumanMessage = "human", e))(RP || {}), _P = /* @__PURE__ */ ((e) => (e.Auto = "Auto", e.Low = "Low", e.High = "High", e))(_P || {});
+var AP = /* @__PURE__ */ ((e) => (e.Text = "Text", e.ImageUrl = "ImageUrl", e))(AP || {}), RP = /* @__PURE__ */ ((e) => (e.SystemMessage = "system", e.AIMessage = "ai", e.HumanMessage = "human", e.ToolMessage = "tool", e))(RP || {}), _P = /* @__PURE__ */ ((e) => (e.Auto = "Auto", e.Low = "Low", e.High = "High", e))(_P || {});
 const MP = async (e) => {
   const { file: t, resizeOptions: n } = e, r = await iv(t, n);
   if (!r)

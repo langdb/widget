@@ -20,6 +20,7 @@ import { ModelEvent } from "../events";
 const MessageRenderer: React.FC<{ message: ChatMessage; personaOptions: PersonaOptions, widgetProps: WidgetProps }> = ({ message, personaOptions, widgetProps }) => (
   <div className={`flex mb-2 ${message.type === MessageType.HumanMessage ? 'justify-end' : 'justify-start'}`}>
     <div className="max-w-3/4">
+    
       {message.type === MessageType.HumanMessage
         ? <HumanMessage msg={message} persona={personaOptions.user} />
         : <AiMessage msg={message} persona={personaOptions.assistant} widgetProps={widgetProps} />

@@ -56,7 +56,8 @@ export declare enum MessageContentType {
 export declare enum MessageType {
     SystemMessage = "system",
     AIMessage = "ai",
-    HumanMessage = "human"
+    HumanMessage = "human",
+    ToolMessage = "tool"
 }
 export declare enum ImageDetail {
     Auto = "Auto",
