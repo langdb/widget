@@ -65,6 +65,7 @@ export enum MessageType {
   SystemMessage = "system",
   AIMessage = "ai",
   HumanMessage = "human",
+  ToolMessage = "tool"
 }
 
 
