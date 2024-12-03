@@ -14,7 +14,8 @@ import { useDropzone } from 'react-dropzone';
 import { FileWithPreview } from "../types";
 import { PaperClipIcon } from "@heroicons/react/24/outline";
 import { Files } from "./Files";
-import { ModelEvent } from "../events";
+import { ChatCompletionChunk } from "../events";
+import emitter from "./EventEmiter";
 
 // New component for rendering messages
 const MessageRenderer: React.FC<{ message: ChatMessage; personaOptions: PersonaOptions, widgetProps: WidgetProps }> = ({ message, personaOptions, widgetProps }) => (
@@ -68,32 +69,26 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
           }
         },
         onmessage: (msg) => {
-          let newMessage: string | undefined;
+          //let newMessage: string | undefined;
           try {
-            const event = JSON.parse(msg.data) as ModelEvent;
-
+            const event = JSON.parse(msg.data) as ChatCompletionChunk;
             props.onEvent?.(event);
-            if (event.event.type === 'llm_content') {
-              newMessage = event.event.data.content;
-            }
+            setMessages((prevMessages) => {
+              const lastMessage = prevMessages[prevMessages.length - 1];
+              if (lastMessage.type === MessageType.HumanMessage) {
+                // also update lastMessage threadId
+                return  [...prevMessages.slice(0, -1), {...lastMessage, threadId: currentThreadId}, { id: messageId || uuidv4(), message: event.choices.map((choice) => choice.delta.content).join(''), type: MessageType.AIMessage, content_type: MessageContentType.Text, threadId: currentThreadId }];
+              } else {
+                const updatedLastMessage = { ...lastMessage, message: lastMessage.message + event.choices.map((choice) => choice.delta.content).join('') };
+                return [...prevMessages.slice(0, -1), updatedLastMessage];
+              }
+            })
           } catch (_e: any) {
-            newMessage = msg.data;
+           // newMessage = msg.data;
           }
-          if (!newMessage) {
-            return;
-          }
-          setMessages((prevMessages) => {
-            const lastMessage = prevMessages[prevMessages.length - 1];
-            if (lastMessage.type === MessageType.HumanMessage) {
-              // also update lastMessage threadId
-              return [...prevMessages.slice(0, -1), { ...lastMessage, threadId: currentThreadId }, { id: messageId || uuidv4(), message: newMessage, type: MessageType.AIMessage, content_type: MessageContentType.Text, threadId: currentThreadId }];
-            } else {
-              const updatedLastMessage = { ...lastMessage, message: lastMessage.message + newMessage };
-              return [...prevMessages.slice(0, -1), updatedLastMessage];
-            }
-          });
         },
         onclose: () => {
+          emitter.emit('langdb_chatSubmitSuccess', {});
           setMessageId(undefined);
           setTyping(false);
         },
@@ -117,6 +112,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
     error,
   } = chatState;
 
+  const {hideChatInput} = props
   const { messagesEndRef, scrollToBottom } = useScrollToBottom();
 
   useEffect(() => {
@@ -137,14 +133,28 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
   };
 
   const [files, setFiles] = useState<FileWithPreview[]>([]);
+  
   const handleSubmit = useMessageSubmission(props, chatState)
 
-  const onSubmitWrapper = useCallback((e: React.FormEvent) => {
-    e.preventDefault();
+
+  const onSubmitWrapper = useCallback((inputText: string) => {
     let currentFiles = files;
     setFiles([]);
-    return handleSubmit({ currentInput, files: currentFiles });
-  }, [currentInput, files, chatState, props]);
+    return handleSubmit({ currentInput: inputText, files: currentFiles });
+  }, [files, handleSubmit]);
+
+  useEffect(() => {
+    const handleExternalSubmit = ({ inputText }: { inputText: string }) => {
+      setCurrentInput(inputText); // Set the input text
+      onSubmitWrapper(inputText); // Pass the input text directly
+    };
+  
+    emitter.on('langdb_chatSubmit', handleExternalSubmit);
+  
+    return () => {
+      emitter.off('langdb_chatSubmit', handleExternalSubmit);
+    };
+  }, [onSubmitWrapper, setCurrentInput]);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setFiles(prevFiles => [
@@ -201,10 +211,10 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
           </div>
         )}
       </div>
-      <div className="langdb-chat-input bg-inherit sticky bottom-0 pt-1 px-4">
+      {!hideChatInput && <div className="langdb-chat-input bg-inherit sticky bottom-0 pt-1 px-4">
         {files && files.length > 0 && <Files files={files} setFiles={setFiles} />}
         <ChatInput onFileIconClick={open} onSubmit={onSubmitWrapper} currentInput={currentInput} setCurrentInput={setCurrentInput} />
-      </div>
+      </div>}
     </div>
   );
 };

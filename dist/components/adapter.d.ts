@@ -1,4 +1,4 @@
-import { ModelEvent } from '../events';
+import { ChatCompletionChunk } from '../events';
 import { FileWithPreview, ResizeOptions, ResponseCallbackOptions } from '../types';
 import { FetchEventSourceInit } from '@microsoft/fetch-event-source';
 
@@ -14,7 +14,7 @@ export interface AdapterProps {
     projectId?: string;
     getAccessToken?: () => Promise<string>;
     responseCallback?: (_opts: ResponseCallbackOptions) => void;
-    onEvent?: (event: ModelEvent) => void;
+    onEvent?: (event: ChatCompletionChunk) => void;
 }
 export interface SubmitProps extends FetchEventSourceInit {
     widgetProps: AdapterProps;
@@ -27,5 +27,6 @@ export declare const getHeaders: (props: {
     publicId?: string;
     threadId?: string;
     getAccessToken?: () => Promise<string>;
+    apiKey?: string;
 }) => Promise<any>;
 export declare const onSubmit: (submitProps: SubmitProps) => Promise<void>;

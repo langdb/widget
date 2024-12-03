@@ -1,5 +1,5 @@
 // import { ChatAdapter, StreamingAdapterObserver } from "@nlux/react";
-import { ModelEvent } from "../events";
+import { ChatCompletionChunk } from "../events";
 import { ChatCompletionMessage, FileWithPreview, MessageRequest, ResizeOptions, ResponseCallbackOptions } from "../types";
 import { fetchEventSource, FetchEventSourceInit } from '@microsoft/fetch-event-source';
 
@@ -15,7 +15,7 @@ export interface AdapterProps {
   projectId?: string;
   getAccessToken?: () => Promise<string>;
   responseCallback?: (_opts: ResponseCallbackOptions) => void;
-  onEvent?: (event: ModelEvent) => void;
+  onEvent?: (event: ChatCompletionChunk) => void;
 }
 
 export interface SubmitProps extends FetchEventSourceInit {
@@ -30,8 +30,9 @@ export const getHeaders = async (props: {
   publicId?: string;
   threadId?: string;
   getAccessToken?: () => Promise<string>;
+  apiKey?: string;
 }): Promise<any> => {
-  const { projectId, publicId, getAccessToken, threadId } = props;
+  const { projectId, publicId, apiKey,getAccessToken, threadId } = props;
   const headers: any = { "Content-Type": "application/json" };
   if (projectId) {
     headers["x-project-id"] = projectId;
@@ -41,6 +42,9 @@ export const getHeaders = async (props: {
   }
   if (publicId) {
     headers["X-PUBLIC-APPLICATION-ID"] = publicId;
+  } 
+  if(apiKey) {
+    headers.Authorization = `Bearer ${apiKey}`
   } else {
     const token = await getAccessToken?.();
     if (!token)

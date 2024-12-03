@@ -17,7 +17,9 @@ export interface WidgetProps extends AdapterProps {
     threadId?: string;
     projectId?: string;
     getAccessToken?: () => Promise<string>;
+    apiKey?: string;
     publicId?: string;
     serverUrl?: string;
+    hideChatInput?: boolean;
 }
 export declare const Widget: React.FC<WidgetProps>;

@@ -20,11 +20,32 @@ export type ModelEventType = {
     type: 'unknown_error';
     data: string;
 };
-export interface ModelEvent {
-    span_id: string;
-    trace_id: string;
-    event: ModelEventType;
-    timestamp: string;
+export interface ChatCompletionChunk {
+    id: string;
+    created: number;
+    model: string;
+    object: string;
+    choices: ChatCompletionChunkChoice[];
+}
+export interface ChatCompletionDelta {
+    role?: string;
+    content?: string;
+    tool_calls?: ToolCall[];
+}
+export interface ToolCall {
+    id: string;
+    type: string;
+    function: FunctionCall;
+}
+export interface FunctionCall {
+    name: string;
+    arguments: string;
+}
+export interface ChatCompletionChunkChoice {
+    delta: ChatCompletionDelta;
+    index: number;
+    finish_reason?: string;
+    logprobs?: any;
 }
 export interface ModelUsage {
     input_tokens: number;

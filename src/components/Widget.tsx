@@ -23,8 +23,10 @@ export interface WidgetProps extends AdapterProps {
   threadId?: string;
   projectId?: string;
   getAccessToken?: () => Promise<string>;
+  apiKey?: string;
   publicId?: string;
   serverUrl?: string;
+  hideChatInput?: boolean
 }
 
 interface MessageWithId {
@@ -44,14 +46,16 @@ const getMessagesFromThread = async (props: {
   getAccessToken?: () => Promise<string>;
   publicId?: string;
   serverUrl: string;
+  apiKey?: string
 }) => {
   try {
-    const { threadId, projectId, getAccessToken, publicId, serverUrl } = props;
+    const { threadId, projectId, apiKey, getAccessToken, publicId, serverUrl } = props;
     const headers = await getHeaders({
       projectId,
       publicId,
       getAccessToken,
-      threadId
+      threadId,
+      apiKey
     });
     const res = await axios.get(`${serverUrl}/threads/${threadId}/messages`, {
       headers,
@@ -90,7 +94,8 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
         projectId,
         getAccessToken,
         publicId,
-        serverUrl: props.serverUrl || DEV_SERVER_URL
+        serverUrl: props.serverUrl || DEV_SERVER_URL,
+        apiKey: props.apiKey
       });
     }
   });

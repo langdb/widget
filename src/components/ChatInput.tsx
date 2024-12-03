@@ -1,7 +1,7 @@
 import { ArrowUpIcon, PaperClipIcon } from "@heroicons/react/24/outline";
 
 export const ChatInput: React.FC<{
-  onSubmit: (e: React.FormEvent) => void;
+  onSubmit: (inputText: string) => Promise<void>;
   currentInput: string;
   className?: string;
   setCurrentInput: (input: string) => void,
@@ -9,7 +9,7 @@ export const ChatInput: React.FC<{
 }> = ({ onSubmit, currentInput, setCurrentInput, className, onFileIconClick }) => (
   <form onSubmit={(e) => {
     e.preventDefault();
-    onSubmit(e);
+    onSubmit(currentInput);
   }}
     className={`langdb-input-container flex items-center p-2 rounded-full mb-3 ${className}`}>
     {onFileIconClick && <button type="button" onClick={(e) => {
