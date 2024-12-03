@@ -226,7 +226,7 @@ const StarterDisplay: React.FC<{ starters: WidgetProps['starters'], onStarterCli
       <Avatar width={48} height={48} />
       <span className="font-bold">LangDB</span>
       <div className="flex flex-col justify-center items-center">
-        <span className="text-sm">Easily build and deploy AI agents with SQL</span>
+        <span className="text-sm">Easily build and deploy AI agents</span>
       </div>
     </div>
     <div className="flex p-8 justify-end items-end">

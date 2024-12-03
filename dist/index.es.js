@@ -33310,7 +33310,7 @@ const Iu = g0(), m0 = ({ message: e, personaOptions: t, widgetProps: n }) => /* 
   /* @__PURE__ */ N.jsxs("div", { className: "flex flex-2 gap-3 flex-col justify-center items-center", children: [
     /* @__PURE__ */ N.jsx(Bu, { width: 48, height: 48 }),
     /* @__PURE__ */ N.jsx("span", { className: "font-bold", children: "LangDB" }),
-    /* @__PURE__ */ N.jsx("div", { className: "flex flex-col justify-center items-center", children: /* @__PURE__ */ N.jsx("span", { className: "text-sm", children: "Easily build and deploy AI agents with SQL" }) })
+    /* @__PURE__ */ N.jsx("div", { className: "flex flex-col justify-center items-center", children: /* @__PURE__ */ N.jsx("span", { className: "text-sm", children: "Easily build and deploy AI agents" }) })
   ] }),
   /* @__PURE__ */ N.jsx("div", { className: "flex p-8 justify-end items-end", children: /* @__PURE__ */ N.jsx("div", { className: "flex  flex-row gap-4", children: e && e.map((n, r) => /* @__PURE__ */ N.jsx("button", { onClick: () => {
     t(n.prompt);
