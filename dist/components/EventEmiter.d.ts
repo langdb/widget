@@ -4,5 +4,5 @@ type Events = {
     };
     langdb_chatSubmitSuccess: {};
 };
-declare const emitter: import('mitt').Emitter<Events>;
-export default emitter;
+export declare const emitter: import('mitt').Emitter<Events>;
+export {};

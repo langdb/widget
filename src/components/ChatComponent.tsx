@@ -15,13 +15,13 @@ import { FileWithPreview } from "../types";
 import { PaperClipIcon } from "@heroicons/react/24/outline";
 import { Files } from "./Files";
 import { ChatCompletionChunk } from "../events";
-import emitter from "./EventEmiter";
+import { emitter } from "./EventEmiter";
 
 // New component for rendering messages
 const MessageRenderer: React.FC<{ message: ChatMessage; personaOptions: PersonaOptions, widgetProps: WidgetProps }> = ({ message, personaOptions, widgetProps }) => (
   <div className={`flex mb-2 ${message.type === MessageType.HumanMessage ? 'justify-end' : 'justify-start'}`}>
     <div className="max-w-3/4">
-    
+
       {message.type === MessageType.HumanMessage
         ? <HumanMessage msg={message} persona={personaOptions.user} />
         : <AiMessage msg={message} persona={personaOptions.assistant} widgetProps={widgetProps} />
@@ -77,14 +77,14 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
               const lastMessage = prevMessages[prevMessages.length - 1];
               if (lastMessage.type === MessageType.HumanMessage) {
                 // also update lastMessage threadId
-                return  [...prevMessages.slice(0, -1), {...lastMessage, threadId: currentThreadId}, { id: messageId || uuidv4(), message: event.choices.map((choice) => choice.delta.content).join(''), type: MessageType.AIMessage, content_type: MessageContentType.Text, threadId: currentThreadId }];
+                return [...prevMessages.slice(0, -1), { ...lastMessage, threadId: currentThreadId }, { id: messageId || uuidv4(), message: event.choices.map((choice) => choice.delta.content).join(''), type: MessageType.AIMessage, content_type: MessageContentType.Text, threadId: currentThreadId }];
               } else {
                 const updatedLastMessage = { ...lastMessage, message: lastMessage.message + event.choices.map((choice) => choice.delta.content).join('') };
                 return [...prevMessages.slice(0, -1), updatedLastMessage];
               }
             })
           } catch (_e: any) {
-           // newMessage = msg.data;
+            // newMessage = msg.data;
           }
         },
         onclose: () => {
@@ -112,7 +112,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
     error,
   } = chatState;
 
-  const {hideChatInput} = props
+  const { hideChatInput } = props
   const { messagesEndRef, scrollToBottom } = useScrollToBottom();
 
   useEffect(() => {
@@ -133,7 +133,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
   };
 
   const [files, setFiles] = useState<FileWithPreview[]>([]);
-  
+
   const handleSubmit = useMessageSubmission(props, chatState)
 
 
@@ -148,9 +148,9 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
       setCurrentInput(inputText); // Set the input text
       onSubmitWrapper(inputText); // Pass the input text directly
     };
-  
+
     emitter.on('langdb_chatSubmit', handleExternalSubmit);
-  
+
     return () => {
       emitter.off('langdb_chatSubmit', handleExternalSubmit);
     };
@@ -167,12 +167,13 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
       }))
     ]);
   }, []);
-  const { getRootProps, isDragActive, open } = useDropzone({ onDrop, noClick: true, 
+  const { getRootProps, isDragActive, open } = useDropzone({
+    onDrop, noClick: true,
     noKeyboard: true,
     accept: {
       "image/*": [],
     }, // Accept only image files
-   });
+  });
 
   return (
     <div className="langdb-chat mx-auto flex flex-1 flex-col lg:max-w-[40rem] xl:max-w-[48rem] w-full h-full">

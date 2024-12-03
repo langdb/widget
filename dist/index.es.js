@@ -35870,6 +35870,7 @@ async function sv(e) {
 var CP = /* @__PURE__ */ ((e) => (e.Stop = "stop", e.StopSequence = "stop_sequence", e.Length = "length", e.ToolCalls = "tool_calls", e.ContentFilter = "content_filter", e.Guardrail = "guardrail", e.Other = "other", e))(CP || {});
 export {
   wP as ChatIcon,
+  cD as ChatInput,
   FP as FloatingChatWidget,
   IP as ImageDetail,
   _P as MessageContentType,
@@ -35877,6 +35878,7 @@ export {
   CP as ModelFinishReason,
   MP as Widget,
   PP as createImageUrl,
-  UP as createInnerMessage
+  UP as createInnerMessage,
+  Iu as emitter
 };
 //# sourceMappingURL=index.es.js.map

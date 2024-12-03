@@ -2,7 +2,7 @@ import React, { FC, useEffect } from "react";
 import axios from "axios";
 import { Widget, WidgetProps } from "../Widget";
 import { ChatInput } from "../ChatInput";
-import emitter from "../EventEmiter";
+import {emitter} from "../EventEmiter";
 
 export const getAccessToken = async () => {
   try {

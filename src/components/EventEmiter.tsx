@@ -5,6 +5,5 @@ type Events = {
   langdb_chatSubmitSuccess: {}
 };
 
-const emitter = mitt<Events>();
+export const emitter = mitt<Events>();
 
-export default emitter;
