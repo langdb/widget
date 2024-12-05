@@ -1,6 +1,7 @@
 import { ChatCompletionChunk } from '../events';
 import { FileWithPreview, ResizeOptions, ResponseCallbackOptions } from '../types';
 import { FetchEventSourceInit } from '@microsoft/fetch-event-source';
+import { WidgetProps } from './Widget';
 
 export declare const DEV_SERVER_URL = "https://api.dev.langdb.ai";
 export interface AdapterProps {
@@ -17,7 +18,7 @@ export interface AdapterProps {
     onEvent?: (event: ChatCompletionChunk) => void;
 }
 export interface SubmitProps extends FetchEventSourceInit {
-    widgetProps: AdapterProps;
+    widgetProps: WidgetProps;
     message: string;
     files?: FileWithPreview[];
     threadId?: string;

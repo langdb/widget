@@ -2,6 +2,7 @@
 import { ChatCompletionChunk } from "../events";
 import { ChatCompletionMessage, FileWithPreview, MessageRequest, ResizeOptions, ResponseCallbackOptions } from "../types";
 import { fetchEventSource, FetchEventSourceInit } from '@microsoft/fetch-event-source';
+import { WidgetProps } from "./Widget";
 
 export const DEV_SERVER_URL = "https://api.dev.langdb.ai";
 export interface AdapterProps {
@@ -19,7 +20,7 @@ export interface AdapterProps {
 }
 
 export interface SubmitProps extends FetchEventSourceInit {
-  widgetProps: AdapterProps;
+  widgetProps: WidgetProps;
   message: string;
   files?: FileWithPreview[];
   threadId?: string;
@@ -57,13 +58,19 @@ export const getHeaders = async (props: {
 
 export const onSubmit = async (submitProps: SubmitProps) => {
   const { widgetProps, message, threadId, onopen, onmessage, onerror, onclose, } = submitProps;
-  // const { fileResizeOptions: resizeOptions } = widgetProps;
+  // const { fileResizeOptions: resizeOptions } = widgetProps;`
   const serverUrl = widgetProps.serverUrl || DEV_SERVER_URL;
   const apiUrl = `${serverUrl}/chat/completions`;
   const { modelName, agentParams, responseCallback } = widgetProps;
 
   try {
-    const headers = await getHeaders(widgetProps);
+    const headers = await getHeaders({
+      projectId: widgetProps.projectId,
+      publicId: widgetProps.publicId,
+      getAccessToken: widgetProps.getAccessToken,
+      threadId: threadId || widgetProps.threadId,
+      apiKey: widgetProps.apiKey
+    });
     // if(files && files.length > 0) {
     //   let _imageUrls= await Promise.all(files.map(file => {
     //     return createImageUrl({ file, resizeOptions })

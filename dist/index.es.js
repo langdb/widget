@@ -776,7 +776,13 @@ const Pu = "https://api.dev.langdb.ai", Uu = async (e) => {
 }, Ov = async (e) => {
   const { widgetProps: t, message: n, threadId: r, onopen: a, onmessage: i, onerror: o, onclose: s } = e, u = `${t.serverUrl || Pu}/chat/completions`, { modelName: c, agentParams: d, responseCallback: f } = t;
   try {
-    const p = await Uu(t);
+    const p = await Uu({
+      projectId: t.projectId,
+      publicId: t.publicId,
+      getAccessToken: t.getAccessToken,
+      threadId: r || t.threadId,
+      apiKey: t.apiKey
+    });
     await Cv(u, {
       method: "POST",
       body: JSON.stringify({

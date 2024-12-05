@@ -58,16 +58,6 @@ const Example: FC<WidgetProps> = ({
           starters={starters}
           hideChatInput
         />
-        <Widget
-          modelName="gpt-4o"
-          projectId="419b04bb-4386-4d7e-ab09-02e81ba3a087"
-          getAccessToken={getAccessToken}
-          serverUrl="http://localhost:8083"
-          theme={theme}
-          apiKey={apiKey}
-          starters={starters}
-          hideChatInput
-        />
       </div>
       <div className={`${theme} dark-theme`}>
         <div className="langdb-chat bg-inherit sticky bottom-0 pt-1 px-4">
