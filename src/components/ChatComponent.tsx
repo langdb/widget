@@ -71,18 +71,24 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
         onmessage: (msg) => {
           //let newMessage: string | undefined;
           try {
-            const event = JSON.parse(msg.data) as ChatCompletionChunk;
-            props.onEvent?.(event);
-            setMessages((prevMessages) => {
-              const lastMessage = prevMessages[prevMessages.length - 1];
-              if (lastMessage.type === MessageType.HumanMessage) {
-                // also update lastMessage threadId
-                return [...prevMessages.slice(0, -1), { ...lastMessage, threadId: currentThreadId }, { id: messageId || uuidv4(), message: event.choices.map((choice) => choice.delta.content).join(''), type: MessageType.AIMessage, content_type: MessageContentType.Text, threadId: currentThreadId }];
-              } else {
-                const updatedLastMessage = { ...lastMessage, message: lastMessage.message + event.choices.map((choice) => choice.delta.content).join('') };
-                return [...prevMessages.slice(0, -1), updatedLastMessage];
-              }
-            })
+            let json_msg = JSON.parse(msg.data);
+            if (json_msg.error) {
+              setError(json_msg.error);
+              setTyping(false);
+            } else {
+              const event = json_msg as ChatCompletionChunk;
+              props.onEvent?.(event);
+              setMessages((prevMessages) => {
+                const lastMessage = prevMessages[prevMessages.length - 1];
+                if (lastMessage.type === MessageType.HumanMessage) {
+                  // also update lastMessage threadId
+                  return [...prevMessages.slice(0, -1), { ...lastMessage, threadId: currentThreadId }, { id: messageId || uuidv4(), message: event.choices.map((choice) => choice.delta.content).join(''), type: MessageType.AIMessage, content_type: MessageContentType.Text, threadId: currentThreadId }];
+                } else {
+                  const updatedLastMessage = { ...lastMessage, message: lastMessage.message + event.choices.map((choice) => choice.delta.content).join('') };
+                  return [...prevMessages.slice(0, -1), updatedLastMessage];
+                }
+              })
+            }
           } catch (_e: any) {
             // newMessage = msg.data;
           }

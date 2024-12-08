@@ -33213,16 +33213,21 @@ const Iu = g0(), m0 = ({ message: e, personaOptions: t, widgetProps: n }) => /* 
           onmessage: (m) => {
             var b;
             try {
-              const x = JSON.parse(m.data);
-              (b = e.onEvent) == null || b.call(e, x), n((w) => {
-                const S = w[w.length - 1];
-                if (S.type === en.HumanMessage)
-                  return [...w.slice(0, -1), { ...S, threadId: p }, { id: l || Gc(), message: x.choices.map((y) => y.delta.content).join(""), type: en.AIMessage, content_type: lu.Text, threadId: p }];
-                {
-                  const y = { ...S, message: S.message + x.choices.map((R) => R.delta.content).join("") };
-                  return [...w.slice(0, -1), y];
-                }
-              });
+              let x = JSON.parse(m.data);
+              if (x.error)
+                i(x.error), a(!1);
+              else {
+                const w = x;
+                (b = e.onEvent) == null || b.call(e, w), n((S) => {
+                  const y = S[S.length - 1];
+                  if (y.type === en.HumanMessage)
+                    return [...S.slice(0, -1), { ...y, threadId: p }, { id: l || Gc(), message: w.choices.map((R) => R.delta.content).join(""), type: en.AIMessage, content_type: lu.Text, threadId: p }];
+                  {
+                    const R = { ...y, message: y.message + w.choices.map((v) => v.delta.content).join("") };
+                    return [...S.slice(0, -1), R];
+                  }
+                });
+              }
             } catch {
             }
           },
