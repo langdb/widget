@@ -16,6 +16,8 @@ import { PaperClipIcon } from "@heroicons/react/24/outline";
 import { Files } from "./Files";
 import { ChatCompletionChunk } from "../events";
 import { emitter } from "./EventEmiter";
+import { XCircleIcon } from "@heroicons/react/24/solid";
+import { EventSourceMessage } from "@microsoft/fetch-event-source";
 
 // New component for rendering messages
 const MessageRenderer: React.FC<{ message: ChatMessage; personaOptions: PersonaOptions, widgetProps: WidgetProps }> = ({ message, personaOptions, widgetProps }) => (
@@ -32,79 +34,137 @@ const MessageRenderer: React.FC<{ message: ChatMessage; personaOptions: PersonaO
 
 // Custom hook for handling message submission
 const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof useChatState>) => {
-  const { setMessages, setCurrentInput, setTyping, setError, setMessageId, setThreadId, messageId, threadId } = chatState;
-  return useCallback(async (inputProps: { currentInput: string, files: FileWithPreview[] }) => {
-    const { currentInput, files } = inputProps;
-    if (currentInput.trim() === '') return;
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { id: uuidv4(), message: currentInput, type: MessageType.HumanMessage, content_type: MessageContentType.Text, role: 'user', threadId: threadId, files: files },
-    ]);
-    setCurrentInput('');
-    setTyping(true);
+  const {
+    setMessages,
+    setCurrentInput,
+    setTyping,
+    setError,
+    setMessageId,
+    setThreadId,
+    messageId,
+    threadId,
+  } = chatState;
 
-    try {
-      let currentThreadId = threadId;
-      await onSubmit({
-        widgetProps: props,
-        files,
-        message: currentInput,
-        threadId: threadId,
-        onopen: async (response) => {
-          if (response.ok && response.headers.get('content-type') === "text/event-stream") {
-            const threadIdHeader = response.headers.get('X-Thread-Id');
-            const messageIdHeader = response.headers.get('X-Message-Id');
-            currentThreadId = threadIdHeader || threadId;
-            setMessageId(messageIdHeader || undefined);
-            setThreadId(threadIdHeader || undefined);
-            if (props.responseCallback) {
-              const traceId = response?.headers.get('x-trace-id') as string | undefined;
-              props.responseCallback({
-                traceId,
-                modelName: props.modelName,
-                threadId: threadIdHeader as string,
-                messageId: messageIdHeader as string,
-              });
-            }
-          }
-        },
-        onmessage: (msg) => {
-          //let newMessage: string | undefined;
-          try {
-            let json_msg = JSON.parse(msg.data);
-            if (json_msg.error) {
-              setError(json_msg.error);
-              setTyping(false);
-            } else {
-              const event = json_msg as ChatCompletionChunk;
-              props.onEvent?.(event);
-              setMessages((prevMessages) => {
-                const lastMessage = prevMessages[prevMessages.length - 1];
-                if (lastMessage.type === MessageType.HumanMessage) {
-                  // also update lastMessage threadId
-                  return [...prevMessages.slice(0, -1), { ...lastMessage, threadId: currentThreadId }, { id: messageId || uuidv4(), message: event.choices.map((choice) => choice.delta.content).join(''), type: MessageType.AIMessage, content_type: MessageContentType.Text, threadId: currentThreadId }];
-                } else {
-                  const updatedLastMessage = { ...lastMessage, message: lastMessage.message + event.choices.map((choice) => choice.delta.content).join('') };
-                  return [...prevMessages.slice(0, -1), updatedLastMessage];
-                }
-              })
-            }
-          } catch (_e: any) {
-            // newMessage = msg.data;
-          }
-        },
-        onclose: () => {
-          emitter.emit('langdb_chatSubmitSuccess', {});
-          setMessageId(undefined);
-          setTyping(false);
-        },
-      });
-    } catch (e: unknown) {
-      console.error(e);
-      setError(e instanceof Error ? e.message : String(e));
-      setTyping(false);
+  const handleOpen = useCallback( async (response: Response, currentThreadId?: string) => {
+    if (response.ok && response.headers.get('content-type') === 'text/event-stream') {
+      const threadIdHeader = response.headers.get('X-Thread-Id');
+      const messageIdHeader = response.headers.get('X-Message-Id');
+      const updatedThreadId = threadIdHeader || currentThreadId;
+
+      setMessageId(messageIdHeader || undefined);
+      setThreadId(updatedThreadId);
+
+      if (props.responseCallback) {
+        const traceId = response.headers.get('x-trace-id') as string | undefined;
+        props.responseCallback({
+          traceId,
+          modelName: props.modelName,
+          threadId: updatedThreadId,
+          messageId: messageIdHeader as string,
+        });
+      }
     }
-  }, [props, setMessages, setCurrentInput, setTyping, setError, setMessageId, setThreadId, messageId, threadId]);
+  }, [props, setMessageId, setThreadId]);
+
+  const handleMessage = useCallback( (msg: EventSourceMessage, currentThreadId?: string) => {
+    try {
+      const jsonMsg = JSON.parse(msg.data);
+
+      if (jsonMsg.error) {
+        setError(jsonMsg.error);
+        setTyping(false);
+      } else {
+        const event = jsonMsg as ChatCompletionChunk;
+
+        props.onEvent?.(event);
+
+        setMessages((prevMessages) => {
+          const lastMessage = prevMessages[prevMessages.length - 1];
+
+          if (lastMessage.type === MessageType.HumanMessage) {
+            return [
+              ...prevMessages.slice(0, -1),
+              { ...lastMessage, threadId: currentThreadId },
+              {
+                id: messageId || uuidv4(),
+                message: event.choices.map((choice) => choice.delta.content).join(''),
+                type: MessageType.AIMessage,
+                content_type: MessageContentType.Text,
+                threadId: currentThreadId,
+              },
+            ];
+          }
+
+          const updatedLastMessage = {
+            ...lastMessage,
+            message: lastMessage.message + event.choices.map((choice) => choice.delta.content).join(''),
+          };
+
+          return [...prevMessages.slice(0, -1), updatedLastMessage];
+        });
+      }
+    } catch (error) {
+      console.error('Failed to parse message data:', error);
+    }
+  }, [props, setTyping, setError, setMessageId, setThreadId]);
+
+  const submitMessageFn = useCallback(
+    async (inputProps: { currentInput: string; files: FileWithPreview[] }) => {
+      const { currentInput, files } = inputProps;
+
+      if (currentInput.trim() === '') return;
+
+      const newMessage = {
+        id: uuidv4(),
+        message: currentInput,
+        type: MessageType.HumanMessage,
+        content_type: MessageContentType.Text,
+        role: 'user',
+        threadId,
+        files,
+      };
+
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+      setCurrentInput('');
+      setTyping(true);
+      setError(undefined);
+
+      try {
+        let currentThreadId = threadId;
+
+        await onSubmit({
+          widgetProps: props,
+          files,
+          message: currentInput,
+          threadId,
+          onopen: (response) => handleOpen(response, currentThreadId),
+          onmessage: (msg) => handleMessage(msg, currentThreadId),
+          onclose: () => {
+            emitter.emit('langdb_chatSubmitSuccess', {});
+            setMessageId(undefined);
+            setTyping(false);
+          },
+        });
+      } catch (error) {
+        console.error(error);
+        setError(error instanceof Error ? error.message : String(error));
+        setTyping(false);
+      }
+    },
+    [
+      props,
+      threadId,
+      setMessages,
+      setCurrentInput,
+      setTyping,
+      setError,
+      setMessageId,
+      setThreadId,
+      messageId,
+    ]
+  );
+
+  return submitMessageFn;
 };
 
 export const ChatComponent: React.FC<WidgetProps> = (props) => {
@@ -116,6 +176,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
     setCurrentInput,
     typing,
     error,
+    setError
   } = chatState;
 
   const { hideChatInput } = props
@@ -213,8 +274,14 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
         </div>
 
         {error && (
-          <div className="error-message bg-red-100 text-red-700 p-2 rounded-lg mb-4">
-            {error}
+          <div className=" bg-red-100 flex  p-2 rounded-lg items-center justify-between mb-4">
+            <span className="text-red-700">{error}</span>
+            
+            <XCircleIcon 
+            onClick={() => {
+              setError(undefined);
+            }}
+            className="h-4 w-4 text-red-500 hover:text-red-700 hover:cursor-pointer rounded-full" />
           </div>
         )}
       </div>
