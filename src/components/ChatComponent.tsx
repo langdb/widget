@@ -131,7 +131,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
         threadId,
         files,
       };
-
+      
       setMessages((prevMessages) => [...prevMessages, newMessage]);
       setCurrentInput('');
       setTyping(true);

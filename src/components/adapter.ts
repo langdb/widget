@@ -81,12 +81,24 @@ export const onSubmit = async (submitProps: SubmitProps) => {
       role: 'user',
       content: message
     }
+     
+    let messages: ChatCompletionMessage[] = [userCompletionMessage];
+      if(!threadId && modelName && modelName.includes('claude-')) {
+        messages = [
+          {
+            role: 'system',
+            content: 'You are a helpful assistant.'
+          },
+          userCompletionMessage
+        ]
+      }
+
     
     const request: MessageRequest = {
       model: modelName,
       parameters: agentParams || {},
       thread_id: threadId,
-      messages: [userCompletionMessage],
+      messages: messages,
       stream: true
       //message: innerMsg,
     };

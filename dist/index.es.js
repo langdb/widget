@@ -782,17 +782,24 @@ const Pu = "https://api.dev.langdb.ai", Uu = async (e) => {
       getAccessToken: t.getAccessToken,
       threadId: r || t.threadId,
       apiKey: t.apiKey
-    });
-    await Cv(u, {
+    }), m = {
+      role: "user",
+      content: n
+    };
+    let b = [m];
+    !r && c && c.includes("claude-") && (b = [
+      {
+        role: "system",
+        content: "You are a helpful assistant."
+      },
+      m
+    ]), await Cv(u, {
       method: "POST",
       body: JSON.stringify({
         model: c,
         parameters: d || {},
         thread_id: r,
-        messages: [{
-          role: "user",
-          content: n
-        }],
+        messages: b,
         stream: !0
         //message: innerMsg,
       }),
