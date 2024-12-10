@@ -805,7 +805,7 @@ const Pu = "https://api.dev.langdb.ai", Uu = async (e) => {
     });
   } catch (p) {
     const m = new Error(p.toString());
-    f && f({ error: m, modelName: c });
+    o == null || o(m), f && f({ error: m, modelName: c });
   }
 }, Lv = () => {
   const e = _e(null), t = () => {
@@ -33225,6 +33225,10 @@ const Iu = b0(), h0 = ({ message: e, personaOptions: t, widgetProps: n }) => /* 
         });
       }
     }
+    if (!p.ok) {
+      let b = await p.json();
+      throw b.error ? new Error(b.error) : new Error(p.statusText);
+    }
   }, [e, o, s]), d = Ce((p, m) => {
     var b;
     try {
@@ -33279,6 +33283,9 @@ const Iu = b0(), h0 = ({ message: e, personaOptions: t, widgetProps: n }) => /* 
           files: b,
           message: m,
           threadId: u,
+          onerror: (v) => {
+            i(v instanceof Error ? v.message : String(v)), a(!1);
+          },
           onopen: (v) => c(v, w),
           onmessage: (v) => d(v, w),
           onclose: () => {
@@ -33286,7 +33293,7 @@ const Iu = b0(), h0 = ({ message: e, personaOptions: t, widgetProps: n }) => /* 
           }
         });
       } catch (w) {
-        console.error(w), i(w instanceof Error ? w.message : String(w)), a(!1);
+        i(w instanceof Error ? w.message : String(w)), a(!1);
       }
     },
     [

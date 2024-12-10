@@ -64,6 +64,14 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
         });
       }
     }
+    if(!response.ok) {
+      let responseJson = await response.json();
+      if(responseJson.error) {
+        throw new Error(responseJson.error)
+      } else {
+        throw new Error(response.statusText)
+      }
+    }
   }, [props, setMessageId, setThreadId]);
 
   const handleMessage = useCallback( (msg: EventSourceMessage, currentThreadId?: string) => {
@@ -137,6 +145,10 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
           files,
           message: currentInput,
           threadId,
+          onerror: (error) => {
+            setError(error instanceof Error ? error.message : String(error));
+            setTyping(false);
+          },
           onopen: (response) => handleOpen(response, currentThreadId),
           onmessage: (msg) => handleMessage(msg, currentThreadId),
           onclose: () => {
@@ -146,7 +158,6 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
           },
         });
       } catch (error) {
-        console.error(error);
         setError(error instanceof Error ? error.message : String(error));
         setTyping(false);
       }
