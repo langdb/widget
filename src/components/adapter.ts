@@ -73,7 +73,6 @@ export const onSubmit = async (submitProps: SubmitProps) => {
       threadId: threadId || widgetProps.threadId,
       apiKey: widgetProps.apiKey
     });
-    // let image_urls: (string | ArrayBuffer)[] = [];
 
     let submitMessage = await createSubmitMessage({
       files,
@@ -99,7 +98,6 @@ export const onSubmit = async (submitProps: SubmitProps) => {
       thread_id: threadId,
       messages: messages,
       stream: true
-      //message: innerMsg,
     };
     await fetchEventSource(apiUrl, {
       method: "POST",

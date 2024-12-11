@@ -10,7 +10,7 @@ export const HumanMessage: React.FC<{ msg: ChatMessage; persona?: Persona }> = (
     return (
       <div className="flex items-center gap-2 mb-2">
         <div className="flex flex-col">
-          <div className="rounded-lg p-2 human-message">
+          <div className="rounded-lg flex flex-col p-2 gap-2 human-message">
             {msg.content_array.map((item, index) => {
               let contentPart = item;
               let type = contentPart[0] === "Text" ? "Text" : "ImageUrl";

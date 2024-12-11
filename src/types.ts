@@ -119,34 +119,34 @@ export async function createSubmitMessage(props: {
       // only image files are supported
       .filter(file => file && file.type && file.type.startsWith('image/'))
       .map(async (file): Promise<ChatMessageContentImage> => {
-      const blob = await resizeImage(file, props.resizeOptions);
-      if (!blob) {
-        throw new Error("resize failed");
-      }
-      const imageUrl = await blobToBase64(blob);
-      if (!imageUrl) {
-        throw new Error("base64 failed");
-      }
-      let resultImage:ChatMessageContentImage = {
-        type: "image_url",
-        image_url: {
-          url: imageUrl as string
+        const blob = await resizeImage(file, props.resizeOptions);
+        if (!blob) {
+          throw new Error("resize failed");
         }
-      }
-      return resultImage
-    }))
+        const imageUrl = await blobToBase64(blob);
+        if (!imageUrl) {
+          throw new Error("base64 failed");
+        }
+        let resultImage: ChatMessageContentImage = {
+          type: "image_url",
+          image_url: {
+            url: imageUrl as string
+          }
+        }
+        return resultImage
+      }))
     let textMessage: ChatMessageText = {
       type: "text",
       text: message
     }
-    let finalResult: ChatCompletionMessage =  {
+    let finalResult: ChatCompletionMessage = {
       role: "user",
       content: [...contentImages, textMessage]
     }
     return finalResult;
   }
 }
-export const createImageUrl  = async (props: {file: FileWithPreview, resizeOptions?: ResizeOptions}) => {
+export const createImageUrl = async (props: { file: FileWithPreview, resizeOptions?: ResizeOptions }) => {
   const { file, resizeOptions } = props;
   const blob = await resizeImage(file, resizeOptions);
   if (!blob) {
@@ -172,20 +172,20 @@ export async function createInnerMessage(props: {
       // only image files are supported
       .filter(file => file && file.type && file.type.startsWith('image/'))
       .map(async (file): Promise<MessageContentPart> => {
-      const blob = await resizeImage(file, props.resizeOptions);
-      if (!blob) {
-        throw new Error("resize failed");
-      }
-      const imageUrl = await blobToBase64(blob);
-      if (!imageUrl) {
-        throw new Error("base64 failed");
-      }
-      return [
-        MessageContentType.ImageUrl,
-        imageUrl as string,
-        null
-      ]
-    }))
+        const blob = await resizeImage(file, props.resizeOptions);
+        if (!blob) {
+          throw new Error("resize failed");
+        }
+        const imageUrl = await blobToBase64(blob);
+        if (!imageUrl) {
+          throw new Error("base64 failed");
+        }
+        return [
+          MessageContentType.ImageUrl,
+          imageUrl as string,
+          null
+        ]
+      }))
     parts.push(
       [
         MessageContentType.Text,
@@ -207,15 +207,39 @@ const resizeImage = async (file: FileWithPreview, options?: ResizeOptions): Prom
   const ctx = canvas.getContext('2d')
 
   if (!ctx) throw new Error("ctx is not available")
-  canvas.width = size
-  canvas.height = size
+
   let raw_file = file.raw_file;
   if (!(raw_file instanceof Blob)) {
     return null;
   }
+
+  // Check if the file is an SVG
+  if (raw_file.type === 'image/svg+xml') {
+    const svgText = await raw_file.text();
+    const parser = new DOMParser();
+    const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
+    const svgElement = svgDoc.documentElement;
+
+    // Modify the width and height attributes
+    svgElement.setAttribute('width', size.toString());
+    svgElement.setAttribute('height', size.toString());
+
+    const serializer = new XMLSerializer();
+    const resizedSvgText = serializer.serializeToString(svgElement);
+    return new Blob([resizedSvgText], { type: 'image/svg+xml' });
+  }
+
   let bitmap = await createImageBitmap(raw_file)
 
   const { width, height } = bitmap
+
+  // Check if both width and height are less than maxSize
+  if (width < size && height < size) {
+    return raw_file;
+  }
+
+  canvas.width = size
+  canvas.height = size
 
   const ratio = Math.max(size / width, size / height)
 
