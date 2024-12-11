@@ -38,11 +38,18 @@ export interface ChatCompletionMessage {
         arguments: string;
     };
 }
-type ChatMessageContent = ChatMessageText | ChatMessageContentImage;
+type ChatMessageContent = ChatMessageText | ChatMessageContentImage | ChatMessageWithAudio;
 export interface ChatMessageContentImage {
     type: string;
     image_url: string | {
         url: string;
+    };
+}
+export interface ChatMessageWithAudio {
+    type: string;
+    audio: {
+        data: string;
+        format: string;
     };
 }
 export interface ChatMessageText {
@@ -79,6 +86,7 @@ export interface FileWithPreview extends File {
     preview: string;
     type: string;
     raw_file: File;
+    base64?: string;
 }
 export type ResponseCallbackOptions = {
     traceId?: string;

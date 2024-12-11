@@ -6,25 +6,31 @@ import { Files } from "../Files";
 
 export const HumanMessage: React.FC<{ msg: ChatMessage; persona?: Persona }> = ({ msg, persona }) => {
   const { message, files } = msg;
-  if(msg.content_array && msg.content_array.length > 0) {
+  if (msg.content_array && msg.content_array.length > 0) {
     return (
       <div className="flex items-center gap-2 mb-2">
         <div className="flex flex-col">
           <div className="rounded-lg flex flex-col p-2 gap-2 human-message">
             {msg.content_array.map((item, index) => {
               let contentPart = item;
-              let type = contentPart[0] === "Text" ? "Text" : "ImageUrl";
+              let type = contentPart[0] as string; ///=== "Text" ? "Text" : contentPart[0] === "InputAudio" ? "InputAudio" : "ImageUrl";
               let content = contentPart[1];
-              if(type === "ImageUrl") {
+
+              if (type === "ImageUrl") {
                 return (
                   <div key={index} className="flex flex-col">
-                          <img src={content} />
+                    <img src={content} />
                   </div>
                 )
+              } else if (type === 'InputAudio') {
+                return <audio controls className="my-2" >
+                  <source src={`data:audio/mpeg;base64,${content}`} type="audio/mpeg" />
+                  Your browser does not support the audio element.
+                </audio>
               } else {
                 return (
                   <div key={index} className="flex flex-col">
-                     {content}
+                    {content}
                   </div>
                 )
               }

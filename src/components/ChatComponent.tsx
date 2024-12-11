@@ -8,7 +8,7 @@ import { onSubmit } from "./adapter";
 import { ChatMessage, MessageContentType, MessageType } from "../dto/ChatMessage";
 import { HumanMessage } from "./Messages/Human";
 import { AiMessage } from "./Messages/Ai";
-import { ChatInput } from "./ChatInput";
+import { ChatInput, convertAudioToBase64 } from "./ChatInput";
 import { Persona, PersonaOptions } from "../dto/PersonaOptions";
 import { FileWithPreview } from "../types";
 import { ChatCompletionChunk } from "../events";
@@ -217,13 +217,29 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
   }, [handleSubmit]);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
-    let files = acceptedFiles.map(file => ({
-      preview: URL.createObjectURL(file),
-      raw_file: file,
-      ...file,
-      type: file.type,
-    }));
-    emitter.emit('langdb_fileAdded', { files });
+    let updatedFilesPromises = acceptedFiles.map(file => {
+      if (file.type.startsWith('audio/')) {
+        return convertAudioToBase64(file).then((base64) => {
+          return ({
+            preview: '',
+            base64: base64 as string,
+            raw_file: file,
+            ...file,
+            type: file.type,
+          })
+        })
+      }
+      return Promise.resolve({
+        preview: URL.createObjectURL(file),
+        raw_file: file,
+        ...file,
+        type: file.type,
+      })
+    })
+    let allResolved = Promise.all(updatedFilesPromises);
+    allResolved.then((files: FileWithPreview[]) => {
+      emitter.emit('langdb_fileAdded', { files });
+    });
   }, []);
   const { getRootProps, isDragActive } = useDropzone({
     onDrop,
@@ -231,6 +247,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
     noKeyboard: true,
     accept: {
       "image/*": [],
+      "audio/*": [],
     },
   });
 

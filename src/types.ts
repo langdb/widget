@@ -40,11 +40,19 @@ export interface ChatCompletionMessage {
   };
 }
 
-type ChatMessageContent = ChatMessageText | ChatMessageContentImage;
+type ChatMessageContent = ChatMessageText | ChatMessageContentImage | ChatMessageWithAudio;
 export interface ChatMessageContentImage {
   type: string;
   image_url: string | {
     url: string;
+  }
+}
+
+export interface ChatMessageWithAudio {
+  type: string;
+  audio: {
+    data: string;
+    format: string;
   }
 }
 export interface ChatMessageText {
@@ -92,6 +100,7 @@ export interface FileWithPreview extends File {
   preview: string;
   type: string;
   raw_file: File;
+  base64?: string
 }
 
 export type ResponseCallbackOptions = {
@@ -115,25 +124,40 @@ export async function createSubmitMessage(props: {
     }
     return result;
   } else {
-    let contentImages: ChatMessageContentImage[] = await Promise.all(files
+    let contentImagesAudios: ChatMessageContent[] = await Promise.all(files
       // only image files are supported
-      .filter(file => file && file.type && file.type.startsWith('image/'))
-      .map(async (file): Promise<ChatMessageContentImage> => {
-        const blob = await resizeImage(file, props.resizeOptions);
-        if (!blob) {
-          throw new Error("resize failed");
-        }
-        const imageUrl = await blobToBase64(blob);
-        if (!imageUrl) {
-          throw new Error("base64 failed");
-        }
-        let resultImage: ChatMessageContentImage = {
-          type: "image_url",
-          image_url: {
-            url: imageUrl as string
+      .filter(file => file && file.type && (file.type.startsWith('audio/') || file.type.startsWith('image/')))
+      .map(async (file: FileWithPreview) => {
+        if (file.type.startsWith('audio/')) {
+          let file_name = file.raw_file.name;
+          // format is extracted from file name
+          let format = file_name.split('.').pop();
+          let submitData = file.base64?.split(',')[1];
+          let resultAudio: ChatMessageWithAudio = {
+            type: "input_audio",
+            audio: {
+              data: submitData as string,
+              format: format as string
+            }
           }
+          return resultAudio
+        } else {
+          const blob = await resizeImage(file, props.resizeOptions);
+          if (!blob) {
+            throw new Error("resize failed");
+          }
+          const imageUrl = await blobToBase64(blob);
+          if (!imageUrl) {
+            throw new Error("base64 failed");
+          }
+          let resultImage: ChatMessageContentImage = {
+            type: "image_url",
+            image_url: {
+              url: imageUrl as string
+            }
+          }
+          return resultImage
         }
-        return resultImage
       }))
     let textMessage: ChatMessageText = {
       type: "text",
@@ -141,7 +165,7 @@ export async function createSubmitMessage(props: {
     }
     let finalResult: ChatCompletionMessage = {
       role: "user",
-      content: [...contentImages, textMessage]
+      content: [...contentImagesAudios, textMessage]
     }
     return finalResult;
   }
