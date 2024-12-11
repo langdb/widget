@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useScrollToBottom } from "../hooks/ScrollToBottom";
 import { WidgetProps } from "./Widget";
 import { Avatar } from "./Icons";
@@ -10,14 +10,13 @@ import { HumanMessage } from "./Messages/Human";
 import { AiMessage } from "./Messages/Ai";
 import { ChatInput } from "./ChatInput";
 import { Persona, PersonaOptions } from "../dto/PersonaOptions";
-import { useDropzone } from 'react-dropzone';
 import { FileWithPreview } from "../types";
-import { PaperClipIcon } from "@heroicons/react/24/outline";
-import { Files } from "./Files";
 import { ChatCompletionChunk } from "../events";
 import { emitter } from "./EventEmiter";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import { EventSourceMessage } from "@microsoft/fetch-event-source";
+import { useDropzone } from "react-dropzone";
+import { PaperClipIcon } from "@heroicons/react/24/outline";
 
 // New component for rendering messages
 const MessageRenderer: React.FC<{ message: ChatMessage; personaOptions: PersonaOptions, widgetProps: WidgetProps }> = ({ message, personaOptions, widgetProps }) => (
@@ -190,7 +189,6 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
     setError
   } = chatState;
 
-  console.log('=== messages', messages)
   const { hideChatInput } = props
   const { messagesEndRef, scrollToBottom } = useScrollToBottom();
 
@@ -211,55 +209,46 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
     } as Persona,
   };
 
-  const [files, setFiles] = useState<FileWithPreview[]>([]);
-
   const handleSubmit = useMessageSubmission(props, chatState)
 
 
-  const onSubmitWrapper = useCallback((inputText: string) => {
-    let currentFiles = files;
-    setFiles([]);
-    return handleSubmit({ currentInput: inputText, files: currentFiles });
-  }, [files, handleSubmit]);
+  const onSubmitWrapper = useCallback((inputText: string, files: FileWithPreview[]) => {
+    return handleSubmit({ currentInput: inputText, files: files });
+  }, [handleSubmit]);
+
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    let files = acceptedFiles.map(file => ({
+      preview: URL.createObjectURL(file),
+      raw_file: file,
+      ...file,
+      type: file.type,
+    }));
+    emitter.emit('langdb_fileAdded', { files });
+  }, []);
+  const { getRootProps, isDragActive } = useDropzone({
+    onDrop,
+    noClick: true,
+    noKeyboard: true,
+    accept: {
+      "image/*": [],
+    },
+  });
 
   useEffect(() => {
-    const handleExternalSubmit = ({ inputText }: { inputText: string }) => {
+    const handleExternalSubmit = ({ inputText, files }: { inputText: string, files: FileWithPreview[] }) => {
       setCurrentInput(inputText); // Set the input text
-      onSubmitWrapper(inputText); // Pass the input text directly
+      onSubmitWrapper(inputText, files); // Pass the input text directly
     };
-
     emitter.on('langdb_chatSubmit', handleExternalSubmit);
 
     return () => {
       emitter.off('langdb_chatSubmit', handleExternalSubmit);
     };
   }, [onSubmitWrapper, setCurrentInput]);
-
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    setFiles(prevFiles => [
-      ...prevFiles,
-      ...acceptedFiles.map(file => ({
-        preview: URL.createObjectURL(file),
-        raw_file: file,
-        ...file,
-        type: file.type,
-      }))
-    ]);
-  }, []);
-  const { getRootProps, isDragActive, open, getInputProps } = useDropzone({
-    onDrop,
-    noClick: true,
-    noKeyboard: true,
-    accept: {
-      "image/*": [],
-    }, // Accept only image files
-  });
-
   return (
     <div className="langdb-chat mx-auto flex flex-1 flex-col lg:max-w-[40rem] xl:max-w-[48rem] w-full h-full">
-      
+
       <div {...getRootProps()} className="langdb-message-section flex flex-col flex-1 justify-center overflow-y-auto p-4 pb-0">
-      
         {isDragActive && (
           <div className="absolute gap-20 flex-col inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white text-xl z-50">
             <PaperClipIcon className="h-12 w-12" />
@@ -291,7 +280,6 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
         {error && (
           <div className=" bg-red-100 flex  p-2 rounded-lg items-center justify-between mb-4">
             <span className="text-red-700">{error}</span>
-
             <XCircleIcon
               onClick={() => {
                 setError(undefined);
@@ -300,15 +288,14 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
           </div>
         )}
       </div>
-      {!hideChatInput && <div className="langdb-chat-input bg-inherit sticky bottom-0 pt-1 px-4">
-        {files && files.length > 0 && <Files files={files} setFiles={setFiles} />}
-        <input {...getInputProps()} className="hidden" />
-        <ChatInput
-          onFileIconClick={open}
-          onSubmit={onSubmitWrapper} 
-          currentInput={currentInput} 
-          setCurrentInput={setCurrentInput} />
-      </div>}
+      {!hideChatInput && <ChatInput
+        onSubmit={(inputText: string, files: FileWithPreview[]) => {
+          emitter.emit('langdb_chatSubmit', { inputText, files });
+          setCurrentInput('');
+          return Promise.resolve();
+        }}
+        currentInput={currentInput}
+        setCurrentInput={setCurrentInput} />}
     </div>
   );
 };
