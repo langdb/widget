@@ -45,7 +45,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
     threadId,
   } = chatState;
 
-  const handleOpen = useCallback( async (response: Response, currentThreadId?: string) => {
+  const handleOpen = useCallback(async (response: Response, currentThreadId?: string) => {
     if (response.ok && response.headers.get('content-type') === 'text/event-stream') {
       const threadIdHeader = response.headers.get('X-Thread-Id');
       const messageIdHeader = response.headers.get('X-Message-Id');
@@ -64,9 +64,9 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
         });
       }
     }
-    if(!response.ok) {
+    if (!response.ok) {
       let responseJson = await response.json();
-      if(responseJson.error) {
+      if (responseJson.error) {
         throw new Error(responseJson.error)
       } else {
         throw new Error(response.statusText)
@@ -74,7 +74,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
     }
   }, [props, setMessageId, setThreadId]);
 
-  const handleMessage = useCallback( (msg: EventSourceMessage, currentThreadId?: string) => {
+  const handleMessage = useCallback((msg: EventSourceMessage, currentThreadId?: string) => {
     try {
       const jsonMsg = JSON.parse(msg.data);
 
@@ -131,7 +131,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
         threadId,
         files,
       };
-      
+
       setMessages((prevMessages) => [...prevMessages, newMessage]);
       setCurrentInput('');
       setTyping(true);
@@ -190,6 +190,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
     setError
   } = chatState;
 
+  console.log('=== messages', messages)
   const { hideChatInput } = props
   const { messagesEndRef, scrollToBottom } = useScrollToBottom();
 
@@ -245,8 +246,9 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
       }))
     ]);
   }, []);
-  const { getRootProps, isDragActive, open } = useDropzone({
-    onDrop, noClick: true,
+  const { getRootProps, isDragActive, open, getInputProps } = useDropzone({
+    onDrop,
+    noClick: true,
     noKeyboard: true,
     accept: {
       "image/*": [],
@@ -255,7 +257,9 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
 
   return (
     <div className="langdb-chat mx-auto flex flex-1 flex-col lg:max-w-[40rem] xl:max-w-[48rem] w-full h-full">
+      
       <div {...getRootProps()} className="langdb-message-section flex flex-col flex-1 justify-center overflow-y-auto p-4 pb-0">
+      
         {isDragActive && (
           <div className="absolute gap-20 flex-col inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white text-xl z-50">
             <PaperClipIcon className="h-12 w-12" />
@@ -287,18 +291,23 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
         {error && (
           <div className=" bg-red-100 flex  p-2 rounded-lg items-center justify-between mb-4">
             <span className="text-red-700">{error}</span>
-            
-            <XCircleIcon 
-            onClick={() => {
-              setError(undefined);
-            }}
-            className="h-4 w-4 text-red-500 hover:text-red-700 hover:cursor-pointer rounded-full" />
+
+            <XCircleIcon
+              onClick={() => {
+                setError(undefined);
+              }}
+              className="h-4 w-4 text-red-500 hover:text-red-700 hover:cursor-pointer rounded-full" />
           </div>
         )}
       </div>
       {!hideChatInput && <div className="langdb-chat-input bg-inherit sticky bottom-0 pt-1 px-4">
         {files && files.length > 0 && <Files files={files} setFiles={setFiles} />}
-        <ChatInput onFileIconClick={open} onSubmit={onSubmitWrapper} currentInput={currentInput} setCurrentInput={setCurrentInput} />
+        <input {...getInputProps()} className="hidden" />
+        <ChatInput
+          onFileIconClick={open}
+          onSubmit={onSubmitWrapper} 
+          currentInput={currentInput} 
+          setCurrentInput={setCurrentInput} />
       </div>}
     </div>
   );

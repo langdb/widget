@@ -1,5 +1,5 @@
 
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { XCircleIcon } from "@heroicons/react/24/outline";
 import { FileWithPreview } from "../types";
 interface FilesProps {
   files: FileWithPreview[];
@@ -16,8 +16,8 @@ export const Files = ({ files, setFiles }: FilesProps) => {
     <aside className="flex flex-wrap mt-4">
       {files.map(file => (
         <div key={file.name} className="relative m-2">
-          {setFiles && <button onClick={removeFile(file)} className="absolute right-1 top-1 -translate-y-1/2 translate-x-1/2 rounded-full bg-red-500 text-white  text-token-text-primary transition-colors hover:opacity-100 group-hover:opacity-100 md:opacity-0">
-            <XMarkIcon className="w-4 h-4" />
+          {setFiles && <button onClick={removeFile(file)} className="absolute right-1 top-1 -translate-y-1/2 translate-x-1/2 rounded-full  hover:text-primary  text-token-text-primary transition-colors">
+            <XCircleIcon className="w-4 h-4" />
           </button>}
           <div key={`preview-${file.name}`} className="">
           {file.type === 'application/pdf' && (
@@ -30,6 +30,7 @@ export const Files = ({ files, setFiles }: FilesProps) => {
                 <img
                   src={file.preview}
                   alt={file.name}
+                  object-fit="cover"
                   className={`${sizePreview} border border-border object-cover rounded-lg`}
                 />
               )}

@@ -32,12 +32,24 @@ export interface MessageRequest {
 
 export interface ChatCompletionMessage {
   role: string;
-  content: string;
+  content: string | ChatMessageContent[];
   name?: string;
   function_call?: {
     name: string;
     arguments: string;
   };
+}
+
+type ChatMessageContent = ChatMessageText | ChatMessageContentImage;
+export interface ChatMessageContentImage {
+  type: string;
+  image_url: string | {
+    url: string;
+  }
+}
+export interface ChatMessageText {
+  type: string;
+  text: string;
 }
 
 export interface ResizeOptions {
@@ -90,7 +102,50 @@ export type ResponseCallbackOptions = {
   error?: Error
 };
 
-
+export async function createSubmitMessage(props: {
+  files?: FileWithPreview[],
+  message: string,
+  resizeOptions?: ResizeOptions
+}): Promise<ChatCompletionMessage> {
+  const { files, message } = props;
+  if (!files || !files.length) {
+    let result: ChatCompletionMessage = {
+      role: "user",
+      content: message
+    }
+    return result;
+  } else {
+    let contentImages: ChatMessageContentImage[] = await Promise.all(files
+      // only image files are supported
+      .filter(file => file && file.type && file.type.startsWith('image/'))
+      .map(async (file): Promise<ChatMessageContentImage> => {
+      const blob = await resizeImage(file, props.resizeOptions);
+      if (!blob) {
+        throw new Error("resize failed");
+      }
+      const imageUrl = await blobToBase64(blob);
+      if (!imageUrl) {
+        throw new Error("base64 failed");
+      }
+      let resultImage:ChatMessageContentImage = {
+        type: "image_url",
+        image_url: {
+          url: imageUrl as string
+        }
+      }
+      return resultImage
+    }))
+    let textMessage: ChatMessageText = {
+      type: "text",
+      text: message
+    }
+    let finalResult: ChatCompletionMessage =  {
+      role: "user",
+      content: [...contentImages, textMessage]
+    }
+    return finalResult;
+  }
+}
 export const createImageUrl  = async (props: {file: FileWithPreview, resizeOptions?: ResizeOptions}) => {
   const { file, resizeOptions } = props;
   const blob = await resizeImage(file, resizeOptions);

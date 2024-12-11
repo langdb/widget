@@ -31,12 +31,23 @@ export interface MessageRequest {
 }
 export interface ChatCompletionMessage {
     role: string;
-    content: string;
+    content: string | ChatMessageContent[];
     name?: string;
     function_call?: {
         name: string;
         arguments: string;
     };
+}
+type ChatMessageContent = ChatMessageText | ChatMessageContentImage;
+export interface ChatMessageContentImage {
+    type: string;
+    image_url: string | {
+        url: string;
+    };
+}
+export interface ChatMessageText {
+    type: string;
+    text: string;
 }
 export interface ResizeOptions {
     maxSize: number;
@@ -76,6 +87,11 @@ export type ResponseCallbackOptions = {
     modelName: string;
     error?: Error;
 };
+export declare function createSubmitMessage(props: {
+    files?: FileWithPreview[];
+    message: string;
+    resizeOptions?: ResizeOptions;
+}): Promise<ChatCompletionMessage>;
 export declare const createImageUrl: (props: {
     file: FileWithPreview;
     resizeOptions?: ResizeOptions;
@@ -102,3 +118,4 @@ export interface MessageWithIds {
     messageId: string;
     content: string;
 }
+export {};

@@ -2,7 +2,7 @@ import React, { FC, useEffect } from "react";
 import axios from "axios";
 import { Widget, WidgetProps } from "../Widget";
 import { ChatInput } from "../ChatInput";
-import {emitter} from "../EventEmiter";
+import { emitter } from "../EventEmiter";
 
 export const getAccessToken = async () => {
   try {
@@ -23,7 +23,7 @@ const Example: FC<WidgetProps> = ({
   starters = []
 }) => {
 
-  const apiKey = 'langdb_N2NXaUZZRW1hLzRWcU9OclJKWlBGazFNMlpJWWR0akNmV1B3elVJc0laZXBOTFlLaXI2L0JEYWFTNTQ2YmxPTWpXbEtZOVhkR0VLZnIzdm5JbXpOUjNqb3ZPK3BFOTRpMDBmWEI5TmlBVEh2WFR6Q2RYa0RaeVVicVBISDZrU3kyZzlXVEZYMUF6Um5UNW5hSk4yYnBrcXYwRmR1WlcvNERWeWhMcTJ0KzVZZ0wzTHlsYlNySFdIWlB1eDUwY0EyQlJ6eHFRPT06QUFBQUFBQUFBQUFBQUFBQQ=='
+  const apiKey = 'langdb_NmNQd0dZZ21jdkJSb2VoeEVjUU1URkFLanRVTktzL0RLelB3elFwa2R0YjBPK3hXbS95a0hTZVhScGt0TEZlQzBYRU9KOUhFVEJDQitDem9aSExNWG1IdXArMjNHTUV3d1VHSkdzbHRGekhvWERmTkpIaFVaaVZJcC9YQjZrVGkxZ2hXRmxLa0JEUThIc3paYzlhZHB4cjZod2R1WlcvNERWeWhMcTJ0KzVZZ0wzTHlSNTkxTnJzRmV4TVUrV1NOSjgzRG9nPT06QUFBQUFBQUFBQUFBQUFBQQ=='
   const [currentInput, setCurrentInput] = React.useState("");
   useEffect(() => {
 
@@ -51,23 +51,13 @@ const Example: FC<WidgetProps> = ({
       <div className="flex flex-1">
         <Widget
           modelName="gpt-4o"
-          projectId="419b04bb-4386-4d7e-ab09-02e81ba3a087"
+          projectId="c6b79821-233f-4b7e-97ff-ea898bacd8ab"
           apiKey={apiKey}
+          threadId="7fcfc666-2334-4382-9bb4-7466c2f657b7"
           serverUrl="http://localhost:8083"
           theme={theme}
           starters={starters}
-          hideChatInput
         />
-      </div>
-      <div className={`${theme} dark-theme`}>
-        <div className="langdb-chat bg-inherit sticky bottom-0 pt-1 px-4">
-          <ChatInput onSubmit={(text) => {
-            emitter.emit('langdb_chatSubmit', { inputText: text });
-            return Promise.resolve()
-          }}
-            currentInput={currentInput}
-            setCurrentInput={setCurrentInput} />
-        </div>
       </div>
     </div>
   );

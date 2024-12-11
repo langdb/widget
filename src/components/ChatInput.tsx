@@ -13,6 +13,7 @@ export const ChatInput: React.FC<{
   }}
     className={`langdb-input-container flex items-center p-2 rounded-full mb-3 ${className}`}>
     {onFileIconClick && <button type="button" onClick={(e) => {
+      e.stopPropagation();
       e.preventDefault();
       onFileIconClick();
     }} className="flex items-center justify-center h-8 w-8 rounded-full text-token-text-primary ml-1.5">

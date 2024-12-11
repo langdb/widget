@@ -83,12 +83,12 @@ const getMessagesFromThread = async (props: {
 
 export const Widget: React.FC<WidgetProps> = React.memo((props) => {
   const themeClass = props.theme === "dark" ? "dark-theme" : "light-theme";
-  const { threadId, projectId, getAccessToken, publicId, messages } = props;
+  const { threadId, projectId, getAccessToken, publicId, apiKey, messages } = props;
   const { run: triggerGetMessages, loading: messagesLoading, data } = useRequest(getMessagesFromThread, {
     manual: true
   });
   useMount(() => {
-    if (threadId && projectId && (getAccessToken || publicId) && (!messages || messages.length === 0)) {
+    if (threadId && projectId && (getAccessToken || publicId || apiKey) && (!messages || messages.length === 0)) {
       triggerGetMessages({
         threadId,
         projectId,

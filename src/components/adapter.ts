@@ -1,6 +1,6 @@
 // import { ChatAdapter, StreamingAdapterObserver } from "@nlux/react";
 import { ChatCompletionChunk } from "../events";
-import { ChatCompletionMessage, FileWithPreview, MessageRequest, ResizeOptions, ResponseCallbackOptions } from "../types";
+import { ChatCompletionMessage,  createSubmitMessage, FileWithPreview, MessageRequest, ResizeOptions, ResponseCallbackOptions } from "../types";
 import { fetchEventSource, FetchEventSourceInit } from '@microsoft/fetch-event-source';
 import { WidgetProps } from "./Widget";
 
@@ -33,18 +33,18 @@ export const getHeaders = async (props: {
   getAccessToken?: () => Promise<string>;
   apiKey?: string;
 }): Promise<any> => {
-  const { projectId, publicId, apiKey,getAccessToken, threadId } = props;
+  const { projectId, publicId, apiKey, getAccessToken, threadId } = props;
   const headers: any = { "Content-Type": "application/json" };
   if (projectId) {
     headers["x-project-id"] = projectId;
   }
-  if(threadId) {
+  if (threadId) {
     headers["X-Thread-Id"] = threadId
   }
   if (publicId) {
     headers["X-PUBLIC-APPLICATION-ID"] = publicId;
-  } 
-  if(apiKey) {
+  }
+  if (apiKey) {
     headers.Authorization = `Bearer ${apiKey}`
   } else {
     const token = await getAccessToken?.();
@@ -56,9 +56,11 @@ export const getHeaders = async (props: {
   return headers;
 }
 
+
+
 export const onSubmit = async (submitProps: SubmitProps) => {
-  const { widgetProps, message, threadId, onopen, onmessage, onerror, onclose, } = submitProps;
-  // const { fileResizeOptions: resizeOptions } = widgetProps;`
+  const { widgetProps, files, message, threadId, onopen, onmessage, onerror, onclose, } = submitProps;
+  const { fileResizeOptions: resizeOptions } = widgetProps;
   const serverUrl = widgetProps.serverUrl || DEV_SERVER_URL;
   const apiUrl = `${serverUrl}/chat/completions`;
   const { modelName, agentParams, responseCallback } = widgetProps;
@@ -71,29 +73,26 @@ export const onSubmit = async (submitProps: SubmitProps) => {
       threadId: threadId || widgetProps.threadId,
       apiKey: widgetProps.apiKey
     });
-    // if(files && files.length > 0) {
-    //   let _imageUrls= await Promise.all(files.map(file => {
-    //     return createImageUrl({ file, resizeOptions })
-    //   }));
-    // }
+    // let image_urls: (string | ArrayBuffer)[] = [];
 
-    const userCompletionMessage: ChatCompletionMessage = {
-      role: 'user',
-      content: message
+    let submitMessage = await createSubmitMessage({
+      files,
+      message,
+      resizeOptions
+    });
+
+    let messages: ChatCompletionMessage[] = [submitMessage];
+    if (!threadId && modelName && modelName.includes('claude-')) {
+      messages = [
+        {
+          role: 'system',
+          content: 'You are a helpful assistant.'
+        },
+        submitMessage
+      ]
     }
-     
-    let messages: ChatCompletionMessage[] = [userCompletionMessage];
-      if(!threadId && modelName && modelName.includes('claude-')) {
-        messages = [
-          {
-            role: 'system',
-            content: 'You are a helpful assistant.'
-          },
-          userCompletionMessage
-        ]
-      }
 
-    
+
     const request: MessageRequest = {
       model: modelName,
       parameters: agentParams || {},
