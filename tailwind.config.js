@@ -1,57 +1,70 @@
-import colors from "tailwindcss/colors";
-import defaultTheme from "tailwindcss/defaultTheme";
+/** @type {import('tailwindcss').Config} */
+const colors = require('tailwindcss/colors')
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 module.exports = {
-  darkMode: 'class',
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  darkMode: ['selector', '[data-mode="dark"]'],
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/react-tailwindcss-datepicker/dist/index.esm.{js,ts}",
+  ],
   theme: {
     fontFamily: {
-      sans: ["Inter var", ...defaultTheme.fontFamily.sans],
+      sans: ['Inter var', ...defaultTheme.fontFamily.sans],
     },
-    colors: {
-      ...colors,
-      darkContainer: '#212121',  
-      darkHeader: '#2c2c2c',
-      darkcolorGray: 'rgb(155 155 155)',
-      darkcolorWhite: 'rgb(236, 236, 236)',
-      primary: {
-        50: 'var(--widget-primary-50)',
-        100: 'var(--widget-primary-100)',
-        200: 'var(--widget-primary-200)',
-        300: 'var(--widget-primary-300)',
-        400: 'var(--widget-primary-400)',
-        500: 'var(--widget-primary-500)',
-        600: 'var(--widget-primary-600)',
-        700: 'var(--widget-primary-700)',
-        800: 'var(--widget-primary-800)',
-        900: 'var(--widget-primary-900)',
-        DEFAULT: 'var(--widget-primary-default)',
+    extend: {
+      colors: {
+        lightContainer: '#ffffff', // Light container color
+        darkContainer: '#202020',  // Dark container color
+        darkHeader: '#2c2c2c',
+        secondary: 'var(--secondary-background)',
+        primary: {
+          50: 'var(--primary-50)',
+          100: 'var(--primary-100)',
+          200: 'var(--primary-200)',
+          300: 'var(--primary-300)',
+          400: 'var(--primary-400)',
+          500: 'var(--primary-500)',
+          600: 'var(--primary-600)',
+          700: 'var(--primary-700)',
+          800: 'var(--primary-800)',
+          900: 'var(--primary-900)',
+          DEFAULT: 'var(--primary-default)',
+        },
+        dark: {
+          background: '#171717'
+        },
+        text: {
+          DEFAULT: 'var(--text-color)',
+          title: {
+            light: colors.gray[900],
+            dark: colors.white,
+            DEFAULT: colors.gray[900]
+          }
+        },
+        disabled: 'var(--disable-color)',
+        background: 'var(--background-color)',
+        header: 'var(--header-color)',
+        border: 'var(--border-color)',
+        secondaryBorder: 'var(--secondary-border-color)',
+        secondaryText: 'var(--secondary-text)',
+        // other color definitions...
       },
-      text: {
-        DEFAULT: 'var(--widget-text-color)',
-      },
-      background: 'var(--widget-background-color)',
-      header: 'var(--widget-header-color)',
-      border: 'var(--widget-border-color)',
+
+      borderColor: (theme) => ({
+        ...theme('colors'),
+        'dark-default': 'rgb(46, 46, 46)', // Default border color for dark mode
+      }),
     },
-    keyframes: {
-      slideDown: {
-        from: { height: "0px" },
-        to: { height: "var(--radix-accordion-content-height)" },
+    variants: {
+      extend: {
+        borderColor: ['dark'], // Enable dark variant for borderColor
       },
-      slideUp: {
-        from: { height: "var(--radix-accordion-content-height)" },
-        to: { height: "0px" },
-      },
-    },
-    animation: {
-      slideDown: "slideDown 300ms cubic-bezier(0.87, 0, 0.13, 1)",
-      slideUp: "slideUp 300ms cubic-bezier(0.87, 0, 0.13, 1)",
-      fadeIn: "fadeIn 500ms ease-in-out",
     },
   },
   plugins: [
-    require("@tailwindcss/forms"),
-    require("@tailwindcss/typography"),
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
     require("tailwindcss-animate"),
   ],
-};
+}
