@@ -44,6 +44,9 @@ dependencies:
   axios:
     specifier: ^1.7.8
     version: 1.7.8
+  dayjs:
+    specifier: ^1.11.13
+    version: 1.11.13
   highlightjs-copy:
     specifier: ^1.0.5
     version: 1.0.6
@@ -62,6 +65,9 @@ dependencies:
   react-syntax-highlighter:
     specifier: ^15.5.0
     version: 15.6.1(react@18.3.1)
+  react-tailwindcss-datepicker:
+    specifier: ^1.7.2
+    version: 1.7.2(dayjs@1.11.13)(react@18.3.1)
   showdown-highlight:
     specifier: ^3.1.0
     version: 3.1.0
@@ -5456,6 +5462,16 @@ packages:
       prismjs: 1.29.0
       react: 18.3.1
       refractor: 3.6.0
+    dev: false
+
+  /react-tailwindcss-datepicker@1.7.2(dayjs@1.11.13)(react@18.3.1):
+    resolution: {integrity: sha512-/NIRLB1evT69pt3Syol3cZpsAnLZlGvFWav98/Rr77Gey382C1fjKW2Emgu+SC4NtiRt6CBFwx/0Wbkn4iI+nA==}
+    peerDependencies:
+      dayjs: ^1.11.12
+      react: ^17.0.2 || ^18.2.0
+    dependencies:
+      dayjs: 1.11.13
+      react: 18.3.1
     dev: false
 
   /react@18.3.1:
