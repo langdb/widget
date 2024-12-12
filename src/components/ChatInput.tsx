@@ -164,12 +164,11 @@ export const ChatInput: React.FC<{
         <PaperClipIcon className="h-6 w-6" />
       </button>
       <input
-        type="text"
         value={currentInput}
         disabled={isListening}
         onChange={(e) => setCurrentInput(e.target.value)}
         placeholder="Type your message..."
-        className="langdb-input flex-1 p-2 ring-0 focus:ring-0 focus:outline-none"
+        className=" bg-transparent border-none flex-1 p-2 ring-0 focus:ring-0 focus:outline-none"
       />
       {isSupportingSpeechRecognition && <button
         type="button"

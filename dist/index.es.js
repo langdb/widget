@@ -33369,12 +33369,11 @@ const Xe = y0(), E0 = () => /* @__PURE__ */ k.jsxs("svg", { width: "24", height:
           /* @__PURE__ */ k.jsx(
             "input",
             {
-              type: "text",
               value: t,
               disabled: a,
               onChange: (y) => n(y.target.value),
               placeholder: "Type your message...",
-              className: "langdb-input flex-1 p-2 ring-0 focus:ring-0 focus:outline-none"
+              className: " bg-transparent border-none flex-1 p-2 ring-0 focus:ring-0 focus:outline-none"
             }
           ),
           l && /* @__PURE__ */ k.jsx(
