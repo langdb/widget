@@ -12,6 +12,7 @@ import { HandThumbDownIcon, HandThumbUpIcon } from "@heroicons/react/24/outline"
 import React, { useCallback, useState } from "react";
 import { WidgetProps } from "../Widget";
 import { DEV_SERVER_URL, getHeaders } from "../adapter";
+import ReactJson from 'react-json-view'
 
 
 export const AiMessage: React.FC<{ msg?: ChatMessage; typing?: boolean; persona?: Persona, widgetProps: WidgetProps }> = ({ msg, typing, persona, widgetProps }) => {
@@ -62,15 +63,17 @@ export const AiMessage: React.FC<{ msg?: ChatMessage; typing?: boolean; persona?
               return match ? (
                 <div className="relative">
                   <CopyToClipboard content={String(children).replace(/\n$/, '')} className="absolute top-0 right-0 m-2 p-1 rounded text-xs" />
-                  <SyntaxHighlighter
-                    style={vscDarkPlus as any}
-                    language={match[1]}
-                    PreTag="div"
-                    {...props}
-                    ref={props.ref as React.LegacyRef<SyntaxHighlighter>}
-                  >
-                    {String(children).replace(/\n$/, '')}
-                  </SyntaxHighlighter>
+                  <div style={{ maxHeight: '400px', overflow: 'auto', overflowX: 'auto' }}>
+                    <SyntaxHighlighter
+                      style={vscDarkPlus as any}
+                      language={match[1]}
+                      PreTag="div"
+                      {...props}
+                      ref={props.ref as React.LegacyRef<SyntaxHighlighter>}
+                    >
+                      {String(children).replace(/\n$/, '')}
+                    </SyntaxHighlighter>
+                  </div>
                 </div>
               ) : (
                 <code className={className} {...props}>
@@ -96,31 +99,7 @@ export const AiMessage: React.FC<{ msg?: ChatMessage; typing?: boolean; persona?
           {msg?.tool_calls && msg.tool_calls.map((tool_call, index) => {
           if (tool_call.function) {
             let function_display = { ...tool_call.function, arguments: JSON.parse(tool_call.function.arguments) };
-            return <ReactMarkdown 
-            components={{
-              code({ node, className, children, ...props }) {
-                const match = /language-(\w+)/.exec(className || '');
-                return match ? (
-                  <div className="relative">
-                    <CopyToClipboard content={String(children).replace(/\n$/, '')} className="absolute top-0 right-0 m-2 p-1 rounded text-xs" />
-                    <SyntaxHighlighter
-                      style={vscDarkPlus as any}
-                      language={match[1]}
-                      PreTag="div"
-                      {...props}
-                      ref={props.ref as React.LegacyRef<SyntaxHighlighter>}
-                    >
-                      {String(children).replace(/\n$/, '')}
-                    </SyntaxHighlighter>
-                  </div>
-                ) : (
-                  <code className={className} {...props}>
-                    {children}
-                  </code>
-                );
-              },
-            }}
-            key={index}>{"```json\n" + JSON.stringify(function_display, null, 2) + "\n```"}</ReactMarkdown>
+            return <ReactJson key={index} theme='ashes' src={function_display} />
           }
           return <></>
         })}
