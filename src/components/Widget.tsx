@@ -26,7 +26,8 @@ export interface WidgetProps extends AdapterProps {
   apiKey?: string;
   publicId?: string;
   serverUrl?: string;
-  hideChatInput?: boolean
+  hideChatInput?: boolean,
+
 }
 
 interface MessageWithId {
