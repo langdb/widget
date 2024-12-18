@@ -280,9 +280,9 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
           handleSubmit({ currentInput: prompt, files: [] });
         }} />}
         <div className="langdb-message-render flex-1 overflow-auto">
-          {messages.filter(m => m.type === MessageType.HumanMessage || (!m.tool_call_id && !m.tool_calls)).map((msg: ChatMessage) => (
-            <MessageRenderer key={msg.id} message={msg} personaOptions={personaOptions} widgetProps={props} />
-          ))}
+          {messages.filter(m => m.type === MessageType.HumanMessage || m.type !== MessageType.ToolMessage).map((msg: ChatMessage) => {
+            return <MessageRenderer key={msg.id} message={msg} personaOptions={personaOptions} widgetProps={props} />
+          })}
           {typing && (
             <div key="typing-ai" className="flex justify-start">
               <div className="max-w-3/4">

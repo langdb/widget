@@ -3,7 +3,7 @@ import './Widget.css';
 import { AdapterProps, DEV_SERVER_URL, getHeaders } from "./adapter";
 import React from "react";
 import { ChatComponent } from "./ChatComponent";
-import { ChatMessage, MessageContentPart, MessageContentType, MessageType } from "../dto/ChatMessage";
+import { ChatMessage, MessageContentPart, MessageContentType, MessageType, ToolCall } from "../dto/ChatMessage";
 import { PersonaOptions } from "../dto/PersonaOptions";
 import { ConversationStarter } from "../dto/ConversationStarter";
 import axios from "axios";
@@ -40,6 +40,9 @@ interface MessageWithId {
   type: MessageType;
   user_id: string;
   thread_id: string;
+  tool_call_id?: string;
+  tool_calls?: ToolCall[]
+
 }
 const getMessagesFromThread = async (props: {
   threadId: string;
@@ -72,6 +75,8 @@ const getMessagesFromThread = async (props: {
         content_type: message.content_type,
         content_array: message.content_array,
         threadId: message.thread_id,
+        tool_call_id: message.tool_call_id,
+        tool_calls: message.tool_calls
       });
     }
     return messages;

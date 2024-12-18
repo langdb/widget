@@ -9,7 +9,7 @@ import { AvatarItem } from "./AvatarItem";
 import { ChatMessage } from "../../dto/ChatMessage";
 import { HandThumbDownIcon as SHandThumbDownIcon, HandThumbUpIcon as SHandThumbUpIcon } from "@heroicons/react/24/solid";
 import { HandThumbDownIcon, HandThumbUpIcon } from "@heroicons/react/24/outline";
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { WidgetProps } from "../Widget";
 import { DEV_SERVER_URL, getHeaders } from "../adapter";
 
@@ -89,6 +89,40 @@ export const AiMessage: React.FC<{ msg?: ChatMessage; typing?: boolean; persona?
         >
           {msg?.message}
         </ReactMarkdown>
+        {msg?.tool_calls && msg.tool_calls && msg.tool_calls.length > 0 && <div>
+          <div className="text-xs">Tool Invoke:</div>
+          {msg?.tool_calls && msg.tool_calls.map((tool_call, index) => {
+          if (tool_call.function) {
+            let function_display = { ...tool_call.function, arguments: JSON.parse(tool_call.function.arguments) };
+            return <ReactMarkdown 
+            components={{
+              code({ node, className, children, ...props }) {
+                const match = /language-(\w+)/.exec(className || '');
+                return match ? (
+                  <div className="relative">
+                    <CopyToClipboard content={String(children).replace(/\n$/, '')} className="absolute top-0 right-0 m-2 p-1 rounded text-xs" />
+                    <SyntaxHighlighter
+                      style={vscDarkPlus as any}
+                      language={match[1]}
+                      PreTag="div"
+                      {...props}
+                      ref={props.ref as React.LegacyRef<SyntaxHighlighter>}
+                    >
+                      {String(children).replace(/\n$/, '')}
+                    </SyntaxHighlighter>
+                  </div>
+                ) : (
+                  <code className={className} {...props}>
+                    {children}
+                  </code>
+                );
+              },
+            }}
+            key={index}>{"```json\n" + JSON.stringify(function_display, null, 2) + "\n```"}</ReactMarkdown>
+          }
+          return <></>
+        })}
+        </div>}
         {
           !typing && threadId && id && (<>
             <div className=" mt-3 gap-3 flex items-center justify-start space-x-1">
@@ -117,7 +151,6 @@ export const AiMessage: React.FC<{ msg?: ChatMessage; typing?: boolean; persona?
           <span>Typing...</span>
         </div>
       )}
-
     </div>
   )
 };

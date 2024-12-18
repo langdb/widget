@@ -14,7 +14,12 @@ export interface ChatMessage {
 export interface ToolCall {
     id: string;
     type: string;
+    function?: FunctionCall;
     [key: string]: any;
+}
+export interface FunctionCall {
+    name: string;
+    arguments: string;
 }
 export type MessageContentPart = [
     MessageContentType,
