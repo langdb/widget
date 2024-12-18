@@ -21,7 +21,7 @@ import { PaperClipIcon } from "@heroicons/react/24/outline";
 // New component for rendering messages
 const MessageRenderer: React.FC<{ message: ChatMessage; personaOptions: PersonaOptions, widgetProps: WidgetProps }> = ({ message, personaOptions, widgetProps }) => (
   <div className={`flex mb-2 ${message.type === MessageType.HumanMessage ? 'justify-end' : 'justify-start'}`}>
-    <div className="max-w-3/4">
+    <div className="max-w-3/4 overflow-scroll">
 
       {message.type === MessageType.HumanMessage
         ? <HumanMessage msg={message} persona={personaOptions.user} />

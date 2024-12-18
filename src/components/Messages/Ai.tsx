@@ -90,7 +90,9 @@ export const AiMessage: React.FC<{ msg?: ChatMessage; typing?: boolean; persona?
           {msg?.message}
         </ReactMarkdown>
         {msg?.tool_calls && msg.tool_calls && msg.tool_calls.length > 0 && <div>
-          <div className="text-xs">Tool Invoke:</div>
+          <div className="">
+            <span className="text-sm">Tool Calls</span>
+          </div>
           {msg?.tool_calls && msg.tool_calls.map((tool_call, index) => {
           if (tool_call.function) {
             let function_display = { ...tool_call.function, arguments: JSON.parse(tool_call.function.arguments) };

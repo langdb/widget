@@ -1269,7 +1269,7 @@ const fS = /* @__PURE__ */ ue.forwardRef(pS), ey = ({ files: e, setFiles: t }) =
         "Your browser does not support the audio element."
       ] }) : /* @__PURE__ */ _.jsx("div", { className: "flex flex-col", children: l }, i);
     }) }) }),
-    t ? t.url ? /* @__PURE__ */ _.jsx(tn, { name: t.name, imageUrl: t.url, className: "h-6 w-6 rounded-full" }) : /* @__PURE__ */ _.jsx(Kc, { className: "h-6 w-6 rounded-full" }) : /* @__PURE__ */ _.jsx(tn, { className: "h-6 w-6 rounded-full", name: "User" })
+    /* @__PURE__ */ _.jsx("div", { children: t ? t.url ? /* @__PURE__ */ _.jsx(tn, { name: t.name, imageUrl: t.url, className: "h-6 w-6 rounded-full" }) : /* @__PURE__ */ _.jsx(Kc, { className: "h-6 w-6 rounded-full" }) : /* @__PURE__ */ _.jsx(tn, { className: "h-6 w-6 rounded-full", name: "User" }) })
   ] }) : /* @__PURE__ */ _.jsxs("div", { className: "flex items-center gap-2 mb-2", children: [
     /* @__PURE__ */ _.jsxs("div", { className: "flex flex-col", children: [
       r && r.length > 0 && /* @__PURE__ */ _.jsx(ey, { files: r }),
@@ -30323,7 +30323,7 @@ const ch = {
         }
       ),
       (e == null ? void 0 : e.tool_calls) && e.tool_calls && e.tool_calls.length > 0 && /* @__PURE__ */ _.jsxs("div", { children: [
-        /* @__PURE__ */ _.jsx("div", { className: "text-xs", children: "Tool Invoke:" }),
+        /* @__PURE__ */ _.jsx("div", { className: "", children: /* @__PURE__ */ _.jsx("span", { className: "text-sm", children: "Tool Calls" }) }),
         (e == null ? void 0 : e.tool_calls) && e.tool_calls.map((d, f) => {
           if (d.function) {
             let p = { ...d.function, arguments: JSON.parse(d.function.arguments) };
@@ -33427,7 +33427,7 @@ const Xe = y0(), E0 = () => /* @__PURE__ */ _.jsxs("svg", { width: "24", height:
       }
     )
   ] });
-}, S0 = ({ message: e, personaOptions: t, widgetProps: n }) => /* @__PURE__ */ _.jsx("div", { className: `flex mb-2 ${e.type === Lt.HumanMessage ? "justify-end" : "justify-start"}`, children: /* @__PURE__ */ _.jsx("div", { className: "max-w-3/4", children: e.type === Lt.HumanMessage ? /* @__PURE__ */ _.jsx(gS, { msg: e, persona: t.user }) : /* @__PURE__ */ _.jsx(vE, { msg: e, persona: t.assistant, widgetProps: n }) }) }), w0 = (e, t) => {
+}, S0 = ({ message: e, personaOptions: t, widgetProps: n }) => /* @__PURE__ */ _.jsx("div", { className: `flex mb-2 ${e.type === Lt.HumanMessage ? "justify-end" : "justify-start"}`, children: /* @__PURE__ */ _.jsx("div", { className: "max-w-3/4 overflow-scroll", children: e.type === Lt.HumanMessage ? /* @__PURE__ */ _.jsx(gS, { msg: e, persona: t.user }) : /* @__PURE__ */ _.jsx(vE, { msg: e, persona: t.assistant, widgetProps: n }) }) }), w0 = (e, t) => {
   const {
     setMessages: n,
     setCurrentInput: r,

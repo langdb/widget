@@ -37,7 +37,9 @@ export const HumanMessage: React.FC<{ msg: ChatMessage; persona?: Persona }> = (
             })}
           </div>
         </div>
-        {!persona ? <AvatarItem className="h-6 w-6 rounded-full" name={"User"} /> : (persona.url ? <AvatarItem name={persona.name} imageUrl={persona.url} className="h-6 w-6 rounded-full" /> : <UserCircleIcon className="h-6 w-6 rounded-full" />)}
+        <div>
+          {!persona ? <AvatarItem className="h-6 w-6 rounded-full" name={"User"} /> : (persona.url ? <AvatarItem name={persona.name} imageUrl={persona.url} className="h-6 w-6 rounded-full" /> : <UserCircleIcon className="h-6 w-6 rounded-full" />)}
+        </div>
       </div>
     )
   }
