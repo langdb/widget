@@ -42,6 +42,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
     setThreadId,
     messageId,
     threadId,
+    messages
   } = chatState;
 
   const handleOpen = useCallback(async (response: Response, currentThreadId?: string) => {
@@ -140,6 +141,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
         let currentThreadId = threadId;
 
         await onSubmit({
+          previousMessages: messages,
           widgetProps: props,
           files,
           message: currentInput,
@@ -171,6 +173,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
       setMessageId,
       setThreadId,
       messageId,
+      messages
     ]
   );
 

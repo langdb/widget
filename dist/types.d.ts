@@ -1,3 +1,5 @@
+import { ChatMessage } from './dto/ChatMessage';
+
 export interface MessageRequest {
     model: string;
     messages: ChatCompletionMessage[];
@@ -95,6 +97,7 @@ export type ResponseCallbackOptions = {
     modelName: string;
     error?: Error;
 };
+export declare function convert_to(input: ChatMessage[]): ChatCompletionMessage[];
 export declare function createSubmitMessage(props: {
     files?: FileWithPreview[];
     message: string;
@@ -120,10 +123,5 @@ export interface Message {
     content?: string;
     content_array: MessageContentPart[];
     type: MessageType;
-}
-export interface MessageWithIds {
-    threadId: string;
-    messageId: string;
-    content: string;
 }
 export {};

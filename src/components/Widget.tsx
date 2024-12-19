@@ -3,7 +3,7 @@ import './Widget.css';
 import { AdapterProps, DEV_SERVER_URL, getHeaders } from "./adapter";
 import React from "react";
 import { ChatComponent } from "./ChatComponent";
-import { ChatMessage, MessageContentPart, MessageContentType, MessageType, ToolCall } from "../dto/ChatMessage";
+import { ChatMessage, MessageWithId } from "../dto/ChatMessage";
 import { PersonaOptions } from "../dto/PersonaOptions";
 import { ConversationStarter } from "../dto/ConversationStarter";
 import axios from "axios";
@@ -30,20 +30,7 @@ export interface WidgetProps extends AdapterProps {
 
 }
 
-interface MessageWithId {
-  id: string;
-  created_at: string;
-  model_name: string;
-  content: string;
-  content_type: MessageContentType;
-  content_array: MessageContentPart[];
-  type: MessageType;
-  user_id: string;
-  thread_id: string;
-  tool_call_id?: string;
-  tool_calls?: ToolCall[]
 
-}
 const getMessagesFromThread = async (props: {
   threadId: string;
   projectId: string;
@@ -76,7 +63,10 @@ const getMessagesFromThread = async (props: {
         content_array: message.content_array,
         threadId: message.thread_id,
         tool_call_id: message.tool_call_id,
-        tool_calls: message.tool_calls
+        tool_calls: message.tool_calls,
+        model_name: message.model_name,
+        user_id: message.user_id,
+        created_at: message.created_at
       });
     }
     return messages;
@@ -107,8 +97,8 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
   });
   if (messagesLoading) {
     return <div className={`${themeClass} w-full h-full justify-center items-center`}>
-     <span className="animate-pulse"> Loading...</span>
-      </div>;
+      <span className="animate-pulse"> Loading...</span>
+    </div>;
   }
 
   return (

@@ -1,8 +1,9 @@
 // import { ChatAdapter, StreamingAdapterObserver } from "@nlux/react";
 import { ChatCompletionChunk } from "../events";
-import { ChatCompletionMessage,  createSubmitMessage, FileWithPreview, MessageRequest, ResizeOptions, ResponseCallbackOptions } from "../types";
+import { ChatCompletionMessage,  convert_to,  createSubmitMessage, FileWithPreview, MessageRequest, ResizeOptions, ResponseCallbackOptions } from "../types";
 import { fetchEventSource, FetchEventSourceInit } from '@microsoft/fetch-event-source';
 import { WidgetProps } from "./Widget";
+import { ChatMessage } from "../dto/ChatMessage";
 
 export const DEV_SERVER_URL = "https://api.dev.langdb.ai";
 export interface AdapterProps {
@@ -24,6 +25,7 @@ export interface SubmitProps extends FetchEventSourceInit {
   message: string;
   files?: FileWithPreview[];
   threadId?: string;
+  previousMessages: ChatMessage[]
 }
 
 export const getHeaders = async (props: {
@@ -59,7 +61,7 @@ export const getHeaders = async (props: {
 
 
 export const onSubmit = async (submitProps: SubmitProps) => {
-  const { widgetProps, files, message, threadId, onopen, onmessage, onerror, onclose, } = submitProps;
+  const { widgetProps, files, message, threadId, onopen, onmessage, onerror, onclose, previousMessages } = submitProps;
   const { fileResizeOptions: resizeOptions } = widgetProps;
   const serverUrl = widgetProps.serverUrl || DEV_SERVER_URL;
   const apiUrl = `${serverUrl}/chat/completions`;
@@ -74,13 +76,15 @@ export const onSubmit = async (submitProps: SubmitProps) => {
       apiKey: widgetProps.apiKey
     });
 
-    let submitMessage = await createSubmitMessage({
+    let previous: ChatCompletionMessage[] = convert_to(previousMessages)
+
+    let submitMessage:ChatCompletionMessage = await createSubmitMessage({
       files,
       message,
       resizeOptions
     });
 
-    let messages: ChatCompletionMessage[] = [submitMessage];
+    let messages: ChatCompletionMessage[] = [ ...previous, submitMessage];
     if (!threadId && modelName && modelName.includes('claude-')) {
       messages = [
         {

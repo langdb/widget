@@ -1,3 +1,5 @@
+import { ChatMessage } from "./dto/ChatMessage";
+
 export interface MessageRequest {
   model: string;
   messages: ChatCompletionMessage[];
@@ -110,6 +112,52 @@ export type ResponseCallbackOptions = {
   modelName: string
   error?: Error
 };
+
+export function convert_to(input: ChatMessage[]): ChatCompletionMessage[] {
+  return input.map((m: ChatMessage) => {
+
+    if (!m.content_array || m.content_array.length === 0) {
+      return {
+        role: m.type,
+        content: m.message || ''
+      }
+    }
+    let content: ChatMessageContent[] = m.content_array.map(item => {
+      let contentPart = item;
+      let type = contentPart[0] as string;
+      let dataContent = contentPart[1];
+      if (type === "ImageUrl") {
+        let resultImage: ChatMessageContentImage = {
+          type: "image_url",
+          image_url: {
+            url: dataContent as string
+          }
+        }
+        return resultImage
+      } else if (type === 'InputAudio') {
+        let resultAudio: ChatMessageWithAudio = {
+          type: "audio",
+          audio: {
+            data: dataContent as string,
+            format: "mp3"
+          }
+        }
+        return resultAudio
+      } else if (type === 'Text') {
+        let resultText: ChatMessageText = {
+          type: "text",
+          text: dataContent as string
+        }
+        return resultText
+      }
+      return undefined
+    }).filter(item => item !== undefined)
+    return {
+      role: m.type,
+      content: content
+    }
+  })
+}
 
 export async function createSubmitMessage(props: {
   files?: FileWithPreview[],
@@ -295,11 +343,4 @@ export interface Message {
   content?: string;
   content_array: MessageContentPart[];
   type: MessageType;        // Human / AI Message
-}
-
-
-export interface MessageWithIds {
-  threadId: string;
-  messageId: string;
-  content: string;
 }
