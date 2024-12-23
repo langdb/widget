@@ -956,8 +956,7 @@ const Ec = "https://api.dev.langdb.ai", Sc = async (e) => {
       onerror: s
     });
   } catch (R) {
-    const I = new Error(R.toString());
-    s == null || s(I), h && h({ error: I, modelName: p });
+    throw h && h({ error: R, modelName: p }), R;
   }
 }, sS = () => {
   const e = Ze(null), t = () => {
@@ -36093,7 +36092,11 @@ const Rt = qD(), zD = () => /* @__PURE__ */ V.jsxs("svg", { width: "24", height:
           message: h,
           threadId: u,
           onerror: (E) => {
-            i(E instanceof Error ? E.message : String(E)), a(!1);
+            var f;
+            throw i(E instanceof Error ? E.message : String(E)), a(!1), (f = e.responseCallback) == null || f.call(e, {
+              error: E,
+              modelName: e.modelName
+            }), E;
           },
           onopen: (E) => d(E, w),
           onmessage: (E) => m(E, w),

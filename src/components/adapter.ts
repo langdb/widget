@@ -114,10 +114,9 @@ export const onSubmit = async (submitProps: SubmitProps) => {
       onerror
     });
   } catch (e: any) {
-    const error = new Error(e.toString());
-    onerror?.(error);
     if (responseCallback) {
-      responseCallback({ error, modelName });
+      responseCallback({ error: e, modelName });
     }
+    throw e
   }
 }

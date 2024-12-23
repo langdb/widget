@@ -149,6 +149,11 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
           onerror: (error) => {
             setError(error instanceof Error ? error.message : String(error));
             setTyping(false);
+            props.responseCallback?.({
+              error,
+              modelName: props.modelName,
+            });
+            throw error
           },
           onopen: (response) => handleOpen(response, currentThreadId),
           onmessage: (msg) => handleMessage(msg, currentThreadId),
