@@ -26,6 +26,7 @@ export interface ChatCompletionChunk {
     model: string;
     object: string;
     choices: ChatCompletionChunkChoice[];
+    usage?: ModelUsage;
 }
 export interface ChatCompletionDelta {
     role?: string;
@@ -48,8 +49,10 @@ export interface ChatCompletionChunkChoice {
     logprobs?: any;
 }
 export interface ModelUsage {
-    input_tokens: number;
-    output_tokens: number;
+    prompt_tokens: number;
+    completion_tokens: number;
+    total_tokens: number;
+    cost: number;
 }
 export interface LLMContentEvent {
     content: string;

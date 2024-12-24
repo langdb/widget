@@ -40,20 +40,17 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
     setError,
     setMessageId,
     setThreadId,
+    appendUsage,
     messageId,
     threadId,
-    messages
+    messages,
+
   } = chatState;
 
   const handleOpen = useCallback(async (response: Response, currentThreadId?: string) => {
     if (response.ok && response.headers.get('content-type') === 'text/event-stream') {
-      const threadIdHeader = response.headers.get('X-Thread-Id');
       const messageIdHeader = response.headers.get('X-Message-Id');
-      const updatedThreadId = threadIdHeader || currentThreadId;
-
-      setMessageId(messageIdHeader || undefined);
-      setThreadId(updatedThreadId);
-
+      const updatedThreadId = currentThreadId;
       if (props.responseCallback) {
         const traceId = response.headers.get('x-trace-id') as string | undefined;
         props.responseCallback({
@@ -83,7 +80,10 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
         setTyping(false);
       } else {
         const event = jsonMsg as ChatCompletionChunk;
-
+        if (event.usage) {
+          emitter.emit('langdb_usageStats', { usage: event.usage, threadId: currentThreadId });
+          appendUsage(event.usage);
+        }
         props.onEvent?.(event);
 
         setMessages((prevMessages) => {
@@ -114,7 +114,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
     } catch (error) {
       console.error('Failed to parse message data:', error);
     }
-  }, [props, setTyping, setError, setMessageId, setThreadId]);
+  }, [props, setTyping, setError, setMessageId, setThreadId, appendUsage]);
 
   const submitMessageFn = useCallback(
     async (inputProps: { currentInput: string; files: FileWithPreview[] }) => {
@@ -155,10 +155,19 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
             });
             throw error
           },
-          onopen: (response) => handleOpen(response, currentThreadId),
-          onmessage: (msg) => handleMessage(msg, currentThreadId),
+          onopen: (response) => {
+            if (response.ok && response.headers.get('content-type') === 'text/event-stream') {
+              const threadIdHeader = response.headers.get('X-Thread-Id');
+              const messageIdHeader = response.headers.get('X-Message-Id');
+              currentThreadId = threadIdHeader || currentThreadId
+              setThreadId(currentThreadId);
+              setMessageId(messageIdHeader || messageId);
+            }
+            return handleOpen(response, currentThreadId)
+          },
+          onmessage: (msg) => handleMessage(msg, currentThreadId || threadId),
           onclose: () => {
-            emitter.emit('langdb_chatSubmitSuccess', {});
+            emitter.emit('langdb_chatSubmitSuccess', { threadId: currentThreadId });
             setMessageId(undefined);
             setTyping(false);
           },

@@ -102,7 +102,7 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
   }
 
   return (
-    <div className={`${themeClass} w-full h-full`}>
+    <div className={`${themeClass} w-full h-full font-be-vietnam`}>
       <ChatComponent {...props} messages={messages || data || []} />
     </div>
   );

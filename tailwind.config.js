@@ -10,7 +10,18 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+      'be-vietnam': ['"Be Vietnam Pro"', 'sans-serif'],
+    },
+    container: {
+      center: true,
+      padding: {
+        DEFAULT: '1rem',
+        sm: '1rem',
+        md: '1rem',
+        lg: '1rem',
+        xl: '3rem',
+        '2xl': '14rem',
+      },
     },
     extend: {
       colors: {

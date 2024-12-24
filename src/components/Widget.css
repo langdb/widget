@@ -1,7 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 .langdb-chat {
   /* Human message in chat */
   --langdb-HumanMessage--BackgroundColor: #374151;

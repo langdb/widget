@@ -29,6 +29,9 @@ export interface MessageRequest {
   function_call?: {
     name: string;
     arguments: string;
+  },
+  stream_options?: {
+    include_usage: boolean
   }
 }
 

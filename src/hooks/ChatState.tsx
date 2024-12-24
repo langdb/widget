@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { ChatMessage } from "../dto/ChatMessage";
+import { ModelUsage } from "../events";
 
 export const useChatState = (props:{initialMessages: ChatMessage[]}) => {
     const { initialMessages } = props;
@@ -9,7 +10,10 @@ export const useChatState = (props:{initialMessages: ChatMessage[]}) => {
     const [messageId, setMessageId] = useState<string | undefined>();
     const [typing, setTyping] = useState(false);
     const [error, setError] = useState<string | undefined>();
-  
+    const [usageInfo, setUsageInfo] = useState<ModelUsage[]>([]);
+    const appendUsage = useCallback((usage: ModelUsage) => {
+      setUsageInfo((prevUsage) => [...prevUsage, usage]);
+    }, [setUsageInfo]);
     return {
       messages,
       setMessages,
@@ -23,6 +27,8 @@ export const useChatState = (props:{initialMessages: ChatMessage[]}) => {
       setTyping,
       error,
       setError,
+      usageInfo,
+      appendUsage
     };
   };
   
