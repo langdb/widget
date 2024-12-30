@@ -18,6 +18,10 @@ type Events = {
     };
     langdb_speechRecognitionStart: {};
     langdb_speechRecognitionEnd: {};
+    langdb_aiMessageClicked: {
+        threadId: string | undefined;
+        messageId: string | undefined;
+    };
 };
 export declare const emitter: import('mitt').Emitter<Events>;
 export {};

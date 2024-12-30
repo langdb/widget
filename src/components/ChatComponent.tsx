@@ -166,6 +166,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
             return handleOpen(response, currentThreadId)
           },
           onmessage: (msg) => handleMessage(msg, currentThreadId || threadId),
+          
           onclose: () => {
             emitter.emit('langdb_chatSubmitSuccess', { threadId: currentThreadId });
             setMessageId(undefined);

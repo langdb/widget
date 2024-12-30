@@ -3,6 +3,7 @@ import axios from "axios";
 import { Widget, WidgetProps } from "../Widget";
 import { ChatInput } from "../ChatInput";
 import { emitter } from "../EventEmiter";
+import { FileWithPreview } from "../../types";
 
 export const getAccessToken = async () => {
   try {
@@ -23,7 +24,7 @@ const Example: FC<WidgetProps> = ({
   starters = []
 }) => {
 
-  const apiKey = 'langdb_NmNQd0dZZ21jdkJSb2VoeEVjUU1URkFLanRVTktzL0RLelB3elFwa2R0YjBPK3hXbS95a0hTZVhScGt0TEZlQzBYRU9KOUhFVEJDQitDem9aSExNWG1IdXArMjNHTUV3d1VHSkdzbHRGekhvWERmTkpIaFVaaVZJcC9YQjZrVGkxZ2hXRmxLa0JEUThIc3paYzlhZHB4cjZod2R1WlcvNERWeWhMcTJ0KzVZZ0wzTHlSNTkxTnJzRmV4TVUrV1NOSjgzRG9nPT06QUFBQUFBQUFBQUFBQUFBQQ=='
+  const apiKey = 'langdb_N1p5cVZvVi9kL1JJOExOeFJKNU1GbHdKbXNNRkxNL1lPemJ3eXhzeGN0K3FPTGxRbi8rN1J6YVhFSVE4ZmdTQjBuUmNQOHlCU1VxRTduam9aM1BHVkhXL3FycTBITXNxa1VhTUdkSXhUanZ0QnpxZklDTmVlVDFPOXZIZTgwRzAyeFZDRWx6MUhIdHBTYzdhS3QvT3B4cisxVFJ1WlcvNERWeWhMcTJ0KzVZZ0wzSjBOY21YQ3pzaDZvQlRQRXFadE1zbzpBQUFBQUFBQUFBQUFBQUFB'
   const [currentInput, setCurrentInput] = React.useState("");
   useEffect(() => {
 
@@ -39,6 +40,14 @@ const Example: FC<WidgetProps> = ({
       });
     };
   }, []);
+
+  useEffect(() => {
+    emitter.on('langdb_aiMessageClicked', ({ threadId, messageId }: { threadId: string | undefined, messageId: string | undefined }) => { console.log( "===== on AI Message Clicked ====", threadId, messageId) });
+    
+    return () => {
+      emitter.off('langdb_aiMessageClicked');
+    };
+  }, []);
   return (
     <div
       style={{
@@ -51,14 +60,24 @@ const Example: FC<WidgetProps> = ({
       <div className="flex flex-1">
         <Widget
           modelName="gpt-4o"
-          projectId="c6b79821-233f-4b7e-97ff-ea898bacd8ab"
+          projectId="80b94904-3c2a-405a-9797-3b9a8caf5318"
           apiKey={apiKey}
-          threadId="7fcfc666-2334-4382-9bb4-7466c2f657b7"
           serverUrl="http://localhost:8083"
           theme={theme}
           starters={starters}
         />
       </div>
+      {/* <div className={`dark-theme  w-full flex justify-center items-center`}>
+        <div className="langdb-chat bg-inherit sticky bottom-0 pt-1 px-4 w-[50vw]">
+          <ChatInput
+            currentInput={currentInput}
+            setCurrentInput={setCurrentInput}
+            onSubmit={(inputText, files) => {
+              emitter.emit('langdb_chatSubmit', { inputText, files })
+              return Promise.resolve();
+            }} />
+        </div>
+      </div> */}
     </div>
   );
 };
