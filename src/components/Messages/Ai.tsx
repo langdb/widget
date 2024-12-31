@@ -57,7 +57,8 @@ export const AiMessage: React.FC<{ msg?: ChatMessage; typing?: boolean; persona?
       e.preventDefault();
       threadId && id && emitter.emit('langdb_aiMessageClicked', {
         threadId: threadId,
-        messageId: id
+        messageId: id,
+        traceId: msg?.trace_id
       });
 
     }} className="flex items-center gap-2">

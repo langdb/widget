@@ -21,6 +21,7 @@ type Events = {
     langdb_aiMessageClicked: {
         threadId: string | undefined;
         messageId: string | undefined;
+        traceId: string | undefined;
     };
 };
 export declare const emitter: import('mitt').Emitter<Events>;

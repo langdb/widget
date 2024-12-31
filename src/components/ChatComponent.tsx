@@ -44,7 +44,6 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
     messageId,
     threadId,
     messages,
-
   } = chatState;
 
   const handleOpen = useCallback(async (response: Response, currentThreadId?: string) => {
@@ -71,7 +70,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
     }
   }, [props, setMessageId, setThreadId]);
 
-  const handleMessage = useCallback((msg: EventSourceMessage, currentThreadId?: string) => {
+  const handleMessage = useCallback((msg: EventSourceMessage, currentThreadId?: string, currentMessageId?: string, currentTraceId?: string | null) => {
     try {
       const jsonMsg = JSON.parse(msg.data);
 
@@ -94,11 +93,12 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
               ...prevMessages.slice(0, -1),
               { ...lastMessage, threadId: currentThreadId },
               {
-                id: messageId || uuidv4(),
+                id: currentMessageId || uuidv4(),
                 message: event.choices.map((choice) => choice.delta.content).join(''),
                 type: MessageType.AIMessage,
                 content_type: MessageContentType.Text,
                 threadId: currentThreadId,
+                trace_id: currentTraceId || undefined
               },
             ];
           }
@@ -114,7 +114,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
     } catch (error) {
       console.error('Failed to parse message data:', error);
     }
-  }, [props, setTyping, setError, setMessageId, setThreadId, appendUsage]);
+  }, [props, setTyping, setError, setMessageId, setThreadId, appendUsage, messageId]);
 
   const submitMessageFn = useCallback(
     async (inputProps: { currentInput: string; files: FileWithPreview[] }) => {
@@ -139,7 +139,8 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
 
       try {
         let currentThreadId = threadId;
-
+        let currentMessageId = messageId;
+        let currentTraceId: string | null = null;
         await onSubmit({
           previousMessages: messages,
           widgetProps: props,
@@ -159,14 +160,16 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
             if (response.ok && response.headers.get('content-type') === 'text/event-stream') {
               const threadIdHeader = response.headers.get('X-Thread-Id');
               const messageIdHeader = response.headers.get('X-Message-Id');
+              const traceIdHeader = response.headers.get('X-Trace-Id');
               currentThreadId = threadIdHeader || currentThreadId
+              currentMessageId = messageIdHeader || currentMessageId
+              currentTraceId = traceIdHeader
               setThreadId(currentThreadId);
-              setMessageId(messageIdHeader || messageId);
+              setMessageId(currentMessageId);
             }
             return handleOpen(response, currentThreadId)
           },
-          onmessage: (msg) => handleMessage(msg, currentThreadId || threadId),
-          
+          onmessage: (msg) => handleMessage(msg, currentThreadId || threadId, currentMessageId || messageId, currentTraceId),
           onclose: () => {
             emitter.emit('langdb_chatSubmitSuccess', { threadId: currentThreadId });
             setMessageId(undefined);

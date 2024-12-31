@@ -9,7 +9,7 @@ type Events = {
   langdb_fileAdded: { files: FileWithPreview[] };
   langdb_speechRecognitionStart: {};
   langdb_speechRecognitionEnd: {};
-  langdb_aiMessageClicked: { threadId: string | undefined, messageId: string | undefined };
+  langdb_aiMessageClicked: { threadId: string | undefined, messageId: string | undefined, traceId: string | undefined };
 };
 
 export const emitter = mitt<Events>();
