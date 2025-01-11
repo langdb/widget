@@ -24,7 +24,9 @@ const Example: FC<WidgetProps> = ({
   starters = []
 }) => {
 
-  const apiKey = 'langdb_N1p5cVZvVi9kL1JJOExOeFJKNU1GbHdKbXNNRkxNL1lPemJ3eXhzeGN0K3FPTGxRbi8rN1J6YVhFSVE4ZmdTQjBuUmNQOHlCU1VxRTduam9aM1BHVkhXL3FycTBITXNxa1VhTUdkSXhUanZ0QnpxZklDTmVlVDFPOXZIZTgwRzAyeFZDRWx6MUhIdHBTYzdhS3QvT3B4cisxVFJ1WlcvNERWeWhMcTJ0KzVZZ0wzSjBOY21YQ3pzaDZvQlRQRXFadE1zbzpBQUFBQUFBQUFBQUFBQUFB'
+  // const apiKey = 'langdb_N1p5cVZvVi9kL1JJOExOeFJKNU1GbHdKbXNNRkxNL1lPemJ3eXhzeGN0K3FPTGxRbi8rN1J6YVhFSVE4ZmdTQjBuUmNQOHlCU1VxRTduam9aM1BHVkhXL3FycTBITXNxa1VhTUdkSXhUanZ0QnpxZklDTmVlVDFPOXZIZTgwRzAyeFZDRWx6MUhIdHBTYzdhS3QvT3B4cisxVFJ1WlcvNERWeWhMcTJ0KzVZZ0wzSjBOY21YQ3pzaDZvQlRQRXFadE1zbzpBQUFBQUFBQUFBQUFBQUFB'
+  const apiKey = 'langdb_N2NQb1ZvRjFKdTlMOTc1alRKRWJSbFlPaHB4VWZzdlVQWEx3elJzOGRONnNOZXBPanJteVJ6eVNUTWs5S2dpS2dTbFpKZG5FU1JHZSt5anlKRExXQ2lHNTlhdTJSc0lybHhTSlJkWTdIREhxQWp1ZEozNEViU1ZObzZPWDZrVGpqQXRXVEFieFZ6UTZHYzdlS3Q3SnB4NzEwUVp1WlcvNERWeWhMcTJ0KzVZZ0wzTHlSaVdkUGN1UU5SY2JFdHljTDRUdmVnPT06QUFBQUFBQUFBQUFBQUFBQQ=='
+  const projectId = 'dbac69ec-83a2-48ae-94a8-42fbba1b65bf'
   const [currentInput, setCurrentInput] = React.useState("");
   useEffect(() => {
 
@@ -60,14 +62,35 @@ const Example: FC<WidgetProps> = ({
       <div className="flex flex-1">
         <Widget
           modelName="gpt-4o"
-          projectId="80b94904-3c2a-405a-9797-3b9a8caf5318"
+          projectId={projectId}
           apiKey={apiKey}
           serverUrl="http://localhost:8083"
           theme={theme}
+          hideChatInput={true}
+          starters={starters}
+        />
+
+<Widget
+          modelName="gpt-4o-mini"
+          projectId={projectId}
+          apiKey={apiKey}
+          serverUrl="http://localhost:8083"
+          theme={theme}
+          hideChatInput={true}
+          starters={starters}
+        />
+
+<Widget
+          modelName="gpt-3.5-turbo-0125"
+          projectId={projectId}
+          apiKey={apiKey}
+          serverUrl="http://localhost:8083"
+          theme={theme}
+          hideChatInput={true}
           starters={starters}
         />
       </div>
-      {/* <div className={`dark-theme  w-full flex justify-center items-center`}>
+      <div className={`dark-theme  w-full flex justify-center items-center`}>
         <div className="langdb-chat bg-inherit sticky bottom-0 pt-1 px-4 w-[50vw]">
           <ChatInput
             currentInput={currentInput}
@@ -77,7 +100,7 @@ const Example: FC<WidgetProps> = ({
               return Promise.resolve();
             }} />
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };
