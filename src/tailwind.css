@@ -2,6 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
+input:-internal-autofill-selected {
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-semibold;
+}
+
+[multiple],
+[type=date],
+[type=datetime-local],
+[type=email],
+[type=month],
+[type=number],
+[type=password],
+[type=search],
+[type=tel],
+[type=text],
+[type=time],
+[type=url],
+[type=week],
+input:where(:not([type])),
+select,
+textarea,
+::after {
+  --tw-ring-color: transparent !important;
+}
+
+[multiple]:focus,
+[type=date]:focus,
+[type=datetime-local]:focus,
+[type=email]:focus,
+[type=month]:focus,
+[type=number]:focus,
+[type=password]:focus,
+[type=search]:focus,
+[type=tel]:focus,
+[type=text]:focus,
+[type=time]:focus,
+[type=url]:focus,
+[type=week]:focus,
+[type=checkbox]:focus,
+input:where(:not([type])):focus,
+select:focus,
+textarea:focus {
+  border-color: var(--primary-500);
+  --tw-ring-color: var(--primary-500);
+}
+
+
 :root {
   --primary-50: rgba(176, 72, 140, 0.1);
   --primary-100: #fde6e7;
@@ -26,8 +82,18 @@
   --secondary-text: rgb(133, 133, 133);
   --tw-ring-color: var(--primary-500);
   border-color: var(--border-color);
+  outline-color: transparent;
 
 }
+
+:focus {
+  outline: transparent auto 0px;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
 [data-mode="dark"] {
   --primary-50: rgba(233, 69, 96, 0.1);
   /* Lighter version with transparency */
@@ -53,4 +119,413 @@
   --secondary-text: rgb(180 180 180);
   border-color: var(--border-color);
 
+}
+
+@layer base {
+
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border-color);
+  }
+
+  [type=text]:focus,
+  input:where(:not([type])):focus,
+  [type=email]:focus,
+  [type=url]:focus,
+  [type=password]:focus,
+  [type=number]:focus,
+  [type=date]:focus,
+  [type=datetime-local]:focus,
+  [type=month]:focus,
+  [type=search]:focus,
+  [type=tel]:focus,
+  [type=time]:focus,
+  [type=week]:focus,
+  [multiple]:focus,
+  textarea:focus,
+  select:focus {
+    border-color: var(--primary-500) !important;
+  }
+
+  :root {
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+[multiple],
+[type=date],
+[type=datetime-local],
+[type=email],
+[type=month],
+[type=number],
+[type=password],
+[type=search],
+[type=tel],
+[type=text],
+[type=time],
+[type=url],
+[type=week],
+input:where(:not([type])),
+select,
+textarea {
+  border-color: var(--border-color);
+  background-color: var(--background-color)
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+
+  background-color: var(--background-color);
+  border-color: var(--border-color);
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border-color: var(--border-color);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior: none;
+  font-size: 15px;
+  /* @apply bg-white text-black; */
+}
+
+[data-mode="dark"] body {
+  @apply bg-dark-background text-gray-400;
+  --focus-border: transparent !important;
+}
+
+:root {
+  --chart-1: 12 76% 61%;
+  --chart-2: 173 58% 39%;
+  --chart-3: 197 37% 24%;
+  --chart-4: 43 74% 66%;
+  --chart-5: 29 85% 63%;
+  --chart-6: 210 50% 45%;
+  --chart-7: 120 60% 50%;
+  --chart-8: 300 40% 30%;
+  --chart-9: 60 70% 60%;
+  --chart-10: 15 80% 65%;
+  --chart-11: 180 55% 35%;
+  --chart-12: 250 45% 25%;
+  --chart-13: 90 75% 70%;
+  --chart-14: 25 72% 67%;
+  --chart-15: 140 65% 40%;
+  --chart-16: 320 38% 28%;
+  --chart-17: 70 68% 64%;
+  --chart-18: 5 74% 59%;
+  --chart-19: 165 59% 39%;
+  --chart-20: 205 38% 24%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --tw-ring-color: var(--primary-500);
+  --sidebar-background: 240 5.9% 10%;
+  --sidebar-foreground: 240 4.8% 95.9%;
+  --sidebar-primary: 224.3 76.3% 48%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 240 3.7% 15.9%;
+  --sidebar-accent-foreground: 240 4.8% 95.9%;
+  --sidebar-border: 240 3.7% 15.9%;
+  --sidebar-ring: 240 4.9% 83.9%;
+}
+
+.dark {
+  --chart-1: 12 76% 61%;
+  --chart-2: 173 58% 39%;
+  --chart-3: 197 37% 24%;
+  --chart-4: 43 74% 66%;
+  --chart-5: 29 85% 63%;
+  --chart-6: 210 50% 45%;
+  --chart-7: 120 60% 50%;
+  --chart-8: 300 40% 30%;
+  --chart-9: 60 70% 60%;
+  --chart-10: 15 80% 65%;
+  --chart-11: 180 55% 35%;
+  --chart-12: 250 45% 25%;
+  --chart-13: 90 75% 70%;
+  --chart-14: 25 72% 67%;
+  --chart-15: 140 65% 40%;
+  --chart-16: 320 38% 28%;
+  --chart-17: 70 68% 64%;
+  --chart-18: 5 74% 59%;
+  --chart-19: 165 59% 39%;
+  --chart-20: 205 38% 24%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --tw-ring-color: var(--primary-500);
+  --sidebar-background: 240 5.9% 10%;
+  --sidebar-foreground: 240 4.8% 95.9%;
+  --sidebar-primary: 224.3 76.3% 48%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 240 3.7% 15.9%;
+  --sidebar-accent-foreground: 240 4.8% 95.9%;
+  --sidebar-border: 240 3.7% 15.9%;
+  --sidebar-ring: 240 4.9% 83.9%;
+
+}
+
+.center {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+code {
+  font-family: 'Roboto Moo';
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+
+.flex {
+  display: flex;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-column-reverse {
+  flex-direction: column-reverse;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
+.flex-fill {
+  flex: 1;
+}
+
+
+.justify-content-start {
+  justify-content: flex-start;
+}
+
+.justify-content-end {
+  justify-content: flex-end;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.justify-content-between {
+  justify-content: space-between;
+}
+
+.justify-content-around {
+  justify-content: space-around;
+}
+
+.align-items-start {
+  align-items: flex-start;
+}
+
+.align-items-end {
+  align-items: flex-end;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.align-items-stretch {
+  align-items: stretch;
+}
+
+
+.gap-1 {
+  gap: 0.25rem;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.gap-3 {
+  gap: 1rem;
+}
+
+.gap-4 {
+  gap: 1.5rem;
+}
+
+.gap-5 {
+  gap: 3rem;
+}
+
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+
+.icon-sample-dashboard {
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+  font-variation-settings: normal;
+  -webkit-tap-highlight-color: transparent;
+  line-height: inherit;
+  font-family: Inter var, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
+  list-style: none;
+  --tw-border-opacity: 1;
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: #e5e7eb;
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x: ;
+  --tw-pan-y: ;
+  --tw-pinch-zoom: ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position: ;
+  --tw-gradient-via-position: ;
+  --tw-gradient-to-position: ;
+  --tw-ordinal: ;
+  --tw-slashed-zero: ;
+  --tw-numeric-figure: ;
+  --tw-numeric-spacing: ;
+  --tw-numeric-fraction: ;
+  --tw-ring-inset: ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur: ;
+  --tw-brightness: ;
+  --tw-contrast: ;
+  --tw-grayscale: ;
+  --tw-hue-rotate: ;
+  --tw-invert: ;
+  --tw-saturate: ;
+  --tw-sepia: ;
+  --tw-drop-shadow: ;
+  --tw-backdrop-blur: ;
+  --tw-backdrop-brightness: ;
+  --tw-backdrop-contrast: ;
+  --tw-backdrop-grayscale: ;
+  --tw-backdrop-hue-rotate: ;
+  --tw-backdrop-invert: ;
+  --tw-backdrop-opacity: ;
+  --tw-backdrop-saturate: ;
+  --tw-backdrop-sepia: ;
+  vertical-align: middle;
+  max-width: 100%;
+  height: 2.5rem;
+  width: 2.5rem;
+  flex: none;
+  border-radius: 0.5rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  object-fit: cover;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-color: rgb(17 24 39 / 0.1);
+  display: flex;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#langdb-datepicker {
+  background-color: var(--secondary-background) !important;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background;
+  }
 }

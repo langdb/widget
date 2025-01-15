@@ -25,8 +25,9 @@ const Example: FC<WidgetProps> = ({
 }) => {
 
   // const apiKey = 'langdb_N1p5cVZvVi9kL1JJOExOeFJKNU1GbHdKbXNNRkxNL1lPemJ3eXhzeGN0K3FPTGxRbi8rN1J6YVhFSVE4ZmdTQjBuUmNQOHlCU1VxRTduam9aM1BHVkhXL3FycTBITXNxa1VhTUdkSXhUanZ0QnpxZklDTmVlVDFPOXZIZTgwRzAyeFZDRWx6MUhIdHBTYzdhS3QvT3B4cisxVFJ1WlcvNERWeWhMcTJ0KzVZZ0wzSjBOY21YQ3pzaDZvQlRQRXFadE1zbzpBQUFBQUFBQUFBQUFBQUFB'
-  const apiKey = 'langdb_N2NQb1ZvRjFKdTlMOTc1alRKRWJSbFlPaHB4VWZzdlVQWEx3elJzOGRONnNOZXBPanJteVJ6eVNUTWs5S2dpS2dTbFpKZG5FU1JHZSt5anlKRExXQ2lHNTlhdTJSc0lybHhTSlJkWTdIREhxQWp1ZEozNEViU1ZObzZPWDZrVGpqQXRXVEFieFZ6UTZHYzdlS3Q3SnB4NzEwUVp1WlcvNERWeWhMcTJ0KzVZZ0wzTHlSaVdkUGN1UU5SY2JFdHljTDRUdmVnPT06QUFBQUFBQUFBQUFBQUFBQQ=='
-  const projectId = 'dbac69ec-83a2-48ae-94a8-42fbba1b65bf'
+  const apiKey = 'langdb_NjhQOVM0WWxjUEVZK2J4b1RjcE1GRkljbXRZR2RNblZJR2p3elJSa2V0VDBZK0pWbHJyaUZTZVVSY1U0ZjE3ZGduVklNY3lIRGtLSC9YZnRZR3lYUTNUNnF1M2lHYzBpa1VmU0g4b3dRVEhyVkR6RElDbFZNaVVmbzZXVzZrVGkzZzFXVFYzMUNEUm1SNW1PY2RmTjhVMnIwVmR1WlcvNERWeWhMcTJ0KzVZZ0wzTHlKM1ZmTXlJRXhjYy9YNDRLMkJyR0pBPT06QUFBQUFBQUFBQUFBQUFBQQ=='
+  const projectId = '42ef7074-79be-4597-b8d9-dce98033c1da'
+  const api_url = 'https://api.staging.langdb.ai'
   const [currentInput, setCurrentInput] = React.useState("");
   useEffect(() => {
 
@@ -64,7 +65,7 @@ const Example: FC<WidgetProps> = ({
           modelName="gpt-4o"
           projectId={projectId}
           apiKey={apiKey}
-          serverUrl="http://localhost:8083"
+          serverUrl={api_url}
           theme={theme}
           hideChatInput={true}
           starters={starters}
@@ -74,7 +75,7 @@ const Example: FC<WidgetProps> = ({
           modelName="gpt-4o-mini"
           projectId={projectId}
           apiKey={apiKey}
-          serverUrl="http://localhost:8083"
+          serverUrl={api_url}
           theme={theme}
           hideChatInput={true}
           starters={starters}
@@ -84,7 +85,7 @@ const Example: FC<WidgetProps> = ({
           modelName="gpt-3.5-turbo-0125"
           projectId={projectId}
           apiKey={apiKey}
-          serverUrl="http://localhost:8083"
+          serverUrl={api_url}
           theme={theme}
           hideChatInput={true}
           starters={starters}

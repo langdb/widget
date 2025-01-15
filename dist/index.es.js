@@ -38606,7 +38606,7 @@ const JF = async (e) => {
       serverUrl: e.serverUrl || Ec,
       apiKey: e.apiKey
     });
-  }), u ? /* @__PURE__ */ V.jsx("div", { className: `${t} w-full h-full justify-center items-center`, children: /* @__PURE__ */ V.jsx("span", { className: "animate-pulse", children: " Loading..." }) }) : /* @__PURE__ */ V.jsx("div", { className: `${t} w-full h-full font-be-vietnam`, children: /* @__PURE__ */ V.jsx(WD, { ...e, messages: s || c || [] }) });
+  }), u ? /* @__PURE__ */ V.jsx("div", { className: `${t} w-full h-full justify-center items-center`, children: /* @__PURE__ */ V.jsx("span", { className: "animate-pulse", children: " Loading..." }) }) : /* @__PURE__ */ V.jsx("div", { className: `${t} w-full h-full`, children: /* @__PURE__ */ V.jsx(WD, { ...e, messages: s || c || [] }) });
 });
 function $u(...e) {
   return e.filter(Boolean).join(" ");
