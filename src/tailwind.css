@@ -149,7 +149,7 @@ textarea:focus {
   }
 
   :root {
-    --sidebar-background: 0 0% 98%;
+    --sidebar-background: transparent;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
     --sidebar-primary-foreground: 0 0% 98%;
@@ -160,7 +160,7 @@ textarea:focus {
   }
 
   .dark {
-    --sidebar-background: 240 5.9% 10%;
+    --sidebar-background: transparent;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
     --sidebar-primary-foreground: 0 0% 100%;
@@ -187,8 +187,7 @@ textarea:focus {
 input:where(:not([type])),
 select,
 textarea {
-  border-color: var(--border-color);
-  background-color: var(--background-color)
+  border-color: var(--border-color) !important;
 }
 
 input:-webkit-autofill,
@@ -201,8 +200,7 @@ select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
 
-  background-color: var(--background-color);
-  border-color: var(--border-color);
+  border-color: var(--border-color) !important;
 }
 
 body {
@@ -214,6 +212,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overscroll-behavior: none;
   font-size: 15px;
+  @apply font-body overflow-x-hidden text-gray-500;
   /* @apply bg-white text-black; */
 }
 
@@ -246,7 +245,7 @@ body {
   --muted: 240 3.7% 15.9%;
   --muted-foreground: 240 5% 64.9%;
   --tw-ring-color: var(--primary-500);
-  --sidebar-background: 240 5.9% 10%;
+  --sidebar-background: transparent;
   --sidebar-foreground: 240 4.8% 95.9%;
   --sidebar-primary: 224.3 76.3% 48%;
   --sidebar-primary-foreground: 0 0% 100%;
@@ -280,7 +279,7 @@ body {
   --muted: 240 3.7% 15.9%;
   --muted-foreground: 240 5% 64.9%;
   --tw-ring-color: var(--primary-500);
-  --sidebar-background: 240 5.9% 10%;
+  --sidebar-background: transparent;
   --sidebar-foreground: 240 4.8% 95.9%;
   --sidebar-primary: 224.3 76.3% 48%;
   --sidebar-primary-foreground: 0 0% 100%;
@@ -517,12 +516,16 @@ body,
 }
 
 #langdb-datepicker {
-  background-color: var(--secondary-background) !important;
+  background-color: transparent !important;
 }
 
 @layer base {
   * {
     @apply border-border;
+  }
+
+  html {
+    font-family: system-ui;
   }
 
   body {

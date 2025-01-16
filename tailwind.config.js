@@ -70,7 +70,7 @@ module.exports = {
 				secondaryBorder: 'var(--secondary-border-color)',
 				secondaryText: 'var(--secondary-text)',
 				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
+					DEFAULT: 'transparent',
 					foreground: 'hsl(var(--sidebar-foreground))',
 					primary: 'hsl(var(--sidebar-primary))',
 					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
