@@ -1,13 +1,13 @@
 import "../tailwind.css";
 import './Widget.css';
 import { AdapterProps, DEV_SERVER_URL, getHeaders } from "./adapter";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { ChatComponent } from "./ChatComponent";
 import { ChatMessage, MessageWithId } from "../dto/ChatMessage";
 import { PersonaOptions } from "../dto/PersonaOptions";
 import { ConversationStarter } from "../dto/ConversationStarter";
 import axios from "axios";
-import { useRequest } from "ahooks";
+import { useMount, useRequest, useUpdateEffect } from "ahooks";
 // Types
 
 export interface WidgetProps extends AdapterProps {
@@ -27,6 +27,7 @@ export interface WidgetProps extends AdapterProps {
   publicId?: string;
   serverUrl?: string;
   hideChatInput?: boolean,
+  autoRefreshThread?: boolean
 
 }
 
@@ -79,12 +80,12 @@ const getMessagesFromThread = async (props: {
 
 export const Widget: React.FC<WidgetProps> = React.memo((props) => {
   const themeClass = props.theme === "dark" ? "dark-theme" : "light-theme";
-  const { threadId, projectId, getAccessToken, publicId, apiKey, messages } = props;
+  const { threadId, projectId, getAccessToken, publicId, apiKey, messages, autoRefreshThread } = props;
   const { run: triggerGetMessages, loading: messagesLoading, data } = useRequest(getMessagesFromThread, {
     manual: true
   });
   const refreshMessages = useCallback(() => {
-    if (threadId && projectId && (getAccessToken || publicId || apiKey) &&(messages === undefined || messages.length === 0)) {
+    if (threadId && projectId && (getAccessToken || publicId || apiKey) && (messages === undefined || messages.length === 0)) {
       triggerGetMessages({
         threadId,
         projectId,
@@ -95,11 +96,20 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
       });
     }
   }, [threadId, projectId, publicId, apiKey, getAccessToken, triggerGetMessages, messages]);
-  useEffect(() => {
-    if (threadId && projectId) {
-      threadId && refreshMessages();
+
+  useMount(() => {
+    refreshMessages();
+  });
+  useUpdateEffect(() => {
+    refreshMessages();
+  }, [projectId]);
+
+
+  useUpdateEffect(() => {
+    if (autoRefreshThread) {
+      refreshMessages();
     }
-  }, [threadId, projectId]);
+  }, [threadId, autoRefreshThread]);
   if (messagesLoading) {
     return <div className={`${themeClass} w-full h-full justify-center items-center`}>
       <span className="animate-pulse"> Loading...</span>
