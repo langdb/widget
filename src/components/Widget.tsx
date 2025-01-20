@@ -1,7 +1,7 @@
 import "../tailwind.css";
 import './Widget.css';
 import { AdapterProps, DEV_SERVER_URL, getHeaders } from "./adapter";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { ChatComponent } from "./ChatComponent";
 import { ChatMessage, MessageWithId } from "../dto/ChatMessage";
 import { PersonaOptions } from "../dto/PersonaOptions";
@@ -83,8 +83,8 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
   const { run: triggerGetMessages, loading: messagesLoading, data } = useRequest(getMessagesFromThread, {
     manual: true
   });
-  useEffect(() => {
-    if (threadId && projectId && (getAccessToken || publicId || apiKey) && (!messages || messages.length === 0)) {
+  const refreshMessages = useCallback(() => {
+    if (threadId && projectId && (getAccessToken || publicId || apiKey) &&(messages === undefined || messages.length === 0)) {
       triggerGetMessages({
         threadId,
         projectId,
@@ -94,7 +94,12 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
         apiKey: props.apiKey
       });
     }
-  }, [threadId, projectId, getAccessToken, publicId, apiKey]);
+  }, [threadId, projectId, publicId, apiKey, getAccessToken, triggerGetMessages, messages]);
+  useEffect(() => {
+    if (threadId && projectId) {
+      refreshMessages();
+    }
+  }, [threadId, projectId]);
   if (messagesLoading) {
     return <div className={`${themeClass} w-full h-full justify-center items-center`}>
       <span className="animate-pulse"> Loading...</span>
