@@ -97,7 +97,7 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
   }, [threadId, projectId, publicId, apiKey, getAccessToken, triggerGetMessages, messages]);
   useEffect(() => {
     if (threadId && projectId) {
-      refreshMessages();
+      threadId && refreshMessages();
     }
   }, [threadId, projectId]);
   if (messagesLoading) {

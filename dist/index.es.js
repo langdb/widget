@@ -38607,7 +38607,7 @@ const JF = async (e) => {
     });
   }, [n, r, i, o, a, l, s]);
   return kt(() => {
-    n && r && d();
+    n && r && n && d();
   }, [n, r]), u ? /* @__PURE__ */ V.jsx("div", { className: `${t} w-full h-full justify-center items-center`, children: /* @__PURE__ */ V.jsx("span", { className: "animate-pulse", children: " Loading..." }) }) : /* @__PURE__ */ V.jsx("div", { className: `${t} w-full h-full`, children: /* @__PURE__ */ V.jsx(VD, { ...e, messages: s || c || [] }) });
 });
 function $u(...e) {
