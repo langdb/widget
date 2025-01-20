@@ -1,13 +1,13 @@
 import "../tailwind.css";
 import './Widget.css';
 import { AdapterProps, DEV_SERVER_URL, getHeaders } from "./adapter";
-import React from "react";
+import React, { useEffect } from "react";
 import { ChatComponent } from "./ChatComponent";
 import { ChatMessage, MessageWithId } from "../dto/ChatMessage";
 import { PersonaOptions } from "../dto/PersonaOptions";
 import { ConversationStarter } from "../dto/ConversationStarter";
 import axios from "axios";
-import { useMount, useRequest } from "ahooks";
+import { useRequest } from "ahooks";
 // Types
 
 export interface WidgetProps extends AdapterProps {
@@ -83,7 +83,7 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
   const { run: triggerGetMessages, loading: messagesLoading, data } = useRequest(getMessagesFromThread, {
     manual: true
   });
-  useMount(() => {
+  useEffect(() => {
     if (threadId && projectId && (getAccessToken || publicId || apiKey) && (!messages || messages.length === 0)) {
       triggerGetMessages({
         threadId,
@@ -94,7 +94,7 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
         apiKey: props.apiKey
       });
     }
-  });
+  }, [threadId, projectId, getAccessToken, publicId, apiKey]);
   if (messagesLoading) {
     return <div className={`${themeClass} w-full h-full justify-center items-center`}>
       <span className="animate-pulse"> Loading...</span>
