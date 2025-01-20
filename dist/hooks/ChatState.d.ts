@@ -18,4 +18,5 @@ export declare const useChatState: (props: {
     setError: import('react').Dispatch<import('react').SetStateAction<string | undefined>>;
     usageInfo: ModelUsage[];
     appendUsage: (usage: ModelUsage) => void;
+    initialMessages: ChatMessage[];
 };

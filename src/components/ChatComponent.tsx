@@ -88,7 +88,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
         setMessages((prevMessages) => {
           const lastMessage = prevMessages[prevMessages.length - 1];
 
-          if (lastMessage.type === MessageType.HumanMessage) {
+          if (lastMessage && lastMessage.type === MessageType.HumanMessage) {
             return [
               ...prevMessages.slice(0, -1),
               { ...lastMessage, threadId: currentThreadId },
@@ -112,7 +112,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
         });
       }
     } catch (error) {
-      console.error('Failed to parse message data:', error);
+      console.error('=== Failed to parse message data:', error);
     }
   }, [props, setTyping, setError, setMessageId, setThreadId, appendUsage, messageId]);
 
