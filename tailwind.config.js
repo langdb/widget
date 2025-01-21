@@ -37,7 +37,12 @@ module.exports = {
 				darkHeader: '#2c2c2c',
 				secondary: 'var(--secondary-background)',
 				slate: {
-					'800': 'var(--secondary-background)'
+					'800': 'var(--background-color)',
+					'600': 'var(--border-color)',
+				},
+				gray: {
+					'700': 'var(--border-color)',
+
 				},
 				primary: {
 					'50': 'var(--primary-50)',
@@ -70,7 +75,7 @@ module.exports = {
 				secondaryBorder: 'var(--secondary-border-color)',
 				secondaryText: 'var(--secondary-text)',
 				sidebar: {
-					DEFAULT: 'transparent',
+					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
 					primary: 'hsl(var(--sidebar-primary))',
 					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
@@ -80,7 +85,7 @@ module.exports = {
 					ring: 'hsl(var(--sidebar-ring))'
 				}
 			},
-			borderColor: (theme) => ({
+			borderColor: (theme: any) => ({
 				...theme('colors'),
 				'dark-default': 'rgb(46, 46, 46)', // Default border color for dark mode
 			}),
