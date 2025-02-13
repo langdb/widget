@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useScrollToBottom } from "../hooks/ScrollToBottom";
 import { WidgetProps } from "./Widget";
 import { Avatar } from "./Icons";
@@ -8,18 +8,21 @@ import { onSubmit } from "./adapter";
 import { ChatMessage, MessageContentType, MessageType } from "../dto/ChatMessage";
 import { HumanMessage } from "./Messages/Human";
 import { AiMessage } from "./Messages/Ai";
-import { ChatInput } from "./ChatInput";
+import { ChatInput, convertAudioToBase64 } from "./ChatInput";
 import { Persona, PersonaOptions } from "../dto/PersonaOptions";
-import { useDropzone } from 'react-dropzone';
 import { FileWithPreview } from "../types";
+import { ChatCompletionChunk } from "../events";
+import { emitter } from "./EventEmiter";
+import { XCircleIcon } from "@heroicons/react/24/solid";
+import { EventSourceMessage } from "@microsoft/fetch-event-source";
+import { useDropzone } from "react-dropzone";
 import { PaperClipIcon } from "@heroicons/react/24/outline";
-import { Files } from "./Files";
-import { ModelEvent } from "../events";
 
 // New component for rendering messages
 const MessageRenderer: React.FC<{ message: ChatMessage; personaOptions: PersonaOptions, widgetProps: WidgetProps }> = ({ message, personaOptions, widgetProps }) => (
   <div className={`flex mb-2 ${message.type === MessageType.HumanMessage ? 'justify-end' : 'justify-start'}`}>
-    <div className="max-w-3/4">
+    <div className="max-w-3/4 overflow-scroll">
+
       {message.type === MessageType.HumanMessage
         ? <HumanMessage msg={message} persona={personaOptions.user} />
         : <AiMessage msg={message} persona={personaOptions.assistant} widgetProps={widgetProps} />
@@ -30,79 +33,183 @@ const MessageRenderer: React.FC<{ message: ChatMessage; personaOptions: PersonaO
 
 // Custom hook for handling message submission
 const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof useChatState>) => {
-  const { setMessages, setCurrentInput, setTyping, setError, setMessageId, setThreadId, messageId, threadId } = chatState;
-  return useCallback(async (inputProps: { currentInput: string, files: FileWithPreview[] }) => {
-    const { currentInput, files } = inputProps;
-    if (currentInput.trim() === '') return;
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { id: uuidv4(), message: currentInput, type: MessageType.HumanMessage, content_type: MessageContentType.Text, role: 'user', threadId: threadId, files: files },
-    ]);
-    setCurrentInput('');
-    setTyping(true);
+  const {
+    setMessages,
+    setCurrentInput,
+    setTyping,
+    setError,
+    setMessageId,
+    setThreadId,
+    appendUsage,
+    messageId,
+    threadId,
+    messages,
+  } = chatState;
 
-    try {
-      let currentThreadId = threadId;
-      await onSubmit({
-        widgetProps: props,
-        files,
-        message: currentInput,
-        threadId: threadId,
-        onopen: async (response) => {
-          if (response.ok && response.headers.get('content-type') === "text/event-stream") {
-            const threadIdHeader = response.headers.get('X-Thread-Id');
-            const messageIdHeader = response.headers.get('X-Message-Id');
-            currentThreadId = threadIdHeader || threadId;
-            setMessageId(messageIdHeader || undefined);
-            setThreadId(threadIdHeader || undefined);
-            if (props.responseCallback) {
-              const traceId = response?.headers.get('x-trace-id') as string | undefined;
-              props.responseCallback({
-                traceId,
-                modelName: props.modelName,
-                threadId: threadIdHeader as string,
-                messageId: messageIdHeader as string,
-              });
-            }
-          }
-        },
-        onmessage: (msg) => {
-          let newMessage: string | undefined;
-          try {
-            const event = JSON.parse(msg.data) as ModelEvent;
-
-            props.onEvent?.(event);
-            if (event.event.type === 'llm_content') {
-              newMessage = event.event.data.content;
-            }
-          } catch (_e: any) {
-            newMessage = msg.data;
-          }
-          if (!newMessage) {
-            return;
-          }
-          setMessages((prevMessages) => {
-            const lastMessage = prevMessages[prevMessages.length - 1];
-            if (lastMessage.type === MessageType.HumanMessage) {
-              // also update lastMessage threadId
-              return [...prevMessages.slice(0, -1), { ...lastMessage, threadId: currentThreadId }, { id: messageId || uuidv4(), message: newMessage, type: MessageType.AIMessage, content_type: MessageContentType.Text, threadId: currentThreadId }];
-            } else {
-              const updatedLastMessage = { ...lastMessage, message: lastMessage.message + newMessage };
-              return [...prevMessages.slice(0, -1), updatedLastMessage];
-            }
-          });
-        },
-        onclose: () => {
-          setMessageId(undefined);
-          setTyping(false);
-        },
-      });
-    } catch (e: unknown) {
-      console.error(e);
-      setError(e instanceof Error ? e.message : String(e));
-      setTyping(false);
+  const handleOpen = useCallback(async (response: Response, currentThreadId?: string) => {
+    if (response.ok && response.headers.get('content-type') === 'text/event-stream') {
+      const messageIdHeader = response.headers.get('X-Message-Id');
+      const updatedThreadId = currentThreadId;
+      if (props.responseCallback) {
+        const traceId = response.headers.get('x-trace-id') as string | undefined;
+        props.responseCallback({
+          traceId,
+          modelName: props.modelName,
+          threadId: updatedThreadId,
+          messageId: messageIdHeader as string,
+        });
+      }
     }
-  }, [props, setMessages, setCurrentInput, setTyping, setError, setMessageId, setThreadId, messageId, threadId]);
+    if (!response.ok) {
+      let responseJson = await response.json();
+      if (responseJson.error) {
+        throw new Error(responseJson.error)
+      } else {
+        throw new Error(response.statusText)
+      }
+    }
+  }, [props, setMessageId, setThreadId]);
+
+  const handleMessage = useCallback((msg: EventSourceMessage, currentThreadId?: string, currentMessageId?: string, currentTraceId?: string | null) => {
+    try {
+      if (msg.data === '[DONE]') {
+        return;
+      }
+      const jsonMsg = JSON.parse(msg.data);
+
+      if (jsonMsg.error) {
+        setError(jsonMsg.error);
+        setTyping(false);
+      } else {
+        const event = jsonMsg as ChatCompletionChunk;
+        if (event.usage) {
+          emitter.emit('langdb_usageStats', { usage: event.usage, threadId: currentThreadId });
+          appendUsage(event.usage);
+        }
+        props.onEvent?.(event);
+
+        setMessages((prevMessages) => {
+          const lastMessage = prevMessages[prevMessages.length - 1];
+
+          if (lastMessage && lastMessage.type === MessageType.HumanMessage) {
+            return [
+              ...prevMessages.slice(0, -1),
+              { ...lastMessage, threadId: currentThreadId },
+              {
+                id: currentMessageId || uuidv4(),
+                message: event.choices.map((choice) => choice.delta.content).join(''),
+                type: MessageType.AIMessage,
+                content_type: MessageContentType.Text,
+                threadId: currentThreadId,
+                trace_id: currentTraceId || undefined
+              },
+            ];
+          }
+
+          const updatedLastMessage = {
+            ...lastMessage,
+            message: lastMessage.message + event.choices.map((choice) => choice.delta.content).join(''),
+          };
+
+          return [...prevMessages.slice(0, -1), updatedLastMessage];
+        });
+      }
+    } catch (error) {
+    }
+  }, [props, setTyping, setError, setMessageId, setThreadId, appendUsage, messageId]);
+  const { messagesEndRef, scrollToBottom } = useScrollToBottom();
+
+  const submitMessageFn = useCallback(
+    async (inputProps: { currentInput: string; files: FileWithPreview[] }) => {
+      const { currentInput, files } = inputProps;
+
+      if (currentInput.trim() === '') return;
+
+      const newMessage = {
+        id: uuidv4(),
+        message: currentInput,
+        type: MessageType.HumanMessage,
+        content_type: MessageContentType.Text,
+        role: 'user',
+        threadId,
+        files,
+      };
+
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+      setCurrentInput('');
+      setTyping(true);
+      setError(undefined);
+
+      try {
+        let currentThreadId = threadId;
+        let currentMessageId = messageId;
+        let currentTraceId: string | null = null;
+        scrollToBottom();
+        await onSubmit({
+          previousMessages: messages,
+          widgetProps: props,
+          files,
+          message: currentInput,
+          threadId,
+          onerror: (error) => {
+            setError(error instanceof Error ? error.message : String(error));
+            setTyping(false);
+            props.responseCallback?.({
+              error,
+              modelName: props.modelName,
+            });
+            throw error
+          },
+          onopen: (response) => {
+            if (response.ok && response.headers.get('content-type') === 'text/event-stream') {
+              const threadIdHeader = response.headers.get('X-Thread-Id');
+              const messageIdHeader = response.headers.get('X-Message-Id');
+              const traceIdHeader = response.headers.get('X-Trace-Id');
+              currentThreadId = threadIdHeader || currentThreadId
+              currentMessageId = messageIdHeader || currentMessageId
+              currentTraceId = traceIdHeader
+              setThreadId(currentThreadId);
+              setMessageId(currentMessageId);
+            }
+            return handleOpen(response, currentThreadId)
+          },
+          onmessage: (msg) => {
+            scrollToBottom()
+            return handleMessage(msg, currentThreadId || threadId, currentMessageId || messageId, currentTraceId)
+          },
+          onclose: () => {
+            emitter.emit('langdb_chatSubmitSuccess', { threadId: currentThreadId });
+            scrollToBottom();
+            setMessageId(undefined);
+            setTyping(false);
+          },
+        });
+      } catch (error) {
+        setError(error instanceof Error ? error.message : String(error));
+        setTyping(false);
+      }
+    },
+    [
+      props,
+      threadId,
+      setMessages,
+      setCurrentInput,
+      setTyping,
+      setError,
+      setMessageId,
+      setThreadId,
+      messageId,
+      messages,
+      messagesEndRef,
+      scrollToBottom
+    ]
+  );
+
+  return {
+    submitMessageFn,
+    messagesEndRef,
+    scrollToBottom
+  };
 };
 
 export const ChatComponent: React.FC<WidgetProps> = (props) => {
@@ -114,13 +221,10 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
     setCurrentInput,
     typing,
     error,
+    setError
   } = chatState;
 
-  const { messagesEndRef, scrollToBottom } = useScrollToBottom();
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages, scrollToBottom]);
+  const { hideChatInput } = props
 
   const personaOptions: PersonaOptions = {
     assistant: {
@@ -135,36 +239,62 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
     } as Persona,
   };
 
-  const [files, setFiles] = useState<FileWithPreview[]>([]);
-  const handleSubmit = useMessageSubmission(props, chatState)
+  const { submitMessageFn: handleSubmit, messagesEndRef } = useMessageSubmission(props, chatState)
 
-  const onSubmitWrapper = useCallback((e: React.FormEvent) => {
-    e.preventDefault();
-    let currentFiles = files;
-    setFiles([]);
-    return handleSubmit({ currentInput, files: currentFiles });
-  }, [currentInput, files, chatState, props]);
+
+  const onSubmitWrapper = useCallback((inputText: string, files: FileWithPreview[]) => {
+    return handleSubmit({ currentInput: inputText, files: files });
+  }, [handleSubmit]);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
-    setFiles(prevFiles => [
-      ...prevFiles,
-      ...acceptedFiles.map(file => ({
+    let updatedFilesPromises = acceptedFiles.map(file => {
+      if (file.type.startsWith('audio/')) {
+        return convertAudioToBase64(file).then((base64) => {
+          return ({
+            preview: '',
+            base64: base64 as string,
+            raw_file: file,
+            ...file,
+            type: file.type,
+          })
+        })
+      }
+      return Promise.resolve({
         preview: URL.createObjectURL(file),
         raw_file: file,
         ...file,
         type: file.type,
-      }))
-    ]);
+      })
+    })
+    let allResolved = Promise.all(updatedFilesPromises);
+    allResolved.then((files: FileWithPreview[]) => {
+      emitter.emit('langdb_fileAdded', { files });
+    });
   }, []);
-  const { getRootProps, isDragActive, open } = useDropzone({ onDrop, noClick: true, 
+  const { getRootProps, isDragActive } = useDropzone({
+    onDrop,
+    noClick: true,
     noKeyboard: true,
     accept: {
       "image/*": [],
-    }, // Accept only image files
-   });
+      "audio/*": [],
+    },
+  });
 
+  useEffect(() => {
+    const handleExternalSubmit = ({ inputText, files }: { inputText: string, files: FileWithPreview[] }) => {
+      setCurrentInput(inputText); // Set the input text
+      onSubmitWrapper(inputText, files); // Pass the input text directly
+    };
+    emitter.on('langdb_chatSubmit', handleExternalSubmit);
+
+    return () => {
+      emitter.off('langdb_chatSubmit', handleExternalSubmit);
+    };
+  }, [onSubmitWrapper, setCurrentInput]);
   return (
     <div className="langdb-chat mx-auto flex flex-1 flex-col lg:max-w-[40rem] xl:max-w-[48rem] w-full h-full">
+
       <div {...getRootProps()} className="langdb-message-section flex flex-col flex-1 justify-center overflow-y-auto p-4 pb-0">
         {isDragActive && (
           <div className="absolute gap-20 flex-col inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white text-xl z-50">
@@ -180,9 +310,9 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
           handleSubmit({ currentInput: prompt, files: [] });
         }} />}
         <div className="langdb-message-render flex-1 overflow-auto">
-          {messages.map((msg: ChatMessage) => (
-            <MessageRenderer key={msg.id} message={msg} personaOptions={personaOptions} widgetProps={props} />
-          ))}
+          {messages.filter(m => m.type === MessageType.HumanMessage || m.type !== MessageType.ToolMessage).map((msg: ChatMessage) => {
+            return <MessageRenderer key={msg.id} message={msg} personaOptions={personaOptions} widgetProps={props} />
+          })}
           {typing && (
             <div key="typing-ai" className="flex justify-start">
               <div className="max-w-3/4">
@@ -195,15 +325,24 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
         </div>
 
         {error && (
-          <div className="error-message bg-red-100 text-red-700 p-2 rounded-lg mb-4">
-            {error}
+          <div className=" bg-red-100 flex  p-2 rounded-lg items-center justify-between mb-4">
+            <span className="text-red-700">{error}</span>
+            <XCircleIcon
+              onClick={() => {
+                setError(undefined);
+              }}
+              className="h-4 w-4 text-red-500 hover:text-red-700 hover:cursor-pointer rounded-full" />
           </div>
         )}
       </div>
-      <div className="langdb-chat-input bg-inherit sticky bottom-0 pt-1 px-4">
-        {files && files.length > 0 && <Files files={files} setFiles={setFiles} />}
-        <ChatInput onFileIconClick={open} onSubmit={onSubmitWrapper} currentInput={currentInput} setCurrentInput={setCurrentInput} />
-      </div>
+      {!hideChatInput && <ChatInput
+        onSubmit={(inputText: string, files: FileWithPreview[]) => {
+          emitter.emit('langdb_chatSubmit', { inputText, files });
+          setCurrentInput('');
+          return Promise.resolve();
+        }}
+        currentInput={currentInput}
+        setCurrentInput={setCurrentInput} />}
     </div>
   );
 };
@@ -214,7 +353,7 @@ const StarterDisplay: React.FC<{ starters: WidgetProps['starters'], onStarterCli
       <Avatar width={48} height={48} />
       <span className="font-bold">LangDB</span>
       <div className="flex flex-col justify-center items-center">
-        <span className="text-sm">Easily build and deploy AI agents with SQL</span>
+        <span className="text-sm">Easily build and deploy AI agents</span>
       </div>
     </div>
     <div className="flex p-8 justify-end items-end">

@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 .langdb-chat {
   /* Human message in chat */
   --langdb-HumanMessage--BackgroundColor: #374151;
@@ -84,11 +83,7 @@
   outline-color: var(--langdb-InputContainer-Focus-Outline--Color);
 }
 
-.langdb-input {
-  background-color: transparent;
-  border: none;
-  color: var(--langdb-Input--TextColor);
-}
+
 
 .send-button {
   background-color: var(--langdb-SubmitButton--BackgroundColor);

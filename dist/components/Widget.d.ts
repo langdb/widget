@@ -14,5 +14,13 @@ export interface WidgetProps extends AdapterProps {
     };
     theme?: "light" | "dark";
     starters?: ConversationStarter[];
+    threadId?: string;
+    projectId?: string;
+    getAccessToken?: () => Promise<string>;
+    apiKey?: string;
+    publicId?: string;
+    serverUrl?: string;
+    hideChatInput?: boolean;
+    autoRefreshThread?: boolean;
 }
 export declare const Widget: React.FC<WidgetProps>;

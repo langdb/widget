@@ -1,4 +1,5 @@
 import { ChatMessage } from '../dto/ChatMessage';
+import { ModelUsage } from '../events';
 
 export declare const useChatState: (props: {
     initialMessages: ChatMessage[];
@@ -15,4 +16,7 @@ export declare const useChatState: (props: {
     setTyping: import('react').Dispatch<import('react').SetStateAction<boolean>>;
     error: string | undefined;
     setError: import('react').Dispatch<import('react').SetStateAction<string | undefined>>;
+    usageInfo: ModelUsage[];
+    appendUsage: (usage: ModelUsage) => void;
+    initialMessages: ChatMessage[];
 };

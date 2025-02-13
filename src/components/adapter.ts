@@ -1,7 +1,9 @@
 // import { ChatAdapter, StreamingAdapterObserver } from "@nlux/react";
-import { ModelEvent } from "../events";
-import { FileWithPreview, MessageRequest, ResizeOptions, ResponseCallbackOptions, createInnerMessage } from "../types";
+import { ChatCompletionChunk } from "../events";
+import { ChatCompletionMessage,  convert_to,  createSubmitMessage, FileWithPreview, MessageRequest, ResizeOptions, ResponseCallbackOptions } from "../types";
 import { fetchEventSource, FetchEventSourceInit } from '@microsoft/fetch-event-source';
+import { WidgetProps } from "./Widget";
+import { ChatMessage } from "../dto/ChatMessage";
 
 export const DEV_SERVER_URL = "https://api.dev.langdb.ai";
 export interface AdapterProps {
@@ -15,25 +17,39 @@ export interface AdapterProps {
   projectId?: string;
   getAccessToken?: () => Promise<string>;
   responseCallback?: (_opts: ResponseCallbackOptions) => void;
-  onEvent?: (event: ModelEvent) => void;
+  onEvent?: (event: ChatCompletionChunk) => void;
 }
 
 export interface SubmitProps extends FetchEventSourceInit {
-  widgetProps: AdapterProps;
+  widgetProps: WidgetProps;
   message: string;
   files?: FileWithPreview[];
   threadId?: string;
+  previousMessages: ChatMessage[]
 }
 
-export const getHeaders = async (props: AdapterProps): Promise<any> => {
+export const getHeaders = async (props: {
+  projectId?: string;
+  publicId?: string;
+  threadId?: string;
+  getAccessToken?: () => Promise<string>;
+  apiKey?: string;
+}): Promise<any> => {
+  const { projectId, publicId, apiKey, getAccessToken, threadId } = props;
   const headers: any = { "Content-Type": "application/json" };
-  if (props.projectId) {
-    headers["x-project-id"] = props.projectId;
+  if (projectId) {
+    headers["x-project-id"] = projectId;
   }
-  if (props.publicId) {
-    headers["X-PUBLIC-APPLICATION-ID"] = props.publicId;
+  if (threadId) {
+    headers["X-Thread-Id"] = threadId
+  }
+  if (publicId) {
+    headers["X-PUBLIC-APPLICATION-ID"] = publicId;
+  }
+  if (apiKey) {
+    headers.Authorization = `Bearer ${apiKey}`
   } else {
-    const token = await props.getAccessToken?.();
+    const token = await getAccessToken?.();
     if (!token)
       throw new Error("Failed to get the user token");
 
@@ -42,22 +58,53 @@ export const getHeaders = async (props: AdapterProps): Promise<any> => {
   return headers;
 }
 
+
+
 export const onSubmit = async (submitProps: SubmitProps) => {
-  const { widgetProps, files, message, threadId, onopen, onmessage, onerror, onclose, } = submitProps;
-  const { fileResizeOptions: resizeOptions, userId } = widgetProps;
+  const { widgetProps, files, message, threadId, onopen, onmessage, onerror, onclose, previousMessages } = submitProps;
+  const { fileResizeOptions: resizeOptions } = widgetProps;
   const serverUrl = widgetProps.serverUrl || DEV_SERVER_URL;
-  const apiUrl = `${serverUrl}/stream`;
+  const apiUrl = `${serverUrl}/chat/completions`;
   const { modelName, agentParams, responseCallback } = widgetProps;
 
   try {
-    const headers = await getHeaders(widgetProps);
-    const innerMsg = await createInnerMessage({ files, message, resizeOptions });
+    const headers = await getHeaders({
+      projectId: widgetProps.projectId,
+      publicId: widgetProps.publicId,
+      getAccessToken: widgetProps.getAccessToken,
+      threadId: threadId || widgetProps.threadId,
+      apiKey: widgetProps.apiKey
+    });
+
+    let previous: ChatCompletionMessage[] = convert_to(previousMessages)
+
+    let submitMessage:ChatCompletionMessage = await createSubmitMessage({
+      files,
+      message,
+      resizeOptions
+    });
+
+    let messages: ChatCompletionMessage[] = [ ...previous, submitMessage];
+    if (!threadId && modelName && modelName.includes('claude-')) {
+      messages = [
+        {
+          role: 'system',
+          content: 'You are a helpful assistant.'
+        },
+        submitMessage
+      ]
+    }
+
+
     const request: MessageRequest = {
-      model_name: modelName,
+      model: modelName,
       parameters: agentParams || {},
-      user_id: userId || "",
       thread_id: threadId,
-      message: innerMsg,
+      messages: messages,
+      stream: true,
+      stream_options: {
+        include_usage: true
+      }
     };
     await fetchEventSource(apiUrl, {
       method: "POST",
@@ -70,9 +117,9 @@ export const onSubmit = async (submitProps: SubmitProps) => {
       onerror
     });
   } catch (e: any) {
-    const error = new Error(e.toString());
     if (responseCallback) {
-      responseCallback({ error, modelName });
+      responseCallback({ error: e, modelName });
     }
+    throw e
   }
 }

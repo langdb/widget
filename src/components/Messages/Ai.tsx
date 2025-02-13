@@ -9,9 +9,11 @@ import { AvatarItem } from "./AvatarItem";
 import { ChatMessage } from "../../dto/ChatMessage";
 import { HandThumbDownIcon as SHandThumbDownIcon, HandThumbUpIcon as SHandThumbUpIcon } from "@heroicons/react/24/solid";
 import { HandThumbDownIcon, HandThumbUpIcon } from "@heroicons/react/24/outline";
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { WidgetProps } from "../Widget";
 import { DEV_SERVER_URL, getHeaders } from "../adapter";
+import ReactJson from 'react-json-view'
+import { emitter } from "../EventEmiter";
 
 
 export const AiMessage: React.FC<{ msg?: ChatMessage; typing?: boolean; persona?: Persona, widgetProps: WidgetProps }> = ({ msg, typing, persona, widgetProps }) => {
@@ -50,7 +52,16 @@ export const AiMessage: React.FC<{ msg?: ChatMessage; typing?: boolean; persona?
 
   }, [threadId, id, widgetProps]);
   return (
-    <div className="flex items-center gap-2">
+    <div onClick={(e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      threadId && id && emitter.emit('langdb_aiMessageClicked', {
+        threadId: threadId,
+        messageId: id,
+        traceId: msg?.trace_id
+      });
+
+    }} className="flex items-center gap-2">
       <div>
         {!persona ? <AvatarItem className="h-6 w-6 rounded-full" name={"User"} /> : (persona.url ? <AvatarItem name={persona.name} imageUrl={persona.url} className="h-6 w-6 rounded-full" /> : <Avatar className="h-6 w-6 rounded-full" />)}
       </div>
@@ -62,15 +73,17 @@ export const AiMessage: React.FC<{ msg?: ChatMessage; typing?: boolean; persona?
               return match ? (
                 <div className="relative">
                   <CopyToClipboard content={String(children).replace(/\n$/, '')} className="absolute top-0 right-0 m-2 p-1 rounded text-xs" />
-                  <SyntaxHighlighter
-                    style={vscDarkPlus as any}
-                    language={match[1]}
-                    PreTag="div"
-                    {...props}
-                    ref={props.ref as React.LegacyRef<SyntaxHighlighter>}
-                  >
-                    {String(children).replace(/\n$/, '')}
-                  </SyntaxHighlighter>
+                  <div style={{ maxHeight: '400px', overflow: 'auto', overflowX: 'auto' }}>
+                    <SyntaxHighlighter
+                      style={vscDarkPlus as any}
+                      language={match[1]}
+                      PreTag="div"
+                      {...props}
+                      ref={props.ref as React.LegacyRef<SyntaxHighlighter>}
+                    >
+                      {String(children).replace(/\n$/, '')}
+                    </SyntaxHighlighter>
+                  </div>
                 </div>
               ) : (
                 <code className={className} {...props}>
@@ -89,19 +102,39 @@ export const AiMessage: React.FC<{ msg?: ChatMessage; typing?: boolean; persona?
         >
           {msg?.message}
         </ReactMarkdown>
+        {msg?.tool_calls && msg.tool_calls && msg.tool_calls.length > 0 && <div>
+          <div className="">
+            <span className="text-sm">Tool Calls</span>
+          </div>
+          {msg?.tool_calls && msg.tool_calls.map((tool_call, index) => {
+            if (tool_call.function) {
+              let function_display = { ...tool_call.function, arguments: JSON.parse(tool_call.function.arguments) };
+              return <ReactJson key={index} theme='ashes' src={function_display} />
+            }
+            return <></>
+          })}
+        </div>}
         {
           !typing && threadId && id && (<>
             <div className=" mt-3 gap-3 flex items-center justify-start space-x-1">
               <button
                 className="rounded focus:outline-none hover:text-primary-500"
-                onClick={() => handleScore(1)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleScore(1)
+                }}
               >
                 {score == undefined && <HandThumbUpIcon className="h-4 w-4" />}
                 {score === 1 && <SHandThumbUpIcon className="h-4 w-4 animate-fadeIn" />}
               </button>
               <button
                 className="rounded focus:outline-none hover:text-primary-500"
-                onClick={() => handleScore(-1)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleScore(-1)
+                }}
               >
                 {score == undefined && <HandThumbDownIcon className="h-4 w-4" />}
                 {score === -1 && <SHandThumbDownIcon className="h-4 w-4 animate-fadeIn" />}
@@ -117,7 +150,6 @@ export const AiMessage: React.FC<{ msg?: ChatMessage; typing?: boolean; persona?
           <span>Typing...</span>
         </div>
       )}
-
     </div>
   )
 };
