@@ -22,5 +22,6 @@ export interface WidgetProps extends AdapterProps {
     serverUrl?: string;
     hideChatInput?: boolean;
     autoRefreshThread?: boolean;
+    renderLoading?: () => React.ReactNode;
 }
 export declare const Widget: React.FC<WidgetProps>;

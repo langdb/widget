@@ -38598,10 +38598,10 @@ const JF = async (e) => {
     return console.error("Error fetching messages:", t), [];
   }
 }, cP = Ft.memo((e) => {
-  const t = e.theme === "dark" ? "dark-theme" : "light-theme", { threadId: n, projectId: r, getAccessToken: a, publicId: i, apiKey: o, messages: s, autoRefreshThread: l } = e, { run: u, loading: c, data: d } = ZF(JF, {
+  const t = e.theme === "dark" ? "dark-theme" : "light-theme", { threadId: n, projectId: r, getAccessToken: a, publicId: i, apiKey: o, messages: s, autoRefreshThread: l, renderLoading: u } = e, { run: c, loading: d, data: m } = ZF(JF, {
     manual: !0
-  }), m = Ge(() => {
-    n && r && (a || i || o) && (s === void 0 || s.length === 0) && u({
+  }), p = Ge(() => {
+    n && r && (a || i || o) && (s === void 0 || s.length === 0) && c({
       threadId: n,
       projectId: r,
       getAccessToken: a,
@@ -38609,14 +38609,14 @@ const JF = async (e) => {
       serverUrl: e.serverUrl || Ec,
       apiKey: e.apiKey
     });
-  }, [n, r, i, o, a, u, s]);
+  }, [n, r, i, o, a, c, s]);
   return jE(() => {
-    m();
+    p();
   }), ir(() => {
-    m();
+    p();
   }, [r]), ir(() => {
-    l && m();
-  }, [n, l]), c ? /* @__PURE__ */ V.jsx("div", { className: `${t} w-full h-full justify-center items-center`, children: /* @__PURE__ */ V.jsx("span", { className: "animate-pulse", children: " Loading..." }) }) : /* @__PURE__ */ V.jsx("div", { className: `${t} w-full h-full`, children: /* @__PURE__ */ V.jsx(WD, { ...e, messages: s || d || [] }) });
+    l && p();
+  }, [n, l]), d ? /* @__PURE__ */ V.jsx("div", { className: `${t} dark-theme w-full h-full justify-center items-center flex`, children: u ? u() : /* @__PURE__ */ V.jsx("span", { className: "animate-pulse", children: " Loading..." }) }) : /* @__PURE__ */ V.jsx("div", { className: `${t} w-full h-full`, children: /* @__PURE__ */ V.jsx(WD, { ...e, messages: s || m || [] }) });
 });
 function $u(...e) {
   return e.filter(Boolean).join(" ");

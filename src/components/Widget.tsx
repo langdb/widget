@@ -27,8 +27,8 @@ export interface WidgetProps extends AdapterProps {
   publicId?: string;
   serverUrl?: string;
   hideChatInput?: boolean,
-  autoRefreshThread?: boolean
-
+  autoRefreshThread?: boolean,
+  renderLoading?: () => React.ReactNode
 }
 
 
@@ -80,7 +80,7 @@ const getMessagesFromThread = async (props: {
 
 export const Widget: React.FC<WidgetProps> = React.memo((props) => {
   const themeClass = props.theme === "dark" ? "dark-theme" : "light-theme";
-  const { threadId, projectId, getAccessToken, publicId, apiKey, messages, autoRefreshThread } = props;
+  const { threadId, projectId, getAccessToken, publicId, apiKey, messages, autoRefreshThread, renderLoading } = props;
   const { run: triggerGetMessages, loading: messagesLoading, data } = useRequest(getMessagesFromThread, {
     manual: true
   });
@@ -111,9 +111,9 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
     }
   }, [threadId, autoRefreshThread]);
   if (messagesLoading) {
-    return <div className={`${themeClass} w-full h-full justify-center items-center`}>
-      <span className="animate-pulse"> Loading...</span>
-    </div>;
+    return <div className={`${themeClass} dark-theme w-full h-full justify-center items-center flex`}>
+    {renderLoading ? renderLoading() : <span className="animate-pulse"> Loading...</span>}
+  </div>;
   }
 
   return (
