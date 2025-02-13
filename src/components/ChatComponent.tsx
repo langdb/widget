@@ -72,6 +72,9 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
 
   const handleMessage = useCallback((msg: EventSourceMessage, currentThreadId?: string, currentMessageId?: string, currentTraceId?: string | null) => {
     try {
+      if (msg.data === '[DONE]') {
+        return;
+      }
       const jsonMsg = JSON.parse(msg.data);
 
       if (jsonMsg.error) {
@@ -112,9 +115,9 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
         });
       }
     } catch (error) {
-      console.error('=== Failed to parse message data:', error);
     }
   }, [props, setTyping, setError, setMessageId, setThreadId, appendUsage, messageId]);
+  const { messagesEndRef, scrollToBottom } = useScrollToBottom();
 
   const submitMessageFn = useCallback(
     async (inputProps: { currentInput: string; files: FileWithPreview[] }) => {
@@ -141,6 +144,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
         let currentThreadId = threadId;
         let currentMessageId = messageId;
         let currentTraceId: string | null = null;
+        scrollToBottom();
         await onSubmit({
           previousMessages: messages,
           widgetProps: props,
@@ -169,9 +173,13 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
             }
             return handleOpen(response, currentThreadId)
           },
-          onmessage: (msg) => handleMessage(msg, currentThreadId || threadId, currentMessageId || messageId, currentTraceId),
+          onmessage: (msg) => {
+            scrollToBottom()
+            return handleMessage(msg, currentThreadId || threadId, currentMessageId || messageId, currentTraceId)
+          },
           onclose: () => {
             emitter.emit('langdb_chatSubmitSuccess', { threadId: currentThreadId });
+            scrollToBottom();
             setMessageId(undefined);
             setTyping(false);
           },
@@ -191,11 +199,17 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
       setMessageId,
       setThreadId,
       messageId,
-      messages
+      messages,
+      messagesEndRef,
+      scrollToBottom
     ]
   );
 
-  return submitMessageFn;
+  return {
+    submitMessageFn,
+    messagesEndRef,
+    scrollToBottom
+  };
 };
 
 export const ChatComponent: React.FC<WidgetProps> = (props) => {
@@ -211,11 +225,6 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
   } = chatState;
 
   const { hideChatInput } = props
-  const { messagesEndRef, scrollToBottom } = useScrollToBottom();
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages, scrollToBottom]);
 
   const personaOptions: PersonaOptions = {
     assistant: {
@@ -230,7 +239,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
     } as Persona,
   };
 
-  const handleSubmit = useMessageSubmission(props, chatState)
+  const { submitMessageFn: handleSubmit, messagesEndRef } = useMessageSubmission(props, chatState)
 
 
   const onSubmitWrapper = useCallback((inputText: string, files: FileWithPreview[]) => {

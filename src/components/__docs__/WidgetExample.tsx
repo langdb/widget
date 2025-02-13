@@ -62,7 +62,7 @@ const Example: FC<WidgetProps> = ({
     >
       <div className="flex flex-1">
         <Widget
-          modelName="gpt-4o"
+          modelName="openai/gpt-4o"
           projectId={projectId}
           apiKey={apiKey}
           serverUrl={api_url}
@@ -72,7 +72,7 @@ const Example: FC<WidgetProps> = ({
         />
 
 <Widget
-          modelName="gpt-4o-mini"
+          modelName="openai/gpt-4o-mini"
           projectId={projectId}
           apiKey={apiKey}
           serverUrl={api_url}
@@ -82,7 +82,7 @@ const Example: FC<WidgetProps> = ({
         />
 
 <Widget
-          modelName="gpt-3.5-turbo-0125"
+          modelName="openai/o1-mini"
           projectId={projectId}
           apiKey={apiKey}
           serverUrl={api_url}
