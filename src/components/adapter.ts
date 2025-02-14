@@ -104,7 +104,8 @@ export const onSubmit = async (submitProps: SubmitProps) => {
       stream: true,
       stream_options: {
         include_usage: true
-      }
+      },
+      ...(agentParams || {})
     };
     await fetchEventSource(apiUrl, {
       method: "POST",
