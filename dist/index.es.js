@@ -942,7 +942,6 @@ const Ec = "https://api.dev.langdb.ai", Sc = async (e) => {
     ]);
     const f = {
       model: p,
-      parameters: g || {},
       thread_id: a,
       messages: x,
       stream: !0,

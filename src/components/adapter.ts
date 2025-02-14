@@ -98,7 +98,6 @@ export const onSubmit = async (submitProps: SubmitProps) => {
 
     const request: MessageRequest = {
       model: modelName,
-      parameters: agentParams || {},
       thread_id: threadId,
       messages: messages,
       stream: true,

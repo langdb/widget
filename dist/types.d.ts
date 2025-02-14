@@ -4,7 +4,6 @@ export interface MessageRequest {
     model: string;
     messages: ChatCompletionMessage[];
     thread_id?: string;
-    parameters: object;
     include_history?: boolean;
     stream?: boolean;
     temperature?: number;
