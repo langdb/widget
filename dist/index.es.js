@@ -45524,12 +45524,13 @@ const e1 = (e) => new Promise((t, n) => {
               /* @__PURE__ */ Y.jsxs(
                 "button",
                 {
+                  type: "button",
                   className: Cy(
                     "flex gap-2 h-9 min-w-8 items-center justify-center  rounded-full border p-2 text-[13px] font-medium radix-state-open:bg-black/10  border-[hsla(0,0%,100%,0.1)]",
                     d ? "bg-[rgb(42,74,109)] hover:bg-[rgb(26,65,106)]" : "bg-transparent hover:bg-[rgb(66,66,66)]"
                   ),
-                  onClick: () => {
-                    m((E) => !E);
+                  onClick: (E) => {
+                    E.stopPropagation(), E.preventDefault(), m((y) => !y);
                   },
                   children: [
                     /* @__PURE__ */ Y.jsx(c_, { className: Cy("h-[18px] w-[18px] font-bold text-[#b4b4b4]") }),
