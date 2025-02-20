@@ -3,8 +3,10 @@ import { FileWithPreview } from '../types';
 import { ModelUsage } from '../events';
 
 type Events = {
-  langdb_chatSubmit: { inputText: string, files: FileWithPreview[] };
+  langdb_chatSubmit: { inputText: string, files: FileWithPreview[], searchToolEnabled?: boolean, otherTools?: string[] };
   langdb_chatSubmitSuccess: { threadId: string | undefined };
+  langdb_chatSubmitDone: { threadId: string | undefined };
+  langdb_chatSubmitError: { error: string };
   langdb_usageStats: { usage: ModelUsage, threadId: string | undefined };
   langdb_fileAdded: { files: FileWithPreview[] };
   langdb_speechRecognitionStart: {};

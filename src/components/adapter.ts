@@ -26,6 +26,8 @@ export interface SubmitProps extends FetchEventSourceInit {
   files?: FileWithPreview[];
   threadId?: string;
   previousMessages: ChatMessage[]
+  searchToolEnabled?: boolean;
+  otherTools?: string[];
 }
 
 export const getHeaders = async (props: {
@@ -61,7 +63,7 @@ export const getHeaders = async (props: {
 
 
 export const onSubmit = async (submitProps: SubmitProps) => {
-  const { widgetProps, files, message, threadId, onopen, onmessage, onerror, onclose, previousMessages } = submitProps;
+  const { widgetProps, files, message, threadId, onopen, onmessage, onerror, onclose, previousMessages, searchToolEnabled } = submitProps;
   const { fileResizeOptions: resizeOptions } = widgetProps;
   const serverUrl = widgetProps.serverUrl || DEV_SERVER_URL;
   const apiUrl = `${serverUrl}/chat/completions`;
@@ -81,7 +83,7 @@ export const onSubmit = async (submitProps: SubmitProps) => {
     let submitMessage:ChatCompletionMessage = await createSubmitMessage({
       files,
       message,
-      resizeOptions
+      resizeOptions,
     });
 
     let messages: ChatCompletionMessage[] = [ ...previous, submitMessage];
@@ -104,7 +106,15 @@ export const onSubmit = async (submitProps: SubmitProps) => {
       stream_options: {
         include_usage: true
       },
-      ...(agentParams || {})
+      ...(agentParams || {}),
+      ...(searchToolEnabled ? {
+        "mcp_servers": [{
+          "name": "web_search",
+          "type": "in-memory"
+        }]
+          
+        
+      } : {}),
     };
     await fetchEventSource(apiUrl, {
       method: "POST",

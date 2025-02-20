@@ -96,8 +96,8 @@ const Example: FC<WidgetProps> = ({
           <ChatInput
             currentInput={currentInput}
             setCurrentInput={setCurrentInput}
-            onSubmit={(inputText, files) => {
-              emitter.emit('langdb_chatSubmit', { inputText, files })
+            onSubmit={(props:{inputText: string, files: FileWithPreview[], searchToolEnabled?: boolean, otherTools?: string[]}) => {
+              emitter.emit('langdb_chatSubmit', props)
               return Promise.resolve();
             }} />
         </div>

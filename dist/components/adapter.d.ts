@@ -24,6 +24,8 @@ export interface SubmitProps extends FetchEventSourceInit {
     files?: FileWithPreview[];
     threadId?: string;
     previousMessages: ChatMessage[];
+    searchToolEnabled?: boolean;
+    otherTools?: string[];
 }
 export declare const getHeaders: (props: {
     projectId?: string;

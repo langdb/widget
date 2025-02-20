@@ -119,74 +119,84 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
   }, [props, setTyping, setError, setMessageId, setThreadId, appendUsage, messageId]);
   const { messagesEndRef, scrollToBottom } = useScrollToBottom();
 
-  const submitMessageFn = useCallback(
-    async (inputProps: { currentInput: string; files: FileWithPreview[] }) => {
-      const { currentInput, files } = inputProps;
+  const submitMessageFn = useCallback(async (inputProps:
+    {
+      inputText: string;
+      files: FileWithPreview[];
+      searchToolEnabled?: boolean;
+      otherTools?: string[];
+    }) => {
+    const { inputText, files, searchToolEnabled, otherTools } = inputProps;
 
-      if (currentInput.trim() === '') return;
+    if (inputText.trim() === '') return;
 
-      const newMessage = {
-        id: uuidv4(),
-        message: currentInput,
-        type: MessageType.HumanMessage,
-        content_type: MessageContentType.Text,
-        role: 'user',
-        threadId,
+    const newMessage = {
+      id: uuidv4(),
+      message: inputText,
+      type: MessageType.HumanMessage,
+      content_type: MessageContentType.Text,
+      role: 'user',
+      threadId,
+      files,
+    };
+
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+    setCurrentInput('');
+    setTyping(true);
+    setError(undefined);
+    let currentThreadId = threadId;
+
+    try {
+      let currentMessageId = messageId;
+      let currentTraceId: string | null = null;
+      scrollToBottom();
+      await onSubmit({
+        searchToolEnabled,
+        otherTools,
+        previousMessages: messages,
+        widgetProps: props,
         files,
-      };
-
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
-      setCurrentInput('');
-      setTyping(true);
-      setError(undefined);
-
-      try {
-        let currentThreadId = threadId;
-        let currentMessageId = messageId;
-        let currentTraceId: string | null = null;
-        scrollToBottom();
-        await onSubmit({
-          previousMessages: messages,
-          widgetProps: props,
-          files,
-          message: currentInput,
-          threadId,
-          onerror: (error) => {
-            setError(error instanceof Error ? error.message : String(error));
-            setTyping(false);
-            props.responseCallback?.({
-              error,
-              modelName: props.modelName,
-            });
-            throw error
-          },
-          onopen: (response) => {
-            if (response.ok && response.headers.get('content-type') === 'text/event-stream') {
-              const threadIdHeader = response.headers.get('X-Thread-Id');
-              const messageIdHeader = response.headers.get('X-Message-Id');
-              const traceIdHeader = response.headers.get('X-Trace-Id');
-              currentThreadId = threadIdHeader || currentThreadId
-              currentMessageId = messageIdHeader || currentMessageId
-              currentTraceId = traceIdHeader
-              setThreadId(currentThreadId);
-              setMessageId(currentMessageId);
-            }
-            return handleOpen(response, currentThreadId)
-          },
-          onmessage: (msg) => {
-            return handleMessage(msg, currentThreadId || threadId, currentMessageId || messageId, currentTraceId)
-          },
-          onclose: () => {
-            emitter.emit('langdb_chatSubmitSuccess', { threadId: currentThreadId });
-            setMessageId(undefined);
-            setTyping(false);
-          },
-        });
-      } catch (error) {
-        setError(error instanceof Error ? error.message : String(error));
-        setTyping(false);
-      }
-    },
+        message: inputText,
+        threadId,
+        onerror: (error) => {
+          setError(error instanceof Error ? error.message : String(error));
+          setTyping(false);
+          props.responseCallback?.({
+            error,
+            modelName: props.modelName,
+          });
+          throw error
+        },
+        onopen: (response) => {
+          if (response.ok && response.headers.get('content-type') === 'text/event-stream') {
+            const threadIdHeader = response.headers.get('X-Thread-Id');
+            const messageIdHeader = response.headers.get('X-Message-Id');
+            const traceIdHeader = response.headers.get('X-Trace-Id');
+            currentThreadId = threadIdHeader || currentThreadId
+            currentMessageId = messageIdHeader || currentMessageId
+            currentTraceId = traceIdHeader
+            setThreadId(currentThreadId);
+            setMessageId(currentMessageId);
+          }
+          return handleOpen(response, currentThreadId)
+        },
+        onmessage: (msg) => {
+          return handleMessage(msg, currentThreadId || threadId, currentMessageId || messageId, currentTraceId)
+        },
+        onclose: () => {
+          emitter.emit('langdb_chatSubmitSuccess', { threadId: currentThreadId });
+          setMessageId(undefined);
+          setTyping(false);
+        },
+      });
+    } catch (error) {
+      setError(error instanceof Error ? error.message : String(error));
+      setTyping(false);
+      emitter.emit('langdb_chatSubmitError', { error: error instanceof Error ? error.message : String(error) });
+    } finally {
+      emitter.emit('langdb_chatSubmitDone', { threadId: currentThreadId });
+    }
+  },
     [
       props,
       threadId,
@@ -240,8 +250,8 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
   const { submitMessageFn: handleSubmit, messagesEndRef } = useMessageSubmission(props, chatState)
 
 
-  const onSubmitWrapper = useCallback((inputText: string, files: FileWithPreview[]) => {
-    return handleSubmit({ currentInput: inputText, files: files });
+  const onSubmitWrapper = useCallback((inputProps: { inputText: string, files: FileWithPreview[], searchToolEnabled?: boolean, otherTools?: string[] }) => {
+    return handleSubmit(inputProps);
   }, [handleSubmit]);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -280,9 +290,9 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
   });
 
   useEffect(() => {
-    const handleExternalSubmit = ({ inputText, files }: { inputText: string, files: FileWithPreview[] }) => {
+    const handleExternalSubmit = ({ inputText, files, searchToolEnabled, otherTools }: { inputText: string, files: FileWithPreview[], searchToolEnabled?: boolean, otherTools?: string[] }) => {
       setCurrentInput(inputText); // Set the input text
-      onSubmitWrapper(inputText, files); // Pass the input text directly
+      onSubmitWrapper({ inputText, files, searchToolEnabled, otherTools }); // Pass the input text directly
     };
     emitter.on('langdb_chatSubmit', handleExternalSubmit);
 
@@ -305,7 +315,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
         )}
         {messages.length === 0 && <StarterDisplay starters={props.starters} onStarterClick={(prompt: string) => {
           setCurrentInput(prompt);
-          handleSubmit({ currentInput: prompt, files: [] });
+          handleSubmit({ inputText: prompt, files: [] });
         }} />}
         <div className="langdb-message-render flex-1 overflow-auto">
           {messages.filter(m => m.type === MessageType.HumanMessage || m.type !== MessageType.ToolMessage).map((msg: ChatMessage) => {
@@ -334,8 +344,8 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
         )}
       </div>
       {!hideChatInput && <ChatInput
-        onSubmit={(inputText: string, files: FileWithPreview[]) => {
-          emitter.emit('langdb_chatSubmit', { inputText, files });
+        onSubmit={(props: { inputText: string, files: FileWithPreview[], searchToolEnabled?: boolean, otherTools?: string[] }) => {
+          emitter.emit('langdb_chatSubmit', props);
           setCurrentInput('');
           return Promise.resolve();
         }}
