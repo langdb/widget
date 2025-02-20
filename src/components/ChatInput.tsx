@@ -197,8 +197,8 @@ export const ChatInput: React.FC<{
               <PaperClipIcon className="h-[18px] w-[18px] font-bold" />
             </button>
             { <button 
-            className={classNames("flex gap-2 h-9 min-w-8 items-center justify-center hover:bg-[rgb(66,66,66)] rounded-full border p-2 text-[13px] font-medium radix-state-open:bg-black/10  border-[hsla(0,0%,100%,0.1)]",
-              searchToolEnabled ? "bg-[rgb(26,65,106)]" : "bg-transparent"
+            className={classNames("flex gap-2 h-9 min-w-8 items-center justify-center  rounded-full border p-2 text-[13px] font-medium radix-state-open:bg-black/10  border-[hsla(0,0%,100%,0.1)]",
+              searchToolEnabled ? "bg-[rgb(42,74,109)] hover:bg-[rgb(26,65,106)]" : "bg-transparent hover:bg-[rgb(66,66,66)]"
             )}
             onClick={() => {
               setSearchToolEnabled(prev => !prev);

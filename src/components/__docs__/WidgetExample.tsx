@@ -25,8 +25,8 @@ const Example: FC<WidgetProps> = ({
 }) => {
 
   // const apiKey = 'langdb_N1p5cVZvVi9kL1JJOExOeFJKNU1GbHdKbXNNRkxNL1lPemJ3eXhzeGN0K3FPTGxRbi8rN1J6YVhFSVE4ZmdTQjBuUmNQOHlCU1VxRTduam9aM1BHVkhXL3FycTBITXNxa1VhTUdkSXhUanZ0QnpxZklDTmVlVDFPOXZIZTgwRzAyeFZDRWx6MUhIdHBTYzdhS3QvT3B4cisxVFJ1WlcvNERWeWhMcTJ0KzVZZ0wzSjBOY21YQ3pzaDZvQlRQRXFadE1zbzpBQUFBQUFBQUFBQUFBQUFB'
-  const apiKey = 'langdb_NjhQOVM0WWxjUEVZK2J4b1RjcE1GRkljbXRZR2RNblZJR2p3elJSa2V0VDBZK0pWbHJyaUZTZVVSY1U0ZjE3ZGduVklNY3lIRGtLSC9YZnRZR3lYUTNUNnF1M2lHYzBpa1VmU0g4b3dRVEhyVkR6RElDbFZNaVVmbzZXVzZrVGkzZzFXVFYzMUNEUm1SNW1PY2RmTjhVMnIwVmR1WlcvNERWeWhMcTJ0KzVZZ0wzTHlKM1ZmTXlJRXhjYy9YNDRLMkJyR0pBPT06QUFBQUFBQUFBQUFBQUFBQQ=='
-  const projectId = '42ef7074-79be-4597-b8d9-dce98033c1da'
+  const apiKey = 'langdb_NmpsbXNyZmZvNHFlZWs5MjMyMnJ1dDJia3A='
+  const projectId = '7ecbda32-76bc-460f-be34-3f5ac06052ff'
   const api_url = 'https://api.staging.langdb.ai'
   const [currentInput, setCurrentInput] = React.useState("");
   useEffect(() => {
@@ -62,6 +62,8 @@ const Example: FC<WidgetProps> = ({
     >
       <div className="flex flex-1">
         <Widget
+          threadId="6f6c1d70-ff02-47cf-b258-28b3317d64df"
+
           modelName="openai/gpt-4o"
           projectId={projectId}
           apiKey={apiKey}
