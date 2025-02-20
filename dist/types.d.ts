@@ -32,6 +32,7 @@ export interface MessageRequest {
     stream_options?: {
         include_usage: boolean;
     };
+    [key: string]: any;
 }
 export interface ChatCompletionMessage {
     role: string;

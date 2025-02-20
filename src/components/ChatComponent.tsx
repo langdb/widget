@@ -174,12 +174,10 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
             return handleOpen(response, currentThreadId)
           },
           onmessage: (msg) => {
-            scrollToBottom()
             return handleMessage(msg, currentThreadId || threadId, currentMessageId || messageId, currentTraceId)
           },
           onclose: () => {
             emitter.emit('langdb_chatSubmitSuccess', { threadId: currentThreadId });
-            scrollToBottom();
             setMessageId(undefined);
             setTyping(false);
           },
