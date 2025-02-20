@@ -71,7 +71,7 @@ const Example: FC<WidgetProps> = ({
           starters={starters}
         />
 
-<Widget
+{/* <Widget
           modelName="openai/gpt-4o-mini"
           projectId={projectId}
           apiKey={apiKey}
@@ -89,7 +89,7 @@ const Example: FC<WidgetProps> = ({
           theme={theme}
           hideChatInput={true}
           starters={starters}
-        />
+        /> */}
       </div>
       <div className={`dark-theme  w-full flex justify-center items-center`}>
         <div className="langdb-chat bg-inherit sticky bottom-0 pt-1 px-4 w-[50vw]">

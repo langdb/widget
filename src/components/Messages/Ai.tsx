@@ -1,7 +1,3 @@
-import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { CopyToClipboard } from "./CopyToClipboard";
 import { PencilIcon } from "@heroicons/react/24/outline";
 import { Persona } from "../../dto/PersonaOptions";
 import { Avatar } from "../Icons";
@@ -14,6 +10,7 @@ import { WidgetProps } from "../Widget";
 import { DEV_SERVER_URL, getHeaders } from "../adapter";
 import ReactJson from 'react-json-view'
 import { emitter } from "../EventEmiter";
+import { MessageDisplay } from "./MessageDisplay";
 
 
 export const AiMessage: React.FC<{ msg?: ChatMessage; typing?: boolean; persona?: Persona, widgetProps: WidgetProps }> = ({ msg, typing, persona, widgetProps }) => {
@@ -66,42 +63,7 @@ export const AiMessage: React.FC<{ msg?: ChatMessage; typing?: boolean; persona?
         {!persona ? <AvatarItem className="h-6 w-6 rounded-full" name={"User"} /> : (persona.url ? <AvatarItem name={persona.name} imageUrl={persona.url} className="h-6 w-6 rounded-full" /> : <Avatar className="h-6 w-6 rounded-full" />)}
       </div>
       <div className="rounded-lg p-2 ai-message">
-        <ReactMarkdown
-          components={{
-            code({ node, className, children, ...props }) {
-              const match = /language-(\w+)/.exec(className || '');
-              return match ? (
-                <div className="relative">
-                  <CopyToClipboard content={String(children).replace(/\n$/, '')} className="absolute top-0 right-0 m-2 p-1 rounded text-xs" />
-                  <div style={{ maxHeight: '400px', overflow: 'auto', overflowX: 'auto' }}>
-                    <SyntaxHighlighter
-                      style={vscDarkPlus as any}
-                      language={match[1]}
-                      PreTag="div"
-                      {...props}
-                      ref={props.ref as React.LegacyRef<SyntaxHighlighter>}
-                    >
-                      {String(children).replace(/\n$/, '')}
-                    </SyntaxHighlighter>
-                  </div>
-                </div>
-              ) : (
-                <code className={className} {...props}>
-                  {children}
-                </code>
-              );
-            },
-            blockquote({ children, ...props }) {
-              return (
-                <blockquote className="border-l-4 border-gray-300 pl-4 italic text-gray-600" {...props}>
-                  {children}
-                </blockquote>
-              );
-            }
-          }}
-        >
-          {msg?.message}
-        </ReactMarkdown>
+        <MessageDisplay message={msg?.message || ""} />
         {msg?.tool_calls && msg.tool_calls && msg.tool_calls.length > 0 && <div>
           <div className="">
             <span className="text-sm">Tool Calls</span>
