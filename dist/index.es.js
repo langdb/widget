@@ -951,7 +951,7 @@ const Ec = "https://api.dev.langdb.ai", Sc = async (e) => {
       ...y || {},
       ...c ? {
         mcp_servers: [{
-          name: "web_search",
+          name: "websearch",
           type: "in-memory"
         }]
       } : {}

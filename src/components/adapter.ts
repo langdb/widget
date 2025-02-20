@@ -109,11 +109,9 @@ export const onSubmit = async (submitProps: SubmitProps) => {
       ...(agentParams || {}),
       ...(searchToolEnabled ? {
         "mcp_servers": [{
-          "name": "web_search",
+          "name": "websearch",
           "type": "in-memory"
         }]
-          
-        
       } : {}),
     };
     await fetchEventSource(apiUrl, {
