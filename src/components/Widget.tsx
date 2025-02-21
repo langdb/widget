@@ -28,7 +28,9 @@ export interface WidgetProps extends AdapterProps {
   serverUrl?: string;
   hideChatInput?: boolean,
   autoRefreshThread?: boolean,
-  renderLoading?: () => React.ReactNode
+  renderLoading?: () => React.ReactNode,
+  searchToolEnabled?: boolean,
+  toggleSearchTool?: (enabled: boolean) => void,
 }
 
 

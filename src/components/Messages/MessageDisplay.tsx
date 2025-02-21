@@ -16,9 +16,6 @@ export const MessageDisplay: React.FC<MessageDisplayProps> = ({ message }) => {
     return <BaseMessageDisplay message={message} />
 };
 
-
-
-
 export const BaseMessageDisplay: React.FC<{ message: string }> = ({ message }) => {
   return <ReactMarkdown
   remarkPlugins={[remarkGfm, behead, remarkFlexibleParagraphs]}

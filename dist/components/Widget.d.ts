@@ -23,5 +23,7 @@ export interface WidgetProps extends AdapterProps {
     hideChatInput?: boolean;
     autoRefreshThread?: boolean;
     renderLoading?: () => React.ReactNode;
+    searchToolEnabled?: boolean;
+    toggleSearchTool?: (enabled: boolean) => void;
 }
 export declare const Widget: React.FC<WidgetProps>;

@@ -344,6 +344,8 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
         )}
       </div>
       {!hideChatInput && <ChatInput
+        searchToolEnabled={props.searchToolEnabled}
+        toggleSearchTool={props.toggleSearchTool}
         onSubmit={(props: { inputText: string, files: FileWithPreview[], searchToolEnabled?: boolean, otherTools?: string[] }) => {
           emitter.emit('langdb_chatSubmit', props);
           setCurrentInput('');

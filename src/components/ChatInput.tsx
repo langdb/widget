@@ -25,11 +25,13 @@ export const ChatInput: React.FC<{
   className?: string;
   isProcessing?: boolean;
   setCurrentInput: (input: string) => void,
-}> = ({ onSubmit, currentInput, setCurrentInput, className, isProcessing }) => {
+  searchToolEnabled?: boolean;
+  toggleSearchTool?: (enabled: boolean) => void;
+  
+}> = ({ onSubmit, currentInput, setCurrentInput, className, isProcessing, searchToolEnabled, toggleSearchTool }) => {
   const [isListening, setIsListening] = useState(false);
   const [error, setError] = useState("");
   const [isSupportingSpeechRecognition, setIsSupportingSpeechRecognition] = useState(false);
-  const [searchToolEnabled, setSearchToolEnabled] = useState(false);
 
   useEffect(() => {
     // Check if the browser supports SpeechRecognition
@@ -196,7 +198,7 @@ export const ChatInput: React.FC<{
               className="flex items-center justify-center h-9 rounded-full border hover:bg-[rgb(66,66,66)] border-[hsla(0,0%,100%,0.1)] w-9">
               <PaperClipIcon className="h-[18px] w-[18px] font-bold" />
             </button>
-            { <button 
+            {toggleSearchTool && <button 
             type="button"
             className={classNames("flex gap-2 h-9 min-w-8 items-center justify-center  rounded-full border p-2 text-[13px] font-medium radix-state-open:bg-black/10  border-[hsla(0,0%,100%,0.1)]",
               searchToolEnabled ? "bg-[rgb(42,74,109)] hover:bg-[rgb(26,65,106)]" : "bg-transparent hover:bg-[rgb(66,66,66)]"
@@ -204,7 +206,7 @@ export const ChatInput: React.FC<{
             onClick={(e) => {
               e.stopPropagation();
               e.preventDefault();
-              setSearchToolEnabled(prev => !prev);
+              toggleSearchTool?.(!searchToolEnabled);
             }}
             >
                 <GlobeAltIcon className={classNames("h-[18px] w-[18px] font-bold text-[#b4b4b4]")} />

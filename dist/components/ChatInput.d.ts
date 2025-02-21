@@ -13,4 +13,6 @@ export declare const ChatInput: React.FC<{
     className?: string;
     isProcessing?: boolean;
     setCurrentInput: (input: string) => void;
+    searchToolEnabled?: boolean;
+    toggleSearchTool?: (enabled: boolean) => void;
 }>;
