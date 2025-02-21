@@ -41160,7 +41160,7 @@ const e_ = {
         return /* @__PURE__ */ Y.jsx("ol", { className: "list-decimal list-inside", ...n, children: t });
       },
       li({ children: t, ...n }) {
-        return /* @__PURE__ */ Y.jsx("li", { className: "list-item", ...n, children: t });
+        return /* @__PURE__ */ Y.jsx("li", { className: "list-item pl-3 pt-1", ...n, children: t });
       },
       a({ children: t, ...n }) {
         return /* @__PURE__ */ Y.jsx("a", { className: "text-blue-500 hover:underline hover:text-blue-600", ...n, children: t });
