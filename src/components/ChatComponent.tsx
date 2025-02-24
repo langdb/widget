@@ -148,8 +148,10 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
     setTyping(true);
     setError(undefined);
     let currentThreadId = threadId;
+    let widgetId = props.widgetId;
 
     try {
+      widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'SubmitStart' });
       let currentMessageId = messageId;
       let currentTraceId: string | null = null;
       scrollToBottom();
@@ -163,6 +165,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
         threadId,
         signal: abortControllerRef.current?.signal,
         onerror: (error) => {
+          widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'SubmitError', error: error instanceof Error ? error.message : String(error) });
           setError(error instanceof Error ? error.message : String(error));
           setTyping(false);
           props.responseCallback?.({
@@ -172,6 +175,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
           throw error
         },
         onopen: (response) => {
+          widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'Processing' });
           if (response.ok && response.headers.get('content-type') === 'text/event-stream') {
             const threadIdHeader = response.headers.get('X-Thread-Id');
             const messageIdHeader = response.headers.get('X-Message-Id');
@@ -185,9 +189,11 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
           return handleOpen(response, currentThreadId)
         },
         onmessage: (msg) => {
+          widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'Processing' });
           return handleMessage(msg, currentThreadId || threadId, currentMessageId || messageId, currentTraceId)
         },
         onclose: () => {
+          widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'SubmitEnd' });
           emitter.emit('langdb_chatSubmitSuccess', { threadId: currentThreadId });
           setMessageId(undefined);
           setTyping(false);
@@ -195,15 +201,16 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
       });
     } catch (error) {
       if (error instanceof Error && error.name === 'AbortError') {
-        console.log('==== AbortError', error);
         // Handle abort specifically if needed
         return;
       }
       setError(error instanceof Error ? error.message : String(error));
       setTyping(false);
+      widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'SubmitError', error: error instanceof Error ? error.message : String(error) });
       emitter.emit('langdb_chatSubmitError', { error: error instanceof Error ? error.message : String(error) });
     } finally {
       abortControllerRef.current = null;
+      widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'SubmitEnd' });
       emitter.emit('langdb_chatSubmitDone', { threadId: currentThreadId });
     }
   },
@@ -336,7 +343,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
     };
   }, [onSubmitWrapper, setCurrentInput]);
   return (
-    <div className="langdb-chat mx-auto flex flex-1 flex-col lg:max-w-[40rem] xl:max-w-[48rem] w-full h-full">
+    <div key={props.widgetId} className="langdb-chat mx-auto flex flex-1 flex-col lg:max-w-[40rem] xl:max-w-[48rem] w-full h-full">
 
       <div {...getRootProps()} className="langdb-message-section flex flex-col flex-1 justify-center overflow-y-auto p-4 pb-0">
         {isDragActive && (

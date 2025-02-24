@@ -5,6 +5,11 @@ type Events = {
     langdb_chatTerminate: {
         threadId: string;
     };
+    langdb_chatWindow: {
+        widgetId: string;
+        state: 'Processing' | 'SubmitStart' | 'SubmitEnd' | 'SubmitError';
+        error?: any;
+    };
     langdb_chatSubmit: {
         inputText: string;
         files: FileWithPreview[];

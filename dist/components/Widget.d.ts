@@ -25,5 +25,6 @@ export interface WidgetProps extends AdapterProps {
     renderLoading?: () => React.ReactNode;
     searchToolEnabled?: boolean;
     toggleSearchTool?: (enabled: boolean) => void;
+    widgetId?: string;
 }
 export declare const Widget: React.FC<WidgetProps>;
