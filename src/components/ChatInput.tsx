@@ -63,7 +63,7 @@ export const ChatInput: React.FC<{
     })
     let allResolved = Promise.all(updatedFilesPromises);
     allResolved.then((updatedFiles) => {
-      emitter.emit('langdb_fileAdded', { files: updatedFiles });
+      emitter.emit('langdb_input_fileAdded', { files: updatedFiles });
     })
   }, []);
 
@@ -74,21 +74,21 @@ export const ChatInput: React.FC<{
         ...files
       ]);
     };
-    emitter.on('langdb_fileAdded', handleFileAdded);
-    emitter.on('langdb_speechRecognitionStart', () => {
+    emitter.on('langdb_input_fileAdded', handleFileAdded);
+    emitter.on('langdb_input_speechRecognitionStart', () => {
       setIsListening(true);
       setError('');
     });
-    emitter.on('langdb_speechRecognitionEnd', () => {
+    emitter.on('langdb_input_speechRecognitionEnd', () => {
       setIsListening(false);
     });
     return () => {
-      emitter.off('langdb_fileAdded', handleFileAdded);
-      emitter.off('langdb_speechRecognitionStart', () => {
+      emitter.off('langdb_input_fileAdded', handleFileAdded);
+      emitter.off('langdb_input_speechRecognitionStart', () => {
         setIsListening(true);
         setError('');
       });
-      emitter.off('langdb_speechRecognitionEnd', () => {
+      emitter.off('langdb_input_speechRecognitionEnd', () => {
         setIsListening(false);
       });
     };
@@ -120,7 +120,7 @@ export const ChatInput: React.FC<{
     recognition.continuous = false; // Stop automatically after one phrase
 
     recognition.onstart = () => {
-      emitter.emit('langdb_speechRecognitionStart', {});
+      emitter.emit('langdb_input_speechRecognitionStart', {});
     };
 
     recognition.onresult = (event: any) => {
@@ -138,7 +138,7 @@ export const ChatInput: React.FC<{
     };
 
     recognition.onend = () => {
-      emitter.emit('langdb_speechRecognitionEnd', {});
+      emitter.emit('langdb_input_speechRecognitionEnd', {});
     };
 
     recognition.start();

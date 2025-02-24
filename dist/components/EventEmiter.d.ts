@@ -4,40 +4,37 @@ import { ModelUsage } from '../events';
 type Events = {
     langdb_chatTerminate: {
         threadId: string;
+        widgetId: string;
     };
     langdb_chatWindow: {
         widgetId: string;
         state: 'Processing' | 'SubmitStart' | 'SubmitEnd' | 'SubmitError';
         error?: any;
+        threadId?: string;
+        messageId?: string;
+        traceId?: string;
     };
-    langdb_chatSubmit: {
+    langdb_input_chatSubmit: {
         inputText: string;
         files: FileWithPreview[];
         searchToolEnabled?: boolean;
         otherTools?: string[];
     };
-    langdb_chatSubmitSuccess: {
-        threadId: string | undefined;
-    };
-    langdb_chatSubmitDone: {
-        threadId: string | undefined;
-    };
-    langdb_chatSubmitError: {
-        error: string;
-    };
     langdb_usageStats: {
         usage: ModelUsage;
         threadId: string | undefined;
+        widgetId: string | undefined;
     };
-    langdb_fileAdded: {
+    langdb_input_fileAdded: {
         files: FileWithPreview[];
     };
-    langdb_speechRecognitionStart: {};
-    langdb_speechRecognitionEnd: {};
+    langdb_input_speechRecognitionStart: {};
+    langdb_input_speechRecognitionEnd: {};
     langdb_aiMessageClicked: {
         threadId: string | undefined;
         messageId: string | undefined;
         traceId: string | undefined;
+        widgetId: string | undefined;
     };
 };
 export declare const emitter: import('mitt').Emitter<Events>;

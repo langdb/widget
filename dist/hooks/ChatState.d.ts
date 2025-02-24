@@ -12,6 +12,8 @@ export declare const useChatState: (props: {
     setThreadId: import('react').Dispatch<import('react').SetStateAction<string | undefined>>;
     messageId: string | undefined;
     setMessageId: import('react').Dispatch<import('react').SetStateAction<string | undefined>>;
+    traceId: string | undefined;
+    setTraceId: import('react').Dispatch<import('react').SetStateAction<string | undefined>>;
     typing: boolean;
     setTyping: import('react').Dispatch<import('react').SetStateAction<boolean>>;
     error: string | undefined;

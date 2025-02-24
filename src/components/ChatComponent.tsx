@@ -43,6 +43,8 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
     setThreadId,
     appendUsage,
     messageId,
+    traceId,
+    setTraceId,
     threadId,
     messages,
   } = chatState;
@@ -84,7 +86,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
       } else {
         const event = jsonMsg as ChatCompletionChunk;
         if (event.usage) {
-          emitter.emit('langdb_usageStats', { usage: event.usage, threadId: currentThreadId });
+          emitter.emit('langdb_usageStats', { usage: event.usage, threadId: currentThreadId, widgetId: props.widgetId });
           appendUsage(event.usage);
         }
         props.onEvent?.(event);
@@ -151,9 +153,9 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
     let widgetId = props.widgetId;
 
     try {
-      widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'SubmitStart' });
+      widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'SubmitStart', threadId: currentThreadId, messageId: messageId });
       let currentMessageId = messageId;
-      let currentTraceId: string | null = null;
+      let currentTraceId = traceId;
       scrollToBottom();
       await onSubmit({
         searchToolEnabled,
@@ -165,7 +167,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
         threadId,
         signal: abortControllerRef.current?.signal,
         onerror: (error) => {
-          widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'SubmitError', error: error instanceof Error ? error.message : String(error) });
+          widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'SubmitError', error: error instanceof Error ? error.message : String(error), threadId: currentThreadId });
           setError(error instanceof Error ? error.message : String(error));
           setTyping(false);
           props.responseCallback?.({
@@ -175,48 +177,52 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
           throw error
         },
         onopen: (response) => {
-          widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'Processing' });
           if (response.ok && response.headers.get('content-type') === 'text/event-stream') {
             const threadIdHeader = response.headers.get('X-Thread-Id');
             const messageIdHeader = response.headers.get('X-Message-Id');
             const traceIdHeader = response.headers.get('X-Trace-Id');
             currentThreadId = threadIdHeader || currentThreadId
             currentMessageId = messageIdHeader || currentMessageId
-            currentTraceId = traceIdHeader
+            currentTraceId = traceIdHeader || currentTraceId
             setThreadId(currentThreadId);
             setMessageId(currentMessageId);
+            setTraceId(currentTraceId);
           }
+          widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'Processing', threadId: currentThreadId, messageId: currentMessageId, traceId: currentTraceId });
+
           return handleOpen(response, currentThreadId)
         },
         onmessage: (msg) => {
-          widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'Processing' });
+          widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'Processing', threadId: currentThreadId, messageId: currentMessageId, traceId: currentTraceId });
           return handleMessage(msg, currentThreadId || threadId, currentMessageId || messageId, currentTraceId)
         },
         onclose: () => {
-          widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'SubmitEnd' });
-          emitter.emit('langdb_chatSubmitSuccess', { threadId: currentThreadId });
+          widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'SubmitEnd', threadId: currentThreadId, messageId: currentMessageId, traceId: currentTraceId });
+          // emitter.emit('langdb_chatSubmitSuccess', { threadId: currentThreadId });
           setMessageId(undefined);
           setTyping(false);
         },
       });
     } catch (error) {
+      widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'SubmitError', error: error instanceof Error ? error.message : String(error), threadId: currentThreadId, messageId: messageId, traceId: traceId });
       if (error instanceof Error && error.name === 'AbortError') {
         // Handle abort specifically if needed
         return;
       }
       setError(error instanceof Error ? error.message : String(error));
       setTyping(false);
-      widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'SubmitError', error: error instanceof Error ? error.message : String(error) });
-      emitter.emit('langdb_chatSubmitError', { error: error instanceof Error ? error.message : String(error) });
+      // emitter.emit('langdb_chatSubmitError', { error: error instanceof Error ? error.message : String(error) });
     } finally {
       abortControllerRef.current = null;
-      widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'SubmitEnd' });
-      emitter.emit('langdb_chatSubmitDone', { threadId: currentThreadId });
+      widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'SubmitEnd', threadId: currentThreadId, messageId: messageId, traceId: traceId });
+      // emitter.emit('langdb_chatSubmitDone', { threadId: currentThreadId });
     }
   },
     [
       props,
       threadId,
+      traceId,
+      setTraceId,
       setMessages,
       setCurrentInput,
       setTyping,
@@ -303,7 +309,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
     })
     let allResolved = Promise.all(updatedFilesPromises);
     allResolved.then((files: FileWithPreview[]) => {
-      emitter.emit('langdb_fileAdded', { files });
+      emitter.emit('langdb_input_fileAdded', { files });
     });
   }, []);
 
@@ -320,8 +326,8 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
 
 
   useEffect(() => {
-    const handleTerminate = (input: { threadId: string }) => {
-      if (input.threadId === threadId) {
+    const handleTerminate = (input: { threadId: string, widgetId: string }) => {
+      if (input.threadId === threadId || (input.widgetId && input.widgetId === props.widgetId)) {
         terminateChat();
         setError('Chat terminated by user');
       }
@@ -336,10 +342,10 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
       setCurrentInput(inputText); // Set the input text
       onSubmitWrapper({ inputText, files, searchToolEnabled, otherTools }); // Pass the input text directly
     };
-    emitter.on('langdb_chatSubmit', handleExternalSubmit);
+    emitter.on('langdb_input_chatSubmit', handleExternalSubmit);
 
     return () => {
-      emitter.off('langdb_chatSubmit', handleExternalSubmit);
+      emitter.off('langdb_input_chatSubmit', handleExternalSubmit);
     };
   }, [onSubmitWrapper, setCurrentInput]);
   return (
@@ -393,7 +399,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
         searchToolEnabled={props.searchToolEnabled}
         toggleSearchTool={props.toggleSearchTool}
         onSubmit={(props: { inputText: string, files: FileWithPreview[], searchToolEnabled?: boolean, otherTools?: string[] }) => {
-          emitter.emit('langdb_chatSubmit', props);
+          emitter.emit('langdb_input_chatSubmit', props);
           setCurrentInput('');
           return Promise.resolve();
         }}

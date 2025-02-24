@@ -25,27 +25,35 @@ const Example: FC<WidgetProps> = ({
 }) => {
 
   // const apiKey = 'langdb_N1p5cVZvVi9kL1JJOExOeFJKNU1GbHdKbXNNRkxNL1lPemJ3eXhzeGN0K3FPTGxRbi8rN1J6YVhFSVE4ZmdTQjBuUmNQOHlCU1VxRTduam9aM1BHVkhXL3FycTBITXNxa1VhTUdkSXhUanZ0QnpxZklDTmVlVDFPOXZIZTgwRzAyeFZDRWx6MUhIdHBTYzdhS3QvT3B4cisxVFJ1WlcvNERWeWhMcTJ0KzVZZ0wzSjBOY21YQ3pzaDZvQlRQRXFadE1zbzpBQUFBQUFBQUFBQUFBQUFB'
-  const apiKey = 'langdb_NmpsbXNyZmZvNHFlZWs5MjMyMnJ1dDJia3A='
+  // const apiKey = 'langdb_NWkzYWRmMHJ1ajJiNXRsNWc1ZWlldm1saG4='
+  // const projectId = '9c7ac2c8-b76f-453b-914d-39eaaccec092'
+  // const api_url = 'https://api.us-east-1.langdb.ai'
   const projectId = '7ecbda32-76bc-460f-be34-3f5ac06052ff'
+  const apiKey = 'langdb_NmpsbXNyZmZvNHFlZWs5MjMyMnJ1dDJia3A='
   const api_url = 'https://api.staging.langdb.ai'
+  const threadId = 'cb93fca4-6330-452e-9d53-9cfe5b17f555'
   const [currentInput, setCurrentInput] = React.useState("");
   useEffect(() => {
-
-
-    emitter.on('langdb_chatSubmitSuccess', () => {
-      setCurrentInput('');
+    emitter.on('langdb_chatWindow', ({
+      widgetId,
+      state,
+      threadId,
+      messageId,
+      traceId,
+      error,
+    }) => {
+      if(state === 'SubmitEnd') {
+        setCurrentInput('');
+      }
     });
 
     return () => {
-      emitter.off('langdb_chatSubmitSuccess', () => {
-        setCurrentInput('');
-
-      });
+      emitter.off('langdb_chatWindow');
     };
   }, []);
 
   useEffect(() => {
-    emitter.on('langdb_aiMessageClicked', ({ threadId, messageId }: { threadId: string | undefined, messageId: string | undefined }) => { console.log( "===== on AI Message Clicked ====", threadId, messageId) });
+    emitter.on('langdb_aiMessageClicked', ({ threadId, messageId }: { threadId: string | undefined, messageId: string | undefined }) => { console.log( "===== on AI Message Clicked ====", {threadId, messageId}) });
     
     return () => {
       emitter.off('langdb_aiMessageClicked');
@@ -61,10 +69,16 @@ const Example: FC<WidgetProps> = ({
       }}
     >
       <div className="flex flex-1">
+        <button
+          className="bg-blue-500 w-[100px] h-[100px] text-white p-2 rounded-md"
+          onClick={() => {
+            emitter.emit('langdb_chatTerminate', { threadId, widgetId: threadId })
+          }}>Terminate</button>
         <Widget
-          threadId="6f6c1d70-ff02-47cf-b258-28b3317d64df"
-
-          modelName="openai/gpt-4o"
+          threadId={threadId}
+          widgetId={threadId}
+          // threadId="d2d89a3b-ee5a-46cb-836b-d8f552fc0fe0"
+          modelName="deepseek/deepseek-reasoner"
           projectId={projectId}
           apiKey={apiKey}
           serverUrl={api_url}
@@ -99,7 +113,7 @@ const Example: FC<WidgetProps> = ({
             currentInput={currentInput}
             setCurrentInput={setCurrentInput}
             onSubmit={(props:{inputText: string, files: FileWithPreview[], searchToolEnabled?: boolean, otherTools?: string[]}) => {
-              emitter.emit('langdb_chatSubmit', props)
+              emitter.emit('langdb_input_chatSubmit', props)
               setCurrentInput('')
               return Promise.resolve();
             }} />

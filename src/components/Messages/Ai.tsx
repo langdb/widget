@@ -56,6 +56,7 @@ export const AiMessage: React.FC<{ msg?: ChatMessage; typing?: boolean; persona?
         threadId: threadId,
         messageId: id,
         traceId: msg?.trace_id,
+        widgetId: widgetProps.widgetId,
       });
 
     }} className="flex items-center gap-2">

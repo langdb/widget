@@ -8,6 +8,7 @@ export const useChatState = (props: { initialMessages: ChatMessage[] }) => {
   const [currentInput, setCurrentInput] = useState<string>('');
   const [threadId, setThreadId] = useState<string | undefined>();
   const [messageId, setMessageId] = useState<string | undefined>();
+  const [traceId, setTraceId] = useState<string | undefined>();
   const [typing, setTyping] = useState(false);
   const [error, setError] = useState<string | undefined>();
   const [usageInfo, setUsageInfo] = useState<ModelUsage[]>([]);
@@ -29,6 +30,8 @@ export const useChatState = (props: { initialMessages: ChatMessage[] }) => {
     setThreadId,
     messageId,
     setMessageId,
+    traceId,
+    setTraceId,
     typing,
     setTyping,
     error,
