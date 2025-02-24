@@ -11,7 +11,7 @@ import { AiMessage } from "./Messages/Ai";
 import { ChatInput, convertAudioToBase64 } from "./ChatInput";
 import { Persona, PersonaOptions } from "../dto/PersonaOptions";
 import { FileWithPreview } from "../types";
-import { ChatCompletionChunk } from "../events";
+import { ChatCompletionChunk, ToolCall } from "../events";
 import { emitter } from "./EventEmiter";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import { EventSourceMessage } from "@microsoft/fetch-event-source";
@@ -112,6 +112,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
           const updatedLastMessage = {
             ...lastMessage,
             message: lastMessage.message + event.choices.map((choice) => choice.delta.content).join(''),
+            tool_calls: [...(lastMessage.tool_calls || []), ...event.choices.map((choice) => choice.delta.tool_calls).flat()].filter((toolCall) => toolCall !== undefined) as ToolCall[],
           };
 
           return [...prevMessages.slice(0, -1), updatedLastMessage];

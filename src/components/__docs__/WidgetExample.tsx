@@ -28,10 +28,10 @@ const Example: FC<WidgetProps> = ({
   // const apiKey = 'langdb_NWkzYWRmMHJ1ajJiNXRsNWc1ZWlldm1saG4='
   // const projectId = '9c7ac2c8-b76f-453b-914d-39eaaccec092'
   // const api_url = 'https://api.us-east-1.langdb.ai'
-  const projectId = '7ecbda32-76bc-460f-be34-3f5ac06052ff'
+  const projectId = 'fb31f9e8-e1d5-45a3-a385-1d34786b9a77'
   const apiKey = 'langdb_NmpsbXNyZmZvNHFlZWs5MjMyMnJ1dDJia3A='
   const api_url = 'https://api.staging.langdb.ai'
-  const threadId = 'cb93fca4-6330-452e-9d53-9cfe5b17f555'
+  const threadId = '' //'5d902cea-8b57-43d2-98c4-fd1f31943202'
   const [currentInput, setCurrentInput] = React.useState("");
   useEffect(() => {
     emitter.on('langdb_chatWindow', ({
@@ -59,6 +59,7 @@ const Example: FC<WidgetProps> = ({
       emitter.off('langdb_aiMessageClicked');
     };
   }, []);
+  const [searchToolEnabled, setSearchToolEnabled] = React.useState(false);
   return (
     <div
       style={{
@@ -77,8 +78,12 @@ const Example: FC<WidgetProps> = ({
         <Widget
           threadId={threadId}
           widgetId={threadId}
+          searchToolEnabled={searchToolEnabled}
+          toggleSearchTool={() => setSearchToolEnabled(prev => !prev)}
+
+        
           // threadId="d2d89a3b-ee5a-46cb-836b-d8f552fc0fe0"
-          modelName="deepseek/deepseek-reasoner"
+          modelName="openai/gpt-4o-mini"
           projectId={projectId}
           apiKey={apiKey}
           serverUrl={api_url}
@@ -112,6 +117,8 @@ const Example: FC<WidgetProps> = ({
           <ChatInput
             currentInput={currentInput}
             setCurrentInput={setCurrentInput}
+            searchToolEnabled={searchToolEnabled}
+            toggleSearchTool={() => setSearchToolEnabled(prev => !prev)}
             onSubmit={(props:{inputText: string, files: FileWithPreview[], searchToolEnabled?: boolean, otherTools?: string[]}) => {
               emitter.emit('langdb_input_chatSubmit', props)
               setCurrentInput('')
