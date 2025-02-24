@@ -33,6 +33,7 @@ const MessageRenderer: React.FC<{ message: ChatMessage; personaOptions: PersonaO
 
 // Custom hook for handling message submission
 const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof useChatState>) => {
+  const abortControllerRef = React.useRef<AbortController | null>(null);
   const {
     setMessages,
     setCurrentInput,
@@ -126,6 +127,8 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
       searchToolEnabled?: boolean;
       otherTools?: string[];
     }) => {
+    abortControllerRef.current = new AbortController();
+
     const { inputText, files, searchToolEnabled, otherTools } = inputProps;
 
     if (inputText.trim() === '') return;
@@ -158,6 +161,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
         files,
         message: inputText,
         threadId,
+        signal: abortControllerRef.current?.signal,
         onerror: (error) => {
           setError(error instanceof Error ? error.message : String(error));
           setTyping(false);
@@ -190,10 +194,16 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
         },
       });
     } catch (error) {
+      if (error instanceof Error && error.name === 'AbortError') {
+        console.log('==== AbortError', error);
+        // Handle abort specifically if needed
+        return;
+      }
       setError(error instanceof Error ? error.message : String(error));
       setTyping(false);
       emitter.emit('langdb_chatSubmitError', { error: error instanceof Error ? error.message : String(error) });
     } finally {
+      abortControllerRef.current = null;
       emitter.emit('langdb_chatSubmitDone', { threadId: currentThreadId });
     }
   },
@@ -213,10 +223,20 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
     ]
   );
 
+  const terminateChat = useCallback(() => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    setTyping(false);
+    setMessageId(undefined);
+  }, [setTyping, setMessageId]);
+
   return {
     submitMessageFn,
     messagesEndRef,
-    scrollToBottom
+    scrollToBottom,
+    terminateChat
   };
 };
 
@@ -232,7 +252,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
     setError
   } = chatState;
 
-  const { hideChatInput } = props
+  const { hideChatInput, threadId } = props
 
   const personaOptions: PersonaOptions = {
     assistant: {
@@ -247,7 +267,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
     } as Persona,
   };
 
-  const { submitMessageFn: handleSubmit, messagesEndRef } = useMessageSubmission(props, chatState)
+  const { submitMessageFn: handleSubmit, messagesEndRef, terminateChat } = useMessageSubmission(props, chatState)
 
 
   const onSubmitWrapper = useCallback((inputProps: { inputText: string, files: FileWithPreview[], searchToolEnabled?: boolean, otherTools?: string[] }) => {
@@ -279,6 +299,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
       emitter.emit('langdb_fileAdded', { files });
     });
   }, []);
+
   const { getRootProps, isDragActive } = useDropzone({
     onDrop,
     noClick: true,
@@ -288,7 +309,21 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
       "audio/*": [],
     },
   });
+  // Add cleanup function
 
+
+  useEffect(() => {
+    const handleTerminate = (input: { threadId: string }) => {
+      if (input.threadId === threadId) {
+        terminateChat();
+        setError('Chat terminated by user');
+      }
+    };
+    emitter.on('langdb_chatTerminate', handleTerminate);
+    return () => {
+      emitter.off('langdb_chatTerminate', handleTerminate);
+    };
+  }, [terminateChat, setError, threadId]);
   useEffect(() => {
     const handleExternalSubmit = ({ inputText, files, searchToolEnabled, otherTools }: { inputText: string, files: FileWithPreview[], searchToolEnabled?: boolean, otherTools?: string[] }) => {
       setCurrentInput(inputText); // Set the input text
@@ -334,9 +369,13 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
 
         {error && (
           <div className=" bg-red-100 flex  p-2 rounded-lg items-center justify-between mb-4">
-            <span className="text-red-700">{error}</span>
+            <div className="flex flex-1">
+              <span className="text-red-700 line-clamp-3">{error}</span>
+            </div>
             <XCircleIcon
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
                 setError(undefined);
               }}
               className="h-4 w-4 text-red-500 hover:text-red-700 hover:cursor-pointer rounded-full" />

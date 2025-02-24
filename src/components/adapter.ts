@@ -1,4 +1,3 @@
-// import { ChatAdapter, StreamingAdapterObserver } from "@nlux/react";
 import { ChatCompletionChunk } from "../events";
 import { ChatCompletionMessage,  convert_to,  createSubmitMessage, FileWithPreview, MessageRequest, ResizeOptions, ResponseCallbackOptions } from "../types";
 import { fetchEventSource, FetchEventSourceInit } from '@microsoft/fetch-event-source';
@@ -28,6 +27,7 @@ export interface SubmitProps extends FetchEventSourceInit {
   previousMessages: ChatMessage[]
   searchToolEnabled?: boolean;
   otherTools?: string[];
+  signal?: AbortSignal;
 }
 
 export const getHeaders = async (props: {
@@ -63,7 +63,7 @@ export const getHeaders = async (props: {
 
 
 export const onSubmit = async (submitProps: SubmitProps) => {
-  const { widgetProps, files, message, threadId, onopen, onmessage, onerror, onclose, previousMessages, searchToolEnabled } = submitProps;
+  const { widgetProps, files, message, threadId, onopen, onmessage, onerror, onclose, previousMessages, searchToolEnabled, signal } = submitProps;
   const { fileResizeOptions: resizeOptions } = widgetProps;
   const serverUrl = widgetProps.serverUrl || DEV_SERVER_URL;
   const apiUrl = `${serverUrl}/chat/completions`;
@@ -122,7 +122,8 @@ export const onSubmit = async (submitProps: SubmitProps) => {
       onopen,
       onmessage,
       onclose,
-      onerror
+      onerror,
+      signal
     });
   } catch (e: any) {
     if (responseCallback) {

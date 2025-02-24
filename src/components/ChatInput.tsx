@@ -183,7 +183,7 @@ export const ChatInput: React.FC<{
             }}
             placeholder="Type your message..."
             rows={1}
-            className="bg-transparent border-none flex-1 p-2 ring-0 focus:ring-0 focus:outline-none resize-none overflow-auto"
+            className="bg-transparent text-white border-none flex-1 p-2 ring-0 focus:ring-0 focus:outline-none resize-none overflow-auto"
           />
 
         </div>
