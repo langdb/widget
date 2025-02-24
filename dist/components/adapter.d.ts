@@ -26,6 +26,7 @@ export interface SubmitProps extends FetchEventSourceInit {
     previousMessages: ChatMessage[];
     searchToolEnabled?: boolean;
     otherTools?: string[];
+    signal?: AbortSignal;
 }
 export declare const getHeaders: (props: {
     projectId?: string;

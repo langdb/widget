@@ -2,6 +2,9 @@ import { FileWithPreview } from '../types';
 import { ModelUsage } from '../events';
 
 type Events = {
+    langdb_chatTerminate: {
+        threadId: string;
+    };
     langdb_chatSubmit: {
         inputText: string;
         files: FileWithPreview[];
