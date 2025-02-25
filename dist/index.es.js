@@ -47967,7 +47967,7 @@ function kH(e, t) {
     }
   }, [void 0, void 0, r], e), [o, u];
 }
-const NH = ({ message: e, personaOptions: t, widgetProps: n, isLastMessage: r, isTyping: a }) => /* @__PURE__ */ X.jsx("article", { className: `flex mb-2 ${e.type === dr.HumanMessage ? "justify-end scroll-my-20" : "justify-start"} ${r ? "min-h-[50vh] items-start justify-start" : "items-start"}`, children: /* @__PURE__ */ X.jsx("div", { className: "max-w-3/4 overflow-scroll text-base", children: e.type === dr.HumanMessage ? /* @__PURE__ */ X.jsx(z8, { msg: e, persona: t.user }) : /* @__PURE__ */ X.jsx(Y8, { msg: e, persona: t.assistant, widgetProps: n, isTyping: a }) }) }), OH = (e, t) => {
+const NH = ({ message: e, personaOptions: t, widgetProps: n, isLastMessage: r, isTyping: a }) => /* @__PURE__ */ X.jsx("article", { className: `flex mb-2 ${e.type === dr.HumanMessage ? "justify-end scroll-my-20" : "justify-start"} ${r && !e.created_at ? "min-h-[50vh] items-start justify-start" : "items-start"}`, children: /* @__PURE__ */ X.jsx("div", { className: "max-w-3/4 overflow-scroll text-base", children: e.type === dr.HumanMessage ? /* @__PURE__ */ X.jsx(z8, { msg: e, persona: t.user }) : /* @__PURE__ */ X.jsx(Y8, { msg: e, persona: t.assistant, widgetProps: n, isTyping: a }) }) }), OH = (e, t) => {
   const n = yn.useRef(null), {
     setMessages: r,
     setCurrentInput: a,
