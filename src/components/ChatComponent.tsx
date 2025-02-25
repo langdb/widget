@@ -20,15 +20,15 @@ import { PaperClipIcon } from "@heroicons/react/24/outline";
 
 // New component for rendering messages
 const MessageRenderer: React.FC<{ message: ChatMessage; personaOptions: PersonaOptions, widgetProps: WidgetProps }> = ({ message, personaOptions, widgetProps }) => (
-  <div className={`flex mb-2 ${message.type === MessageType.HumanMessage ? 'justify-end' : 'justify-start'}`}>
-    <div className="max-w-3/4 overflow-scroll">
+  <article className={`flex mb-2 ${message.type === MessageType.HumanMessage ? 'justify-end scroll-my-20' : 'justify-start'}`}>
+    <div className="max-w-3/4 overflow-scroll text-base">
 
       {message.type === MessageType.HumanMessage
         ? <HumanMessage msg={message} persona={personaOptions.user} />
         : <AiMessage msg={message} persona={personaOptions.assistant} widgetProps={widgetProps} />
       }
     </div>
-  </div>
+  </article>
 );
 
 // Custom hook for handling message submission
@@ -285,7 +285,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
     } as Persona,
   };
 
-  const { submitMessageFn: handleSubmit, messagesEndRef, terminateChat } = useMessageSubmission(props, chatState)
+  const { submitMessageFn: handleSubmit, messagesEndRef, terminateChat, scrollToBottom } = useMessageSubmission(props, chatState)
 
 
   const onSubmitWrapper = useCallback((inputProps: { inputText: string, files: FileWithPreview[], searchToolEnabled?: boolean, otherTools?: string[] }) => {
@@ -342,6 +342,20 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
       emitter.off('langdb_chatTerminate', handleTerminate);
     };
   }, [terminateChat, setError, threadId]);
+
+
+  useEffect(() => {
+    const handleScrollToBottom = (input: { threadId: string | undefined, widgetId: string | undefined }) => {
+      if (messages && messages.length > 0 && ((input.threadId === threadId && input.threadId) || (input.widgetId && input.widgetId === props.widgetId))) {
+        scrollToBottom();
+      }
+    };
+    emitter.on('langdb_chat_scrollToBottom', handleScrollToBottom);
+    return () => {
+      emitter.off('langdb_chat_scrollToBottom', handleScrollToBottom);
+    };
+  }, [messages,threadId, scrollToBottom]);
+
   useEffect(() => {
     const handleExternalSubmit = ({ inputText, files, searchToolEnabled, otherTools }: { inputText: string, files: FileWithPreview[], searchToolEnabled?: boolean, otherTools?: string[] }) => {
       setCurrentInput(inputText); // Set the input text

@@ -38,6 +38,10 @@ type Events = {
         widgetId: string | undefined;
         runId: string | undefined;
     };
+    langdb_chat_scrollToBottom: {
+        threadId: string | undefined;
+        widgetId: string | undefined;
+    };
 };
 export declare const emitter: import('mitt').Emitter<Events>;
 export {};
