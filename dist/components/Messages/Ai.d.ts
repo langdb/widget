@@ -5,7 +5,8 @@ import { WidgetProps } from '../Widget';
 
 export declare const AiMessage: React.FC<{
     msg?: ChatMessage;
-    typing?: boolean;
     persona?: Persona;
     widgetProps: WidgetProps;
+    isLastMessage?: boolean;
+    isTyping?: boolean;
 }>;

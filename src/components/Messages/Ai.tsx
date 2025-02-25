@@ -13,8 +13,15 @@ import { emitter } from "../EventEmiter";
 import { MessageDisplay } from "./MessageDisplay";
 
 
-export const AiMessage: React.FC<{ msg?: ChatMessage; typing?: boolean; persona?: Persona, widgetProps: WidgetProps }> = ({ msg, typing, persona, widgetProps }) => {
+export const AiMessage: React.FC<{
+  msg?: ChatMessage;
+  persona?: Persona,
+  widgetProps: WidgetProps,
+  isLastMessage?: boolean,
+  isTyping?: boolean
+}> = ({ msg, persona, widgetProps, isTyping }) => {
   const { threadId, id } = msg || {};
+
   const [score, setScore] = useState<number | undefined>();
   const [error, setError] = useState<string | undefined>();
   const handleScore = useCallback(async (score: number) => {
@@ -60,11 +67,11 @@ export const AiMessage: React.FC<{ msg?: ChatMessage; typing?: boolean; persona?
         runId: msg?.run_id,
       });
 
-    }} className="flex items-center gap-2">
+    }} className={`flex gap-2 items-start`}>
       <div>
         {!persona ? <AvatarItem className="h-6 w-6 rounded-full" name={"User"} /> : (persona.url ? <AvatarItem name={persona.name} imageUrl={persona.url} className="h-6 w-6 rounded-full" /> : <Avatar className="h-6 w-6 rounded-full" />)}
       </div>
-      <div className="rounded-lg p-2 ai-message">
+      <div className="rounded-lg px-2 py-0 ai-message">
         <MessageDisplay message={msg?.message || ""} />
         {msg?.tool_calls && msg.tool_calls && msg.tool_calls.length > 0 && <div>
           <div className="">
@@ -79,7 +86,7 @@ export const AiMessage: React.FC<{ msg?: ChatMessage; typing?: boolean; persona?
           })}
         </div>}
         {
-          !typing && threadId && id && (<>
+          !isTyping && threadId && id && (<>
             <div className=" mt-3 gap-3 flex items-center justify-start space-x-1">
               <button
                 className="rounded focus:outline-none hover:text-primary-500"
@@ -107,13 +114,14 @@ export const AiMessage: React.FC<{ msg?: ChatMessage; typing?: boolean; persona?
             </div>
           </>)
         }
+        {isTyping && (
+          <div className="rounded-lg p-2 ai-message flex items-center gap-2 animate-pulse">
+            <PencilIcon className="h-5 w-5 text-white animate-pulse" />
+            <span>Typing...</span>
+          </div>
+        )}
       </div>
-      {typing && (
-        <div className="rounded-lg p-2 ai-message flex items-center gap-2 animate-pulse">
-          <PencilIcon className="h-5 w-5 text-gray-500" />
-          <span>Typing...</span>
-        </div>
-      )}
+
     </div>
   )
 };

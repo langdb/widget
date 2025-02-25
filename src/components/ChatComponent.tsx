@@ -17,15 +17,21 @@ import { XCircleIcon } from "@heroicons/react/24/solid";
 import { EventSourceMessage } from "@microsoft/fetch-event-source";
 import { useDropzone } from "react-dropzone";
 import { PaperClipIcon } from "@heroicons/react/24/outline";
-
+import { useInViewport } from "ahooks";
 // New component for rendering messages
-const MessageRenderer: React.FC<{ message: ChatMessage; personaOptions: PersonaOptions, widgetProps: WidgetProps }> = ({ message, personaOptions, widgetProps }) => (
-  <article className={`flex mb-2 ${message.type === MessageType.HumanMessage ? 'justify-end scroll-my-20' : 'justify-start'}`}>
+const MessageRenderer: React.FC<{
+  message: ChatMessage;
+  personaOptions: PersonaOptions,
+  isLastMessage?: boolean,
+  isTyping?: boolean,
+  widgetProps: WidgetProps
+}> = ({ message, personaOptions, widgetProps, isLastMessage, isTyping }) => (
+  <article className={`flex mb-2 ${message.type === MessageType.HumanMessage ? 'justify-end scroll-my-20' : 'justify-start'} ${isLastMessage ? 'min-h-[50vh] items-start justify-start' : 'items-start'}`}>
     <div className="max-w-3/4 overflow-scroll text-base">
 
       {message.type === MessageType.HumanMessage
         ? <HumanMessage msg={message} persona={personaOptions.user} />
-        : <AiMessage msg={message} persona={personaOptions.assistant} widgetProps={widgetProps} />
+        : <AiMessage msg={message} persona={personaOptions.assistant} widgetProps={widgetProps} isTyping={isTyping} />
       }
     </div>
   </article>
@@ -151,6 +157,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
     setCurrentInput('');
     setTyping(true);
     setError(undefined);
+    scrollToBottom();
     let currentThreadId = threadId;
     let widgetId = props.widgetId;
 
@@ -159,7 +166,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
       let currentMessageId = messageId;
       let currentTraceId = traceId;
       let currentRunId: string | undefined = undefined;
-      scrollToBottom();
+      let isFirstSignal = true;
       await onSubmit({
         searchToolEnabled,
         otherTools,
@@ -194,12 +201,18 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
             setTraceId(currentTraceId);
           }
           widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'Processing', threadId: currentThreadId, messageId: currentMessageId, traceId: currentTraceId });
-
           return handleOpen(response, currentThreadId)
         },
         onmessage: (msg) => {
           widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'Processing', threadId: currentThreadId, messageId: currentMessageId, traceId: currentTraceId, runId: currentRunId });
-          return handleMessage(msg, currentThreadId || threadId, currentMessageId || messageId, currentTraceId, currentRunId)
+          handleMessage(msg, currentThreadId || threadId, currentMessageId || messageId, currentTraceId, currentRunId)
+          if (isFirstSignal) {
+            setTimeout(() => {
+              scrollToBottom();
+            },);
+          }
+          isFirstSignal = false;
+          return
         },
         onclose: () => {
           widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'SubmitEnd', threadId: currentThreadId, messageId: currentMessageId, traceId: currentTraceId, runId: currentRunId });
@@ -354,7 +367,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
     return () => {
       emitter.off('langdb_chat_scrollToBottom', handleScrollToBottom);
     };
-  }, [messages,threadId, scrollToBottom]);
+  }, [messages, threadId, scrollToBottom]);
 
   useEffect(() => {
     const handleExternalSubmit = ({ inputText, files, searchToolEnabled, otherTools }: { inputText: string, files: FileWithPreview[], searchToolEnabled?: boolean, otherTools?: string[] }) => {
@@ -367,10 +380,11 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
       emitter.off('langdb_input_chatSubmit', handleExternalSubmit);
     };
   }, [onSubmitWrapper, setCurrentInput]);
+  const [inViewport] = useInViewport(messagesEndRef);
+
   return (
     <div key={props.widgetId} className="langdb-chat mx-auto flex flex-1 flex-col lg:max-w-[40rem] xl:max-w-[48rem] w-full h-full">
-
-      <div {...getRootProps()} className="langdb-message-section flex flex-col flex-1 justify-center overflow-y-auto p-4 pb-0">
+      <div {...getRootProps()} className="langdb-message-section flex flex-col flex-1 justify-center overflow-y-auto p-4 pb-0 relative">
         {isDragActive && (
           <div className="absolute gap-20 flex-col inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white text-xl z-50">
             <PaperClipIcon className="h-12 w-12" />
@@ -386,15 +400,17 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
         }} />}
         <div className="langdb-message-render flex-1 overflow-auto">
           {messages.filter(m => m.type === MessageType.HumanMessage || m.type !== MessageType.ToolMessage).map((msg: ChatMessage) => {
-            return <MessageRenderer key={msg.id} message={msg} personaOptions={personaOptions} widgetProps={props} />
+            const isLastMessage = msg.id === messages[messages.length - 1].id;
+
+            return <MessageRenderer key={msg.id} message={msg} personaOptions={personaOptions} widgetProps={props} isLastMessage={isLastMessage} isTyping={typing && isLastMessage} />
           })}
-          {typing && (
+          {/* {typing && (
             <div key="typing-ai" className="flex justify-start">
               <div className="max-w-3/4">
                 <AiMessage typing={true} persona={personaOptions.assistant} widgetProps={props} />
               </div>
             </div>
-          )}
+          )} */}
           <div ref={messagesEndRef} />
 
         </div>
@@ -412,6 +428,15 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
               }}
               className="h-4 w-4 text-red-500 hover:text-red-700 hover:cursor-pointer rounded-full" />
           </div>
+        )}
+        {!inViewport && (
+          <button
+            onClick={scrollToBottom}
+            className="cursor-pointer absolute z-10 rounded-full bg-clip-padding border text-token-text-secondary border-[hsla(0,0%,100%,.1)] bg-background right-1/2 translate-x-1/2 w-8 h-8 flex items-center justify-center bottom-5"
+            aria-label="Scroll to bottom"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="icon-md text-white"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 21C11.7348 21 11.4804 20.8946 11.2929 20.7071L4.29289 13.7071C3.90237 13.3166 3.90237 12.6834 4.29289 12.2929C4.68342 11.9024 5.31658 11.9024 5.70711 12.2929L11 17.5858V4C11 3.44772 11.4477 3 12 3C12.5523 3 13 3.44772 13 4V17.5858L18.2929 12.2929C18.6834 11.9024 19.3166 11.9024 19.7071 12.2929C20.0976 12.6834 20.0976 13.3166 19.7071 13.7071L12.7071 20.7071C12.5196 20.8946 12.2652 21 12 21Z" fill="currentColor"></path></svg>
+          </button>
         )}
       </div>
       {!hideChatInput && <ChatInput

@@ -69,7 +69,7 @@ const Example: FC<WidgetProps> = ({
         height: '100vh',
       }}
     >
-      <div className="flex flex-1">
+      <div className="flex flex-1 max-h-[calc(100vh-200px)]">
         <button
           className="bg-blue-500 w-[100px] h-[100px] text-white p-2 rounded-md"
           onClick={() => {
