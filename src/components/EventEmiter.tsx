@@ -11,7 +11,8 @@ type Events = {
     error?: any,
     threadId?: string,
     messageId?: string,
-    traceId?: string
+    traceId?: string,
+    runId?: string
   };
 
   langdb_input_chatSubmit: { inputText: string, files: FileWithPreview[], searchToolEnabled?: boolean, otherTools?: string[] };
@@ -19,7 +20,7 @@ type Events = {
   langdb_input_fileAdded: { files: FileWithPreview[] };
   langdb_input_speechRecognitionStart: {};
   langdb_input_speechRecognitionEnd: {};
-  langdb_aiMessageClicked: { threadId: string | undefined, messageId: string | undefined, traceId: string | undefined, widgetId: string | undefined };
+  langdb_aiMessageClicked: { threadId: string | undefined, messageId: string | undefined, traceId: string | undefined, widgetId: string | undefined, runId: string | undefined };
 };
 
 export const emitter = mitt<Events>();

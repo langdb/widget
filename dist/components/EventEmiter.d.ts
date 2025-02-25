@@ -13,6 +13,7 @@ type Events = {
         threadId?: string;
         messageId?: string;
         traceId?: string;
+        runId?: string;
     };
     langdb_input_chatSubmit: {
         inputText: string;
@@ -35,6 +36,7 @@ type Events = {
         messageId: string | undefined;
         traceId: string | undefined;
         widgetId: string | undefined;
+        runId: string | undefined;
     };
 };
 export declare const emitter: import('mitt').Emitter<Events>;

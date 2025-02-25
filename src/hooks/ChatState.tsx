@@ -38,6 +38,6 @@ export const useChatState = (props: { initialMessages: ChatMessage[] }) => {
     setError,
     usageInfo,
     appendUsage,
-    initialMessages
+    initialMessages,
   };
 };

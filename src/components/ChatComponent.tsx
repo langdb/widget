@@ -73,7 +73,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
     }
   }, [props, setMessageId, setThreadId]);
 
-  const handleMessage = useCallback((msg: EventSourceMessage, currentThreadId?: string, currentMessageId?: string, currentTraceId?: string | null) => {
+  const handleMessage = useCallback((msg: EventSourceMessage, currentThreadId?: string, currentMessageId?: string, currentTraceId?: string | null, currentRunId?: string | null) => {
     try {
       if (msg.data === '[DONE]') {
         return;
@@ -113,6 +113,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
             ...lastMessage,
             message: lastMessage.message + event.choices.map((choice) => choice.delta.content).join(''),
             tool_calls: [...(lastMessage.tool_calls || []), ...event.choices.map((choice) => choice.delta.tool_calls).flat()].filter((toolCall) => toolCall !== undefined) as ToolCall[],
+            run_id: currentRunId || undefined
           };
 
           return [...prevMessages.slice(0, -1), updatedLastMessage];
@@ -157,6 +158,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
       widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'SubmitStart', threadId: currentThreadId, messageId: messageId });
       let currentMessageId = messageId;
       let currentTraceId = traceId;
+      let currentRunId: string | undefined = undefined;
       scrollToBottom();
       await onSubmit({
         searchToolEnabled,
@@ -182,9 +184,11 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
             const threadIdHeader = response.headers.get('X-Thread-Id');
             const messageIdHeader = response.headers.get('X-Message-Id');
             const traceIdHeader = response.headers.get('X-Trace-Id');
+            const runIdHeader = response.headers.get('X-Run-Id');
             currentThreadId = threadIdHeader || currentThreadId
             currentMessageId = messageIdHeader || currentMessageId
             currentTraceId = traceIdHeader || currentTraceId
+            currentRunId = runIdHeader || currentRunId
             setThreadId(currentThreadId);
             setMessageId(currentMessageId);
             setTraceId(currentTraceId);
@@ -194,11 +198,11 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
           return handleOpen(response, currentThreadId)
         },
         onmessage: (msg) => {
-          widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'Processing', threadId: currentThreadId, messageId: currentMessageId, traceId: currentTraceId });
-          return handleMessage(msg, currentThreadId || threadId, currentMessageId || messageId, currentTraceId)
+          widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'Processing', threadId: currentThreadId, messageId: currentMessageId, traceId: currentTraceId, runId: currentRunId });
+          return handleMessage(msg, currentThreadId || threadId, currentMessageId || messageId, currentTraceId, currentRunId)
         },
         onclose: () => {
-          widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'SubmitEnd', threadId: currentThreadId, messageId: currentMessageId, traceId: currentTraceId });
+          widgetId && emitter.emit('langdb_chatWindow', { widgetId, state: 'SubmitEnd', threadId: currentThreadId, messageId: currentMessageId, traceId: currentTraceId, runId: currentRunId });
           // emitter.emit('langdb_chatSubmitSuccess', { threadId: currentThreadId });
           setMessageId(undefined);
           setTyping(false);

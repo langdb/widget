@@ -31,7 +31,7 @@ const Example: FC<WidgetProps> = ({
   const projectId = 'fb31f9e8-e1d5-45a3-a385-1d34786b9a77'
   const apiKey = 'langdb_NmpsbXNyZmZvNHFlZWs5MjMyMnJ1dDJia3A='
   const api_url = 'https://api.staging.langdb.ai'
-  const threadId = '' //'5d902cea-8b57-43d2-98c4-fd1f31943202'
+  const threadId = '5d902cea-8b57-43d2-98c4-fd1f31943202'
   const [currentInput, setCurrentInput] = React.useState("");
   useEffect(() => {
     emitter.on('langdb_chatWindow', ({
@@ -53,7 +53,7 @@ const Example: FC<WidgetProps> = ({
   }, []);
 
   useEffect(() => {
-    emitter.on('langdb_aiMessageClicked', ({ threadId, messageId }: { threadId: string | undefined, messageId: string | undefined }) => { console.log( "===== on AI Message Clicked ====", {threadId, messageId}) });
+    emitter.on('langdb_aiMessageClicked', ({ threadId, messageId, runId }: { threadId: string | undefined, messageId: string | undefined, runId: string | undefined }) => { console.log( "===== on AI Message Clicked ====", {threadId, messageId, runId}) });
     
     return () => {
       emitter.off('langdb_aiMessageClicked');
@@ -82,7 +82,7 @@ const Example: FC<WidgetProps> = ({
           toggleSearchTool={() => setSearchToolEnabled(prev => !prev)}
 
         
-          // threadId="d2d89a3b-ee5a-46cb-836b-d8f552fc0fe0"
+          //threadId="38a5a61b-9a28-43d3-99c9-215cc773bb59"
           modelName="openai/gpt-4o-mini"
           projectId={projectId}
           apiKey={apiKey}

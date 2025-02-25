@@ -14,6 +14,7 @@ export interface ChatMessage {
     tool_calls?: ToolCall[];
     files?: FileWithPreview[];
     user_id?: string;
+    run_id?: string;
 }
 export interface MessageWithId {
     id: string;
