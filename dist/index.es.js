@@ -49981,7 +49981,7 @@ const cq = async (e) => {
     m();
   }, [r]), Wa(() => {
     l && m();
-  }, [n, l]), d ? /* @__PURE__ */ X.jsx("div", { className: `${t} dark-theme w-full h-full justify-center items-center flex`, children: u ? u() : /* @__PURE__ */ X.jsx("span", { className: "animate-pulse", children: " Loading..." }) }) : /* @__PURE__ */ X.jsx("div", { className: `${t} w-full h-full`, children: /* @__PURE__ */ X.jsx(LH, { ...e, messages: s || g || [] }) });
+  }, [n, l]), d && (!s || s.length < 1) ? /* @__PURE__ */ X.jsx("div", { className: `${t} dark-theme w-full h-full justify-center items-center flex`, children: u ? u() : /* @__PURE__ */ X.jsx("span", { className: "animate-pulse", children: " Loading..." }) }) : /* @__PURE__ */ X.jsx("div", { className: `${t} w-full h-full`, children: /* @__PURE__ */ X.jsx(LH, { ...e, messages: s || g || [] }) });
 });
 function Ep(...e) {
   return e.filter(Boolean).join(" ");

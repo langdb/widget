@@ -113,10 +113,10 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
       refreshMessages();
     }
   }, [threadId, autoRefreshThread]);
-  if (messagesLoading) {
+  if (messagesLoading && (!messages || messages.length < 1)) {
     return <div className={`${themeClass} dark-theme w-full h-full justify-center items-center flex`}>
-    {renderLoading ? renderLoading() : <span className="animate-pulse"> Loading...</span>}
-  </div>;
+      {renderLoading ? renderLoading() : <span className="animate-pulse"> Loading...</span>}
+    </div>;
   }
 
   return (
