@@ -8,11 +8,13 @@ import { PersonaOptions } from "../dto/PersonaOptions";
 import { ConversationStarter } from "../dto/ConversationStarter";
 import axios from "axios";
 import { useMount, useRequest, useUpdateEffect } from "ahooks";
+import { InititalPrompt, MCPTools } from "../dto/ParamInput";
 // Types
-
 export interface WidgetProps extends AdapterProps {
   personaOptions?: PersonaOptions;
   messages?: ChatMessage[];
+  initialPrompts?: InititalPrompt[];
+  mcpTools?: MCPTools[],
   style?: React.CSSProperties;
   className?: string;
   controls?: {

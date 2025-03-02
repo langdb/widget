@@ -3,6 +3,7 @@ import { ChatCompletionMessage,  convert_to,  createSubmitMessage, FileWithPrevi
 import { fetchEventSource, FetchEventSourceInit } from '@microsoft/fetch-event-source';
 import { WidgetProps } from "./Widget";
 import { ChatMessage } from "../dto/ChatMessage";
+import { InititalPrompt, MCPTools } from "../dto/ParamInput";
 
 export const DEV_SERVER_URL = "https://api.dev.langdb.ai";
 export interface AdapterProps {
@@ -27,6 +28,8 @@ export interface SubmitProps extends FetchEventSourceInit {
   previousMessages: ChatMessage[]
   searchToolEnabled?: boolean;
   otherTools?: string[];
+  mcpTools?: MCPTools[];
+  initialPrompts?: InititalPrompt[],
   signal?: AbortSignal;
 }
 
@@ -63,7 +66,7 @@ export const getHeaders = async (props: {
 
 
 export const onSubmit = async (submitProps: SubmitProps) => {
-  const { widgetProps, files, message, threadId, onopen, onmessage, onerror, onclose, previousMessages, searchToolEnabled, signal } = submitProps;
+  const { widgetProps, files, message, threadId, onopen, onmessage, onerror, onclose, previousMessages, searchToolEnabled, signal, mcpTools, initialPrompts } = submitProps;
   const { fileResizeOptions: resizeOptions } = widgetProps;
   const serverUrl = widgetProps.serverUrl || DEV_SERVER_URL;
   const apiUrl = `${serverUrl}/chat/completions`;
@@ -96,6 +99,20 @@ export const onSubmit = async (submitProps: SubmitProps) => {
         submitMessage
       ]
     }
+    if(initialPrompts && initialPrompts.length > 0) {
+      messages = [...initialPrompts, ...messages]
+    }
+    let mcp_servers = mcpTools || []
+    if(searchToolEnabled) {
+       mcp_servers.push({
+        name: 'websearch',
+        type: 'memory'
+       })
+    }
+    // make mcp_server unique
+    const uniqueMcpServers = Array.from(
+      new Map(mcp_servers.map(server => [`${server.name}-${server.type}`, server])).values()
+    );
 
 
     const request: MessageRequest = {
@@ -107,11 +124,8 @@ export const onSubmit = async (submitProps: SubmitProps) => {
         include_usage: true
       },
       ...(agentParams || {}),
-      ...(searchToolEnabled ? {
-        "mcp_servers": [{
-          "name": "websearch",
-          "type": "in-memory"
-        }]
+      ...(uniqueMcpServers.length > 0 ? {
+        "mcp_servers": uniqueMcpServers
       } : {}),
     };
     await fetchEventSource(apiUrl, {

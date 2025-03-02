@@ -18,6 +18,7 @@ import { EventSourceMessage } from "@microsoft/fetch-event-source";
 import { useDropzone } from "react-dropzone";
 import { PaperClipIcon } from "@heroicons/react/24/outline";
 import { useInViewport } from "ahooks";
+import { InititalPrompt, MCPTools } from "../dto/ParamInput";
 // New component for rendering messages
 const MessageRenderer: React.FC<{
   message: ChatMessage;
@@ -136,10 +137,12 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
       files: FileWithPreview[];
       searchToolEnabled?: boolean;
       otherTools?: string[];
+      initialPrompts?: InititalPrompt[],
+      mcpTools?: MCPTools[]
     }) => {
     abortControllerRef.current = new AbortController();
 
-    const { inputText, files, searchToolEnabled, otherTools } = inputProps;
+    const { inputText, files, searchToolEnabled, otherTools, mcpTools, initialPrompts } = inputProps;
 
     if (inputText.trim() === '') return;
 
@@ -152,8 +155,10 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
       threadId,
       files,
     };
-
-    setMessages((prevMessages) => [...prevMessages, newMessage]);
+    
+    setMessages((prevMessages) => {
+     return [ ...prevMessages, newMessage]
+    });
     setCurrentInput('');
     setTyping(true);
     setError(undefined);
@@ -168,6 +173,8 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
       let currentRunId: string | undefined = undefined;
       let isFirstSignal = true;
       await onSubmit({
+        initialPrompts,
+        mcpTools,
         searchToolEnabled,
         otherTools,
         previousMessages: messages,
@@ -282,6 +289,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
     error,
     setError
   } = chatState;
+  const { initialPrompts, mcpTools } = props
 
   const { hideChatInput, threadId } = props
 
@@ -302,8 +310,8 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
 
 
   const onSubmitWrapper = useCallback((inputProps: { inputText: string, files: FileWithPreview[], searchToolEnabled?: boolean, otherTools?: string[] }) => {
-    return handleSubmit(inputProps);
-  }, [handleSubmit]);
+    return handleSubmit({...inputProps, initialPrompts, mcpTools});
+  }, [handleSubmit, initialPrompts, mcpTools ]);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     let updatedFilesPromises = acceptedFiles.map(file => {
@@ -404,13 +412,6 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
 
             return <MessageRenderer key={msg.id} message={msg} personaOptions={personaOptions} widgetProps={props} isLastMessage={isLastMessage} isTyping={typing && isLastMessage} />
           })}
-          {/* {typing && (
-            <div key="typing-ai" className="flex justify-start">
-              <div className="max-w-3/4">
-                <AiMessage typing={true} persona={personaOptions.assistant} widgetProps={props} />
-              </div>
-            </div>
-          )} */}
           <div ref={messagesEndRef} />
 
         </div>

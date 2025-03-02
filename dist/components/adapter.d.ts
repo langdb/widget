@@ -3,6 +3,7 @@ import { FileWithPreview, ResizeOptions, ResponseCallbackOptions } from '../type
 import { FetchEventSourceInit } from '@microsoft/fetch-event-source';
 import { WidgetProps } from './Widget';
 import { ChatMessage } from '../dto/ChatMessage';
+import { InititalPrompt, MCPTools } from '../dto/ParamInput';
 
 export declare const DEV_SERVER_URL = "https://api.dev.langdb.ai";
 export interface AdapterProps {
@@ -26,6 +27,8 @@ export interface SubmitProps extends FetchEventSourceInit {
     previousMessages: ChatMessage[];
     searchToolEnabled?: boolean;
     otherTools?: string[];
+    mcpTools?: MCPTools[];
+    initialPrompts?: InititalPrompt[];
     signal?: AbortSignal;
 }
 export declare const getHeaders: (props: {
