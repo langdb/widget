@@ -48204,13 +48204,10 @@ const NH = ({ message: e, personaOptions: t, widgetProps: n, isLastMessage: r, i
       n.length === 0 && /* @__PURE__ */ X.jsx(DH, { starters: e.starters, onStarterClick: (j) => {
         a(j), m({ inputText: j, files: [] });
       } }),
-      /* @__PURE__ */ X.jsxs("div", { className: "langdb-message-render flex-1 overflow-auto", children: [
-        n.filter((j) => j.type === dr.HumanMessage || j.type !== dr.ToolMessage).map((j) => {
-          const C = j.id === n[n.length - 1].id;
-          return /* @__PURE__ */ X.jsx(NH, { message: j, personaOptions: g, widgetProps: e, isLastMessage: C, isTyping: i && C }, j.id);
-        }),
-        /* @__PURE__ */ X.jsx("div", { ref: h })
-      ] }),
+      /* @__PURE__ */ X.jsx("div", { className: "langdb-message-render flex-1 overflow-auto", children: n.filter((j) => j.type === dr.HumanMessage || j.type !== dr.ToolMessage).map((j) => {
+        const C = j.id === n[n.length - 1].id;
+        return /* @__PURE__ */ X.jsx(NH, { message: j, personaOptions: g, widgetProps: e, isLastMessage: C, isTyping: i && C }, j.id);
+      }) }),
       o && /* @__PURE__ */ X.jsxs("div", { className: " bg-red-100 flex  p-2 rounded-lg items-center justify-between mb-4", children: [
         /* @__PURE__ */ X.jsx("div", { className: "flex flex-1", children: /* @__PURE__ */ X.jsx("span", { className: "text-red-700 line-clamp-3", children: o }) }),
         /* @__PURE__ */ X.jsx(
@@ -48223,6 +48220,7 @@ const NH = ({ message: e, personaOptions: t, widgetProps: n, isLastMessage: r, i
           }
         )
       ] }),
+      /* @__PURE__ */ X.jsx("div", { ref: h }),
       !b && /* @__PURE__ */ X.jsx(
         "button",
         {

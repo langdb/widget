@@ -412,8 +412,6 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
 
             return <MessageRenderer key={msg.id} message={msg} personaOptions={personaOptions} widgetProps={props} isLastMessage={isLastMessage} isTyping={typing && isLastMessage} />
           })}
-          <div ref={messagesEndRef} />
-
         </div>
 
         {error && (
@@ -430,6 +428,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
               className="h-4 w-4 text-red-500 hover:text-red-700 hover:cursor-pointer rounded-full" />
           </div>
         )}
+        <div ref={messagesEndRef} />
         {!inViewport && (
           <button
             onClick={scrollToBottom}
