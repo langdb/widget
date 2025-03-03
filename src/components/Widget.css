@@ -65,12 +65,14 @@
   background-color: var(--langdb-HumanMessage--BackgroundColor);
   border-color: var(--langdb-HumanMessage--BorderColor);
   color: var(--langdb-HumanMessage--TextColor);
+  overflow: hidden;
 }
 
 .ai-message {
   background-color: var(--langdb-AiMessage--BackgroundColor);
   border-color: var(--langdb-AiMessage--BorderColor);
   color: var(--langdb-AiMessage--TextColor);
+  overflow: hidden;
 }
 
 .langdb-input-container {

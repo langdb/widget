@@ -29,7 +29,6 @@ const MessageRenderer: React.FC<{
 }> = ({ message, personaOptions, widgetProps, isLastMessage, isTyping }) => (
   <article className={`flex mb-2 ${message.type === MessageType.HumanMessage ? 'justify-end scroll-my-20' : 'justify-start'} ${isLastMessage && !message.created_at ? 'min-h-[50vh] items-start justify-start' : 'items-start'}`}>
     <div className="max-w-3/4 overflow-scroll text-sm">
-
       {message.type === MessageType.HumanMessage
         ? <HumanMessage msg={message} persona={personaOptions.user} />
         : <AiMessage msg={message} persona={personaOptions.assistant} widgetProps={widgetProps} isTyping={isTyping} />
