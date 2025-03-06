@@ -80,8 +80,8 @@ const Example: FC<WidgetProps> = ({
           widgetId={threadId}
           searchToolEnabled={searchToolEnabled}
           toggleSearchTool={() => setSearchToolEnabled(prev => !prev)}
+          guards_slug={['guard_1', 'guard_2']}
 
-        
           //threadId="38a5a61b-9a28-43d3-99c9-215cc773bb59"
           modelName="openai/gpt-4o-mini"
           projectId={projectId}

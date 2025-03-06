@@ -1,5 +1,5 @@
 import { ChatCompletionChunk } from "../events";
-import { ChatCompletionMessage,  convert_to,  createSubmitMessage, FileWithPreview, MessageRequest, ResizeOptions, ResponseCallbackOptions } from "../types";
+import { ChatCompletionMessage, convert_to, createSubmitMessage, FileWithPreview, MessageRequest, ResizeOptions, ResponseCallbackOptions } from "../types";
 import { fetchEventSource, FetchEventSourceInit } from '@microsoft/fetch-event-source';
 import { WidgetProps } from "./Widget";
 import { ChatMessage } from "../dto/ChatMessage";
@@ -83,7 +83,7 @@ export const onSubmit = async (submitProps: SubmitProps) => {
 
     let previous: ChatCompletionMessage[] = convert_to(previousMessages)
 
-    let submitMessage:ChatCompletionMessage = await createSubmitMessage({
+    let submitMessage: ChatCompletionMessage = await createSubmitMessage({
       files,
       message,
       resizeOptions,
@@ -91,7 +91,7 @@ export const onSubmit = async (submitProps: SubmitProps) => {
 
     const guard_slug = widgetProps.guards_slug || []
 
-    let messages: ChatCompletionMessage[] = [ ...previous, submitMessage];
+    let messages: ChatCompletionMessage[] = [...previous, submitMessage];
     if (!threadId && modelName && modelName.includes('claude-')) {
       messages = [
         {
@@ -101,15 +101,15 @@ export const onSubmit = async (submitProps: SubmitProps) => {
         submitMessage
       ]
     }
-    if(initialPrompts && initialPrompts.length > 0) {
+    if (initialPrompts && initialPrompts.length > 0) {
       messages = [...initialPrompts, ...messages]
     }
     let mcp_servers = mcpTools || []
-    if(searchToolEnabled) {
-       mcp_servers.push({
+    if (searchToolEnabled) {
+      mcp_servers.push({
         name: 'websearch',
         type: 'memory'
-       })
+      })
     }
     // make mcp_server unique
     const uniqueMcpServers = Array.from(
