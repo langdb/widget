@@ -89,6 +89,8 @@ export const onSubmit = async (submitProps: SubmitProps) => {
       resizeOptions,
     });
 
+    const guard_slug = widgetProps.guards_slug || []
+
     let messages: ChatCompletionMessage[] = [ ...previous, submitMessage];
     if (!threadId && modelName && modelName.includes('claude-')) {
       messages = [
@@ -127,6 +129,11 @@ export const onSubmit = async (submitProps: SubmitProps) => {
       ...(uniqueMcpServers.length > 0 ? {
         "mcp_servers": uniqueMcpServers
       } : {}),
+      ...(guard_slug && guard_slug.length > 0 ? {
+        "extra": {
+          "guards": guard_slug
+        }
+      } : {})
     };
     await fetchEventSource(apiUrl, {
       method: "POST",

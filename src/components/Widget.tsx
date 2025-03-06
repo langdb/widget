@@ -34,6 +34,7 @@ export interface WidgetProps extends AdapterProps {
   searchToolEnabled?: boolean,
   toggleSearchTool?: (enabled: boolean) => void,
   widgetId?: string,
+  guards_slug?: string[]
 }
 
 
