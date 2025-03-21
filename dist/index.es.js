@@ -43855,7 +43855,18 @@ const gt = W8(), Y8 = ({ msg: e, persona: t, widgetProps: n, isTyping: r }) => {
         /* @__PURE__ */ X.jsx("div", { className: "", children: /* @__PURE__ */ X.jsx("span", { className: "text-sm", children: "Tool Calls" }) }),
         (e == null ? void 0 : e.tool_calls) && e.tool_calls.map((d, g) => {
           if (d.function) {
-            let m = { ...d.function, arguments: JSON.parse(d.function.arguments) };
+            let m;
+            try {
+              m = {
+                ...d.function,
+                arguments: d.function.arguments ? JSON.parse(d.function.arguments) : d.function.arguments
+              };
+            } catch (h) {
+              m = {
+                ...d.function,
+                arguments: d.function.arguments
+              }, console.warn("Failed to parse function arguments:", h);
+            }
             return /* @__PURE__ */ X.jsx(V8, { theme: "ashes", src: m }, g);
           }
           return /* @__PURE__ */ X.jsx(X.Fragment, {});

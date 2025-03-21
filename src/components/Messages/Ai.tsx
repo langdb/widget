@@ -79,7 +79,22 @@ export const AiMessage: React.FC<{
           </div>
           {msg?.tool_calls && msg.tool_calls.map((tool_call, index) => {
             if (tool_call.function) {
-              let function_display = { ...tool_call.function, arguments: JSON.parse(tool_call.function.arguments) };
+              let function_display;
+              try {
+                function_display = {
+                  ...tool_call.function,
+                  arguments: tool_call.function.arguments ? 
+                    JSON.parse(tool_call.function.arguments) : 
+                    tool_call.function.arguments
+                };
+              } catch (error) {
+                // If JSON parsing fails, use the original string
+                function_display = {
+                  ...tool_call.function,
+                  arguments: tool_call.function.arguments
+                };
+                console.warn('Failed to parse function arguments:', error);
+              }
               return <ReactJson key={index} theme='ashes' src={function_display} />
             }
             return <></>
