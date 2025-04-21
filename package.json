@@ -77,6 +77,7 @@
     "react-markdown": "^9.0.3",
     "react-syntax-highlighter": "^15.5.0",
     "react-tailwindcss-datepicker": "^1.7.2",
+    "rehype-external-links": "^3.0.0",
     "rehype-raw": "^7.0.0",
     "remark-behead": "^3.1.0",
     "remark-flexible-paragraphs": "^1.2.0",

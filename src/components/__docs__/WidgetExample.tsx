@@ -42,7 +42,7 @@ const Example: FC<WidgetProps> = ({
       traceId,
       error,
     }) => {
-      if(state === 'SubmitEnd') {
+      if (state === 'SubmitEnd') {
         setCurrentInput('');
       }
     });
@@ -53,8 +53,8 @@ const Example: FC<WidgetProps> = ({
   }, []);
 
   useEffect(() => {
-    emitter.on('langdb_aiMessageClicked', ({ threadId, messageId, runId }: { threadId: string | undefined, messageId: string | undefined, runId: string | undefined }) => { console.log( "===== on AI Message Clicked ====", {threadId, messageId, runId}) });
-    
+    emitter.on('langdb_aiMessageClicked', ({ threadId, messageId, runId }: { threadId: string | undefined, messageId: string | undefined, runId: string | undefined }) => { console.log("===== on AI Message Clicked ====", { threadId, messageId, runId }) });
+
     return () => {
       emitter.off('langdb_aiMessageClicked');
     };
@@ -76,23 +76,26 @@ const Example: FC<WidgetProps> = ({
             emitter.emit('langdb_chatTerminate', { threadId, widgetId: threadId })
           }}>Terminate</button>
         <Widget
-          threadId={threadId}
-          widgetId={threadId}
-          searchToolEnabled={searchToolEnabled}
-          toggleSearchTool={() => setSearchToolEnabled(prev => !prev)}
-          guards_slug={['guard_1', 'guard_2']}
+          mcpTools={
+            [{
+              type: 'sse',
+              server_url: "https://api.staging.langdb.ai/connect_slack_9tc97paw"
 
+            }]
+          }
+          //threadId={threadId}
+          //widgetId={threadId}
           //threadId="38a5a61b-9a28-43d3-99c9-215cc773bb59"
           modelName="openai/gpt-4o-mini"
-          projectId={projectId}
-          apiKey={apiKey}
+          projectId={'7d73eb9e-5b69-4422-9252-d6b82db43494'}
+          apiKey={'langdb_N3ZudmUyaHQ5YjlnMGFyZWNrZnJsc2M0bms='}
           serverUrl={api_url}
           theme={theme}
           hideChatInput={true}
           starters={starters}
         />
 
-{/* <Widget
+        {/* <Widget
           modelName="openai/gpt-4o-mini"
           projectId={projectId}
           apiKey={apiKey}
@@ -119,7 +122,7 @@ const Example: FC<WidgetProps> = ({
             setCurrentInput={setCurrentInput}
             searchToolEnabled={searchToolEnabled}
             toggleSearchTool={() => setSearchToolEnabled(prev => !prev)}
-            onSubmit={(props:{inputText: string, files: FileWithPreview[], searchToolEnabled?: boolean, otherTools?: string[]}) => {
+            onSubmit={(props: { inputText: string, files: FileWithPreview[], searchToolEnabled?: boolean, otherTools?: string[] }) => {
               emitter.emit('langdb_input_chatSubmit', props)
               setCurrentInput('')
               return Promise.resolve();

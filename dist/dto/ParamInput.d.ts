@@ -3,6 +3,7 @@ export interface InititalPrompt {
     content: string;
 }
 export interface MCPTools {
-    name: string;
+    name?: string;
     type: string;
+    server_url?: string;
 }

@@ -56,9 +56,7 @@ export const AiMessage: React.FC<{
 
   }, [threadId, id, widgetProps]);
   return (
-    <div onClick={(e) => {
-      e.stopPropagation();
-      e.preventDefault();
+    <div onClick={() => {
       threadId && id && emitter.emit('langdb_aiMessageClicked', {
         threadId: threadId,
         messageId: id,

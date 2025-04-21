@@ -6,6 +6,8 @@ import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { CopyToClipboard } from "./CopyToClipboard";
 import rehypeRaw from 'rehype-raw'
 import behead from 'remark-behead';
+import rehypeExternalLinks from 'rehype-external-links'
+
 import remarkFlexibleParagraphs from "remark-flexible-paragraphs";
 
 interface MessageDisplayProps {
@@ -19,7 +21,7 @@ export const MessageDisplay: React.FC<MessageDisplayProps> = ({ message }) => {
 export const BaseMessageDisplay: React.FC<{ message: string }> = ({ message }) => {
   return <ReactMarkdown
   remarkPlugins={[remarkGfm, behead, remarkFlexibleParagraphs]}
-  rehypePlugins={[rehypeRaw]}
+  rehypePlugins={[rehypeRaw, [rehypeExternalLinks, {target: '_blank'}]]}
   components={{
     code({ node, className, children, ...props }) {
       const match = /language-(\w+)/.exec(className || '');

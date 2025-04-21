@@ -4,6 +4,7 @@ export interface InititalPrompt {
  }
  
  export interface MCPTools {
-   name: string;
+   name?: string;
    type: string;
+   server_url?: string;
  }
