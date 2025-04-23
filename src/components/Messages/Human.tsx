@@ -30,7 +30,7 @@ export const HumanMessage: React.FC<{ msg: ChatMessage; persona?: Persona }> = (
                 </audio>
               } else {
                 return (
-                  <div key={index} className="flex flex-col">
+                  <div key={index} className="flex flex-col whitespace-pre-wrap">
                     <MessageDisplay message={content} />
                   </div>
                 )
@@ -48,7 +48,7 @@ export const HumanMessage: React.FC<{ msg: ChatMessage; persona?: Persona }> = (
     <div className="flex items-center gap-2 mb-2">
       <div className="flex flex-col">
         {files && files.length > 0 && <Files files={files} />}
-        <div className="rounded-lg p-2 human-message">
+        <div className="rounded-lg p-2 human-message whitespace-pre-wrap">
           <MessageDisplay message={message || ""} />
         </div>
       </div>

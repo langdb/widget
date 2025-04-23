@@ -41268,7 +41268,7 @@ const o_ = {
         return /* @__PURE__ */ X.jsx("ol", { className: "list-decimal list-inside", ...n, children: t });
       },
       li({ children: t, ...n }) {
-        return /* @__PURE__ */ X.jsx("li", { className: "list-item pl-3 pt-1", ...n, children: t });
+        return /* @__PURE__ */ X.jsx("li", { className: "list-item", ...n, children: t });
       },
       a({ children: t, ...n }) {
         return /* @__PURE__ */ X.jsx("a", { className: "text-blue-500 hover:underline hover:text-blue-600", ...n, children: t });
@@ -41311,13 +41311,13 @@ ${JSON.stringify(a, null, 2)}` }) : /* @__PURE__ */ X.jsx("p", { ...n, children:
       return s === "ImageUrl" ? /* @__PURE__ */ X.jsx("div", { className: "flex flex-col", children: /* @__PURE__ */ X.jsx("img", { src: l }) }, i) : s === "InputAudio" ? /* @__PURE__ */ X.jsxs("audio", { controls: !0, className: "my-2", children: [
         /* @__PURE__ */ X.jsx("source", { src: `data:audio/mpeg;base64,${l}`, type: "audio/mpeg" }),
         "Your browser does not support the audio element."
-      ] }) : /* @__PURE__ */ X.jsx("div", { className: "flex flex-col", children: /* @__PURE__ */ X.jsx(Gp, { message: l }) }, i);
+      ] }) : /* @__PURE__ */ X.jsx("div", { className: "flex flex-col whitespace-pre-wrap", children: /* @__PURE__ */ X.jsx(Gp, { message: l }) }, i);
     }) }) }),
     /* @__PURE__ */ X.jsx("div", { children: t ? t.url ? /* @__PURE__ */ X.jsx(Qr, { name: t.name, imageUrl: t.url, className: "h-6 w-6 rounded-full" }) : /* @__PURE__ */ X.jsx(Pm, { className: "h-6 w-6 rounded-full" }) : /* @__PURE__ */ X.jsx(Qr, { className: "h-6 w-6 rounded-full", name: "User" }) })
   ] }) : /* @__PURE__ */ X.jsxs("div", { className: "flex items-center gap-2 mb-2", children: [
     /* @__PURE__ */ X.jsxs("div", { className: "flex flex-col", children: [
       r && r.length > 0 && /* @__PURE__ */ X.jsx(pT, { files: r }),
-      /* @__PURE__ */ X.jsx("div", { className: "rounded-lg p-2 human-message", children: /* @__PURE__ */ X.jsx(Gp, { message: n || "" }) })
+      /* @__PURE__ */ X.jsx("div", { className: "rounded-lg p-2 human-message whitespace-pre-wrap", children: /* @__PURE__ */ X.jsx(Gp, { message: n || "" }) })
     ] }),
     t ? t.url ? /* @__PURE__ */ X.jsx(Qr, { name: t.name, imageUrl: t.url, className: "h-6 w-6 rounded-full" }) : /* @__PURE__ */ X.jsx(Pm, { className: "h-6 w-6 rounded-full" }) : /* @__PURE__ */ X.jsx(Qr, { className: "h-6 w-6 rounded-full", name: "User" })
   ] });
@@ -43945,7 +43945,7 @@ const gt = s9(), l9 = ({ msg: e, persona: t, widgetProps: n, isTyping: r }) => {
     /* @__PURE__ */ X.jsx("div", { children: t ? t.url ? /* @__PURE__ */ X.jsx(Qr, { name: t.name, imageUrl: t.url, className: "h-6 w-6 rounded-full" }) : /* @__PURE__ */ X.jsx(df, { className: "h-6 w-6 rounded-full" }) : /* @__PURE__ */ X.jsx(Qr, { className: "h-6 w-6 rounded-full", name: "User" }) }),
     /* @__PURE__ */ X.jsxs("div", { className: "rounded-lg px-3 py-2 ai-message shadow-sm", children: [
       (e == null ? void 0 : e.tool_calls) && e.tool_calls.length > 0 && /* @__PURE__ */ X.jsxs("div", { className: "mb-3 border border-[#333333]  rounded-md overflow-hidden", children: [
-        /* @__PURE__ */ X.jsx("div", { className: "px-3 py-1.5 border-b border-[#333333] flex items-center", children: /* @__PURE__ */ X.jsx("span", { className: "text-sm font-medium", children: "Tool Calls" }) }),
+        /* @__PURE__ */ X.jsx("div", { className: "px-3 py-1.5 border-b border-[#333333] flex items-center", children: /* @__PURE__ */ X.jsx("span", { className: "text-xs font-bold", children: "Tool Calls" }) }),
         /* @__PURE__ */ X.jsx("div", { className: "divide-y divide-[#333333]", children: e.tool_calls.map((d, g) => {
           if (d.function) {
             let m;
@@ -43989,7 +43989,7 @@ const gt = s9(), l9 = ({ msg: e, persona: t, widgetProps: n, isTyping: r }) => {
                 style: {
                   wordWrap: "break-word",
                   whiteSpace: "pre-wrap",
-                  fontSize: "0.85rem"
+                  fontSize: "10px"
                 },
                 src: m
               },

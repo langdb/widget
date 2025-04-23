@@ -79,7 +79,7 @@ export const BaseMessageDisplay: React.FC<{ message: string }> = ({ message }) =
     },
     
     li({ children, ...props }) {
-      return <li className="list-item pl-3 pt-1" {...props}>{children}</li>
+      return <li className="list-item" {...props}>{children}</li>
     },
     a({ children, ...props }) {
       return <a className="text-blue-500 hover:underline hover:text-blue-600" {...props}>{children}</a>

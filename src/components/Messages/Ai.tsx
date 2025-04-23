@@ -73,7 +73,7 @@ export const AiMessage: React.FC<{
         {msg?.tool_calls && msg.tool_calls.length > 0 && (
           <div className="mb-3 border border-[#333333]  rounded-md overflow-hidden">
             <div className="px-3 py-1.5 border-b border-[#333333] flex items-center">
-              <span className="text-sm font-medium">Tool Calls</span>
+              <span className="text-xs font-bold">Tool Calls</span>
             </div>
             <div className="divide-y divide-[#333333]">
               {msg.tool_calls.map((tool_call, index) => {
@@ -124,7 +124,7 @@ export const AiMessage: React.FC<{
                         style={{
                           wordWrap: 'break-word',
                           whiteSpace: 'pre-wrap',
-                          fontSize: '0.85rem'
+                          fontSize: '10px'
                         }}
                         src={function_display}
                       />
