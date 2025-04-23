@@ -43943,11 +43943,10 @@ const gt = s9(), l9 = ({ msg: e, persona: t, widgetProps: n, isTyping: r }) => {
     });
   }, className: "flex gap-2 items-start", children: [
     /* @__PURE__ */ X.jsx("div", { children: t ? t.url ? /* @__PURE__ */ X.jsx(Qr, { name: t.name, imageUrl: t.url, className: "h-6 w-6 rounded-full" }) : /* @__PURE__ */ X.jsx(df, { className: "h-6 w-6 rounded-full" }) : /* @__PURE__ */ X.jsx(Qr, { className: "h-6 w-6 rounded-full", name: "User" }) }),
-    /* @__PURE__ */ X.jsxs("div", { className: "rounded-lg px-2 py-0 ai-message", children: [
-      /* @__PURE__ */ X.jsx(Gp, { message: (e == null ? void 0 : e.message) || "" }),
-      (e == null ? void 0 : e.tool_calls) && e.tool_calls && e.tool_calls.length > 0 && /* @__PURE__ */ X.jsxs("div", { children: [
-        /* @__PURE__ */ X.jsx("div", { className: "", children: /* @__PURE__ */ X.jsx("span", { className: "text-sm", children: "Tool Calls" }) }),
-        (e == null ? void 0 : e.tool_calls) && e.tool_calls.map((d, g) => {
+    /* @__PURE__ */ X.jsxs("div", { className: "rounded-lg px-3 py-2 ai-message shadow-sm", children: [
+      (e == null ? void 0 : e.tool_calls) && e.tool_calls.length > 0 && /* @__PURE__ */ X.jsxs("div", { className: "mb-3 border border-[#333333]  rounded-md overflow-hidden", children: [
+        /* @__PURE__ */ X.jsx("div", { className: "px-3 py-1.5 border-b border-[#333333] flex items-center", children: /* @__PURE__ */ X.jsx("span", { className: "text-sm font-medium", children: "Tool Calls" }) }),
+        /* @__PURE__ */ X.jsx("div", { className: "divide-y divide-[#333333]", children: e.tool_calls.map((d, g) => {
           if (d.function) {
             let m;
             try {
@@ -43961,22 +43960,58 @@ const gt = s9(), l9 = ({ msg: e, persona: t, widgetProps: n, isTyping: r }) => {
                 arguments: d.function.arguments
               }, console.warn("Failed to parse function arguments:", h);
             }
-            return /* @__PURE__ */ X.jsx(o9, { theme: "ashes", src: m }, g);
+            return /* @__PURE__ */ X.jsx("div", { className: "px-3 py-2", children: /* @__PURE__ */ X.jsx(
+              o9,
+              {
+                name: !1,
+                collapsed: 2,
+                displayDataTypes: !1,
+                displayObjectSize: !1,
+                enableClipboard: !1,
+                theme: {
+                  base00: "transparent",
+                  base01: "#ffffff20",
+                  base02: "#ffffff30",
+                  base03: "#ffffff40",
+                  base04: "#ffffff60",
+                  base05: "#ffffff80",
+                  base06: "#ffffffa0",
+                  base07: "#ffffffc0",
+                  base08: "#ff8c8c",
+                  base09: "#ffd700",
+                  base0A: "#ffeb3b",
+                  base0B: "#4caf50",
+                  base0C: "#00bcd4",
+                  base0D: "#2196f3",
+                  base0E: "#9c27b0",
+                  base0F: "#ff9800"
+                },
+                style: {
+                  wordWrap: "break-word",
+                  whiteSpace: "pre-wrap",
+                  fontSize: "0.85rem"
+                },
+                src: m
+              },
+              g
+            ) }, g);
           }
-          return /* @__PURE__ */ X.jsx(X.Fragment, {});
-        })
+          return null;
+        }) })
       ] }),
-      !r && a && i && /* @__PURE__ */ X.jsx(X.Fragment, { children: /* @__PURE__ */ X.jsxs("div", { className: " mt-3 gap-3 flex items-center justify-start space-x-1", children: [
+      /* @__PURE__ */ X.jsx("div", { className: "whitespace-pre-wrap", children: /* @__PURE__ */ X.jsx(Gp, { message: (e == null ? void 0 : e.message) || "" }) }),
+      !r && a && i && /* @__PURE__ */ X.jsxs("div", { className: "mt-3 flex items-center justify-start space-x-2", children: [
         /* @__PURE__ */ X.jsxs(
           "button",
           {
-            className: "rounded focus:outline-none hover:text-primary-500",
+            className: "rounded-full p-1 focus:outline-none hover:bg-gray-700/30 transition-colors duration-150",
+            title: "Thumbs up",
             onClick: (d) => {
               d.preventDefault(), d.stopPropagation(), c(1);
             },
             children: [
-              o == null && /* @__PURE__ */ X.jsx(Ix, { className: "h-4 w-4" }),
-              o === 1 && /* @__PURE__ */ X.jsx(Mx, { className: "h-4 w-4 animate-fadeIn" })
+              o === void 0 && /* @__PURE__ */ X.jsx(Ix, { className: "h-4 w-4" }),
+              o === 1 && /* @__PURE__ */ X.jsx(Mx, { className: "h-4 w-4 text-green-500 animate-fadeIn" })
             ]
           }
         ),
@@ -43984,20 +44019,21 @@ const gt = s9(), l9 = ({ msg: e, persona: t, widgetProps: n, isTyping: r }) => {
           "button",
           {
             className: "rounded focus:outline-none hover:text-primary-500",
+            title: "Thumbs down",
             onClick: (d) => {
               d.preventDefault(), d.stopPropagation(), c(-1);
             },
             children: [
-              o == null && /* @__PURE__ */ X.jsx(xx, { className: "h-4 w-4" }),
+              o === void 0 && /* @__PURE__ */ X.jsx(xx, { className: "h-4 w-4" }),
               o === -1 && /* @__PURE__ */ X.jsx(Lx, { className: "h-4 w-4 animate-fadeIn" })
             ]
           }
         ),
-        l && /* @__PURE__ */ X.jsx("div", { className: " text-red-500 ", children: l })
-      ] }) }),
-      r && /* @__PURE__ */ X.jsxs("div", { className: "rounded-lg p-2 ai-message flex items-center gap-2 animate-pulse", children: [
-        /* @__PURE__ */ X.jsx(kx, { className: "h-5 w-5 text-white animate-pulse" }),
-        /* @__PURE__ */ X.jsx("span", { children: "Typing..." })
+        l && /* @__PURE__ */ X.jsx("div", { className: "text-red-500", children: l })
+      ] }),
+      r && /* @__PURE__ */ X.jsxs("div", { className: "rounded-md p-2 flex items-center gap-2 animate-pulse mt-2", children: [
+        /* @__PURE__ */ X.jsx(kx, { className: "h-4 w-4 text-white animate-pulse" }),
+        /* @__PURE__ */ X.jsx("span", { className: "text-sm", children: "Typing..." })
       ] })
     ] })
   ] });

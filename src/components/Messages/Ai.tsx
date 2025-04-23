@@ -69,68 +69,111 @@ export const AiMessage: React.FC<{
       <div>
         {!persona ? <AvatarItem className="h-6 w-6 rounded-full" name={"User"} /> : (persona.url ? <AvatarItem name={persona.name} imageUrl={persona.url} className="h-6 w-6 rounded-full" /> : <Avatar className="h-6 w-6 rounded-full" />)}
       </div>
-      <div className="rounded-lg px-2 py-0 ai-message">
-        <MessageDisplay message={msg?.message || ""} />
-        {msg?.tool_calls && msg.tool_calls && msg.tool_calls.length > 0 && <div>
-          <div className="">
-            <span className="text-sm">Tool Calls</span>
+      <div className="rounded-lg px-3 py-2 ai-message shadow-sm">
+        {msg?.tool_calls && msg.tool_calls.length > 0 && (
+          <div className="mb-3 border border-[#333333]  rounded-md overflow-hidden">
+            <div className="px-3 py-1.5 border-b border-[#333333] flex items-center">
+              <span className="text-sm font-medium">Tool Calls</span>
+            </div>
+            <div className="divide-y divide-[#333333]">
+              {msg.tool_calls.map((tool_call, index) => {
+                if (tool_call.function) {
+                  let function_display;
+                  try {
+                    function_display = {
+                      ...tool_call.function,
+                      arguments: tool_call.function.arguments ?
+                        JSON.parse(tool_call.function.arguments) :
+                        tool_call.function.arguments
+                    };
+                  } catch (error) {
+                    // If JSON parsing fails, use the original string
+                    function_display = {
+                      ...tool_call.function,
+                      arguments: tool_call.function.arguments
+                    };
+                    console.warn('Failed to parse function arguments:', error);
+                  }
+                  return (
+                    <div key={index} className="px-3 py-2">
+                      <ReactJson
+                        key={index}
+                        name={false}
+                        collapsed={2}
+                        displayDataTypes={false}
+                        displayObjectSize={false}
+                        enableClipboard={false}
+                        theme={{
+                          base00: 'transparent',
+                          base01: '#ffffff20',
+                          base02: '#ffffff30',
+                          base03: '#ffffff40',
+                          base04: '#ffffff60',
+                          base05: '#ffffff80',
+                          base06: '#ffffffa0',
+                          base07: '#ffffffc0',
+                          base08: '#ff8c8c',
+                          base09: '#ffd700',
+                          base0A: '#ffeb3b',
+                          base0B: '#4caf50',
+                          base0C: '#00bcd4',
+                          base0D: '#2196f3',
+                          base0E: '#9c27b0',
+                          base0F: '#ff9800'
+                        }}
+                        style={{
+                          wordWrap: 'break-word',
+                          whiteSpace: 'pre-wrap',
+                          fontSize: '0.85rem'
+                        }}
+                        src={function_display}
+                      />
+                    </div>
+                  );
+                }
+                return null;
+              })}
+            </div>
           </div>
-          {msg?.tool_calls && msg.tool_calls.map((tool_call, index) => {
-            if (tool_call.function) {
-              let function_display;
-              try {
-                function_display = {
-                  ...tool_call.function,
-                  arguments: tool_call.function.arguments ? 
-                    JSON.parse(tool_call.function.arguments) : 
-                    tool_call.function.arguments
-                };
-              } catch (error) {
-                // If JSON parsing fails, use the original string
-                function_display = {
-                  ...tool_call.function,
-                  arguments: tool_call.function.arguments
-                };
-                console.warn('Failed to parse function arguments:', error);
-              }
-              return <ReactJson key={index} theme='ashes' src={function_display} />
-            }
-            return <></>
-          })}
-        </div>}
+        )}
+        <div className="whitespace-pre-wrap">
+          <MessageDisplay message={msg?.message || ""} />
+        </div>
         {
-          !isTyping && threadId && id && (<>
-            <div className=" mt-3 gap-3 flex items-center justify-start space-x-1">
+          !isTyping && threadId && id && (
+            <div className="mt-3 flex items-center justify-start space-x-2">
               <button
-                className="rounded focus:outline-none hover:text-primary-500"
+                className="rounded-full p-1 focus:outline-none hover:bg-gray-700/30 transition-colors duration-150"
+                title="Thumbs up"
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  handleScore(1)
+                  handleScore(1);
                 }}
               >
-                {score == undefined && <HandThumbUpIcon className="h-4 w-4" />}
-                {score === 1 && <SHandThumbUpIcon className="h-4 w-4 animate-fadeIn" />}
+                {score === undefined && <HandThumbUpIcon className="h-4 w-4" />}
+                {score === 1 && <SHandThumbUpIcon className="h-4 w-4 text-green-500 animate-fadeIn" />}
               </button>
               <button
                 className="rounded focus:outline-none hover:text-primary-500"
+                title="Thumbs down"
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  handleScore(-1)
+                  handleScore(-1);
                 }}
               >
-                {score == undefined && <HandThumbDownIcon className="h-4 w-4" />}
+                {score === undefined && <HandThumbDownIcon className="h-4 w-4" />}
                 {score === -1 && <SHandThumbDownIcon className="h-4 w-4 animate-fadeIn" />}
               </button>
-              {error && <div className=" text-red-500 ">{error}</div>}
+              {error && <div className="text-red-500">{error}</div>}
             </div>
-          </>)
+          )
         }
         {isTyping && (
-          <div className="rounded-lg p-2 ai-message flex items-center gap-2 animate-pulse">
-            <PencilIcon className="h-5 w-5 text-white animate-pulse" />
-            <span>Typing...</span>
+          <div className="rounded-md p-2 flex items-center gap-2 animate-pulse mt-2">
+            <PencilIcon className="h-4 w-4 text-white animate-pulse" />
+            <span className="text-sm">Typing...</span>
           </div>
         )}
       </div>
