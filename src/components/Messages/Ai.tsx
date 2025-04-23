@@ -124,7 +124,6 @@ export const AiMessage: React.FC<{
                         style={{
                           wordWrap: 'break-word',
                           whiteSpace: 'pre-wrap',
-                          fontSize: '10px'
                         }}
                         src={function_display}
                       />

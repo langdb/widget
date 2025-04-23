@@ -43988,8 +43988,7 @@ const gt = s9(), l9 = ({ msg: e, persona: t, widgetProps: n, isTyping: r }) => {
                 },
                 style: {
                   wordWrap: "break-word",
-                  whiteSpace: "pre-wrap",
-                  fontSize: "10px"
+                  whiteSpace: "pre-wrap"
                 },
                 src: m
               },
