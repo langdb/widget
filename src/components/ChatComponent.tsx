@@ -286,7 +286,8 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
     setCurrentInput,
     typing,
     error,
-    setError
+    setError,
+    setMessages
   } = chatState;
   const { initialPrompts, mcpTools } = props
 
@@ -362,6 +363,20 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
       emitter.off('langdb_chatTerminate', handleTerminate);
     };
   }, [terminateChat, setError, threadId]);
+
+
+  useEffect(() => {
+    const handleClearChat = (input: { threadId?: string, widgetId?: string }) => {
+      if (input.threadId === threadId || (input.widgetId && input.widgetId === props.widgetId)) {
+        terminateChat();
+        setMessages([]);
+      }
+    };
+    emitter.on('langdb_clearChat', handleClearChat);
+    return () => {
+      emitter.off('langdb_clearChat', handleClearChat);
+    };
+  }, [terminateChat, threadId]);
 
 
   useEffect(() => {

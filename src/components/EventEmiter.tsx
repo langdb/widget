@@ -22,6 +22,7 @@ type Events = {
   langdb_input_speechRecognitionEnd: {};
   langdb_aiMessageClicked: { threadId: string | undefined, messageId: string | undefined, traceId: string | undefined, widgetId: string | undefined, runId: string | undefined };
   langdb_chat_scrollToBottom: { threadId: string | undefined, widgetId: string | undefined };
+  langdb_clearChat: { threadId?: string, widgetId?: string };
 };
 
 export const emitter = mitt<Events>();

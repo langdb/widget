@@ -42,6 +42,10 @@ type Events = {
         threadId: string | undefined;
         widgetId: string | undefined;
     };
+    langdb_clearChat: {
+        threadId?: string;
+        widgetId?: string;
+    };
 };
 export declare const emitter: import('mitt').Emitter<Events>;
 export {};
