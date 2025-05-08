@@ -416,10 +416,10 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
             </div>
           </div>
         )}
-        {messages.length === 0 && <StarterDisplay starters={props.starters} onStarterClick={(prompt: string) => {
+        {messages.length === 0 && (props.renderStarter ? props.renderStarter() : <StarterDisplay starters={props.starters} onStarterClick={(prompt: string) => {
           setCurrentInput(prompt);
           handleSubmit({ inputText: prompt, files: [] });
-        }} />}
+        }} />)}
         <div className="langdb-message-render flex-1 overflow-auto">
           {messages.filter(m => m.type === MessageType.HumanMessage || m.type !== MessageType.ToolMessage).map((msg: ChatMessage) => {
             const isLastMessage = msg.id === messages[messages.length - 1].id;

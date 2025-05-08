@@ -48356,9 +48356,9 @@ const GH = ({ message: e, personaOptions: t, widgetProps: n, isLastMessage: r, i
           /* @__PURE__ */ X.jsx("span", { children: "Drop any file here to add it to conversation" })
         ] })
       ] }),
-      n.length === 0 && /* @__PURE__ */ X.jsx(YH, { starters: e.starters, onStarterClick: (C) => {
+      n.length === 0 && (e.renderStarter ? e.renderStarter() : /* @__PURE__ */ X.jsx(YH, { starters: e.starters, onStarterClick: (C) => {
         a(C), h({ inputText: C, files: [] });
-      } }),
+      } })),
       /* @__PURE__ */ X.jsx("div", { className: "langdb-message-render flex-1 overflow-auto", children: n.filter((C) => C.type === pr.HumanMessage || C.type !== pr.ToolMessage).map((C) => {
         const I = C.id === n[n.length - 1].id;
         return /* @__PURE__ */ X.jsx(GH, { message: C, personaOptions: m, widgetProps: e, isLastMessage: I, isTyping: i && I }, C.id);
