@@ -43998,7 +43998,7 @@ const lt = s9(), l9 = ({ msg: e, persona: t, widgetProps: n, isTyping: r }) => {
           return null;
         }) })
       ] }),
-      /* @__PURE__ */ X.jsx("div", { children: /* @__PURE__ */ X.jsx(Gp, { message: (e == null ? void 0 : e.message) || "" }) }),
+      /* @__PURE__ */ X.jsx("div", { className: "whitespace-pre-wrap", children: /* @__PURE__ */ X.jsx(Gp, { message: (e == null ? void 0 : e.message) || "" }) }),
       !r && a && i && /* @__PURE__ */ X.jsxs("div", { className: "mt-3 flex items-center justify-start space-x-2", children: [
         /* @__PURE__ */ X.jsxs(
           "button",
