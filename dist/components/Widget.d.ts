@@ -9,6 +9,7 @@ export interface WidgetProps extends AdapterProps {
     personaOptions?: PersonaOptions;
     messages?: ChatMessage[];
     initialPrompts?: InititalPrompt[];
+    variables?: Record<string, any>;
     mcpTools?: MCPTools[];
     style?: React.CSSProperties;
     className?: string;

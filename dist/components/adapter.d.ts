@@ -29,6 +29,7 @@ export interface SubmitProps extends FetchEventSourceInit {
     otherTools?: string[];
     mcpTools?: MCPTools[];
     initialPrompts?: InititalPrompt[];
+    variables?: Record<string, any>;
     signal?: AbortSignal;
 }
 export declare const getHeaders: (props: {

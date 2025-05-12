@@ -137,11 +137,12 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
       searchToolEnabled?: boolean;
       otherTools?: string[];
       initialPrompts?: InititalPrompt[],
-      mcpTools?: MCPTools[]
+      variables?: Record<string, any>
+      mcpTools?: MCPTools[],
     }) => {
     abortControllerRef.current = new AbortController();
 
-    const { inputText, files, searchToolEnabled, otherTools, mcpTools, initialPrompts } = inputProps;
+    const { inputText, files, searchToolEnabled, otherTools, mcpTools, initialPrompts, variables } = inputProps;
 
     if (inputText.trim() === '') return;
 
@@ -173,6 +174,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
       let isFirstSignal = true;
       await onSubmit({
         initialPrompts,
+        variables,
         mcpTools,
         searchToolEnabled,
         otherTools,
@@ -289,7 +291,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
     setError,
     setMessages
   } = chatState;
-  const { initialPrompts, mcpTools } = props
+  const { initialPrompts, mcpTools, variables } = props
 
   const { hideChatInput, threadId } = props
 
@@ -310,8 +312,8 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
 
 
   const onSubmitWrapper = useCallback((inputProps: { inputText: string, files: FileWithPreview[], searchToolEnabled?: boolean, otherTools?: string[] }) => {
-    return handleSubmit({...inputProps, initialPrompts, mcpTools});
-  }, [handleSubmit, initialPrompts, mcpTools ]);
+    return handleSubmit({...inputProps, initialPrompts, mcpTools, variables});
+  }, [handleSubmit, initialPrompts, mcpTools, variables]);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     let updatedFilesPromises = acceptedFiles.map(file => {

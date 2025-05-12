@@ -30,6 +30,7 @@ export interface SubmitProps extends FetchEventSourceInit {
   otherTools?: string[];
   mcpTools?: MCPTools[];
   initialPrompts?: InititalPrompt[],
+  variables?: Record<string, any>,
   signal?: AbortSignal;
 }
 
@@ -66,7 +67,7 @@ export const getHeaders = async (props: {
 
 
 export const onSubmit = async (submitProps: SubmitProps) => {
-  const { widgetProps, files, message, threadId, onopen, onmessage, onerror, onclose, previousMessages, searchToolEnabled, signal, mcpTools, initialPrompts } = submitProps;
+  const { widgetProps, files, message, threadId, onopen, onmessage, onerror, onclose, previousMessages, searchToolEnabled, signal, mcpTools, initialPrompts, variables } = submitProps;
   const { fileResizeOptions: resizeOptions } = widgetProps;
   const serverUrl = widgetProps.serverUrl || DEV_SERVER_URL;
   const apiUrl = `${serverUrl}/chat/completions`;
@@ -121,10 +122,14 @@ export const onSubmit = async (submitProps: SubmitProps) => {
       model: modelName,
       thread_id: threadId,
       messages: messages,
+      
       stream: true,
       stream_options: {
         include_usage: true
       },
+      ...(variables && Object.keys(variables).length > 0 ? {
+        "variables": variables
+      } : {}),
       ...(agentParams || {}),
       ...(uniqueMcpServers.length > 0 ? {
         "mcp_servers": uniqueMcpServers

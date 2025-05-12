@@ -14,6 +14,7 @@ export interface WidgetProps extends AdapterProps {
   personaOptions?: PersonaOptions;
   messages?: ChatMessage[];
   initialPrompts?: InititalPrompt[];
+  variables?: Record<string, any>
   mcpTools?: MCPTools[],
   style?: React.CSSProperties;
   className?: string;
@@ -35,7 +36,7 @@ export interface WidgetProps extends AdapterProps {
   toggleSearchTool?: (enabled: boolean) => void,
   renderStarter?: () => React.ReactNode,
   widgetId?: string,
-  guards_slug?: string[]
+  guards_slug?: string[],
 }
 
 
