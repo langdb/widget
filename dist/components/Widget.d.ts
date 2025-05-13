@@ -32,5 +32,6 @@ export interface WidgetProps extends AdapterProps {
     renderStarter?: () => React.ReactNode;
     widgetId?: string;
     guards_slug?: string[];
+    dynamicBody?: any;
 }
 export declare const Widget: React.FC<WidgetProps>;

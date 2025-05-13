@@ -37,6 +37,7 @@ export interface WidgetProps extends AdapterProps {
   renderStarter?: () => React.ReactNode,
   widgetId?: string,
   guards_slug?: string[],
+  dynamicBody?: any
 }
 
 

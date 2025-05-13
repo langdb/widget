@@ -139,6 +139,7 @@ const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof u
       initialPrompts?: InititalPrompt[],
       variables?: Record<string, any>
       mcpTools?: MCPTools[],
+      dynamicBody?: any
     }) => {
     abortControllerRef.current = new AbortController();
 
@@ -291,7 +292,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
     setError,
     setMessages
   } = chatState;
-  const { initialPrompts, mcpTools, variables } = props
+  const { initialPrompts, mcpTools, variables, dynamicBody } = props
 
   const { hideChatInput, threadId } = props
 
@@ -312,8 +313,8 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
 
 
   const onSubmitWrapper = useCallback((inputProps: { inputText: string, files: FileWithPreview[], searchToolEnabled?: boolean, otherTools?: string[] }) => {
-    return handleSubmit({...inputProps, initialPrompts, mcpTools, variables});
-  }, [handleSubmit, initialPrompts, mcpTools, variables]);
+    return handleSubmit({...inputProps, initialPrompts, mcpTools, variables, dynamicBody});
+  }, [handleSubmit, initialPrompts, mcpTools, variables, dynamicBody]);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     let updatedFilesPromises = acceptedFiles.map(file => {
