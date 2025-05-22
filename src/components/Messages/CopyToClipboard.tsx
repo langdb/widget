@@ -14,7 +14,7 @@ export const CopyToClipboard: React.FC<{ content: string } & React.HTMLAttribute
   return (
     <div className={`items-center flex flex-row text-xs ${className}`} onClick={handleCopy} {...restProps}>
       {copied ? (
-        <CheckIcon className="h-4 ml-2 text-green animate-fadeIn" />
+        <CheckIcon className="h-4 ml-2 text-green-500 animate-fadeIn" />
       ) : (
         <ClipboardDocumentIcon className="h-4 ml-2" />
       )}

@@ -135,7 +135,7 @@ export const AiMessage: React.FC<{
             </div>
           </div>
         )}
-        <div className="whitespace-pre-wrap">
+        <div className="whitespace-normal">
           <MessageDisplay message={msg?.message || ""} />
         </div>
         {
