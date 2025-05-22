@@ -32316,7 +32316,7 @@ const H6 = {
   const [r, a] = Bt(!1), i = ct((o) => {
     o.preventDefault(), navigator.clipboard.writeText(e), a(!0), setTimeout(() => a(!1), 3e3);
   }, [e]);
-  return /* @__PURE__ */ X.jsx("div", { className: `items-center flex flex-row text-xs ${t}`, onClick: i, ...n, children: r ? /* @__PURE__ */ X.jsx(yx, { className: "h-4 ml-2 text-green animate-fadeIn" }) : /* @__PURE__ */ X.jsx(Tx, { className: "h-4 ml-2" }) });
+  return /* @__PURE__ */ X.jsx("div", { className: `items-center flex flex-row text-xs ${t}`, onClick: i, ...n, children: r ? /* @__PURE__ */ X.jsx(yx, { className: "h-4 ml-2 text-green-500 animate-fadeIn" }) : /* @__PURE__ */ X.jsx(Tx, { className: "h-4 ml-2" }) });
 };
 class ni {
   /**
@@ -41268,6 +41268,9 @@ const o_ = {
           ) })
         ] }) : /* @__PURE__ */ X.jsx("code", { className: n, ...a, children: r });
       },
+      hr({ ...t }) {
+        return /* @__PURE__ */ X.jsx("hr", { ...t });
+      },
       blockquote({ children: t, ...n }) {
         return /* @__PURE__ */ X.jsx("blockquote", { className: "border-l-4 border-gray-300 pl-4 italic text-gray-600", ...n, children: t });
       },
@@ -41290,28 +41293,28 @@ const o_ = {
         return /* @__PURE__ */ X.jsx("h6", { className: "text-xs font-bold", ...n, children: t });
       },
       ul({ children: t, ...n }) {
-        return /* @__PURE__ */ X.jsx("ul", { className: "list-disc list-inside", ...n, children: t });
+        return /* @__PURE__ */ X.jsx("ul", { ...n, className: `list-disc list-inside ${n.className}`, children: t });
       },
       ol({ children: t, ...n }) {
-        return /* @__PURE__ */ X.jsx("ol", { className: "list-decimal list-inside", ...n, children: t });
+        return /* @__PURE__ */ X.jsx("ol", { ...n, className: `list-decimal list-inside ${n.className}`, children: t });
       },
       li({ children: t, ...n }) {
-        return /* @__PURE__ */ X.jsx("li", { className: "list-item", ...n, children: t });
+        return /* @__PURE__ */ X.jsx("li", { ...n, className: `list-item py-1 ${n.className}`, children: t });
       },
       a({ children: t, ...n }) {
         return /* @__PURE__ */ X.jsx("a", { className: "text-blue-500 hover:underline hover:text-blue-600", ...n, children: t });
       },
       table({ children: t, ...n }) {
-        return /* @__PURE__ */ X.jsx("table", { className: "table-auto", ...n, children: t });
+        return /* @__PURE__ */ X.jsx("table", { className: "table-auto py-2", ...n, children: t });
       },
       tr({ children: t, ...n }) {
         return /* @__PURE__ */ X.jsx("tr", { className: "table-row", ...n, children: t });
       },
       td({ children: t, ...n }) {
-        return /* @__PURE__ */ X.jsx("td", { className: "table-cell border border-border p-2", ...n, children: t });
+        return /* @__PURE__ */ X.jsx("td", { className: "table-cell border border-border", ...n, children: t });
       },
       th({ children: t, ...n }) {
-        return /* @__PURE__ */ X.jsx("th", { className: "table-cell border border-border p-2 font-semibold text-blue-500", ...n, children: t });
+        return /* @__PURE__ */ X.jsx("th", { className: "table-cell border border-border font-semibold text-blue-500", ...n, children: t });
       },
       img({ children: t, ...n }) {
         return /* @__PURE__ */ X.jsx("img", { className: "w-full", ...n });
@@ -41324,9 +41327,9 @@ const o_ = {
           } catch {
           }
           return a ? /* @__PURE__ */ X.jsx(s_, { message: `\`\`\`json
-${JSON.stringify(a, null, 2)}` }) : /* @__PURE__ */ X.jsx("p", { ...n, children: t });
+${JSON.stringify(a, null, 2)}` }) : /* @__PURE__ */ X.jsx("p", { className: "whitespace-pre-wrap", ...n, children: t });
         }
-        return /* @__PURE__ */ X.jsx("p", { ...n, children: t });
+        return /* @__PURE__ */ X.jsx("p", { className: "whitespace-pre-wrap", ...n, children: t });
       }
     },
     children: e
@@ -44026,7 +44029,7 @@ const lt = s9(), l9 = ({ msg: e, persona: t, widgetProps: n, isTyping: r }) => {
           return null;
         }) })
       ] }),
-      /* @__PURE__ */ X.jsx("div", { className: "whitespace-pre-wrap", children: /* @__PURE__ */ X.jsx(Gp, { message: (e == null ? void 0 : e.message) || "" }) }),
+      /* @__PURE__ */ X.jsx("div", { className: "whitespace-normal flex flex-col gap-[15px]", children: /* @__PURE__ */ X.jsx(Gp, { message: (e == null ? void 0 : e.message) || "" }) }),
       !r && a && i && /* @__PURE__ */ X.jsxs("div", { className: "mt-3 flex items-center justify-start space-x-2", children: [
         /* @__PURE__ */ X.jsxs(
           "button",
