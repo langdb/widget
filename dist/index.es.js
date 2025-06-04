@@ -43921,16 +43921,16 @@ const u_ = {
         return /* @__PURE__ */ X.jsx("a", { className: "text-blue-500 hover:underline hover:text-blue-600", ...n, children: t });
       },
       table({ children: t, ...n }) {
-        return /* @__PURE__ */ X.jsx("table", { className: "table-auto my-1", ...n, children: t });
+        return /* @__PURE__ */ X.jsx("table", { className: "table-auto my-1 mx-1", ...n, children: t });
       },
       tr({ children: t, ...n }) {
         return /* @__PURE__ */ X.jsx("tr", { className: "table-row", ...n, children: t });
       },
       td({ children: t, ...n }) {
-        return /* @__PURE__ */ X.jsx("td", { className: "table-cell border border-border", ...n, children: t });
+        return /* @__PURE__ */ X.jsx("td", { className: "table-cell border border-[#333333] px-2 py-1", ...n, children: t });
       },
       th({ children: t, ...n }) {
-        return /* @__PURE__ */ X.jsx("th", { className: "table-cell border border-border font-semibold text-blue-500", ...n, children: t });
+        return /* @__PURE__ */ X.jsx("th", { className: "table-cell border border-[#333333] font-semibold text-blue-500 px-2 py-1", ...n, children: t });
       },
       img({ children: t, ...n }) {
         return /* @__PURE__ */ X.jsx("img", { ...n });

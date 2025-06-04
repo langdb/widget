@@ -90,7 +90,7 @@ export const BaseMessageDisplay: React.FC<{ message: string }> = ({ message }) =
         );
       },
       hr({ ...props }) {
-        return <hr {...props} />
+        return <hr {...props}/>
       },
       pre({ children, ...props }) {
         return <pre {...props} className={`py-0 px-0 mx-0 my-0 whitespace-pre-wrap overflow-auto ${props.className || ''}`}>{children}</pre>
@@ -134,16 +134,16 @@ export const BaseMessageDisplay: React.FC<{ message: string }> = ({ message }) =
         return <a className="text-blue-500 hover:underline hover:text-blue-600" {...props}>{children}</a>
       },
       table({ children, ...props }) {
-        return <table className="table-auto my-1" {...props}>{children}</table>
+        return <table className="table-auto my-1 mx-1" {...props}>{children}</table>
       },
       tr({ children, ...props }) {
         return <tr className="table-row" {...props}>{children}</tr>
       },
       td({ children, ...props }) {
-        return <td className="table-cell border border-border" {...props}>{children}</td>
+        return <td className="table-cell border border-[#333333] px-2 py-1" {...props}>{children}</td>
       },
       th({ children, ...props }) {
-        return <th className="table-cell border border-border font-semibold text-blue-500" {...props}>{children}</th>
+        return <th className="table-cell border border-[#333333] font-semibold text-blue-500 px-2 py-1" {...props}>{children}</th>
       },
       img({ children, ...props }) {
 
