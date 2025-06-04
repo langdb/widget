@@ -76,19 +76,14 @@ const Example: FC<WidgetProps> = ({
             emitter.emit('langdb_chatTerminate', { threadId, widgetId: threadId })
           }}>Terminate</button>
         <Widget
-          mcpTools={
-            [{
-              type: 'sse',
-              server_url: "https://api.staging.langdb.ai/connect_slack_9tc97paw"
-
-            }]
-          }
+          autoRefreshThread={true}
           //threadId={threadId}
           //widgetId={threadId}
           //threadId="38a5a61b-9a28-43d3-99c9-215cc773bb59"
+          threadId="1a7894e3-0a9b-4fc0-8ffb-31743ebac676"
           modelName="openai/gpt-4o-mini"
-          projectId={'7d73eb9e-5b69-4422-9252-d6b82db43494'}
-          apiKey={'langdb_N3ZudmUyaHQ5YjlnMGFyZWNrZnJsc2M0bms='}
+          projectId={'e3477afb-6a1f-4979-ab98-b4fb3f56b74f'}
+          apiKey={'langdb_MTlkYThvcTcxZ2U1ZWhoMHVzbnA4aWJiYnU='}
           serverUrl={api_url}
           theme={theme}
           hideChatInput={true}
@@ -115,7 +110,7 @@ const Example: FC<WidgetProps> = ({
           starters={starters}
         /> */}
       </div>
-      <div className={`dark-theme  w-full flex justify-center items-center`}>
+      {/* <div className={`dark-theme  w-full flex justify-center items-center`}>
         <div className="langdb-chat bg-inherit sticky bottom-0 pt-1 px-4 w-[50vw]">
           <ChatInput
             currentInput={currentInput}
@@ -128,7 +123,7 @@ const Example: FC<WidgetProps> = ({
               return Promise.resolve();
             }} />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
