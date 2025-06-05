@@ -290,7 +290,8 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
     typing,
     error,
     setError,
-    setMessages
+    setMessages,
+    setThreadId,
   } = chatState;
   const { initialPrompts, mcpTools, variables, dynamicBody } = props
 
@@ -373,6 +374,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
       if (input.threadId === threadId || (input.widgetId && input.widgetId === props.widgetId)) {
         terminateChat();
         setMessages([]);
+        setThreadId(props.threadId || undefined)
       }
     };
     emitter.on('langdb_clearChat', handleClearChat);
