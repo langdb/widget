@@ -7,3 +7,8 @@ export interface MCPTools {
     type: string;
     server_url?: string;
 }
+export interface CacheConfig {
+    type: 'exact' | 'distance';
+    expiration_time?: number;
+    min_similarity?: number;
+}

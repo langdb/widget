@@ -14,7 +14,7 @@ import {
 } from "@microsoft/fetch-event-source";
 import { WidgetProps } from "./Widget";
 import { ChatMessage } from "../dto/ChatMessage";
-import { InititalPrompt, MCPTools } from "../dto/ParamInput";
+import { CacheConfig, InititalPrompt, MCPTools } from "../dto/ParamInput";
 
 export const DEV_SERVER_URL = "https://api.dev.langdb.ai";
 export interface AdapterProps {
@@ -113,8 +113,6 @@ export const onSubmit = async (submitProps: SubmitProps) => {
       resizeOptions,
     });
 
-    const guard_slug = widgetProps.guards_slug || [];
-
     let messages: ChatCompletionMessage[] = [...previous, submitMessage];
     if (!threadId && modelName && modelName.includes("claude-")) {
       messages = [
@@ -142,6 +140,17 @@ export const onSubmit = async (submitProps: SubmitProps) => {
       ).values(),
     );
 
+    const guard_slug = widgetProps.guards_slug || [];
+    const cacheConfig: CacheConfig =
+      (widgetProps.cacheConfig as CacheConfig) || {};
+    let extraConfig: { cache?: CacheConfig; guards?: string[] } = {};
+    if (cacheConfig && Object.keys(cacheConfig).length > 0) {
+      extraConfig.cache = cacheConfig;
+    }
+    if (guard_slug && guard_slug.length > 0) {
+      extraConfig.guards = guard_slug;
+    }
+
     let request: MessageRequest = {
       model: modelName,
       thread_id: threadId,
@@ -162,11 +171,9 @@ export const onSubmit = async (submitProps: SubmitProps) => {
             mcp_servers: uniqueMcpServers,
           }
         : {}),
-      ...(guard_slug && guard_slug.length > 0
+      ...(extraConfig && Object.keys(extraConfig).length > 0
         ? {
-            extra: {
-              guards: guard_slug,
-            },
+            extra: extraConfig,
           }
         : {}),
     };

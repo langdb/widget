@@ -80,13 +80,16 @@ const Example: FC<WidgetProps> = ({
           //threadId={threadId}
           //widgetId={threadId}
           //threadId="38a5a61b-9a28-43d3-99c9-215cc773bb59"
+          cacheConfig={{
+            type: "exact",
+            expiration_time: 600,
+          }}
           threadId="9f3891e3-33f3-4c11-be23-785342262f0d"
           modelName="openai/gpt-4o-mini"
           projectId={'e3477afb-6a1f-4979-ab98-b4fb3f56b74f'}
           apiKey={'langdb_MTlkYThvcTcxZ2U1ZWhoMHVzbnA4aWJiYnU='}
           serverUrl={api_url}
           theme={theme}
-          hideChatInput={true}
           starters={starters}
         />
 

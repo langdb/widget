@@ -3,7 +3,7 @@ import { default as React } from 'react';
 import { ChatMessage } from '../dto/ChatMessage';
 import { PersonaOptions } from '../dto/PersonaOptions';
 import { ConversationStarter } from '../dto/ConversationStarter';
-import { InititalPrompt, MCPTools } from '../dto/ParamInput';
+import { CacheConfig, InititalPrompt, MCPTools } from '../dto/ParamInput';
 
 export interface WidgetProps extends AdapterProps {
     personaOptions?: PersonaOptions;
@@ -11,6 +11,7 @@ export interface WidgetProps extends AdapterProps {
     initialPrompts?: InititalPrompt[];
     variables?: Record<string, any>;
     mcpTools?: MCPTools[];
+    cacheConfig?: CacheConfig;
     style?: React.CSSProperties;
     className?: string;
     controls?: {

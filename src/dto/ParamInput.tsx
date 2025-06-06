@@ -8,3 +8,9 @@ export interface InititalPrompt {
    type: string;
    server_url?: string;
  }
+
+ export interface CacheConfig {
+   type: 'exact' | 'distance',
+   expiration_time?: number,
+   min_similarity?: number
+ }
