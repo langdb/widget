@@ -28,7 +28,7 @@
   --langdb-SubmitButton-Disabled--TextColor: white;
 
   --langdb-SubmitButton-Focus-Outline--Color: transparent;
-  --langdb-ChatRoom--BackgroundColor: white;
+  --langdb-ChatRoom--BackgroundColor: transparent;
 
   /* Apply base styles */
   background-color: var(--langdb-ChatRoom--BackgroundColor);
@@ -54,7 +54,7 @@
   --langdb-SubmitButton-Disabled--BorderColor: transparent;
   --langdb-SubmitButton-Disabled--TextColor: black;
 
-  --langdb-ChatRoom--BackgroundColor: rgb(23 23 23);
+  --langdb-ChatRoom--BackgroundColor: transparent;
 }
 
 .starter-button {
