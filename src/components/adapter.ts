@@ -198,6 +198,7 @@ export const onSubmit = async (submitProps: SubmitProps) => {
       onclose,
       onerror,
       signal,
+      openWhenHidden: true,
     });
   } catch (e: any) {
     if (responseCallback) {
