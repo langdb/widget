@@ -75,7 +75,7 @@ textarea:focus {
   /* Light mode background and text colors */
   --background-color: #ffffff;
   --text-color: rgb(107 114 128/var(--tw-text-opacity));
-  --border-color: #333333;
+  --border-color: #202020;
   --header-color: 'gray-50';
   --secondary-border: rgb(217, 212, 212);
   --secondary-text: rgb(133, 133, 133);
@@ -110,7 +110,7 @@ textarea:focus {
   --background-color: #171717;
   --text-color: rgb(156 163 175/var(--tw-text-opacity));
   --header-color: #2c2c2c;
-  --border-color: #333333;
+  --border-color: #202020;
   --disable-color: rgba(255, 255, 255, 0.094);
   --secondary-background: rgb(40 40 40);
   --secondary-border: rgb(46 46 46);
@@ -374,7 +374,7 @@ body,
   box-sizing: border-box;
   border-width: 0;
   border-style: solid;
-  border-color: #333333;
+  border-color: #202020;
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
   --tw-translate-x: 0;

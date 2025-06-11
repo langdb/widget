@@ -33,7 +33,7 @@ module.exports = {
 		extend: {
 			colors: {
 				lightContainer: '#ffffff',
-				darkContainer: '#333333',
+				darkContainer: '#202020',
 				darkHeader: '#2c2c2c',
 				secondary: 'var(--secondary-background)',
 				slate: {
