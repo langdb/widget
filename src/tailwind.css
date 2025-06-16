@@ -75,7 +75,7 @@ textarea:focus {
   /* Light mode background and text colors */
   --background-color: #ffffff;
   --text-color: rgb(107 114 128/var(--tw-text-opacity));
-  --border-color: #202020;
+  --border-color: #FFFFFF1A;
   --header-color: 'gray-50';
   --secondary-border: rgb(217, 212, 212);
   --secondary-text: rgb(133, 133, 133);
@@ -110,7 +110,7 @@ textarea:focus {
   --background-color: #171717;
   --text-color: rgb(156 163 175/var(--tw-text-opacity));
   --header-color: #2c2c2c;
-  --border-color: #202020;
+  --border-color: #FFFFFF1A;
   --disable-color: rgba(255, 255, 255, 0.094);
   --secondary-background: rgb(40 40 40);
   --secondary-border: rgb(46 46 46);
