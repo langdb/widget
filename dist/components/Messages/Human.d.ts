@@ -1,3 +1,4 @@
+import { default as React } from 'react';
 import { ChatMessage } from '../../dto/ChatMessage';
 import { Persona } from '../../dto/PersonaOptions';
 

@@ -19,6 +19,7 @@ import { useDropzone } from "react-dropzone";
 import { PaperClipIcon } from "@heroicons/react/24/outline";
 import { useInViewport } from "ahooks";
 import { InititalPrompt, MCPTools } from "../dto/ParamInput";
+import { SystemMessage } from "./Messages/System";
 // New component for rendering messages
 const MessageRenderer: React.FC<{
   message: ChatMessage;
@@ -26,16 +27,21 @@ const MessageRenderer: React.FC<{
   isLastMessage?: boolean,
   isTyping?: boolean,
   widgetProps: WidgetProps
-}> = ({ message, personaOptions, widgetProps, isLastMessage, isTyping }) => (
+}> = ({ message, personaOptions, widgetProps, isLastMessage, isTyping }) => {
+  return (
   <article className={`flex mb-2 ${message.type === MessageType.HumanMessage ? 'justify-end scroll-my-20' : 'justify-start'} ${isLastMessage && !message.created_at ? 'min-h-[50vh] items-start justify-start' : 'items-start'}`}>
     <div className="max-w-3/4 overflow-scroll text-sm">
-      {message.type === MessageType.HumanMessage
-        ? <HumanMessage msg={message} persona={personaOptions.user} />
-        : <AiMessage msg={message} persona={personaOptions.assistant} widgetProps={widgetProps} isTyping={isTyping} />
-      }
+      {message.type === MessageType.HumanMessage ? (
+        <HumanMessage msg={message} persona={personaOptions.user} />
+      ) : message.type === MessageType.SystemMessage ? (
+        <SystemMessage msg={message} persona={personaOptions.assistant} />
+      ) : (
+        <AiMessage msg={message} persona={personaOptions.assistant} widgetProps={widgetProps} isTyping={isTyping} />
+      )}
     </div>
   </article>
-);
+)
+};
 
 // Custom hook for handling message submission
 const useMessageSubmission = (props: WidgetProps, chatState: ReturnType<typeof useChatState>) => {

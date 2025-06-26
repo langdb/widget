@@ -1,9 +1,7 @@
 import React, { FC, useEffect } from "react";
 import axios from "axios";
 import { Widget, WidgetProps } from "../Widget";
-import { ChatInput } from "../ChatInput";
 import { emitter } from "../EventEmiter";
-import { FileWithPreview } from "../../types";
 
 export const getAccessToken = async () => {
   try {
@@ -19,6 +17,7 @@ export const getAccessToken = async () => {
   }
 }
 
+
 const Example: FC<WidgetProps> = ({
   theme = 'light',
   starters = []
@@ -31,7 +30,7 @@ const Example: FC<WidgetProps> = ({
   const projectId = 'fb31f9e8-e1d5-45a3-a385-1d34786b9a77'
   const apiKey = 'langdb_NmpsbXNyZmZvNHFlZWs5MjMyMnJ1dDJia3A='
   const api_url = 'https://api.staging.langdb.ai'
-  const threadId = '5d902cea-8b57-43d2-98c4-fd1f31943202'
+  const threadId = '86fef116-8094-4533-b09e-6210462a2174'
   const [currentInput, setCurrentInput] = React.useState("");
   useEffect(() => {
     emitter.on('langdb_chatWindow', ({
@@ -69,24 +68,16 @@ const Example: FC<WidgetProps> = ({
         height: '100vh',
       }}
     >
-      <div className="flex flex-1 max-h-[calc(100vh-200px)]">
-        <button
-          className="bg-blue-500 w-[100px] h-[100px] text-white p-2 rounded-md"
-          onClick={() => {
-            emitter.emit('langdb_chatTerminate', { threadId, widgetId: threadId })
-          }}>Terminate</button>
+      <div className="flex flex-1 max-h-[calc(100vh-200px)] bg-black">
+        
         <Widget
           autoRefreshThread={true}
           //threadId={threadId}
           //widgetId={threadId}
           //threadId="38a5a61b-9a28-43d3-99c9-215cc773bb59"
-          cacheConfig={{
-            type: "exact",
-            expiration_time: 600,
-          }}
-          threadId="9f3891e3-33f3-4c11-be23-785342262f0d"
+          threadId="86fef116-8094-4533-b09e-6210462a2174"
           modelName="openai/gpt-4o-mini"
-          projectId={'e3477afb-6a1f-4979-ab98-b4fb3f56b74f'}
+          projectId={'dffdff3d-6cb1-4d45-89d1-f5d2b100e9d9'}
           apiKey={'langdb_MTlkYThvcTcxZ2U1ZWhoMHVzbnA4aWJiYnU='}
           serverUrl={api_url}
           theme={theme}
