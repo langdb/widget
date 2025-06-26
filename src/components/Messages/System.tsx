@@ -4,8 +4,9 @@ import { Persona } from "../../dto/PersonaOptions";
 import { MessageDisplay } from "./MessageDisplay";
 import { AvatarItem } from "./AvatarItem";
 import { CogIcon, ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
-import { ClipboardDocumentIcon, CheckIcon } from "@heroicons/react/24/outline";
+import { ClipboardDocumentIcon, CheckIcon, ClockIcon } from "@heroicons/react/24/outline";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
+import { formatMessageTime } from "../../utils/dateUtils";
 
 interface SystemMessageProps {
   msg: ChatMessage;
@@ -50,6 +51,12 @@ export const SystemMessage: React.FC<SystemMessageProps> = ({ msg, persona }) =>
               </Tooltip>
             </TooltipProvider>
             <span className="text-gray-400 font-bold">System</span>
+            {msg.created_at && (
+              <div className="flex items-center text-xs text-gray-500 ml-2">
+                <ClockIcon className="h-3 w-3 mr-1" />
+                <span>{formatMessageTime(msg.created_at)}</span>
+              </div>
+            )}
           </div>
           <button
             onClick={(e) => {

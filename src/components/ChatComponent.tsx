@@ -20,27 +20,44 @@ import { PaperClipIcon } from "@heroicons/react/24/outline";
 import { useInViewport } from "ahooks";
 import { InititalPrompt, MCPTools } from "../dto/ParamInput";
 import { SystemMessage } from "./Messages/System";
-// New component for rendering messages
+/**
+ * MessageRenderer component displays chat messages with appropriate styling based on message type
+ */
 const MessageRenderer: React.FC<{
   message: ChatMessage;
-  personaOptions: PersonaOptions,
-  isLastMessage?: boolean,
-  isTyping?: boolean,
-  widgetProps: WidgetProps
+  personaOptions: PersonaOptions;
+  isLastMessage?: boolean;
+  isTyping?: boolean;
+  widgetProps: WidgetProps;
 }> = ({ message, personaOptions, widgetProps, isLastMessage, isTyping }) => {
+  // Determine if this is a human message for styling purposes
+  const isHumanMessage = message.type === MessageType.HumanMessage;
+  
   return (
-  <article className={`flex mb-2 ${message.type === MessageType.HumanMessage ? 'justify-end scroll-my-20' : 'justify-start'} ${isLastMessage && !message.created_at ? 'min-h-[50vh] items-start justify-start' : 'items-start'}`}>
-    <div className="max-w-3/4 overflow-scroll text-sm">
-      {message.type === MessageType.HumanMessage ? (
-        <HumanMessage msg={message} persona={personaOptions.user} />
-      ) : message.type === MessageType.SystemMessage ? (
-        <SystemMessage msg={message} persona={personaOptions.assistant} />
-      ) : (
-        <AiMessage msg={message} persona={personaOptions.assistant} widgetProps={widgetProps} isTyping={isTyping} />
-      )}
-    </div>
-  </article>
-)
+    <article 
+      className={`
+        flex mb-2.5 
+        ${isHumanMessage ? 'justify-end scroll-my-20' : 'justify-start'} 
+        ${isLastMessage && !message.created_at ? 'min-h-[50vh] items-start justify-start' : 'items-start'}
+        transition-opacity duration-200 ease-in-out
+      `}
+    >
+      <div className="max-w-3/4 overflow-scroll text-sm rounded-lg">
+        {isHumanMessage ? (
+          <HumanMessage msg={message} persona={personaOptions.user} />
+        ) : message.type === MessageType.SystemMessage ? (
+          <SystemMessage msg={message} persona={personaOptions.assistant} />
+        ) : (
+          <AiMessage 
+            msg={message} 
+            persona={personaOptions.assistant} 
+            widgetProps={widgetProps} 
+            isTyping={isTyping} 
+          />
+        )}
+      </div>
+    </article>
+  )
 };
 
 // Custom hook for handling message submission

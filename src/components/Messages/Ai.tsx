@@ -1,4 +1,4 @@
-import { PencilIcon, ClipboardDocumentIcon, CheckIcon } from "@heroicons/react/24/outline";
+import { PencilIcon, ClipboardDocumentIcon, CheckIcon, ClockIcon } from "@heroicons/react/24/outline";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { Persona } from "../../dto/PersonaOptions";
 import { Avatar } from "../Icons";
@@ -12,6 +12,7 @@ import { DEV_SERVER_URL, getHeaders } from "../adapter";
 import ReactJson from 'react-json-view'
 import { emitter } from "../EventEmiter";
 import { MessageDisplay } from "./MessageDisplay";
+import { formatMessageTime } from "../../utils/dateUtils";
 
 
 export const AiMessage: React.FC<{
@@ -84,6 +85,12 @@ export const AiMessage: React.FC<{
         <div className="flex items-center justify-between mb-1.5 py-1 border-b border-neutral-800">
           <div className="flex items-center gap-1.5">
             <span className="text-neutral-400 font-bold">{msg?.type === 'ai' ? 'Assistant' : msg?.type === 'human' ? 'You' : 'System'}</span>
+            {msg?.created_at && (
+              <div className="flex items-center text-xs text-neutral-500 ml-2">
+                <ClockIcon className="h-3 w-3 mr-1" />
+                <span>{formatMessageTime(msg.created_at)}</span>
+              </div>
+            )}
           </div>
           {msg?.message && <button
             onClick={(e) => {

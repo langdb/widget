@@ -4,9 +4,10 @@ import { Persona } from "../../dto/PersonaOptions";
 import { AvatarItem } from "./AvatarItem";
 import { Files } from "../Files";
 import { MessageDisplay } from "./MessageDisplay";
-import { ClipboardDocumentIcon, CheckIcon } from "@heroicons/react/24/outline";
+import { ClipboardDocumentIcon, CheckIcon, ClockIcon } from "@heroicons/react/24/outline";
 import { UserCircleIcon, ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
+import { formatMessageTime } from "../../utils/dateUtils";
 
 export const HumanMessage: React.FC<{ msg: ChatMessage; persona?: Persona }> = ({ msg, persona }) => {
   const { message, files } = msg;
@@ -32,6 +33,12 @@ export const HumanMessage: React.FC<{ msg: ChatMessage; persona?: Persona }> = (
             <div className="flex items-center justify-between mb-1.5 py-1 border-b border-zinc-700">
               <div className="flex items-center gap-1.5">
                 <span className="text-white font-bold">You</span>
+                {msg.created_at && (
+                  <div className="flex items-center text-xs text-zinc-400 ml-2">
+                    <ClockIcon className="h-3 w-3 mr-1" />
+                    <span>{formatMessageTime(msg.created_at)}</span>
+                  </div>
+                )}
               </div>
               <button
                 onClick={(e) => {
@@ -120,6 +127,12 @@ export const HumanMessage: React.FC<{ msg: ChatMessage; persona?: Persona }> = (
           <div className="flex items-center justify-between mb-1.5 py-1 border-b border-zinc-700">
             <div className="flex items-center gap-1.5">
               <span className="text-white font-bold">You</span>
+              {msg.created_at && (
+                  <div className="flex items-center text-xs text-zinc-400 ml-2">
+                    <ClockIcon className="h-3 w-3 mr-1" />
+                    <span>{formatMessageTime(msg.created_at)}</span>
+                  </div>
+                )}
             </div>
             <button
               onClick={(e) => {
