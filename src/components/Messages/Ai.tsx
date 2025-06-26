@@ -71,7 +71,7 @@ export const AiMessage: React.FC<{
 
     }} className={`flex gap-2 items-start`}>
       <div className="flex-shrink-0">
-        {renderProviderAvatar && msg?.model_name ? renderProviderAvatar({ modelName: msg.model_name }) : <TooltipProvider>
+        {renderProviderAvatar && msg?.model_name ? renderProviderAvatar({ modelName: msg.model_name, messageType: msg.type }) : <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
               {!persona ? <AvatarItem className="h-6 w-6 rounded-full" name={"Assistant"} /> : (persona.url ? <AvatarItem name={persona.name} imageUrl={persona.url} className="h-6 w-6 rounded-full" /> : <Avatar className="h-6 w-6 rounded-full" />)}

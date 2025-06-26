@@ -7,13 +7,15 @@ import { CogIcon, ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/sol
 import { ClipboardDocumentIcon, CheckIcon, ClockIcon } from "@heroicons/react/24/outline";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { formatMessageTime } from "../../utils/dateUtils";
+import { WidgetProps } from "../Widget";
 
 interface SystemMessageProps {
   msg: ChatMessage;
+  widgetProps: WidgetProps;
   persona?: Persona;
 }
 
-export const SystemMessage: React.FC<SystemMessageProps> = ({ msg, persona }) => {
+export const SystemMessage: React.FC<SystemMessageProps> = ({ msg, widgetProps, persona }) => {
   const [expanded, setExpanded] = useState(false);
   const [copied, setCopied] = useState(false);
   
@@ -40,7 +42,7 @@ export const SystemMessage: React.FC<SystemMessageProps> = ({ msg, persona }) =>
         <div className="rounded-md p-2.5 bg-zinc-900 border border-zinc-800 text-gray-400 whitespace-pre-wrap">
           <div className="flex items-center justify-between mb-1.5 py-2 border-b border-zinc-800">
           <div className="flex items-center gap-1.5">
-            <TooltipProvider>
+            {widgetProps.renderProviderAvatar && msg?.model_name ? widgetProps.renderProviderAvatar({ modelName: msg.model_name, messageType: msg.type }) : <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
                   <CogIcon className="h-4 w-4 text-gray-400" />
@@ -49,7 +51,7 @@ export const SystemMessage: React.FC<SystemMessageProps> = ({ msg, persona }) =>
                   <p>System Message</p>
                 </TooltipContent>
               </Tooltip>
-            </TooltipProvider>
+            </TooltipProvider>}
             <span className="text-gray-400 font-bold">System</span>
             {msg.created_at && (
               <div className="flex items-center text-xs text-gray-500 ml-2">

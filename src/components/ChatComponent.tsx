@@ -46,7 +46,7 @@ const MessageRenderer: React.FC<{
         {isHumanMessage ? (
           <HumanMessage msg={message} persona={personaOptions.user} />
         ) : message.type === MessageType.SystemMessage ? (
-          <SystemMessage msg={message} persona={personaOptions.assistant} />
+          <SystemMessage msg={message} widgetProps={widgetProps}  persona={personaOptions.assistant} />
         ) : (
           <AiMessage 
             msg={message} 

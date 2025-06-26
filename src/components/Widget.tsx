@@ -38,6 +38,7 @@ export interface WidgetProps extends AdapterProps {
   renderStarter?: () => React.ReactNode,
   renderProviderAvatar?: (props: {
     modelName: string;
+    messageType: string;
   }) => React.ReactNode,
   widgetId?: string,
   guards_slug?: string[],

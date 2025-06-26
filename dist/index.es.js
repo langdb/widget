@@ -68321,7 +68321,7 @@ const ur = wge(), Cge = ({ msg: e, persona: t, widgetProps: n, isTyping: a }) =>
       runId: e == null ? void 0 : e.run_id
     });
   }, className: "flex gap-2 items-start", children: [
-    /* @__PURE__ */ K.jsx("div", { className: "flex-shrink-0", children: T && (e != null && e.model_name) ? T({ modelName: e.model_name }) : /* @__PURE__ */ K.jsx(Kb, { children: /* @__PURE__ */ K.jsxs(Xb, { children: [
+    /* @__PURE__ */ K.jsx("div", { className: "flex-shrink-0", children: T && (e != null && e.model_name) ? T({ modelName: e.model_name, messageType: e.type }) : /* @__PURE__ */ K.jsx(Kb, { children: /* @__PURE__ */ K.jsxs(Xb, { children: [
       /* @__PURE__ */ K.jsx(Zb, { children: t ? t.url ? /* @__PURE__ */ K.jsx(Ym, { name: t.name, imageUrl: t.url, className: "h-6 w-6 rounded-full" }) : /* @__PURE__ */ K.jsx(RN, { className: "h-6 w-6 rounded-full" }) : /* @__PURE__ */ K.jsx(Ym, { className: "h-6 w-6 rounded-full", name: "Assistant" }) }),
       /* @__PURE__ */ K.jsx(oh, { children: /* @__PURE__ */ K.jsx("p", { children: "AI Message" }) })
     ] }) }) }),
@@ -72560,16 +72560,16 @@ function uye(e, t) {
     }
   }, [void 0, void 0, a], e), [u, g];
 }
-const cye = ({ msg: e, persona: t }) => {
-  const [n, a] = Cr(!1), [o, l] = Cr(!1), u = (x) => x ? x.split(`
-`).length : 0, f = (x, T) => x ? x.split(`
-`).slice(0, T).join(`
-`) : "", m = e.message || "", g = u(m), v = g > 5, y = n || !v ? m : f(m, 5);
+const cye = ({ msg: e, widgetProps: t, persona: n }) => {
+  const [a, o] = Cr(!1), [l, u] = Cr(!1), f = (T) => T ? T.split(`
+`).length : 0, m = (T, C) => T ? T.split(`
+`).slice(0, C).join(`
+`) : "", g = e.message || "", v = f(g), y = v > 5, x = a || !y ? g : m(g, 5);
   return /* @__PURE__ */ K.jsxs("div", { className: "flex items-center gap-2 mb-2", children: [
     /* @__PURE__ */ K.jsx("div", { className: "flex flex-col w-full", children: /* @__PURE__ */ K.jsxs("div", { className: "rounded-md p-2.5 bg-zinc-900 border border-zinc-800 text-gray-400 whitespace-pre-wrap", children: [
       /* @__PURE__ */ K.jsxs("div", { className: "flex items-center justify-between mb-1.5 py-2 border-b border-zinc-800", children: [
         /* @__PURE__ */ K.jsxs("div", { className: "flex items-center gap-1.5", children: [
-          /* @__PURE__ */ K.jsx(Kb, { children: /* @__PURE__ */ K.jsxs(Xb, { children: [
+          t.renderProviderAvatar && (e != null && e.model_name) ? t.renderProviderAvatar({ modelName: e.model_name, messageType: e.type }) : /* @__PURE__ */ K.jsx(Kb, { children: /* @__PURE__ */ K.jsxs(Xb, { children: [
             /* @__PURE__ */ K.jsx(Zb, { children: /* @__PURE__ */ K.jsx(LD, { className: "h-4 w-4 text-gray-400" }) }),
             /* @__PURE__ */ K.jsx(oh, { children: /* @__PURE__ */ K.jsx("p", { children: "System Message" }) })
           ] }) }),
@@ -72582,31 +72582,31 @@ const cye = ({ msg: e, persona: t }) => {
         /* @__PURE__ */ K.jsx(
           "button",
           {
-            onClick: (x) => {
-              x.stopPropagation(), e.message && navigator.clipboard.writeText(e.message).then(() => {
-                l(!0), setTimeout(() => l(!1), 2e3);
-              }).catch((T) => console.error("Failed to copy:", T));
+            onClick: (T) => {
+              T.stopPropagation(), e.message && navigator.clipboard.writeText(e.message).then(() => {
+                u(!0), setTimeout(() => u(!1), 2e3);
+              }).catch((C) => console.error("Failed to copy:", C));
             },
             className: "text-gray-500 hover:text-gray-300 transition-colors",
-            title: o ? "Copied!" : "Copy message",
-            children: o ? /* @__PURE__ */ K.jsx(nh, { className: "h-3.5 w-3.5 text-green-500" }) : /* @__PURE__ */ K.jsx(rh, { className: "h-3.5 w-3.5" })
+            title: l ? "Copied!" : "Copy message",
+            children: l ? /* @__PURE__ */ K.jsx(nh, { className: "h-3.5 w-3.5 text-green-500" }) : /* @__PURE__ */ K.jsx(rh, { className: "h-3.5 w-3.5" })
           }
         )
       ] }),
       /* @__PURE__ */ K.jsxs("div", { className: "text-gray-300", children: [
-        /* @__PURE__ */ K.jsx(IE, { message: y }),
-        v && /* @__PURE__ */ K.jsx(
+        /* @__PURE__ */ K.jsx(IE, { message: x }),
+        y && /* @__PURE__ */ K.jsx(
           "button",
           {
-            onClick: () => a(!n),
+            onClick: () => o(!a),
             className: "flex items-center gap-1 mt-2 text-gray-500 hover:text-gray-300 transition-colors font-medium",
-            children: n ? /* @__PURE__ */ K.jsxs(K.Fragment, { children: [
+            children: a ? /* @__PURE__ */ K.jsxs(K.Fragment, { children: [
               /* @__PURE__ */ K.jsx(N5, { className: "h-4 w-4" }),
               "Show less"
             ] }) : /* @__PURE__ */ K.jsxs(K.Fragment, { children: [
               /* @__PURE__ */ K.jsx(k5, { className: "h-4 w-4" }),
               "Read more (",
-              g - 5,
+              v - 5,
               " more lines)"
             ] })
           }
@@ -72629,7 +72629,7 @@ const cye = ({ msg: e, persona: t }) => {
         ${a && !e.created_at ? "min-h-[50vh] items-start justify-start" : "items-start"}
         transition-opacity duration-200 ease-in-out
       `,
-      children: /* @__PURE__ */ K.jsx("div", { className: "max-w-3/4 overflow-scroll text-sm rounded-lg", children: l ? /* @__PURE__ */ K.jsx(Age, { msg: e, persona: t.user }) : e.type === ld.SystemMessage ? /* @__PURE__ */ K.jsx(cye, { msg: e, persona: t.assistant }) : /* @__PURE__ */ K.jsx(
+      children: /* @__PURE__ */ K.jsx("div", { className: "max-w-3/4 overflow-scroll text-sm rounded-lg", children: l ? /* @__PURE__ */ K.jsx(Age, { msg: e, persona: t.user }) : e.type === ld.SystemMessage ? /* @__PURE__ */ K.jsx(cye, { msg: e, widgetProps: n, persona: t.assistant }) : /* @__PURE__ */ K.jsx(
         Cge,
         {
           msg: e,
