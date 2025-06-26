@@ -1,4 +1,5 @@
 import { PencilIcon, ClipboardDocumentIcon, CheckIcon } from "@heroicons/react/24/outline";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { Persona } from "../../dto/PersonaOptions";
 import { Avatar } from "../Icons";
 import { AvatarItem } from "./AvatarItem";
@@ -68,7 +69,16 @@ export const AiMessage: React.FC<{
 
     }} className={`flex gap-2 items-start`}>
       <div className="flex-shrink-0">
-        {!persona ? <AvatarItem className="h-6 w-6 rounded-full" name={"Assistant"} /> : (persona.url ? <AvatarItem name={persona.name} imageUrl={persona.url} className="h-6 w-6 rounded-full" /> : <Avatar className="h-6 w-6 rounded-full" />)}
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              {!persona ? <AvatarItem className="h-6 w-6 rounded-full" name={"Assistant"} /> : (persona.url ? <AvatarItem name={persona.name} imageUrl={persona.url} className="h-6 w-6 rounded-full" /> : <Avatar className="h-6 w-6 rounded-full" />)}
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>AI Message</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
       <div className="w-full rounded-md p-2.5 bg-neutral-900 border border-neutral-800 shadow-sm">
         <div className="flex items-center justify-between mb-1.5 py-1 border-b border-neutral-800">

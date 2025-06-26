@@ -5,11 +5,25 @@ import { AvatarItem } from "./AvatarItem";
 import { Files } from "../Files";
 import { MessageDisplay } from "./MessageDisplay";
 import { ClipboardDocumentIcon, CheckIcon } from "@heroicons/react/24/outline";
-import { UserCircleIcon } from "@heroicons/react/24/solid";
+import { UserCircleIcon, ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 
 export const HumanMessage: React.FC<{ msg: ChatMessage; persona?: Persona }> = ({ msg, persona }) => {
   const { message, files } = msg;
   const [copied, setCopied] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  
+  // Function to count lines in text
+  const countLines = (text: string): number => {
+    return text ? text.split('\n').length : 0;
+  };
+  
+  // Function to get first N lines of text
+  const getFirstNLines = (text: string, n: number): string => {
+    if (!text) return '';
+    const lines = text.split('\n');
+    return lines.slice(0, n).join('\n');
+  };
   if (msg.content_array && msg.content_array.length > 0) {
     return (
       <div className="flex items-center gap-2 mb-2">
@@ -78,16 +92,31 @@ export const HumanMessage: React.FC<{ msg: ChatMessage; persona?: Persona }> = (
           </div>
         </div>
         <div className="flex-shrink-0">
-          {!persona ? <AvatarItem className="h-6 w-6 rounded-full" name={"User"} /> : (persona.url ? <AvatarItem name={persona.name} imageUrl={persona.url} className="h-6 w-6 rounded-full" /> : <UserCircleIcon className="h-6 w-6 rounded-full text-white" />)}
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                {!persona ? <AvatarItem className="h-6 w-6 rounded-full" name={"User"} /> : (persona.url ? <AvatarItem name={persona.name} imageUrl={persona.url} className="h-6 w-6 rounded-full" /> : <UserCircleIcon className="h-6 w-6 rounded-full text-white" />)}
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Human Message</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </div>
     )
   }
+  // Calculate line count and determine if we need to show Read more button
+  const messageText = message || '';
+  const lineCount = countLines(messageText);
+  const hasMoreLines = lineCount > 5;
+  const displayMessage = expanded || !hasMoreLines ? messageText : getFirstNLines(messageText, 5);
+
   return (
     <div className="flex items-center gap-2 mb-2">
       <div className="flex flex-col w-full">
         {files && files.length > 0 && <Files files={files} />}
-        <div className="rounded-md p-2.5 bg-zinc-800 border border-zinc-700 whitespace-pre-wrap">
+        <div className="rounded-md p-2.5 bg-zinc-800 border border-zinc-700 whitespace-pre-wrap min-w-[100px]">
           <div className="flex items-center justify-between mb-1.5 py-1 border-b border-zinc-700">
             <div className="flex items-center gap-1.5">
               <span className="text-white font-bold">You</span>
@@ -113,12 +142,40 @@ export const HumanMessage: React.FC<{ msg: ChatMessage; persona?: Persona }> = (
             </button>
           </div>
           <div className="text-gray-100">
-            <MessageDisplay message={message || ""} />
+            <MessageDisplay message={displayMessage} />
+            
+            {hasMoreLines && (
+              <button 
+                onClick={() => setExpanded(!expanded)}
+                className="flex items-center gap-1 mt-2 text-zinc-500 hover:text-zinc-300 transition-colors font-medium"
+              >
+                {expanded ? (
+                  <>
+                    <ChevronUpIcon className="h-4 w-4" />
+                    Show less
+                  </>
+                ) : (
+                  <>
+                    <ChevronDownIcon className="h-4 w-4" />
+                    Read more ({lineCount - 5} more lines)
+                  </>
+                )}
+              </button>
+            )}
           </div>
         </div>
       </div>
       <div className="flex-shrink-0">
-        {!persona ? <AvatarItem className="h-6 w-6 rounded-full" name={"User"} /> : (persona.url ? <AvatarItem name={persona.name} imageUrl={persona.url} className="h-6 w-6 rounded-full" /> : <UserCircleIcon className="h-6 w-6 rounded-full text-white" />)}
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              {!persona ? <AvatarItem className="h-6 w-6 rounded-full" name={"User"} /> : (persona.url ? <AvatarItem name={persona.name} imageUrl={persona.url} className="h-6 w-6 rounded-full" /> : <UserCircleIcon className="h-6 w-6 rounded-full text-white" />)}
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Human Message</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
     </div>
   )

@@ -5,6 +5,7 @@ import { MessageDisplay } from "./MessageDisplay";
 import { AvatarItem } from "./AvatarItem";
 import { CogIcon, ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 import { ClipboardDocumentIcon, CheckIcon } from "@heroicons/react/24/outline";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 
 interface SystemMessageProps {
   msg: ChatMessage;
@@ -38,7 +39,16 @@ export const SystemMessage: React.FC<SystemMessageProps> = ({ msg, persona }) =>
         <div className="rounded-md p-2.5 bg-zinc-900 border border-zinc-800 text-gray-400 whitespace-pre-wrap">
           <div className="flex items-center justify-between mb-1.5 py-2 border-b border-zinc-800">
           <div className="flex items-center gap-1.5">
-            <CogIcon className="h-4 w-4 text-gray-400" />
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <CogIcon className="h-4 w-4 text-gray-400" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>System Message</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
             <span className="text-gray-400 font-bold">System</span>
           </div>
           <button
@@ -86,7 +96,16 @@ export const SystemMessage: React.FC<SystemMessageProps> = ({ msg, persona }) =>
         </div>
       </div>
       <div className="flex-shrink-0">
-        <CogIcon className="h-5 w-5 text-gray-500" />
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <CogIcon className="h-6 w-6 rounded-full text-white" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>System Message</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
     </div>
   );
