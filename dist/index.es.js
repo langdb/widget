@@ -43895,10 +43895,10 @@ const n_ = {
         return /* @__PURE__ */ X.jsx("blockquote", { className: "border-l-4 border-gray-300 pl-4 italic text-gray-600", ...n, children: t });
       },
       h1({ children: t, ...n }) {
-        return /* @__PURE__ */ X.jsx("h1", { className: "font-bold text-[2em] pb-[0.3em] border-b border-[#333333] ", ...n, children: t });
+        return /* @__PURE__ */ X.jsx("h1", { className: "font-bold text-[2em] pb-[0.3em] border-b border-border ", ...n, children: t });
       },
       h2({ children: t, ...n }) {
-        return /* @__PURE__ */ X.jsx("h2", { className: "font-bold text-[1.5em] pb-[0.3em] border-b border-[#333333]", ...n, children: t });
+        return /* @__PURE__ */ X.jsx("h2", { className: "font-bold text-[1.5em] pb-[0.3em] border-b border-border", ...n, children: t });
       },
       h3({ children: t, ...n }) {
         return /* @__PURE__ */ X.jsx("h3", { className: "font-bold text-[1em]", ...n, children: t });
@@ -43931,10 +43931,10 @@ const n_ = {
         return /* @__PURE__ */ X.jsx("tr", { className: "table-row", ...n, children: t });
       },
       td({ children: t, ...n }) {
-        return /* @__PURE__ */ X.jsx("td", { className: "table-cell border border-[#333333] px-2 py-1", ...n, children: t });
+        return /* @__PURE__ */ X.jsx("td", { className: "table-cell border border-border px-2 py-1", ...n, children: t });
       },
       th({ children: t, ...n }) {
-        return /* @__PURE__ */ X.jsx("th", { className: "table-cell border border-[#333333] font-semibold text-blue-500 px-2 py-1", ...n, children: t });
+        return /* @__PURE__ */ X.jsx("th", { className: "table-cell border border-border font-semibold text-blue-500 px-2 py-1", ...n, children: t });
       },
       img({ children: t, ...n }) {
         return /* @__PURE__ */ X.jsx("img", { ...n });
@@ -44020,8 +44020,8 @@ const ct = b9(), E9 = ({ msg: e, persona: t, widgetProps: n, isTyping: r }) => {
   }, className: "flex gap-2 items-start", children: [
     /* @__PURE__ */ X.jsx("div", { children: t ? t.url ? /* @__PURE__ */ X.jsx(Qr, { name: t.name, imageUrl: t.url, className: "h-6 w-6 rounded-full" }) : /* @__PURE__ */ X.jsx(ff, { className: "h-6 w-6 rounded-full" }) : /* @__PURE__ */ X.jsx(Qr, { className: "h-6 w-6 rounded-full", name: "User" }) }),
     /* @__PURE__ */ X.jsxs("div", { className: "rounded-lg px-3 py-2 ai-message shadow-sm", children: [
-      (e == null ? void 0 : e.tool_calls) && e.tool_calls.length > 0 && /* @__PURE__ */ X.jsxs("div", { className: "mb-3 border border-[#333333]  rounded-md overflow-hidden", children: [
-        /* @__PURE__ */ X.jsx("div", { className: "px-3 py-1.5 border-b border-[#333333] flex items-center", children: /* @__PURE__ */ X.jsx("span", { className: "text-xs font-bold", children: "Tool Calls" }) }),
+      (e == null ? void 0 : e.tool_calls) && e.tool_calls.length > 0 && /* @__PURE__ */ X.jsxs("div", { className: "mb-3 border border-border  rounded-md overflow-hidden", children: [
+        /* @__PURE__ */ X.jsx("div", { className: "px-3 py-1.5 border-b border-border flex items-center", children: /* @__PURE__ */ X.jsx("span", { className: "text-xs font-bold", children: "Tool Calls" }) }),
         /* @__PURE__ */ X.jsx("div", { className: "divide-y divide-[#333333]", children: e.tool_calls.map((d, g) => {
           if (d.function) {
             let f;

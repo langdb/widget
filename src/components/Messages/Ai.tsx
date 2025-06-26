@@ -71,8 +71,8 @@ export const AiMessage: React.FC<{
       </div>
       <div className="rounded-lg px-3 py-2 ai-message shadow-sm">
         {msg?.tool_calls && msg.tool_calls.length > 0 && (
-          <div className="mb-3 border border-[#333333]  rounded-md overflow-hidden">
-            <div className="px-3 py-1.5 border-b border-[#333333] flex items-center">
+          <div className="mb-3 border border-border  rounded-md overflow-hidden">
+            <div className="px-3 py-1.5 border-b border-border flex items-center">
               <span className="text-xs font-bold">Tool Calls</span>
             </div>
             <div className="divide-y divide-[#333333]">
