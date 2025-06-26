@@ -31,6 +31,9 @@ export interface WidgetProps extends AdapterProps {
     searchToolEnabled?: boolean;
     toggleSearchTool?: (enabled: boolean) => void;
     renderStarter?: () => React.ReactNode;
+    renderProviderAvatar?: (props: {
+        modelName: string;
+    }) => React.ReactNode;
     widgetId?: string;
     guards_slug?: string[];
     dynamicBody?: any;

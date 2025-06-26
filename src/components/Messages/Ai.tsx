@@ -58,6 +58,7 @@ export const AiMessage: React.FC<{
     }
 
   }, [threadId, id, widgetProps]);
+  let renderProviderAvatar = widgetProps.renderProviderAvatar;
   return (
     <div onClick={() => {
       threadId && id && emitter.emit('langdb_aiMessageClicked', {
@@ -70,7 +71,7 @@ export const AiMessage: React.FC<{
 
     }} className={`flex gap-2 items-start`}>
       <div className="flex-shrink-0">
-        <TooltipProvider>
+        {renderProviderAvatar && msg?.model_name ? renderProviderAvatar({ modelName: msg.model_name }) : <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
               {!persona ? <AvatarItem className="h-6 w-6 rounded-full" name={"Assistant"} /> : (persona.url ? <AvatarItem name={persona.name} imageUrl={persona.url} className="h-6 w-6 rounded-full" /> : <Avatar className="h-6 w-6 rounded-full" />)}
@@ -79,7 +80,7 @@ export const AiMessage: React.FC<{
               <p>AI Message</p>
             </TooltipContent>
           </Tooltip>
-        </TooltipProvider>
+        </TooltipProvider>}
       </div>
       <div className="w-full rounded-md p-2.5 bg-neutral-900 border border-neutral-800 shadow-sm">
         <div className="flex items-center justify-between mb-1.5 py-1 border-b border-neutral-800">
