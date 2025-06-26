@@ -17,7 +17,6 @@ export const HumanMessage: React.FC<{ msg: ChatMessage; persona?: Persona }> = (
           <div className="rounded-md p-2.5 bg-zinc-800 border border-zinc-700 flex flex-col gap-2 whitespace-pre-wrap">
             <div className="flex items-center justify-between mb-1.5 py-1 border-b border-zinc-700">
               <div className="flex items-center gap-1.5">
-                <UserCircleIcon className="h-3 w-3 text-white" />
                 <span className="text-white font-bold">You</span>
               </div>
               <button
@@ -91,7 +90,6 @@ export const HumanMessage: React.FC<{ msg: ChatMessage; persona?: Persona }> = (
         <div className="rounded-md p-2.5 bg-zinc-800 border border-zinc-700 whitespace-pre-wrap">
           <div className="flex items-center justify-between mb-1.5 py-1 border-b border-zinc-700">
             <div className="flex items-center gap-1.5">
-              <UserCircleIcon className="h-3 w-3 text-white" />
               <span className="text-white font-bold">You</span>
             </div>
             <button

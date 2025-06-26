@@ -35,10 +35,10 @@ export const SystemMessage: React.FC<SystemMessageProps> = ({ msg, persona }) =>
   return (
     <div className="flex items-center gap-2 mb-2">
       <div className="flex flex-col w-full">
-        <div className="rounded-md p-2.5 bg-zinc-900 border border-zinc-800 text-gray-400 whitespace-pre-wrap text-xs">
+        <div className="rounded-md p-2.5 bg-zinc-900 border border-zinc-800 text-gray-400 whitespace-pre-wrap">
           <div className="flex items-center justify-between mb-1.5 py-2 border-b border-zinc-800">
           <div className="flex items-center gap-1.5">
-            <CogIcon className="h-3 w-3 text-gray-400" />
+            <CogIcon className="h-4 w-4 text-gray-400" />
             <span className="text-gray-400 font-bold">System</span>
           </div>
           <button
@@ -67,16 +67,16 @@ export const SystemMessage: React.FC<SystemMessageProps> = ({ msg, persona }) =>
             {hasMoreLines && (
               <button 
                 onClick={() => setExpanded(!expanded)}
-                className="flex items-center gap-1 mt-2 text-gray-500 hover:text-gray-300 transition-colors text-xs font-medium"
+                className="flex items-center gap-1 mt-2 text-gray-500 hover:text-gray-300 transition-colors font-medium"
               >
                 {expanded ? (
                   <>
-                    <ChevronUpIcon className="h-3 w-3" />
+                    <ChevronUpIcon className="h-4 w-4" />
                     Show less
                   </>
                 ) : (
                   <>
-                    <ChevronDownIcon className="h-3 w-3" />
+                    <ChevronDownIcon className="h-4 w-4" />
                     Read more ({lineCount - 5} more lines)
                   </>
                 )}
