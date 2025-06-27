@@ -68359,16 +68359,7 @@ const ur = wge(), Cge = ({ msg: e, persona: t, widgetProps: n, isTyping: a }) =>
         ] }),
         /* @__PURE__ */ K.jsx("div", { className: "divide-y divide-neutral-700", children: e.tool_calls.map((C, k) => {
           if (C.function) {
-            let P;
-            try {
-              P = JSON.stringify(
-                JSON.parse(C.function.arguments),
-                null,
-                2
-              );
-            } catch (L) {
-              P = C.function.arguments, console.warn("Failed to parse function arguments:", L);
-            }
+            let P = C.function;
             const U = C.function.name.replace(/([A-Z])/g, " $1").replace(/_/g, " ").trim().replace(/^./, (L) => L.toUpperCase()), [O, _] = Cr(!1), I = () => {
               var L;
               (L = C.function) != null && L.arguments && navigator.clipboard.writeText(C.function.arguments).then(() => {

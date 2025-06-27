@@ -122,17 +122,7 @@ export const AiMessage: React.FC<{
             <div className="divide-y divide-neutral-700">
               {msg.tool_calls.map((tool_call, index) => {
                 if (tool_call.function) {
-                  let function_display;
-                  try {
-                    function_display = JSON.stringify(
-                      JSON.parse(tool_call.function.arguments),
-                      null,
-                      2
-                    );
-                  } catch (e) {
-                    function_display = tool_call.function.arguments;
-                    console.warn('Failed to parse function arguments:', e);
-                  }
+                  let function_display = tool_call.function;
                   // Format function name for better display
                   const functionName = tool_call.function.name;
                   const formattedName = functionName
