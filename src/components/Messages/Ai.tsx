@@ -136,8 +136,8 @@ export const AiMessage: React.FC<{
                   
                   // Handle copy function
                   const handleCopyToolCall = () => {
-                    if (tool_call.function?.arguments) {
-                      navigator.clipboard.writeText(tool_call.function.arguments)
+                    if (tool_call.function) {
+                      navigator.clipboard.writeText(JSON.stringify(tool_call.function, null, 2))
                         .then(() => {
                           setToolCopied(true);
                           setTimeout(() => setToolCopied(false), 2000);
@@ -159,7 +159,7 @@ export const AiMessage: React.FC<{
                             handleCopyToolCall();
                           }}
                           className="text-neutral-500 hover:text-neutral-300 transition-colors"
-                          title={toolCopied ? "Copied!" : "Copy arguments"}
+                          title={toolCopied ? "Copied!" : "Copy function"}
                         >
                           {toolCopied ? 
                             <CheckIcon className="h-3.5 w-3.5 text-green-500" /> : 

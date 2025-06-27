@@ -68361,10 +68361,9 @@ const ur = wge(), Cge = ({ msg: e, persona: t, widgetProps: n, isTyping: a }) =>
           if (C.function) {
             let P = C.function;
             const U = C.function.name.replace(/([A-Z])/g, " $1").replace(/_/g, " ").trim().replace(/^./, (L) => L.toUpperCase()), [O, _] = Cr(!1), I = () => {
-              var L;
-              (L = C.function) != null && L.arguments && navigator.clipboard.writeText(C.function.arguments).then(() => {
+              C.function && navigator.clipboard.writeText(JSON.stringify(C.function, null, 2)).then(() => {
                 _(!0), setTimeout(() => _(!1), 2e3);
-              }).catch((q) => console.error("Failed to copy tool call:", q));
+              }).catch((L) => console.error("Failed to copy tool call:", L));
             };
             return /* @__PURE__ */ K.jsxs("div", { className: "px-3 py-2.5 bg-neutral-800/30 rounded-sm mb-1 last:mb-0", children: [
               /* @__PURE__ */ K.jsxs("div", { className: "flex items-center justify-between mb-1.5", children: [
@@ -68379,7 +68378,7 @@ const ur = wge(), Cge = ({ msg: e, persona: t, widgetProps: n, isTyping: a }) =>
                       L.stopPropagation(), I();
                     },
                     className: "text-neutral-500 hover:text-neutral-300 transition-colors",
-                    title: O ? "Copied!" : "Copy arguments",
+                    title: O ? "Copied!" : "Copy function",
                     children: O ? /* @__PURE__ */ K.jsx(nh, { className: "h-3.5 w-3.5 text-green-500" }) : /* @__PURE__ */ K.jsx(rh, { className: "h-3.5 w-3.5" })
                   }
                 )
