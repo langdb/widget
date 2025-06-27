@@ -103,10 +103,10 @@ export const BaseMessageDisplay: React.FC<{ message: string }> = ({ message }) =
         );
       },
       h1({ children, ...props }) {
-        return <h1 className="font-bold text-[2em] pb-[0.3em] border-b border-[#333333] " {...props}>{children}</h1>
+        return <h1 className="font-bold text-[2em] pb-[0.3em] border-b border-border " {...props}>{children}</h1>
       },
       h2({ children, ...props }) {
-        return <h2 className="font-bold text-[1.5em] pb-[0.3em] border-b border-[#333333]" {...props}>{children}</h2>
+        return <h2 className="font-bold text-[1.5em] pb-[0.3em] border-b border-border" {...props}>{children}</h2>
       },
       h3({ children, ...props }) {
         return <h3 className="font-bold text-[1em]" {...props}>{children}</h3>
@@ -140,10 +140,10 @@ export const BaseMessageDisplay: React.FC<{ message: string }> = ({ message }) =
         return <tr className="table-row" {...props}>{children}</tr>
       },
       td({ children, ...props }) {
-        return <td className="table-cell border border-[#333333] px-2 py-1" {...props}>{children}</td>
+        return <td className="table-cell border border-border px-2 py-1" {...props}>{children}</td>
       },
       th({ children, ...props }) {
-        return <th className="table-cell border border-[#333333] font-semibold text-blue-500 px-2 py-1" {...props}>{children}</th>
+        return <th className="table-cell border border-border font-semibold text-blue-500 px-2 py-1" {...props}>{children}</th>
       },
       img({ children, ...props }) {
 
