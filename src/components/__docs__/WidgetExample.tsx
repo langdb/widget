@@ -75,9 +75,9 @@ const Example: FC<WidgetProps> = ({
           //threadId={threadId}
           //widgetId={threadId}
           //threadId="38a5a61b-9a28-43d3-99c9-215cc773bb59"
-          threadId="3289ddba-00f1-406f-95ae-9cf472010e95"
+          // threadId="3289ddba-00f1-406f-95ae-9cf472010e95"
           modelName="openai/gpt-4o-mini"
-          projectId={'2ce526dd-c0f0-4c50-942e-9cd9bc37b8f3'}
+          projectId={'dffdff3d-6cb1-4d45-89d1-f5d2b100e9d9'}
           apiKey={'langdb_MTlkYThvcTcxZ2U1ZWhoMHVzbnA4aWJiYnU='}
           serverUrl={api_url}
           theme={theme}
