@@ -32,21 +32,31 @@ const MessageRenderer: React.FC<{
 }> = ({ message, personaOptions, widgetProps, isLastMessage, isTyping }) => {
   // Determine if this is a human message for styling purposes
   const isHumanMessage = message.type === MessageType.HumanMessage;
+  const isSystemMessage = message.type === MessageType.SystemMessage;
   
   return (
     <article 
       className={`
-        flex mb-2.5 
-        ${isHumanMessage ? 'justify-end scroll-my-20' : 'justify-start'} 
+        flex mb-4 group
+        ${isHumanMessage ? 'justify-end' : 'justify-start'} 
         ${isLastMessage && !message.created_at ? 'min-h-[50vh] items-start justify-start' : 'items-start'}
-        transition-opacity duration-200 ease-in-out
+        transition-all duration-200 ease-in-out
+        ${isSystemMessage ? 'px-2' : ''}
       `}
+      role="listitem"
+      aria-label={`${isHumanMessage ? 'Your' : isSystemMessage ? 'System' : 'Assistant'} message`}
     >
-      <div className="max-w-3/4 overflow-scroll text-sm rounded-lg">
+      <div 
+        className={`
+          max-w-[85%] sm:max-w-[75%] text-sm
+          ${isHumanMessage ? 'order-1' : 'order-2'}
+          ${isSystemMessage ? 'w-full' : ''}
+        `}
+      >
         {isHumanMessage ? (
           <HumanMessage msg={message} persona={personaOptions.user} />
         ) : message.type === MessageType.SystemMessage ? (
-          <SystemMessage msg={message} widgetProps={widgetProps}  persona={personaOptions.assistant} />
+          <SystemMessage msg={message} widgetProps={widgetProps} persona={personaOptions.assistant} />
         ) : (
           <AiMessage 
             msg={message} 

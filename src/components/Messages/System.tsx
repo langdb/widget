@@ -37,7 +37,19 @@ export const SystemMessage: React.FC<SystemMessageProps> = ({ msg, widgetProps, 
   const displayMessage = expanded || !hasMoreLines ? message : getFirstNLines(message, 5);
   
   return (
-    <div className="flex items-center gap-2 mb-2">
+    <div className="flex items-start gap-2 mb-2">
+      <div className="flex-shrink-0">
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <CogIcon className="h-6 w-6 rounded-full text-white" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>System Message</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </div>
       <div className="flex flex-col w-full">
         <div className="rounded-md p-2.5 bg-zinc-900 border border-zinc-800 text-gray-400 whitespace-pre-wrap">
           <div className="flex items-center justify-between mb-1.5 py-2 border-b border-zinc-800">
@@ -103,18 +115,6 @@ export const SystemMessage: React.FC<SystemMessageProps> = ({ msg, widgetProps, 
             )}
           </div>
         </div>
-      </div>
-      <div className="flex-shrink-0">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger>
-              <CogIcon className="h-6 w-6 rounded-full text-white" />
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>System Message</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
       </div>
     </div>
   );
