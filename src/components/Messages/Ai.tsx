@@ -82,7 +82,7 @@ export const AiMessage: React.FC<{
           </Tooltip>
         </TooltipProvider>}
       </div>
-      <div className="w-full rounded-md p-2.5 bg-neutral-900 border border-neutral-800 shadow-sm">
+      <div className="w-full rounded-md p-2.5 bg-neutral-900 border border-neutral-800 shadow-sm overflow-hidden">
         <div className="flex items-center justify-between mb-1.5 py-1 border-b border-neutral-800">
           <div className="flex items-center gap-1.5">
             <span className="text-neutral-400 font-bold">{msg?.type === 'ai' ? 'Assistant' : msg?.type === 'human' ? 'You' : 'System'}</span>
@@ -166,37 +166,42 @@ export const AiMessage: React.FC<{
                             <ClipboardDocumentIcon className="h-3.5 w-3.5" />}
                         </button>
                       </div>
-                      <ReactJson
-                        key={index}
-                        name={false}
-                        collapsed={2}
-                        displayDataTypes={false}
-                        displayObjectSize={false}
-                        enableClipboard={false}
-                        theme={{
-                          base00: 'transparent',
-                          base01: '#404040',
-                          base02: '#525252',
-                          base03: '#737373',
-                          base04: '#a3a3a3',
-                          base05: '#d4d4d4',
-                          base06: '#e5e5e5',
-                          base07: '#f5f5f5',
-                          base08: '#f87171', // red
-                          base09: '#fb923c', // orange
-                          base0A: '#facc15', // yellow
-                          base0B: '#4ade80', // green
-                          base0C: '#22d3ee', // cyan
-                          base0D: '#60a5fa', // blue
-                          base0E: '#a78bfa', // purple
-                          base0F: '#f472b6', // pink
-                        }}
-                        style={{
-                          wordWrap: 'break-word',
-                          whiteSpace: 'pre-wrap',
-                        }}
-                        src={function_display}
-                      />
+                      <div className="max-w-full overflow-x-auto">
+                        <ReactJson
+                          key={index}
+                          name={false}
+                          collapsed={2}
+                          displayDataTypes={false}
+                          displayObjectSize={false}
+                          enableClipboard={false}
+                          theme={{
+                            base00: 'transparent',
+                            base01: '#404040',
+                            base02: '#525252',
+                            base03: '#737373',
+                            base04: '#a3a3a3',
+                            base05: '#d4d4d4',
+                            base06: '#e5e5e5',
+                            base07: '#f5f5f5',
+                            base08: '#f87171', // red
+                            base09: '#fb923c', // orange
+                            base0A: '#facc15', // yellow
+                            base0B: '#4ade80', // green
+                            base0C: '#22d3ee', // cyan
+                            base0D: '#60a5fa', // blue
+                            base0E: '#a78bfa', // purple
+                            base0F: '#f472b6', // pink
+                          }}
+                          style={{
+                            wordWrap: 'break-word',
+                            whiteSpace: 'pre-wrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            maxWidth: '100%'
+                          }}
+                          src={function_display}
+                        />
+                      </div>
                     </div>
                   );
                 }
@@ -205,7 +210,7 @@ export const AiMessage: React.FC<{
             </div>
           </div>
         )}
-        <div className="whitespace-normal flex flex-col gap-[15px] text-gray-100">
+        <div className="whitespace-normal flex flex-col gap-[15px] text-gray-100 break-words overflow-wrap break-all">
           <MessageDisplay message={msg?.message || ""} />
         </div>
         {

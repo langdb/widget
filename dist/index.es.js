@@ -68325,7 +68325,7 @@ const ur = wge(), Cge = ({ msg: e, persona: t, widgetProps: n, isTyping: a }) =>
       /* @__PURE__ */ K.jsx(Zb, { children: t ? t.url ? /* @__PURE__ */ K.jsx(Ym, { name: t.name, imageUrl: t.url, className: "h-6 w-6 rounded-full" }) : /* @__PURE__ */ K.jsx(RN, { className: "h-6 w-6 rounded-full" }) : /* @__PURE__ */ K.jsx(Ym, { className: "h-6 w-6 rounded-full", name: "Assistant" }) }),
       /* @__PURE__ */ K.jsx(oh, { children: /* @__PURE__ */ K.jsx("p", { children: "AI Message" }) })
     ] }) }) }),
-    /* @__PURE__ */ K.jsxs("div", { className: "w-full rounded-md p-2.5 bg-neutral-900 border border-neutral-800 shadow-sm", children: [
+    /* @__PURE__ */ K.jsxs("div", { className: "w-full rounded-md p-2.5 bg-neutral-900 border border-neutral-800 shadow-sm overflow-hidden", children: [
       /* @__PURE__ */ K.jsxs("div", { className: "flex items-center justify-between mb-1.5 py-1 border-b border-neutral-800", children: [
         /* @__PURE__ */ K.jsxs("div", { className: "flex items-center gap-1.5", children: [
           /* @__PURE__ */ K.jsx("span", { className: "text-neutral-400 font-bold", children: (e == null ? void 0 : e.type) === "ai" ? "Assistant" : (e == null ? void 0 : e.type) === "human" ? "You" : "System" }),
@@ -68384,7 +68384,7 @@ const ur = wge(), Cge = ({ msg: e, persona: t, widgetProps: n, isTyping: a }) =>
                   }
                 )
               ] }),
-              /* @__PURE__ */ K.jsx(
+              /* @__PURE__ */ K.jsx("div", { className: "max-w-full overflow-x-auto", children: /* @__PURE__ */ K.jsx(
                 E9,
                 {
                   name: !1,
@@ -68420,18 +68420,21 @@ const ur = wge(), Cge = ({ msg: e, persona: t, widgetProps: n, isTyping: a }) =>
                   },
                   style: {
                     wordWrap: "break-word",
-                    whiteSpace: "pre-wrap"
+                    whiteSpace: "pre-wrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    maxWidth: "100%"
                   },
                   src: P
                 },
                 k
-              )
+              ) })
             ] }, k);
           }
           return null;
         }) })
       ] }),
-      /* @__PURE__ */ K.jsx("div", { className: "whitespace-normal flex flex-col gap-[15px] text-gray-100", children: /* @__PURE__ */ K.jsx(IE, { message: (e == null ? void 0 : e.message) || "" }) }),
+      /* @__PURE__ */ K.jsx("div", { className: "whitespace-normal flex flex-col gap-[15px] text-gray-100 break-words overflow-wrap break-all", children: /* @__PURE__ */ K.jsx(IE, { message: (e == null ? void 0 : e.message) || "" }) }),
       !a && o && l && /* @__PURE__ */ K.jsxs("div", { className: "mt-3 flex items-center justify-start space-x-2", children: [
         /* @__PURE__ */ K.jsxs(
           "button",
