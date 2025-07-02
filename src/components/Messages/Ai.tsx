@@ -27,6 +27,7 @@ export const AiMessage: React.FC<{
   const [score, setScore] = useState<number | undefined>();
   const [error, setError] = useState<string | undefined>();
   const [copied, setCopied] = useState(false);
+  const [toolCopiedStates, setToolCopiedStates] = useState<{[key: string]: boolean}>({});
   const handleScore = useCallback(async (score: number) => {
     let scoreRequest;
     scoreRequest = {
@@ -131,20 +132,21 @@ export const AiMessage: React.FC<{
                     .trim()
                     .replace(/^./, str => str.toUpperCase());
                     
-                  // State for copy button
-                  const [toolCopied, setToolCopied] = useState(false);
-                  
                   // Handle copy function
                   const handleCopyToolCall = () => {
                     if (tool_call.function) {
                       navigator.clipboard.writeText(JSON.stringify(tool_call.function, null, 2))
                         .then(() => {
-                          setToolCopied(true);
-                          setTimeout(() => setToolCopied(false), 2000);
+                          setToolCopiedStates(prev => ({ ...prev, [tool_call.id]: true }));
+                          setTimeout(() => {
+                            setToolCopiedStates(prev => ({ ...prev, [tool_call.id]: false }));
+                          }, 2000);
                         })
                         .catch(err => console.error('Failed to copy tool call:', err));
                     }
                   };
+                  
+                  const isToolCopied = toolCopiedStates[tool_call.id] || false;
                     
                   return (
                     <div key={index} className="px-3 py-2.5 bg-neutral-800/30 rounded-sm mb-1 last:mb-0">
@@ -159,9 +161,9 @@ export const AiMessage: React.FC<{
                             handleCopyToolCall();
                           }}
                           className="text-neutral-500 hover:text-neutral-300 transition-colors"
-                          title={toolCopied ? "Copied!" : "Copy function"}
+                          title={isToolCopied ? "Copied!" : "Copy function"}
                         >
-                          {toolCopied ? 
+                          {isToolCopied ? 
                             <CheckIcon className="h-3.5 w-3.5 text-green-500" /> : 
                             <ClipboardDocumentIcon className="h-3.5 w-3.5" />}
                         </button>

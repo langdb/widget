@@ -76,9 +76,13 @@ const Example: FC<WidgetProps> = ({
           //widgetId={threadId}
           //threadId="38a5a61b-9a28-43d3-99c9-215cc773bb59"
           // threadId="3289ddba-00f1-406f-95ae-9cf472010e95"
-          modelName="openai/gpt-4o-mini"
-          projectId={'dffdff3d-6cb1-4d45-89d1-f5d2b100e9d9'}
-          apiKey={'langdb_MTlkYThvcTcxZ2U1ZWhoMHVzbnA4aWJiYnU='}
+          modelName="anthropic/claude-sonnet-4"
+          mcpTools={[{
+            type: 'sse',
+            server_url: 'https://api.staging.langdb.ai/tavily_ejbjbkqz',
+          }]}
+          projectId={'04b66e93-a6a8-4f70-96b1-86c5e73225ee'}
+          apiKey={'langdb_bHhGUHcyZHBSU0x3b0I='}
           serverUrl={api_url}
           theme={theme}
           starters={starters}
