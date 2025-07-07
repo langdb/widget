@@ -72621,7 +72621,7 @@ const cye = ({ msg: e, widgetProps: t, persona: n }) => {
       className: `
         flex mb-4 group
         ${l ? "justify-end" : "justify-start"} 
-        ${a && !e.created_at ? "min-h-[50vh] items-start justify-start" : "items-start"}
+        ${a && !e.created_at ? `min-h-[40vh] items-start justify-start ${n.lastAiMessageClass || ""}` : "items-start"}
         transition-all duration-200 ease-in-out
         ${u ? "px-2" : ""}
       `,

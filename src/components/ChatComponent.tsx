@@ -39,7 +39,7 @@ const MessageRenderer: React.FC<{
       className={`
         flex mb-4 group
         ${isHumanMessage ? 'justify-end' : 'justify-start'} 
-        ${isLastMessage && !message.created_at ? 'min-h-[50vh] items-start justify-start' : 'items-start'}
+        ${isLastMessage && !message.created_at ? `min-h-[40vh] items-start justify-start ${widgetProps.lastAiMessageClass || ''}` : 'items-start'}
         transition-all duration-200 ease-in-out
         ${isSystemMessage ? 'px-2' : ''}
       `}
