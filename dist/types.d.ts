@@ -6,6 +6,7 @@ export interface MessageRequest {
     thread_id?: string;
     include_history?: boolean;
     stream?: boolean;
+    max_retries?: number;
     temperature?: number;
     top_p?: number;
     n?: number;

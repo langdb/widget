@@ -36,6 +36,8 @@ export interface WidgetProps extends AdapterProps {
         messageType: string;
     }) => React.ReactNode;
     widgetId?: string;
+    maxRetries?: number;
+    fallback?: any[];
     lastAiMessageClass?: string;
     guards_slug?: string[];
     dynamicBody?: any;

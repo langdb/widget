@@ -979,7 +979,9 @@ const AN = "https://api.dev.langdb.ai", CN = async (e) => {
       } : {},
       ...Ee && Object.keys(Ee).length > 0 ? {
         extra: Ee
-      } : {}
+      } : {},
+      ...t.fallback && t.fallback.length > 0 ? { fallback: t.fallback } : {},
+      ...t.maxRetries && t.maxRetries > 0 ? { max_retries: t.maxRetries } : {}
     };
     P && (he = {
       ...P,

@@ -176,6 +176,8 @@ export const onSubmit = async (submitProps: SubmitProps) => {
             extra: extraConfig,
           }
         : {}),
+      ...(widgetProps.fallback && widgetProps.fallback.length > 0 ? { fallback: widgetProps.fallback } : {}),
+      ...(widgetProps.maxRetries && widgetProps.maxRetries > 0 ? { max_retries: widgetProps.maxRetries } : {}),
     };
     if (dynamicBody) {
       request = {
