@@ -44034,7 +44034,7 @@ const S9 = {
       p({ children: t, ...n }) {
         if (typeof t == "string") {
           let o = SU(t);
-          return o ? /* @__PURE__ */ K.jsx(T9, { message: `\`\`\`json
+          return o && o.length > 0 ? /* @__PURE__ */ K.jsx(T9, { message: `\`\`\`json
 ${JSON.stringify(o, null, 2)}` }) : /* @__PURE__ */ K.jsx("p", { className: "whitespace-pre-wrap my-0", ...n, children: t });
         }
         return /* @__PURE__ */ K.jsx("p", { className: "whitespace-pre-wrap my-0", ...n, children: t });

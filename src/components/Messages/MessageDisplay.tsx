@@ -155,7 +155,7 @@ export const BaseMessageDisplay: React.FC<{ message: string }> = ({ message }) =
         if (typeof children === 'string') {
           let stringChildren = children;
           let jsonObject = tryParseJson(stringChildren);
-          if (jsonObject) {
+          if (jsonObject && jsonObject.length > 0) {
             return <BaseMessageDisplay message={`\`\`\`json\n${JSON.stringify(jsonObject, null, 2)}`} />
           }
           return <p className="whitespace-pre-wrap my-0" {...props}>{children}</p>
