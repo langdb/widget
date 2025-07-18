@@ -43987,22 +43987,22 @@ const S9 = {
         return /* @__PURE__ */ K.jsx("blockquote", { className: "border-l-4 border-gray-300 pl-4 italic text-gray-600", ...n, children: t });
       },
       h1({ children: t, ...n }) {
-        return /* @__PURE__ */ K.jsx("h1", { className: "font-bold text-[2em] pb-[0.3em] border-b border-border ", ...n, children: t });
+        return /* @__PURE__ */ K.jsx("h1", { className: "font-bold text-3xl pb-[0.3em] border-b border-border ", ...n, children: t });
       },
       h2({ children: t, ...n }) {
-        return /* @__PURE__ */ K.jsx("h2", { className: "font-bold text-[1.5em] pb-[0.3em] border-b border-border", ...n, children: t });
+        return /* @__PURE__ */ K.jsx("h2", { className: "font-bold text-2xl pb-[0.3em] border-b border-border", ...n, children: t });
       },
       h3({ children: t, ...n }) {
-        return /* @__PURE__ */ K.jsx("h3", { className: "font-bold text-[1em]", ...n, children: t });
+        return /* @__PURE__ */ K.jsx("h3", { className: "font-bold text-xl", ...n, children: t });
       },
       h4({ children: t, ...n }) {
-        return /* @__PURE__ */ K.jsx("h4", { className: "font-bold text-[0.8em] ", ...n, children: t });
+        return /* @__PURE__ */ K.jsx("h4", { className: "font-bold text-lg ", ...n, children: t });
       },
       h5({ children: t, ...n }) {
-        return /* @__PURE__ */ K.jsx("h5", { className: "font-bold text-[0.6em] ", ...n, children: t });
+        return /* @__PURE__ */ K.jsx("h5", { className: "font-bold text-md ", ...n, children: t });
       },
       h6({ children: t, ...n }) {
-        return /* @__PURE__ */ K.jsx("h6", { className: "font-bold text-[0.5em]", ...n, children: t });
+        return /* @__PURE__ */ K.jsx("h6", { className: "font-bold text-sm", ...n, children: t });
       },
       ul({ children: t, ...n }) {
         return /* @__PURE__ */ K.jsx("ul", { ...n, className: `list-disc list-inside my-1 ${n.className || ""}`, children: t });

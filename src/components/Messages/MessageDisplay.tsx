@@ -103,22 +103,22 @@ export const BaseMessageDisplay: React.FC<{ message: string }> = ({ message }) =
         );
       },
       h1({ children, ...props }) {
-        return <h1 className="font-bold text-[2em] pb-[0.3em] border-b border-border " {...props}>{children}</h1>
+        return <h1 className="font-bold text-3xl pb-[0.3em] border-b border-border " {...props}>{children}</h1>
       },
       h2({ children, ...props }) {
-        return <h2 className="font-bold text-[1.5em] pb-[0.3em] border-b border-border" {...props}>{children}</h2>
+        return <h2 className="font-bold text-2xl pb-[0.3em] border-b border-border" {...props}>{children}</h2>
       },
       h3({ children, ...props }) {
-        return <h3 className="font-bold text-[1em]" {...props}>{children}</h3>
+        return <h3 className="font-bold text-xl" {...props}>{children}</h3>
       },
       h4({ children, ...props }) {
-        return <h4 className="font-bold text-[0.8em] " {...props}>{children}</h4>
+        return <h4 className="font-bold text-lg " {...props}>{children}</h4>
       },
       h5({ children, ...props }) {
-        return <h5 className="font-bold text-[0.6em] " {...props}>{children}</h5>
+        return <h5 className="font-bold text-md " {...props}>{children}</h5>
       },
       h6({ children, ...props }) {
-        return <h6 className="font-bold text-[0.5em]" {...props}>{children}</h6>
+        return <h6 className="font-bold text-sm" {...props}>{children}</h6>
       },
       ul({ children, ...props }) {
         return <ul {...props} className={`list-disc list-inside my-1 ${props.className || ''}`}>{children}</ul>
