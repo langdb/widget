@@ -1,5 +1,3 @@
-export declare const CopyToClipboard: React.FC<
-  {
+export declare const CopyToClipboard: React.FC<{
     content: string;
-  } & React.HTMLAttributes<HTMLDivElement>
->;
+} & React.HTMLAttributes<HTMLDivElement>>;

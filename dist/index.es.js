@@ -288,8 +288,8 @@ function PR(e) {
         role: t.type,
         content: t.message || ""
       };
-    let n = t.content_array.map((r) => {
-      let a = r, i = a[0], o = a[1];
+    const n = t.content_array.map((r) => {
+      const a = r, i = a[0], o = a[1];
       if (i === "ImageUrl")
         return {
           type: "image_url",
@@ -325,32 +325,36 @@ async function FR(e) {
       content: n
     };
   {
-    let r = await Promise.all(t.filter((o) => o && o.type && (o.type.startsWith("audio/") || o.type.startsWith("image/"))).map(async (o) => {
-      var s;
-      if (o.type.startsWith("audio/")) {
-        let u = o.raw_file.name.split(".").pop();
-        return {
-          type: "input_audio",
-          audio: {
-            data: (s = o.base64) == null ? void 0 : s.split(",")[1],
-            format: u
-          }
-        };
-      } else {
-        const l = await Am(o, e.resizeOptions);
-        if (!l)
-          throw new Error("resize failed");
-        const u = await xm(l);
-        if (!u)
-          throw new Error("base64 failed");
-        return {
-          type: "image_url",
-          image_url: {
-            url: u
-          }
-        };
-      }
-    })), a = {
+    const r = await Promise.all(
+      t.filter(
+        (o) => o && o.type && (o.type.startsWith("audio/") || o.type.startsWith("image/"))
+      ).map(async (o) => {
+        var s;
+        if (o.type.startsWith("audio/")) {
+          const u = o.raw_file.name.split(".").pop();
+          return {
+            type: "input_audio",
+            audio: {
+              data: (s = o.base64) == null ? void 0 : s.split(",")[1],
+              format: u
+            }
+          };
+        } else {
+          const l = await Am(o, e.resizeOptions);
+          if (!l)
+            throw new Error("resize failed");
+          const u = await xm(l);
+          if (!u)
+            throw new Error("base64 failed");
+          return {
+            type: "image_url",
+            image_url: {
+              url: u
+            }
+          };
+        }
+      })
+    ), a = {
       type: "text",
       text: n
     };
@@ -374,32 +378,24 @@ async function _Y(e) {
   if (!t || !t.length)
     return n;
   {
-    let r = await Promise.all(t.filter((a) => a && a.type && a.type.startsWith("image/")).map(async (a) => {
-      const i = await Am(a, e.resizeOptions);
-      if (!i)
-        throw new Error("resize failed");
-      const o = await xm(i);
-      if (!o)
-        throw new Error("base64 failed");
-      return [
-        "ImageUrl",
-        o,
-        null
-      ];
-    }));
-    return r.push(
-      [
-        "Text",
-        n,
-        null
-      ]
-    ), r;
+    const r = await Promise.all(
+      t.filter((a) => a && a.type && a.type.startsWith("image/")).map(async (a) => {
+        const i = await Am(a, e.resizeOptions);
+        if (!i)
+          throw new Error("resize failed");
+        const o = await xm(i);
+        if (!o)
+          throw new Error("base64 failed");
+        return ["ImageUrl", o, null];
+      })
+    );
+    return r.push(["Text", n, null]), r;
   }
 }
 const Am = async (e, t) => {
   const n = (t == null ? void 0 : t.maxSize) || 256, r = document.createElement("canvas"), a = r.getContext("2d");
   if (!a) throw new Error("ctx is not available");
-  let i = e.raw_file;
+  const i = e.raw_file;
   if (!(i instanceof Blob))
     return null;
   if (i.type === "image/svg+xml") {
@@ -408,13 +404,22 @@ const Am = async (e, t) => {
     const A = new XMLSerializer().serializeToString(b);
     return new Blob([A], { type: "image/svg+xml" });
   }
-  let o = await createImageBitmap(i);
-  const { width: s, height: l } = o;
+  const o = await createImageBitmap(i), { width: s, height: l } = o;
   if (s < n && l < n)
     return i;
   r.width = n, r.height = n;
   const u = Math.max(n / s, n / l), c = (n - s * u) / 2, d = (n - l * u) / 2;
-  return a.drawImage(o, 0, 0, s, l, c, d, s * u, l * u), new Promise((p) => {
+  return a.drawImage(
+    o,
+    0,
+    0,
+    s,
+    l,
+    c,
+    d,
+    s * u,
+    l * u
+  ), new Promise((p) => {
     r.toBlob((f) => {
       p(f);
     });
@@ -588,12 +593,12 @@ const wm = "https://api.dev.langdb.ai", Rm = async (e) => {
       getAccessToken: t.getAccessToken,
       threadId: a || t.threadId,
       apiKey: t.apiKey
-    });
-    let R = PR(u), j = await FR({
+    }), R = PR(u), j = await FR({
       files: n,
       message: r,
       resizeOptions: b
-    }), I = [...R, j];
+    });
+    let I = [...R, j];
     !a && y && y.includes("claude-") && (I = [
       {
         role: "system",
@@ -601,7 +606,7 @@ const wm = "https://api.dev.langdb.ai", Rm = async (e) => {
       },
       j
     ]), f && f.length > 0 && (I = [...f, ...I]);
-    let w = p || [];
+    const w = p || [];
     c && w.push({
       name: "websearch",
       type: "memory"
@@ -610,8 +615,7 @@ const wm = "https://api.dev.langdb.ai", Rm = async (e) => {
       new Map(
         w.map((Y) => [`${Y.name}-${Y.type}`, Y])
       ).values()
-    ), $ = t.guards_slug || [], B = t.cacheConfig || {};
-    let Q = {};
+    ), $ = t.guards_slug || [], B = t.cacheConfig || {}, Q = {};
     B && Object.keys(B).length > 0 && (Q.cache = B), $ && $.length > 0 && (Q.guards = $);
     let X = {
       model: y,
@@ -663,14 +667,49 @@ const wm = "https://api.dev.langdb.ai", Rm = async (e) => {
     (n = e.current) == null || n.scrollIntoView({ behavior: "smooth" });
   }, [e]);
   return { messagesEndRef: e, scrollToBottom: t };
-}, Cm = (e) => /* @__PURE__ */ N.jsxs("svg", { width: "1176", height: "1176", ...e, viewBox: "0 0 1176 1176", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [
-  /* @__PURE__ */ N.jsxs("g", { "clip-path": "url(#clip0_191_10)", children: [
-    /* @__PURE__ */ N.jsx("path", { "fill-rule": "evenodd", "clip-rule": "evenodd", d: "M1006.71 105.003C983.924 34.7033 908.214 -4.13421 837.747 18.3355L255.675 203.937C185.207 226.407 146.502 301.727 169.289 372.027C192.076 442.326 267.785 481.164 338.253 458.694L920.325 273.092C990.792 250.623 1029.5 175.302 1006.71 105.003Z", fill: "#E94560" }),
-    /* @__PURE__ */ N.jsx("path", { "fill-rule": "evenodd", "clip-rule": "evenodd", d: "M1006.71 454.208C983.924 383.908 908.214 345.071 837.747 367.541L255.675 553.142C185.207 575.612 146.502 650.932 169.289 721.232C192.076 791.531 267.785 830.369 338.253 807.899L920.325 622.297C990.792 599.828 1029.5 524.507 1006.71 454.208Z", fill: "#E94560" }),
-    /* @__PURE__ */ N.jsx("path", { "fill-rule": "evenodd", "clip-rule": "evenodd", d: "M1006.71 803.463C983.924 733.163 908.214 694.326 837.747 716.795L255.675 902.397C185.207 924.867 146.502 1000.19 169.289 1070.49C192.076 1140.79 267.785 1179.62 338.253 1157.15L920.325 971.552C990.792 949.083 1029.5 873.762 1006.71 803.463Z", fill: "#E94560" })
-  ] }),
-  /* @__PURE__ */ N.jsx("defs", { children: /* @__PURE__ */ N.jsx("clipPath", { id: "clip0_191_10", children: /* @__PURE__ */ N.jsx("rect", { width: "1176", height: "1176", fill: "white" }) }) })
-] }), Qt = [];
+}, Cm = (e) => /* @__PURE__ */ N.jsxs(
+  "svg",
+  {
+    width: "1176",
+    height: "1176",
+    ...e,
+    viewBox: "0 0 1176 1176",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+    children: [
+      /* @__PURE__ */ N.jsxs("g", { clipPath: "url(#clip0_191_10)", children: [
+        /* @__PURE__ */ N.jsx(
+          "path",
+          {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M1006.71 105.003C983.924 34.7033 908.214 -4.13421 837.747 18.3355L255.675 203.937C185.207 226.407 146.502 301.727 169.289 372.027C192.076 442.326 267.785 481.164 338.253 458.694L920.325 273.092C990.792 250.623 1029.5 175.302 1006.71 105.003Z",
+            fill: "#E94560"
+          }
+        ),
+        /* @__PURE__ */ N.jsx(
+          "path",
+          {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M1006.71 454.208C983.924 383.908 908.214 345.071 837.747 367.541L255.675 553.142C185.207 575.612 146.502 650.932 169.289 721.232C192.076 791.531 267.785 830.369 338.253 807.899L920.325 622.297C990.792 599.828 1029.5 524.507 1006.71 454.208Z",
+            fill: "#E94560"
+          }
+        ),
+        /* @__PURE__ */ N.jsx(
+          "path",
+          {
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            d: "M1006.71 803.463C983.924 733.163 908.214 694.326 837.747 716.795L255.675 902.397C185.207 924.867 146.502 1000.19 169.289 1070.49C192.076 1140.79 267.785 1179.62 338.253 1157.15L920.325 971.552C990.792 949.083 1029.5 873.762 1006.71 803.463Z",
+            fill: "#E94560"
+          }
+        )
+      ] }),
+      /* @__PURE__ */ N.jsx("defs", { children: /* @__PURE__ */ N.jsx("clipPath", { id: "clip0_191_10", children: /* @__PURE__ */ N.jsx("rect", { width: "1176", height: "1176", fill: "white" }) }) })
+    ]
+  }
+), Qt = [];
 for (let e = 0; e < 256; ++e)
   Qt.push((e + 256).toString(16).slice(1));
 function YR(e, t = 0) {
@@ -698,11 +737,16 @@ function dh(e, t, n) {
   return r[6] = r[6] & 15 | 64, r[8] = r[8] & 63 | 128, YR(r);
 }
 const QR = (e) => {
-  const { initialMessages: t } = e, [n, r] = ht([]), [a, i] = ht(""), [o, s] = ht(), [l, u] = ht(), [c, d] = ht(), [p, f] = ht(!1), [h, b] = ht(), [_, A] = ht([]), x = dt((E) => {
-    A((v) => [...v, E]);
-  }, [A]), y = [...t, ...n];
+  const { initialMessages: t } = e, [n, r] = ht([]), [a, i] = ht(""), [o, s] = ht(), [l, u] = ht(), [c, d] = ht(), [p, f] = ht(!1), [h, b] = ht(), [_, A] = ht([]), x = dt(
+    (E) => {
+      A((v) => [...v, E]);
+    },
+    [A]
+  ), y = [...t, ...n];
   return {
-    messages: Array.from(new Set(y.map((E) => E.id))).map((E) => y.find((v) => v.id === E)).filter((E) => E !== void 0),
+    messages: Array.from(
+      new Set(y.map((E) => E.id))
+    ).map((E) => y.find((v) => v.id === E)).filter((E) => E !== void 0),
     setMessages: r,
     currentInput: a,
     setCurrentInput: i,
@@ -722,9 +766,20 @@ const QR = (e) => {
   };
 };
 var kf = /* @__PURE__ */ ((e) => (e.Text = "Text", e.ImageUrl = "ImageUrl", e))(kf || {}), dr = /* @__PURE__ */ ((e) => (e.SystemMessage = "system", e.AIMessage = "ai", e.HumanMessage = "human", e.ToolMessage = "tool", e))(dr || {});
-const Ea = ({ imageUrl: e, name: t, className: n }) => {
+const Ea = ({
+  imageUrl: e,
+  name: t,
+  className: n
+}) => {
   const r = (a) => a.charAt(0).toUpperCase();
-  return /* @__PURE__ */ N.jsx("div", { className: `avatar ${n}`, children: e ? /* @__PURE__ */ N.jsx("img", { src: e, alt: t, className: "h-full w-full rounded-full object-cover" }) : /* @__PURE__ */ N.jsx("div", { className: "h-full w-full rounded-full bg-gray-500 flex items-center justify-center text-white", children: r(t) }) });
+  return /* @__PURE__ */ N.jsx("div", { className: `avatar ${n}`, children: e ? /* @__PURE__ */ N.jsx(
+    "img",
+    {
+      src: e,
+      alt: t,
+      className: "h-full w-full rounded-full object-cover"
+    }
+  ) : /* @__PURE__ */ N.jsx("div", { className: "h-full w-full rounded-full bg-gray-500 flex items-center justify-center text-white", children: r(t) }) });
 };
 function JR({
   title: e,
@@ -905,10 +960,30 @@ const cC = /* @__PURE__ */ K.forwardRef(uC), iS = ({ files: e, setFiles: t }) =>
     t && t(i);
   }, r = t ? "w-12 h-12" : "w-24 h-24";
   return /* @__PURE__ */ N.jsx("div", { className: "flex flex-col w-[100%]", children: /* @__PURE__ */ N.jsx("aside", { className: "flex flex-wrap mt-4", children: e.map((a) => /* @__PURE__ */ N.jsxs("div", { className: "relative m-2", children: [
-    t && /* @__PURE__ */ N.jsx("button", { onClick: n(a), className: "absolute right-1 top-1 -translate-y-1/2 translate-x-1/2 rounded-full font-bold bg-slate-400 opacity-80 hover:opacity-100 text-white  border-border p-1  hover:text-black  text-token-text-primary transition-colors", children: /* @__PURE__ */ N.jsx(cC, { className: "w-2 h-2" }) }),
+    t && /* @__PURE__ */ N.jsx(
+      "button",
+      {
+        onClick: n(a),
+        className: "absolute right-1 top-1 -translate-y-1/2 translate-x-1/2 rounded-full font-bold bg-slate-400 opacity-80 hover:opacity-100 text-white  border-border p-1  hover:text-black  text-token-text-primary transition-colors",
+        children: /* @__PURE__ */ N.jsx(cC, { className: "w-2 h-2" })
+      }
+    ),
     /* @__PURE__ */ N.jsxs("div", { className: "", children: [
-      a.type === "application/pdf" && /* @__PURE__ */ N.jsx("embed", { src: a.preview, className: `${r} border border-border object-cover rounded-lg overflow-hidden`, type: "application/pdf" }),
-      a.type === "text/plain" && /* @__PURE__ */ N.jsx("iframe", { src: a.preview, className: `${r} border border-border object-cover rounded-lg overflow-hidden` }),
+      a.type === "application/pdf" && /* @__PURE__ */ N.jsx(
+        "embed",
+        {
+          src: a.preview,
+          className: `${r} border border-border object-cover rounded-lg overflow-hidden`,
+          type: "application/pdf"
+        }
+      ),
+      a.type === "text/plain" && /* @__PURE__ */ N.jsx(
+        "iframe",
+        {
+          src: a.preview,
+          className: `${r} border border-border object-cover rounded-lg overflow-hidden`
+        }
+      ),
       a.type.startsWith("image/") && /* @__PURE__ */ N.jsx(
         "img",
         {
@@ -40818,10 +40893,21 @@ function K7({
   }));
 }
 const X7 = /* @__PURE__ */ K.forwardRef(K7), Z7 = ({ content: e, className: t, ...n }) => {
-  const [r, a] = ht(!1), i = dt((o) => {
-    o.preventDefault(), navigator.clipboard.writeText(e), a(!0), setTimeout(() => a(!1), 3e3);
-  }, [e]);
-  return /* @__PURE__ */ N.jsx("div", { className: `items-center flex flex-row text-xs ${t}`, onClick: i, ...n, children: r ? /* @__PURE__ */ N.jsx(Ra, { className: "h-4 ml-2 text-green-500 animate-fadeIn" }) : /* @__PURE__ */ N.jsx(Ca, { className: "h-4 ml-2" }) });
+  const [r, a] = ht(!1), i = dt(
+    (o) => {
+      o.preventDefault(), navigator.clipboard.writeText(e), a(!0), setTimeout(() => a(!1), 3e3);
+    },
+    [e]
+  );
+  return /* @__PURE__ */ N.jsx(
+    "div",
+    {
+      className: `items-center flex flex-row text-xs ${t}`,
+      onClick: i,
+      ...n,
+      children: r ? /* @__PURE__ */ N.jsx(Ra, { className: "h-4 ml-2 text-green-500 animate-fadeIn" }) : /* @__PURE__ */ N.jsx(Ca, { className: "h-4 ml-2" })
+    }
+  );
 };
 var WA = { exports: {} };
 (function(e, t) {
@@ -43572,7 +43658,9 @@ const KA = {
   } catch {
     return;
   }
-}, jo = ({ message: e }) => /* @__PURE__ */ N.jsx(XA, { message: e }), XA = ({ message: e }) => /* @__PURE__ */ N.jsx(
+}, jo = ({ message: e }) => /* @__PURE__ */ N.jsx(XA, { message: e }), XA = ({
+  message: e
+}) => /* @__PURE__ */ N.jsx(
   FO,
   {
     remarkPlugins: [B7, I9, nH],
@@ -43581,70 +43669,118 @@ const KA = {
       code({ node: t, className: n, children: r, ...a }) {
         const i = /language-(\w+)/.exec(n || "");
         return i ? /* @__PURE__ */ N.jsxs("div", { className: "relative", children: [
-          /* @__PURE__ */ N.jsx(Z7, { content: String(r).replace(/\n$/, ""), className: "absolute top-0 right-0 m-2 p-1 rounded text-xs" }),
-          /* @__PURE__ */ N.jsx("div", { style: { maxHeight: i && i.length > 0 && i[1].toLowerCase().includes("json") ? "auto" : "400px", overflow: "auto", overflowX: "auto" }, children: i && i.length > 0 && i[1].toLowerCase().includes("json") ? /* @__PURE__ */ N.jsx("div", { className: "px-3 py-2 mr-5", children: /* @__PURE__ */ N.jsx(
-            YA,
+          /* @__PURE__ */ N.jsx(
+            Z7,
             {
-              name: !1,
-              collapsed: 2,
-              displayDataTypes: !1,
-              displayObjectSize: !1,
-              enableClipboard: !1,
-              theme: {
-                base00: "transparent",
-                base01: "#ffffff20",
-                base02: "#ffffff30",
-                base03: "#ffffff40",
-                base04: "#ffffff60",
-                base05: "#ffffff80",
-                base06: "#ffffffa0",
-                base07: "rgb(156, 220, 254)",
-                base08: "#ff8c8c",
-                base09: "rgb(206, 145, 120)",
-                base0A: "#ffeb3b",
-                base0B: "#4caf50",
-                base0C: "#00bcd4",
-                base0D: "#2196f3",
-                base0E: "#9c27b0",
-                base0F: "#ff9800"
-              },
+              content: String(r).replace(/\n$/, ""),
+              className: "absolute top-0 right-0 m-2 p-1 rounded text-xs"
+            }
+          ),
+          /* @__PURE__ */ N.jsx(
+            "div",
+            {
               style: {
-                wordWrap: "break-word",
-                whiteSpace: "pre-wrap",
-                borderRadius: "10px",
-                fontSize: "13px",
-                fontFamily: "ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace",
-                backgroundColor: "rgba(30,30,30)"
+                maxHeight: i && i.length > 0 && i[1].toLowerCase().includes("json") ? "auto" : "400px",
+                overflow: "auto",
+                overflowX: "auto"
               },
-              src: e1(String(r).replace(/\n$/, "")) || {}
+              children: i && i.length > 0 && i[1].toLowerCase().includes("json") ? /* @__PURE__ */ N.jsx("div", { className: "px-3 py-2 mr-5", children: /* @__PURE__ */ N.jsx(
+                YA,
+                {
+                  name: !1,
+                  collapsed: 2,
+                  displayDataTypes: !1,
+                  displayObjectSize: !1,
+                  enableClipboard: !1,
+                  theme: {
+                    base00: "transparent",
+                    base01: "#ffffff20",
+                    base02: "#ffffff30",
+                    base03: "#ffffff40",
+                    base04: "#ffffff60",
+                    base05: "#ffffff80",
+                    base06: "#ffffffa0",
+                    base07: "rgb(156, 220, 254)",
+                    base08: "#ff8c8c",
+                    base09: "rgb(206, 145, 120)",
+                    base0A: "#ffeb3b",
+                    base0B: "#4caf50",
+                    base0C: "#00bcd4",
+                    base0D: "#2196f3",
+                    base0E: "#9c27b0",
+                    base0F: "#ff9800"
+                  },
+                  style: {
+                    wordWrap: "break-word",
+                    whiteSpace: "pre-wrap",
+                    borderRadius: "10px",
+                    fontSize: "13px",
+                    fontFamily: "ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace",
+                    backgroundColor: "rgba(30,30,30)"
+                  },
+                  src: e1(String(r).replace(/\n$/, "")) || {}
+                }
+              ) }) : /* @__PURE__ */ N.jsx(
+                A_,
+                {
+                  style: {
+                    ...g5,
+                    wordWrap: "break-word",
+                    whiteSpace: "pre-wrap"
+                  },
+                  language: i[1],
+                  PreTag: "div",
+                  ...a,
+                  ref: a.ref,
+                  children: String(r).replace(/\n$/, "")
+                }
+              )
             }
-          ) }) : /* @__PURE__ */ N.jsx(
-            A_,
-            {
-              style: { ...g5, wordWrap: "break-word", whiteSpace: "pre-wrap" },
-              language: i[1],
-              PreTag: "div",
-              ...a,
-              ref: a.ref,
-              children: String(r).replace(/\n$/, "")
-            }
-          ) })
+          )
         ] }) : /* @__PURE__ */ N.jsx("code", { className: n, ...a, children: r });
       },
       hr({ ...t }) {
         return /* @__PURE__ */ N.jsx("hr", { ...t });
       },
       pre({ children: t, ...n }) {
-        return /* @__PURE__ */ N.jsx("pre", { ...n, className: `py-0 px-0 mx-0 my-0 whitespace-pre-wrap overflow-auto ${n.className || ""}`, children: t });
+        return /* @__PURE__ */ N.jsx(
+          "pre",
+          {
+            ...n,
+            className: `py-0 px-0 mx-0 my-0 whitespace-pre-wrap overflow-auto ${n.className || ""}`,
+            children: t
+          }
+        );
       },
       blockquote({ children: t, ...n }) {
-        return /* @__PURE__ */ N.jsx("blockquote", { className: "border-l-4 border-gray-300 pl-4 italic text-gray-600", ...n, children: t });
+        return /* @__PURE__ */ N.jsx(
+          "blockquote",
+          {
+            className: "border-l-4 border-gray-300 pl-4 italic text-gray-600",
+            ...n,
+            children: t
+          }
+        );
       },
       h1({ children: t, ...n }) {
-        return /* @__PURE__ */ N.jsx("h1", { className: "font-bold text-3xl pb-[0.3em] border-b border-border ", ...n, children: t });
+        return /* @__PURE__ */ N.jsx(
+          "h1",
+          {
+            className: "font-bold text-3xl pb-[0.3em] border-b border-border ",
+            ...n,
+            children: t
+          }
+        );
       },
       h2({ children: t, ...n }) {
-        return /* @__PURE__ */ N.jsx("h2", { className: "font-bold text-2xl pb-[0.3em] border-b border-border", ...n, children: t });
+        return /* @__PURE__ */ N.jsx(
+          "h2",
+          {
+            className: "font-bold text-2xl pb-[0.3em] border-b border-border",
+            ...n,
+            children: t
+          }
+        );
       },
       h3({ children: t, ...n }) {
         return /* @__PURE__ */ N.jsx("h3", { className: "font-bold text-xl", ...n, children: t });
@@ -43659,16 +43795,44 @@ const KA = {
         return /* @__PURE__ */ N.jsx("h6", { className: "font-bold text-sm", ...n, children: t });
       },
       ul({ children: t, ...n }) {
-        return /* @__PURE__ */ N.jsx("ul", { ...n, className: `list-disc list-inside my-1 ${n.className || ""}`, children: t });
+        return /* @__PURE__ */ N.jsx(
+          "ul",
+          {
+            ...n,
+            className: `list-disc list-inside my-1 ${n.className || ""}`,
+            children: t
+          }
+        );
       },
       ol({ children: t, ...n }) {
-        return /* @__PURE__ */ N.jsx("ol", { ...n, className: `list-decimal list-inside my-1 ${n.className || ""}`, children: t });
+        return /* @__PURE__ */ N.jsx(
+          "ol",
+          {
+            ...n,
+            className: `list-decimal list-inside my-1 ${n.className || ""}`,
+            children: t
+          }
+        );
       },
       li({ children: t, ...n }) {
-        return /* @__PURE__ */ N.jsx("li", { ...n, className: `list-item my-0.5 ${n.className || ""}`, children: t });
+        return /* @__PURE__ */ N.jsx(
+          "li",
+          {
+            ...n,
+            className: `list-item my-0.5 ${n.className || ""}`,
+            children: t
+          }
+        );
       },
       a({ children: t, ...n }) {
-        return /* @__PURE__ */ N.jsx("a", { className: "text-blue-500 hover:underline hover:text-blue-600", ...n, children: t });
+        return /* @__PURE__ */ N.jsx(
+          "a",
+          {
+            className: "text-blue-500 hover:underline hover:text-blue-600",
+            ...n,
+            children: t
+          }
+        );
       },
       table({ children: t, ...n }) {
         return /* @__PURE__ */ N.jsx("table", { className: "table-auto my-1 mx-1", ...n, children: t });
@@ -43677,19 +43841,38 @@ const KA = {
         return /* @__PURE__ */ N.jsx("tr", { className: "table-row", ...n, children: t });
       },
       td({ children: t, ...n }) {
-        return /* @__PURE__ */ N.jsx("td", { className: "table-cell border border-border px-2 py-1", ...n, children: t });
+        return /* @__PURE__ */ N.jsx(
+          "td",
+          {
+            className: "table-cell border border-border px-2 py-1",
+            ...n,
+            children: t
+          }
+        );
       },
       th({ children: t, ...n }) {
-        return /* @__PURE__ */ N.jsx("th", { className: "table-cell border border-border font-semibold text-blue-500 px-2 py-1", ...n, children: t });
+        return /* @__PURE__ */ N.jsx(
+          "th",
+          {
+            className: "table-cell border border-border font-semibold text-blue-500 px-2 py-1",
+            ...n,
+            children: t
+          }
+        );
       },
       img({ children: t, ...n }) {
         return /* @__PURE__ */ N.jsx("img", { ...n });
       },
       p({ children: t, ...n }) {
         if (typeof t == "string") {
-          let a = e1(t);
-          return a && a.length > 0 ? /* @__PURE__ */ N.jsx(XA, { message: `\`\`\`json
-${JSON.stringify(a, null, 2)}` }) : /* @__PURE__ */ N.jsx("p", { className: "whitespace-pre-wrap my-0", ...n, children: t });
+          const a = e1(t);
+          return a && a.length > 0 ? /* @__PURE__ */ N.jsx(
+            XA,
+            {
+              message: `\`\`\`json
+${JSON.stringify(a, null, 2)}`
+            }
+          ) : /* @__PURE__ */ N.jsx("p", { className: "whitespace-pre-wrap my-0", ...n, children: t });
         }
         return /* @__PURE__ */ N.jsx("p", { className: "whitespace-pre-wrap my-0", ...n, children: t });
       }
@@ -48712,15 +48895,35 @@ const Go = (e) => {
           )
         ] }),
         e.content_array.map((h, b) => {
-          let _ = h, A = _[0], x = _[1];
+          const _ = h, A = _[0], x = _[1];
           return A === "ImageUrl" ? /* @__PURE__ */ N.jsx("div", { className: "flex flex-col", children: /* @__PURE__ */ N.jsx("img", { src: x, className: "rounded-md max-w-full" }) }, b) : A === "InputAudio" ? /* @__PURE__ */ N.jsxs("audio", { controls: !0, className: "my-2 w-full", children: [
-            /* @__PURE__ */ N.jsx("source", { src: `data:audio/mpeg;base64,${x}`, type: "audio/mpeg" }),
+            /* @__PURE__ */ N.jsx(
+              "source",
+              {
+                src: `data:audio/mpeg;base64,${x}`,
+                type: "audio/mpeg"
+              }
+            ),
             "Your browser does not support the audio element."
-          ] }, b) : /* @__PURE__ */ N.jsx("div", { className: "flex flex-col whitespace-pre-wrap text-gray-100", children: /* @__PURE__ */ N.jsx(jo, { message: x }) }, b);
+          ] }, b) : /* @__PURE__ */ N.jsx(
+            "div",
+            {
+              className: "flex flex-col whitespace-pre-wrap text-gray-100",
+              children: /* @__PURE__ */ N.jsx(jo, { message: x })
+            },
+            b
+          );
         })
       ] }) }),
       /* @__PURE__ */ N.jsx("div", { className: "flex-shrink-0", children: /* @__PURE__ */ N.jsx(Li, { children: /* @__PURE__ */ N.jsxs(Di, { children: [
-        /* @__PURE__ */ N.jsx(Mi, { children: t ? t.url ? /* @__PURE__ */ N.jsx(Ea, { name: t.name, imageUrl: t.url, className: "h-6 w-6 rounded-full" }) : /* @__PURE__ */ N.jsx(fh, { className: "h-6 w-6 rounded-full text-white" }) : /* @__PURE__ */ N.jsx(Ea, { className: "h-6 w-6 rounded-full", name: "User" }) }),
+        /* @__PURE__ */ N.jsx(Mi, { children: t ? t.url ? /* @__PURE__ */ N.jsx(
+          Ea,
+          {
+            name: t.name,
+            imageUrl: t.url,
+            className: "h-6 w-6 rounded-full"
+          }
+        ) : /* @__PURE__ */ N.jsx(fh, { className: "h-6 w-6 rounded-full text-white" }) : /* @__PURE__ */ N.jsx(Ea, { className: "h-6 w-6 rounded-full", name: "User" }) }),
         /* @__PURE__ */ N.jsx(ka, { children: /* @__PURE__ */ N.jsx("p", { children: "Human Message" }) })
       ] }) }) })
     ] });
@@ -48773,7 +48976,14 @@ const Go = (e) => {
       ] })
     ] }),
     /* @__PURE__ */ N.jsx("div", { className: "flex-shrink-0", children: /* @__PURE__ */ N.jsx(Li, { children: /* @__PURE__ */ N.jsxs(Di, { children: [
-      /* @__PURE__ */ N.jsx(Mi, { children: t ? t.url ? /* @__PURE__ */ N.jsx(Ea, { name: t.name, imageUrl: t.url, className: "h-6 w-6 rounded-full" }) : /* @__PURE__ */ N.jsx(fh, { className: "h-6 w-6 rounded-full text-white" }) : /* @__PURE__ */ N.jsx(Ea, { className: "h-6 w-6 rounded-full", name: "User" }) }),
+      /* @__PURE__ */ N.jsx(Mi, { children: t ? t.url ? /* @__PURE__ */ N.jsx(
+        Ea,
+        {
+          name: t.name,
+          imageUrl: t.url,
+          className: "h-6 w-6 rounded-full"
+        }
+      ) : /* @__PURE__ */ N.jsx(fh, { className: "h-6 w-6 rounded-full text-white" }) : /* @__PURE__ */ N.jsx(Ea, { className: "h-6 w-6 rounded-full", name: "User" }) }),
       /* @__PURE__ */ N.jsx(ka, { children: /* @__PURE__ */ N.jsx("p", { children: "Human Message" }) })
     ] }) }) })
   ] });
@@ -48795,191 +49005,229 @@ function Xz(e) {
   } };
 }
 const lt = Xz(), Zz = ({ msg: e, persona: t, widgetProps: n, isTyping: r }) => {
-  const { threadId: a, id: i } = e || {}, [o, s] = ht(), [l, u] = ht(), [c, d] = ht(!1), [p, f] = ht({}), h = dt(async (_) => {
-    let A;
-    A = {
-      thread_id: a,
-      message_id: i,
-      score: _
-    };
-    try {
-      const x = await Rm(n), y = n.serverUrl || wm, g = await fetch(`${y}/threads/score`, {
-        method: "POST",
-        headers: x,
-        body: JSON.stringify(A)
-      });
-      if (!g.ok) {
-        const E = await g.text();
-        let v = JSON.parse(E);
-        throw new Error(v.error);
+  const { threadId: a, id: i } = e || {}, [o, s] = ht(), [l, u] = ht(), [c, d] = ht(!1), [p, f] = ht({}), h = dt(
+    async (_) => {
+      let A;
+      A = {
+        thread_id: a,
+        message_id: i,
+        score: _
+      };
+      try {
+        const x = await Rm(n), y = n.serverUrl || wm, g = await fetch(`${y}/threads/score`, {
+          method: "POST",
+          headers: x,
+          body: JSON.stringify(A)
+        });
+        if (!g.ok) {
+          const E = await g.text(), v = JSON.parse(E);
+          throw new Error(v.error);
+        }
+        s(_);
+      } catch (x) {
+        u(x.toString()), console.error("Error recording score:", x);
       }
-      s(_);
-    } catch (x) {
-      u(x.toString()), console.error("Error recording score:", x);
-    }
-  }, [a, i, n]);
-  let b = n.renderProviderAvatar;
-  return /* @__PURE__ */ N.jsxs("div", { onClick: () => {
-    a && i && lt.emit("langdb_aiMessageClicked", {
-      threadId: a,
-      messageId: i,
-      traceId: e == null ? void 0 : e.trace_id,
-      widgetId: n.widgetId,
-      runId: e == null ? void 0 : e.run_id
-    });
-  }, className: "flex gap-2 items-start", children: [
-    /* @__PURE__ */ N.jsx("div", { className: "flex-shrink-0", children: b && (e != null && e.model_name) ? b({ modelName: e.model_name, messageType: e.type }) : /* @__PURE__ */ N.jsx(Li, { children: /* @__PURE__ */ N.jsxs(Di, { children: [
-      /* @__PURE__ */ N.jsx(Mi, { children: t ? t.url ? /* @__PURE__ */ N.jsx(Ea, { name: t.name, imageUrl: t.url, className: "h-6 w-6 rounded-full" }) : /* @__PURE__ */ N.jsx(Cm, { className: "h-6 w-6 rounded-full" }) : /* @__PURE__ */ N.jsx(Ea, { className: "h-6 w-6 rounded-full", name: "Assistant" }) }),
-      /* @__PURE__ */ N.jsx(ka, { children: /* @__PURE__ */ N.jsx("p", { children: "AI Message" }) })
-    ] }) }) }),
-    /* @__PURE__ */ N.jsxs("div", { className: "w-full rounded-md p-2.5 bg-neutral-900 border border-neutral-800 shadow-sm overflow-hidden", children: [
-      /* @__PURE__ */ N.jsxs("div", { className: "flex items-center justify-between mb-1.5 py-1 border-b border-neutral-800", children: [
-        /* @__PURE__ */ N.jsxs("div", { className: "flex items-center gap-1.5", children: [
-          /* @__PURE__ */ N.jsx("span", { className: "text-neutral-400 font-bold", children: (e == null ? void 0 : e.type) === "ai" ? "Assistant" : (e == null ? void 0 : e.type) === "human" ? "You" : "System" }),
-          (e == null ? void 0 : e.created_at) && /* @__PURE__ */ N.jsxs("div", { className: "flex items-center text-xs text-neutral-500 ml-2", children: [
-            /* @__PURE__ */ N.jsx(Uo, { className: "h-3 w-3 mr-1" }),
-            /* @__PURE__ */ N.jsx("span", { children: Go(e.created_at) })
-          ] })
-        ] }),
-        (e == null ? void 0 : e.message) && /* @__PURE__ */ N.jsx(
-          "button",
-          {
-            onClick: (_) => {
-              _.stopPropagation(), e != null && e.message && navigator.clipboard.writeText(e.message).then(() => {
-                d(!0), setTimeout(() => d(!1), 2e3);
-              }).catch((A) => console.error("Failed to copy:", A));
-            },
-            className: "text-neutral-500 hover:text-neutral-300 transition-colors",
-            title: c ? "Copied!" : "Copy message",
-            children: c ? /* @__PURE__ */ N.jsx(Ra, { className: "h-3.5 w-3.5 text-green-500" }) : /* @__PURE__ */ N.jsx(Ca, { className: "h-3.5 w-3.5" })
-          }
-        )
-      ] }),
-      (e == null ? void 0 : e.tool_calls) && e.tool_calls.length > 0 && /* @__PURE__ */ N.jsxs("div", { className: "mb-3 border border-neutral-700 rounded-md overflow-hidden bg-neutral-800/50", children: [
-        /* @__PURE__ */ N.jsxs("div", { className: "px-3 py-1.5 border-b border-neutral-700 flex items-center justify-between", children: [
-          /* @__PURE__ */ N.jsx("span", { className: "text-xs font-bold text-neutral-300", children: "Tool Calls" }),
-          /* @__PURE__ */ N.jsxs("span", { className: "text-xs text-neutral-500", children: [
-            e.tool_calls.length,
-            " ",
-            e.tool_calls.length === 1 ? "call" : "calls"
-          ] })
-        ] }),
-        /* @__PURE__ */ N.jsx("div", { className: "divide-y divide-neutral-700", children: e.tool_calls.map((_, A) => {
-          if (_.function) {
-            let x = _.function;
-            const g = _.function.name.replace(/([A-Z])/g, " $1").replace(/_/g, " ").trim().replace(/^./, (R) => R.toUpperCase()), E = () => {
-              _.function && navigator.clipboard.writeText(JSON.stringify(_.function, null, 2)).then(() => {
-                f((R) => ({ ...R, [_.id]: !0 })), setTimeout(() => {
-                  f((R) => ({ ...R, [_.id]: !1 }));
-                }, 2e3);
-              }).catch((R) => console.error("Failed to copy tool call:", R));
-            }, v = p[_.id] || !1;
-            return /* @__PURE__ */ N.jsxs("div", { className: "px-3 py-2.5 bg-neutral-800/30 rounded-sm mb-1 last:mb-0", children: [
-              /* @__PURE__ */ N.jsxs("div", { className: "flex items-center justify-between mb-1.5", children: [
-                /* @__PURE__ */ N.jsxs("div", { className: "flex items-center gap-2", children: [
-                  /* @__PURE__ */ N.jsx("span", { className: "text-xs font-medium text-neutral-300", children: g }),
-                  /* @__PURE__ */ N.jsx("span", { className: "text-xs text-neutral-500 bg-neutral-800 px-1.5 py-0.5 rounded", children: _.id })
-                ] }),
-                /* @__PURE__ */ N.jsx(
-                  "button",
-                  {
-                    onClick: (R) => {
-                      R.stopPropagation(), E();
-                    },
-                    className: "text-neutral-500 hover:text-neutral-300 transition-colors",
-                    title: v ? "Copied!" : "Copy function",
-                    children: v ? /* @__PURE__ */ N.jsx(Ra, { className: "h-3.5 w-3.5 text-green-500" }) : /* @__PURE__ */ N.jsx(Ca, { className: "h-3.5 w-3.5" })
-                  }
-                )
-              ] }),
-              /* @__PURE__ */ N.jsx("div", { className: "max-w-full overflow-x-auto", children: /* @__PURE__ */ N.jsx(
-                YA,
-                {
-                  name: !1,
-                  collapsed: 2,
-                  displayDataTypes: !1,
-                  displayObjectSize: !1,
-                  enableClipboard: !1,
-                  theme: {
-                    base00: "transparent",
-                    base01: "#404040",
-                    base02: "#525252",
-                    base03: "#737373",
-                    base04: "#a3a3a3",
-                    base05: "#d4d4d4",
-                    base06: "#e5e5e5",
-                    base07: "#f5f5f5",
-                    base08: "#f87171",
-                    // red
-                    base09: "#fb923c",
-                    // orange
-                    base0A: "#facc15",
-                    // yellow
-                    base0B: "#4ade80",
-                    // green
-                    base0C: "#22d3ee",
-                    // cyan
-                    base0D: "#60a5fa",
-                    // blue
-                    base0E: "#a78bfa",
-                    // purple
-                    base0F: "#f472b6"
-                    // pink
-                  },
-                  style: {
-                    wordWrap: "break-word",
-                    whiteSpace: "pre-wrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    maxWidth: "100%"
-                  },
-                  src: x
+    },
+    [a, i, n]
+  ), b = n.renderProviderAvatar;
+  return /* @__PURE__ */ N.jsxs(
+    "div",
+    {
+      onClick: () => {
+        a && i && lt.emit("langdb_aiMessageClicked", {
+          threadId: a,
+          messageId: i,
+          traceId: e == null ? void 0 : e.trace_id,
+          widgetId: n.widgetId,
+          runId: e == null ? void 0 : e.run_id
+        });
+      },
+      className: "flex gap-2 items-start",
+      children: [
+        /* @__PURE__ */ N.jsx("div", { className: "flex-shrink-0", children: b && (e != null && e.model_name) ? b({
+          modelName: e.model_name,
+          messageType: e.type
+        }) : /* @__PURE__ */ N.jsx(Li, { children: /* @__PURE__ */ N.jsxs(Di, { children: [
+          /* @__PURE__ */ N.jsx(Mi, { children: t ? t.url ? /* @__PURE__ */ N.jsx(
+            Ea,
+            {
+              name: t.name,
+              imageUrl: t.url,
+              className: "h-6 w-6 rounded-full"
+            }
+          ) : /* @__PURE__ */ N.jsx(Cm, { className: "h-6 w-6 rounded-full" }) : /* @__PURE__ */ N.jsx(
+            Ea,
+            {
+              className: "h-6 w-6 rounded-full",
+              name: "Assistant"
+            }
+          ) }),
+          /* @__PURE__ */ N.jsx(ka, { children: /* @__PURE__ */ N.jsx("p", { children: "AI Message" }) })
+        ] }) }) }),
+        /* @__PURE__ */ N.jsxs("div", { className: "w-full rounded-md p-2.5 bg-neutral-900 border border-neutral-800 shadow-sm overflow-hidden", children: [
+          /* @__PURE__ */ N.jsxs("div", { className: "flex items-center justify-between mb-1.5 py-1 border-b border-neutral-800", children: [
+            /* @__PURE__ */ N.jsxs("div", { className: "flex items-center gap-1.5", children: [
+              /* @__PURE__ */ N.jsx("span", { className: "text-neutral-400 font-bold", children: (e == null ? void 0 : e.type) === "ai" ? "Assistant" : (e == null ? void 0 : e.type) === "human" ? "You" : "System" }),
+              (e == null ? void 0 : e.created_at) && /* @__PURE__ */ N.jsxs("div", { className: "flex items-center text-xs text-neutral-500 ml-2", children: [
+                /* @__PURE__ */ N.jsx(Uo, { className: "h-3 w-3 mr-1" }),
+                /* @__PURE__ */ N.jsx("span", { children: Go(e.created_at) })
+              ] })
+            ] }),
+            (e == null ? void 0 : e.message) && /* @__PURE__ */ N.jsx(
+              "button",
+              {
+                onClick: (_) => {
+                  _.stopPropagation(), e != null && e.message && navigator.clipboard.writeText(e.message).then(() => {
+                    d(!0), setTimeout(() => d(!1), 2e3);
+                  }).catch((A) => console.error("Failed to copy:", A));
                 },
-                A
-              ) })
-            ] }, A);
-          }
-          return null;
-        }) })
-      ] }),
-      /* @__PURE__ */ N.jsx("div", { className: "whitespace-normal flex flex-col gap-[15px] text-gray-100 break-words overflow-wrap break-all", children: /* @__PURE__ */ N.jsx(jo, { message: (e == null ? void 0 : e.message) || "" }) }),
-      !r && a && i && /* @__PURE__ */ N.jsxs("div", { className: "mt-3 flex items-center justify-start space-x-2", children: [
-        /* @__PURE__ */ N.jsxs(
-          "button",
-          {
-            className: "rounded-full p-1 focus:outline-none hover:bg-gray-700/30 transition-colors duration-150",
-            title: "Thumbs up",
-            onClick: (_) => {
-              _.preventDefault(), _.stopPropagation(), h(1);
-            },
-            children: [
-              o === void 0 && /* @__PURE__ */ N.jsx(W7, { className: "h-4 w-4" }),
-              o === 1 && /* @__PURE__ */ N.jsx(iC, { className: "h-4 w-4 text-green-500 animate-fadeIn" })
-            ]
-          }
-        ),
-        /* @__PURE__ */ N.jsxs(
-          "button",
-          {
-            className: "rounded focus:outline-none hover:text-primary-500",
-            title: "Thumbs down",
-            onClick: (_) => {
-              _.preventDefault(), _.stopPropagation(), h(-1);
-            },
-            children: [
-              o === void 0 && /* @__PURE__ */ N.jsx(G7, { className: "h-4 w-4" }),
-              o === -1 && /* @__PURE__ */ N.jsx(rC, { className: "h-4 w-4 animate-fadeIn" })
-            ]
-          }
-        ),
-        l && /* @__PURE__ */ N.jsx("div", { className: "text-red-500", children: l })
-      ] }),
-      r && /* @__PURE__ */ N.jsxs("div", { className: "rounded-md p-2 flex items-center gap-2 animate-pulse mt-2", children: [
-        /* @__PURE__ */ N.jsx(X7, { className: "h-4 w-4 text-white animate-pulse" }),
-        /* @__PURE__ */ N.jsx("span", { className: "text-sm", children: "Typing..." })
-      ] })
-    ] })
-  ] });
+                className: "text-neutral-500 hover:text-neutral-300 transition-colors",
+                title: c ? "Copied!" : "Copy message",
+                children: c ? /* @__PURE__ */ N.jsx(Ra, { className: "h-3.5 w-3.5 text-green-500" }) : /* @__PURE__ */ N.jsx(Ca, { className: "h-3.5 w-3.5" })
+              }
+            )
+          ] }),
+          (e == null ? void 0 : e.tool_calls) && e.tool_calls.length > 0 && /* @__PURE__ */ N.jsxs("div", { className: "mb-3 border border-neutral-700 rounded-md overflow-hidden bg-neutral-800/50", children: [
+            /* @__PURE__ */ N.jsxs("div", { className: "px-3 py-1.5 border-b border-neutral-700 flex items-center justify-between", children: [
+              /* @__PURE__ */ N.jsx("span", { className: "text-xs font-bold text-neutral-300", children: "Tool Calls" }),
+              /* @__PURE__ */ N.jsxs("span", { className: "text-xs text-neutral-500", children: [
+                e.tool_calls.length,
+                " ",
+                e.tool_calls.length === 1 ? "call" : "calls"
+              ] })
+            ] }),
+            /* @__PURE__ */ N.jsx("div", { className: "divide-y divide-neutral-700", children: e.tool_calls.map((_, A) => {
+              if (_.function) {
+                const x = _.function, g = _.function.name.replace(/([A-Z])/g, " $1").replace(/_/g, " ").trim().replace(/^./, (R) => R.toUpperCase()), E = () => {
+                  _.function && navigator.clipboard.writeText(JSON.stringify(_.function, null, 2)).then(() => {
+                    f((R) => ({
+                      ...R,
+                      [_.id]: !0
+                    })), setTimeout(() => {
+                      f((R) => ({
+                        ...R,
+                        [_.id]: !1
+                      }));
+                    }, 2e3);
+                  }).catch(
+                    (R) => console.error("Failed to copy tool call:", R)
+                  );
+                }, v = p[_.id] || !1;
+                return /* @__PURE__ */ N.jsxs(
+                  "div",
+                  {
+                    className: "px-3 py-2.5 bg-neutral-800/30 rounded-sm mb-1 last:mb-0",
+                    children: [
+                      /* @__PURE__ */ N.jsxs("div", { className: "flex items-center justify-between mb-1.5", children: [
+                        /* @__PURE__ */ N.jsxs("div", { className: "flex items-center gap-2", children: [
+                          /* @__PURE__ */ N.jsx("span", { className: "text-xs font-medium text-neutral-300", children: g }),
+                          /* @__PURE__ */ N.jsx("span", { className: "text-xs text-neutral-500 bg-neutral-800 px-1.5 py-0.5 rounded", children: _.id })
+                        ] }),
+                        /* @__PURE__ */ N.jsx(
+                          "button",
+                          {
+                            onClick: (R) => {
+                              R.stopPropagation(), E();
+                            },
+                            className: "text-neutral-500 hover:text-neutral-300 transition-colors",
+                            title: v ? "Copied!" : "Copy function",
+                            children: v ? /* @__PURE__ */ N.jsx(Ra, { className: "h-3.5 w-3.5 text-green-500" }) : /* @__PURE__ */ N.jsx(Ca, { className: "h-3.5 w-3.5" })
+                          }
+                        )
+                      ] }),
+                      /* @__PURE__ */ N.jsx("div", { className: "max-w-full overflow-x-auto", children: /* @__PURE__ */ N.jsx(
+                        YA,
+                        {
+                          name: !1,
+                          collapsed: 2,
+                          displayDataTypes: !1,
+                          displayObjectSize: !1,
+                          enableClipboard: !1,
+                          theme: {
+                            base00: "transparent",
+                            base01: "#404040",
+                            base02: "#525252",
+                            base03: "#737373",
+                            base04: "#a3a3a3",
+                            base05: "#d4d4d4",
+                            base06: "#e5e5e5",
+                            base07: "#f5f5f5",
+                            base08: "#f87171",
+                            // red
+                            base09: "#fb923c",
+                            // orange
+                            base0A: "#facc15",
+                            // yellow
+                            base0B: "#4ade80",
+                            // green
+                            base0C: "#22d3ee",
+                            // cyan
+                            base0D: "#60a5fa",
+                            // blue
+                            base0E: "#a78bfa",
+                            // purple
+                            base0F: "#f472b6"
+                            // pink
+                          },
+                          style: {
+                            wordWrap: "break-word",
+                            whiteSpace: "pre-wrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            maxWidth: "100%"
+                          },
+                          src: x
+                        },
+                        A
+                      ) })
+                    ]
+                  },
+                  A
+                );
+              }
+              return null;
+            }) })
+          ] }),
+          /* @__PURE__ */ N.jsx("div", { className: "whitespace-normal flex flex-col gap-[15px] text-gray-100 break-words overflow-wrap break-all", children: /* @__PURE__ */ N.jsx(jo, { message: (e == null ? void 0 : e.message) || "" }) }),
+          !r && a && i && /* @__PURE__ */ N.jsxs("div", { className: "mt-3 flex items-center justify-start space-x-2", children: [
+            /* @__PURE__ */ N.jsxs(
+              "button",
+              {
+                className: "rounded-full p-1 focus:outline-none hover:bg-gray-700/30 transition-colors duration-150",
+                title: "Thumbs up",
+                onClick: (_) => {
+                  _.preventDefault(), _.stopPropagation(), h(1);
+                },
+                children: [
+                  o === void 0 && /* @__PURE__ */ N.jsx(W7, { className: "h-4 w-4" }),
+                  o === 1 && /* @__PURE__ */ N.jsx(iC, { className: "h-4 w-4 text-green-500 animate-fadeIn" })
+                ]
+              }
+            ),
+            /* @__PURE__ */ N.jsxs(
+              "button",
+              {
+                className: "rounded focus:outline-none hover:text-primary-500",
+                title: "Thumbs down",
+                onClick: (_) => {
+                  _.preventDefault(), _.stopPropagation(), h(-1);
+                },
+                children: [
+                  o === void 0 && /* @__PURE__ */ N.jsx(G7, { className: "h-4 w-4" }),
+                  o === -1 && /* @__PURE__ */ N.jsx(rC, { className: "h-4 w-4 animate-fadeIn" })
+                ]
+              }
+            ),
+            l && /* @__PURE__ */ N.jsx("div", { className: "text-red-500", children: l })
+          ] }),
+          r && /* @__PURE__ */ N.jsxs("div", { className: "rounded-md p-2 flex items-center gap-2 animate-pulse mt-2", children: [
+            /* @__PURE__ */ N.jsx(X7, { className: "h-4 w-4 text-white animate-pulse" }),
+            /* @__PURE__ */ N.jsx("span", { className: "text-sm", children: "Typing..." })
+          ] })
+        ] })
+      ]
+    }
+  );
 };
 var cm = { exports: {} }, Eo = { exports: {} }, ot = {};
 /** @license React v16.13.1
@@ -51890,25 +52138,67 @@ function tG(e, t) {
 }
 function M1() {
 }
-const nG = () => /* @__PURE__ */ N.jsxs("svg", { width: "24", height: "24", viewBox: "0 0 24 24", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [
-  /* @__PURE__ */ N.jsx("path", { d: "M9.5 4C8.67157 4 8 4.67157 8 5.5V18.5C8 19.3284 8.67157 20 9.5 20C10.3284 20 11 19.3284 11 18.5V5.5C11 4.67157 10.3284 4 9.5 4Z", fill: "currentColor" }),
-  /* @__PURE__ */ N.jsx("path", { d: "M13 8.5C13 7.67157 13.6716 7 14.5 7C15.3284 7 16 7.67157 16 8.5V15.5C16 16.3284 15.3284 17 14.5 17C13.6716 17 13 16.3284 13 15.5V8.5Z", fill: "currentColor" }),
-  /* @__PURE__ */ N.jsx("path", { d: "M4.5 9C3.67157 9 3 9.67157 3 10.5V13.5C3 14.3284 3.67157 15 4.5 15C5.32843 15 6 14.3284 6 13.5V10.5C6 9.67157 5.32843 9 4.5 9Z", fill: "currentColor" }),
-  /* @__PURE__ */ N.jsx("path", { d: "M19.5 9C18.6716 9 18 9.67157 18 10.5V13.5C18 14.3284 18.6716 15 19.5 15C20.3284 15 21 14.3284 21 13.5V10.5C21 9.67157 20.3284 9 19.5 9Z", fill: "currentColor" })
-] });
+const nG = () => /* @__PURE__ */ N.jsxs(
+  "svg",
+  {
+    width: "24",
+    height: "24",
+    viewBox: "0 0 24 24",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+    children: [
+      /* @__PURE__ */ N.jsx(
+        "path",
+        {
+          d: "M9.5 4C8.67157 4 8 4.67157 8 5.5V18.5C8 19.3284 8.67157 20 9.5 20C10.3284 20 11 19.3284 11 18.5V5.5C11 4.67157 10.3284 4 9.5 4Z",
+          fill: "currentColor"
+        }
+      ),
+      /* @__PURE__ */ N.jsx(
+        "path",
+        {
+          d: "M13 8.5C13 7.67157 13.6716 7 14.5 7C15.3284 7 16 7.67157 16 8.5V15.5C16 16.3284 15.3284 17 14.5 17C13.6716 17 13 16.3284 13 15.5V8.5Z",
+          fill: "currentColor"
+        }
+      ),
+      /* @__PURE__ */ N.jsx(
+        "path",
+        {
+          d: "M4.5 9C3.67157 9 3 9.67157 3 10.5V13.5C3 14.3284 3.67157 15 4.5 15C5.32843 15 6 14.3284 6 13.5V10.5C6 9.67157 5.32843 9 4.5 9Z",
+          fill: "currentColor"
+        }
+      ),
+      /* @__PURE__ */ N.jsx(
+        "path",
+        {
+          d: "M19.5 9C18.6716 9 18 9.67157 18 10.5V13.5C18 14.3284 18.6716 15 19.5 15C20.3284 15 21 14.3284 21 13.5V10.5C21 9.67157 20.3284 9 19.5 9Z",
+          fill: "currentColor"
+        }
+      )
+    ]
+  }
+);
 function P1(...e) {
   return e.filter(Boolean).join(" ");
 }
 const ew = (e) => new Promise((t, n) => {
   const r = new FileReader();
   r.readAsDataURL(e), r.onload = () => t(r.result), r.onerror = (a) => n(a);
-}), rG = ({ onSubmit: e, currentInput: t, setCurrentInput: n, className: r, isProcessing: a, searchToolEnabled: i, toggleSearchTool: o }) => {
+}), rG = ({
+  onSubmit: e,
+  currentInput: t,
+  setCurrentInput: n,
+  className: r,
+  isProcessing: a,
+  searchToolEnabled: i,
+  toggleSearchTool: o
+}) => {
   const [s, l] = ht(!1), [u, c] = ht(""), [d, p] = ht(!1);
   Jt(() => {
     "webkitSpeechRecognition" in window || "SpeechRecognition" in window ? p(!0) : p(!1);
   }, []);
   const f = dt((E) => {
-    let v = E.map((j) => j.type.startsWith("audio/") ? ew(j).then((I) => ({
+    const v = E.map((j) => j.type.startsWith("audio/") ? ew(j).then((I) => ({
       preview: "",
       base64: I,
       raw_file: j,
@@ -51926,10 +52216,7 @@ const ew = (e) => new Promise((t, n) => {
   }, []);
   Jt(() => {
     const E = ({ files: v }) => {
-      b((R) => [
-        ...R,
-        ...v
-      ]);
+      b((R) => [...R, ...v]);
     };
     return lt.on("langdb_input_fileAdded", E), lt.on("langdb_input_speechRecognitionStart", () => {
       l(!0), c("");
@@ -51983,8 +52270,13 @@ const ew = (e) => new Promise((t, n) => {
         ..._(),
         onSubmit: (E) => {
           E.preventDefault();
-          let v = h;
-          b([]), e({ inputText: t, files: v, searchToolEnabled: i, otherTools: [] });
+          const v = h;
+          b([]), e({
+            inputText: t,
+            files: v,
+            searchToolEnabled: i,
+            otherTools: []
+          });
         },
         className: `langdb-input-container flex items-center p-2 rounded-xl mb-3 ${r}`,
         children: /* @__PURE__ */ N.jsxs("div", { className: "flex flex-col flex-1", children: [
@@ -52002,8 +52294,13 @@ const ew = (e) => new Promise((t, n) => {
                 onChange: (E) => n(E.target.value),
                 onKeyDown: (E) => {
                   if (E.key === "Enter" && !E.shiftKey && (E.preventDefault(), t.trim())) {
-                    let v = h;
-                    b([]), e({ inputText: t, files: v, searchToolEnabled: i, otherTools: [] });
+                    const v = h;
+                    b([]), e({
+                      inputText: t,
+                      files: v,
+                      searchToolEnabled: i,
+                      otherTools: []
+                    });
                   }
                 },
                 placeholder: "Type your message...",
@@ -52036,7 +52333,14 @@ const ew = (e) => new Promise((t, n) => {
                     E.stopPropagation(), E.preventDefault(), o == null || o(!i);
                   },
                   children: [
-                    /* @__PURE__ */ N.jsx(z7, { className: P1("h-[18px] w-[18px] font-bold text-[#b4b4b4]") }),
+                    /* @__PURE__ */ N.jsx(
+                      z7,
+                      {
+                        className: P1(
+                          "h-[18px] w-[18px] font-bold text-[#b4b4b4]"
+                        )
+                      }
+                    ),
                     /* @__PURE__ */ N.jsx("span", { className: "font-semibold text-[#b4b4b4]", children: "Search" })
                   ]
                 }
@@ -53062,7 +53366,11 @@ function LV(e, t) {
     }
   }, [void 0, void 0, r], e), [o, u];
 }
-const DV = ({ msg: e, widgetProps: t, persona: n }) => {
+const DV = ({
+  msg: e,
+  widgetProps: t,
+  persona: n
+}) => {
   const [r, a] = ht(!1), [i, o] = ht(!1), s = (f) => f ? f.split(`
 `).length : 0, l = (f, h) => f ? f.split(`
 `).slice(0, h).join(`
@@ -53075,7 +53383,10 @@ const DV = ({ msg: e, widgetProps: t, persona: n }) => {
     /* @__PURE__ */ N.jsx("div", { className: "flex flex-col w-full", children: /* @__PURE__ */ N.jsxs("div", { className: "rounded-md p-2.5 bg-zinc-900 border border-zinc-800 text-gray-400 whitespace-pre-wrap", children: [
       /* @__PURE__ */ N.jsxs("div", { className: "flex items-center justify-between mb-1.5 py-2 border-b border-zinc-800", children: [
         /* @__PURE__ */ N.jsxs("div", { className: "flex items-center gap-1.5", children: [
-          t.renderProviderAvatar && (e != null && e.model_name) ? t.renderProviderAvatar({ modelName: e.model_name, messageType: e.type }) : /* @__PURE__ */ N.jsx(Li, { children: /* @__PURE__ */ N.jsxs(Di, { children: [
+          t.renderProviderAvatar && (e != null && e.model_name) ? t.renderProviderAvatar({
+            modelName: e.model_name,
+            messageType: e.type
+          }) : /* @__PURE__ */ N.jsx(Li, { children: /* @__PURE__ */ N.jsxs(Di, { children: [
             /* @__PURE__ */ N.jsx(Mi, { children: /* @__PURE__ */ N.jsx(ph, { className: "h-4 w-4 text-gray-400" }) }),
             /* @__PURE__ */ N.jsx(ka, { children: /* @__PURE__ */ N.jsx("p", { children: "System Message" }) })
           ] }) }),
@@ -53142,7 +53453,14 @@ const DV = ({ msg: e, widgetProps: t, persona: n }) => {
           ${i ? "order-1" : "order-2"}
           ${o ? "w-full" : ""}
         `,
-          children: i ? /* @__PURE__ */ N.jsx(Kz, { msg: e, persona: t.user }) : e.type === dr.SystemMessage ? /* @__PURE__ */ N.jsx(DV, { msg: e, widgetProps: n, persona: t.assistant }) : /* @__PURE__ */ N.jsx(
+          children: i ? /* @__PURE__ */ N.jsx(Kz, { msg: e, persona: t.user }) : e.type === dr.SystemMessage ? /* @__PURE__ */ N.jsx(
+            DV,
+            {
+              msg: e,
+              widgetProps: n,
+              persona: t.assistant
+            }
+          ) : /* @__PURE__ */ N.jsx(
             Zz,
             {
               msg: e,
@@ -53169,69 +53487,100 @@ const DV = ({ msg: e, widgetProps: t, persona: n }) => {
     setTraceId: p,
     threadId: f,
     messages: h
-  } = t, b = dt(async (E, v) => {
-    if (E.ok && E.headers.get("content-type") === "text/event-stream") {
-      const R = E.headers.get("X-Message-Id"), j = v;
-      if (e.responseCallback) {
-        const I = E.headers.get("x-trace-id");
-        e.responseCallback({
-          traceId: I,
-          modelName: e.modelName,
-          threadId: j,
-          messageId: R
-        });
+  } = t, b = dt(
+    async (E, v) => {
+      if (E.ok && E.headers.get("content-type") === "text/event-stream") {
+        const R = E.headers.get("X-Message-Id"), j = v;
+        if (e.responseCallback) {
+          const I = E.headers.get("x-trace-id");
+          e.responseCallback({
+            traceId: I,
+            modelName: e.modelName,
+            threadId: j,
+            messageId: R
+          });
+        }
       }
-    }
-    if (!E.ok) {
-      let R = await E.json();
-      throw R.error ? new Error(R.error) : new Error(E.statusText);
-    }
-  }, [e, s, l]), _ = dt((E, v, R, j, I) => {
-    var w;
-    try {
-      if (E.data === "[DONE]")
-        return;
-      const z = JSON.parse(E.data);
-      if (z.error)
-        o(z.error), i(!1);
-      else {
-        const $ = z;
-        $.usage && (lt.emit("langdb_usageStats", { usage: $.usage, threadId: v, widgetId: e.widgetId }), u($.usage)), (w = e.onEvent) == null || w.call(e, $), r((B) => {
-          const Q = B[B.length - 1];
-          if (Q && Q.type === dr.HumanMessage)
-            return [
-              ...B.slice(0, -1),
-              { ...Q, threadId: v },
-              {
-                id: R || dh(),
-                message: $.choices.map((ie) => ie.delta.content).join(""),
-                type: dr.AIMessage,
-                content_type: kf.Text,
-                threadId: v,
-                trace_id: j || void 0
-              }
-            ];
-          let X = Q.tool_calls || [], Y = $.choices.map((ie) => ie.delta.tool_calls).flat().filter((ie) => ie !== void 0);
-          for (let ie of Y.filter((de) => de !== void 0)) {
-            let de = X.findIndex((T) => T.id === ie.id);
-            de !== -1 ? X[de] = ie : X.push(ie);
-          }
-          const se = {
-            ...Q,
-            message: Q.message + $.choices.map((ie) => ie.delta.content).join(""),
-            tool_calls: X,
-            run_id: I || void 0
-          };
-          return [...B.slice(0, -1), se];
-        });
+      if (!E.ok) {
+        const R = await E.json();
+        throw R.error ? new Error(R.error) : new Error(E.statusText);
       }
-    } catch {
-    }
-  }, [e, i, o, s, l, u, c, r]), { messagesEndRef: A, scrollToBottom: x } = WR(), y = dt(
+    },
+    [e, s, l]
+  ), _ = dt(
+    (E, v, R, j, I) => {
+      var w;
+      try {
+        if (E.data === "[DONE]")
+          return;
+        const z = JSON.parse(E.data);
+        if (z.error)
+          o(z.error), i(!1);
+        else {
+          const $ = z;
+          $.usage && (lt.emit("langdb_usageStats", {
+            usage: $.usage,
+            threadId: v,
+            widgetId: e.widgetId
+          }), u($.usage)), (w = e.onEvent) == null || w.call(e, $), r((B) => {
+            const Q = B[B.length - 1];
+            if (Q && Q.type === dr.HumanMessage)
+              return [
+                ...B.slice(0, -1),
+                { ...Q, threadId: v },
+                {
+                  id: R || dh(),
+                  message: $.choices.map((ie) => ie.delta.content).join(""),
+                  type: dr.AIMessage,
+                  content_type: kf.Text,
+                  threadId: v,
+                  trace_id: j || void 0
+                }
+              ];
+            const X = Q.tool_calls || [], Y = $.choices.map((ie) => ie.delta.tool_calls).flat().filter((ie) => ie !== void 0);
+            for (const ie of Y.filter(
+              (de) => de !== void 0
+            )) {
+              const de = X.findIndex(
+                (T) => T.id === ie.id
+              );
+              de !== -1 ? X[de] = ie : X.push(ie);
+            }
+            const se = {
+              ...Q,
+              message: Q.message + $.choices.map((ie) => ie.delta.content).join(""),
+              tool_calls: X,
+              run_id: I || void 0
+            };
+            return [...B.slice(0, -1), se];
+          });
+        }
+      } catch {
+      }
+    },
+    [
+      e,
+      i,
+      o,
+      s,
+      l,
+      u,
+      c,
+      r
+    ]
+  ), { messagesEndRef: A, scrollToBottom: x } = WR(), y = dt(
     async (E) => {
       var Y;
       n.current = new AbortController();
-      const { inputText: v, files: R, searchToolEnabled: j, otherTools: I, mcpTools: w, initialPrompts: z, variables: $ } = E;
+      const {
+        inputText: v,
+        files: R,
+        searchToolEnabled: j,
+        otherTools: I,
+        mcpTools: w,
+        initialPrompts: z,
+        variables: $
+      } = E;
       if (v.trim() === "") return;
       const B = {
         id: dh(),
@@ -53243,9 +53592,15 @@ const DV = ({ msg: e, widgetProps: t, persona: n }) => {
         files: R
       };
       r((se) => [...se, B]), a(""), i(!0), o(void 0), x();
-      let Q = f, X = e.widgetId;
+      let Q = f;
+      const X = e.widgetId;
       try {
-        X && lt.emit("langdb_chatWindow", { widgetId: X, state: "SubmitStart", threadId: Q, messageId: c });
+        X && lt.emit("langdb_chatWindow", {
+          widgetId: X,
+          state: "SubmitStart",
+          threadId: Q,
+          messageId: c
+        });
         let se = c, ie = d, de, T = !0;
         await VR({
           initialPrompts: z,
@@ -53261,7 +53616,12 @@ const DV = ({ msg: e, widgetProps: t, persona: n }) => {
           signal: (Y = n.current) == null ? void 0 : Y.signal,
           onerror: (W) => {
             var ae;
-            throw X && lt.emit("langdb_chatWindow", { widgetId: X, state: "SubmitError", error: W instanceof Error ? W.message : String(W), threadId: Q }), o(W instanceof Error ? W.message : String(W)), i(!1), (ae = e.responseCallback) == null || ae.call(e, {
+            throw X && lt.emit("langdb_chatWindow", {
+              widgetId: X,
+              state: "SubmitError",
+              error: W instanceof Error ? W.message : String(W),
+              threadId: Q
+            }), o(W instanceof Error ? W.message : String(W)), i(!1), (ae = e.responseCallback) == null || ae.call(e, {
               error: W,
               modelName: e.modelName
             }), W;
@@ -53271,23 +53631,62 @@ const DV = ({ msg: e, widgetProps: t, persona: n }) => {
               const ae = W.headers.get("X-Thread-Id"), k = W.headers.get("X-Message-Id"), me = W.headers.get("X-Trace-Id"), xe = W.headers.get("X-Run-Id");
               Q = ae || Q, se = k || se, ie = me || ie, de = xe || de, l(Q), s(se), p(ie);
             }
-            return X && lt.emit("langdb_chatWindow", { widgetId: X, state: "Processing", threadId: Q, messageId: se, traceId: ie }), b(W, Q);
+            return X && lt.emit("langdb_chatWindow", {
+              widgetId: X,
+              state: "Processing",
+              threadId: Q,
+              messageId: se,
+              traceId: ie
+            }), b(W, Q);
           },
           onmessage: (W) => {
-            X && lt.emit("langdb_chatWindow", { widgetId: X, state: "Processing", threadId: Q, messageId: se, traceId: ie, runId: de }), _(W, Q || f, se || c, ie, de), T && setTimeout(() => {
+            X && lt.emit("langdb_chatWindow", {
+              widgetId: X,
+              state: "Processing",
+              threadId: Q,
+              messageId: se,
+              traceId: ie,
+              runId: de
+            }), _(
+              W,
+              Q || f,
+              se || c,
+              ie,
+              de
+            ), T && setTimeout(() => {
               x();
             }), T = !1;
           },
           onclose: () => {
-            X && lt.emit("langdb_chatWindow", { widgetId: X, state: "SubmitEnd", threadId: Q, messageId: se, traceId: ie, runId: de }), s(void 0), i(!1);
+            X && lt.emit("langdb_chatWindow", {
+              widgetId: X,
+              state: "SubmitEnd",
+              threadId: Q,
+              messageId: se,
+              traceId: ie,
+              runId: de
+            }), s(void 0), i(!1);
           }
         });
       } catch (se) {
-        if (X && lt.emit("langdb_chatWindow", { widgetId: X, state: "SubmitError", error: se instanceof Error ? se.message : String(se), threadId: Q, messageId: c, traceId: d }), se instanceof Error && se.name === "AbortError")
+        if (X && lt.emit("langdb_chatWindow", {
+          widgetId: X,
+          state: "SubmitError",
+          error: se instanceof Error ? se.message : String(se),
+          threadId: Q,
+          messageId: c,
+          traceId: d
+        }), se instanceof Error && se.name === "AbortError")
           return;
         o(se instanceof Error ? se.message : String(se)), i(!1);
       } finally {
-        n.current = null, X && lt.emit("langdb_chatWindow", { widgetId: X, state: "SubmitEnd", threadId: Q, messageId: c, traceId: d });
+        n.current = null, X && lt.emit("langdb_chatWindow", {
+          widgetId: X,
+          state: "SubmitEnd",
+          threadId: Q,
+          messageId: c,
+          traceId: d
+        });
       }
     },
     [
@@ -53336,8 +53735,22 @@ const DV = ({ msg: e, widgetProps: t, persona: n }) => {
       name: "User",
       ...(z = e.personaOptions) == null ? void 0 : z.user
     }
-  }, { submitMessageFn: A, messagesEndRef: x, terminateChat: y, scrollToBottom: g } = PV(e, t), E = dt(($) => A({ ...$, initialPrompts: c, mcpTools: d, variables: p, dynamicBody: f }), [A, c, d, p, f]), v = dt(($) => {
-    let B = $.map((X) => X.type.startsWith("audio/") ? ew(X).then((Y) => ({
+  }, {
+    submitMessageFn: A,
+    messagesEndRef: x,
+    terminateChat: y,
+    scrollToBottom: g
+  } = PV(e, t), E = dt(
+    ($) => A({
+      ...$,
+      initialPrompts: c,
+      mcpTools: d,
+      variables: p,
+      dynamicBody: f
+    }),
+    [A, c, d, p, f]
+  ), v = dt(($) => {
+    const B = $.map((X) => X.type.startsWith("audio/") ? ew(X).then((Y) => ({
       preview: "",
       base64: Y,
       raw_file: X,
@@ -53383,7 +53796,12 @@ const DV = ({ msg: e, widgetProps: t, persona: n }) => {
       lt.off("langdb_chat_scrollToBottom", $);
     };
   }, [n, b, g]), Jt(() => {
-    const $ = ({ inputText: B, files: Q, searchToolEnabled: X, otherTools: Y }) => {
+    const $ = ({
+      inputText: B,
+      files: Q,
+      searchToolEnabled: X,
+      otherTools: Y
+    }) => {
       a(B), E({ inputText: B, files: Q, searchToolEnabled: X, otherTools: Y });
     };
     return lt.on("langdb_input_chatSubmit", $), () => {
@@ -53393,70 +53811,145 @@ const DV = ({ msg: e, widgetProps: t, persona: n }) => {
   const [I] = LV(x);
   return Jt(() => {
     i && setTimeout(() => g(), 100);
-  }, [i, g]), /* @__PURE__ */ N.jsxs("div", { className: "langdb-chat mx-auto flex flex-1 flex-col lg:max-w-[40rem] xl:max-w-[48rem] w-full h-full", children: [
-    /* @__PURE__ */ N.jsxs("div", { ...R(), className: "langdb-message-section flex flex-col flex-1 justify-center overflow-y-auto p-4 pb-0 relative", children: [
-      j && /* @__PURE__ */ N.jsxs("div", { className: "absolute gap-20 flex-col inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white text-xl z-50", children: [
-        /* @__PURE__ */ N.jsx(VA, { className: "h-12 w-12" }),
-        /* @__PURE__ */ N.jsxs("div", { className: "flex flex-col justify-center items-center", children: [
-          /* @__PURE__ */ N.jsx("span", { className: " font-bold", children: "Add anything" }),
-          /* @__PURE__ */ N.jsx("span", { children: "Drop any file here to add it to conversation" })
-        ] })
-      ] }),
-      n.length === 0 && (e.renderStarter ? e.renderStarter() : /* @__PURE__ */ N.jsx(BV, { starters: e.starters, onStarterClick: ($) => {
-        a($), A({ inputText: $, files: [] });
-      } })),
-      /* @__PURE__ */ N.jsxs("div", { className: "langdb-message-render flex-1 overflow-auto", children: [
-        n.filter(($) => $.type === dr.HumanMessage || $.type !== dr.ToolMessage).map(($) => {
-          const B = $.id === n[n.length - 1].id;
-          return /* @__PURE__ */ N.jsx(MV, { message: $, personaOptions: _, widgetProps: e, isLastMessage: B, isTyping: i && B }, $.id);
-        }),
-        /* @__PURE__ */ N.jsx("div", { ref: x, className: "h-1" }),
-        !I && /* @__PURE__ */ N.jsx("div", { className: "sticky bottom-4 w-full flex justify-center mt-2 mb-2", children: /* @__PURE__ */ N.jsx(
-          "button",
+  }, [i, g]), /* @__PURE__ */ N.jsxs(
+    "div",
+    {
+      className: "langdb-chat mx-auto flex flex-1 flex-col lg:max-w-[40rem] xl:max-w-[48rem] w-full h-full",
+      children: [
+        /* @__PURE__ */ N.jsxs(
+          "div",
           {
-            onClick: g,
-            className: "cursor-pointer z-10 rounded-full bg-clip-padding border text-token-text-secondary border-neutral-800 bg-neutral-900 w-10 h-10 flex items-center justify-center shadow-lg hover:bg-neutral-800 transition-all duration-200",
-            "aria-label": "Scroll to bottom",
-            children: /* @__PURE__ */ N.jsx("svg", { width: "24", height: "24", viewBox: "0 0 24 24", fill: "none", xmlns: "http://www.w3.org/2000/svg", className: "icon-md text-white", children: /* @__PURE__ */ N.jsx("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M12 21C11.7348 21 11.4804 20.8946 11.2929 20.7071L4.29289 13.7071C3.90237 13.3166 3.90237 12.6834 4.29289 12.2929C4.68342 11.9024 5.31658 11.9024 5.70711 12.2929L11 17.5858V4C11 3.44772 11.4477 3 12 3C12.5523 3 13 3.44772 13 4V17.5858L18.2929 12.2929C18.6834 11.9024 19.3166 11.9024 19.7071 12.2929C20.0976 12.6834 20.0976 13.3166 19.7071 13.7071L12.7071 20.7071C12.5196 20.8946 12.2652 21 12 21Z", fill: "currentColor" }) })
+            ...R(),
+            className: "langdb-message-section flex flex-col flex-1 justify-center overflow-y-auto p-4 pb-0 relative",
+            children: [
+              j && /* @__PURE__ */ N.jsxs("div", { className: "absolute gap-20 flex-col inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white text-xl z-50", children: [
+                /* @__PURE__ */ N.jsx(VA, { className: "h-12 w-12" }),
+                /* @__PURE__ */ N.jsxs("div", { className: "flex flex-col justify-center items-center", children: [
+                  /* @__PURE__ */ N.jsx("span", { className: " font-bold", children: "Add anything" }),
+                  /* @__PURE__ */ N.jsx("span", { children: "Drop any file here to add it to conversation" })
+                ] })
+              ] }),
+              n.length === 0 && (e.renderStarter ? e.renderStarter() : /* @__PURE__ */ N.jsx(
+                BV,
+                {
+                  starters: e.starters,
+                  onStarterClick: ($) => {
+                    a($), A({ inputText: $, files: [] });
+                  }
+                }
+              )),
+              /* @__PURE__ */ N.jsxs("div", { className: "langdb-message-render flex-1 overflow-auto", children: [
+                n.filter(
+                  ($) => $.type === dr.HumanMessage || $.type !== dr.ToolMessage
+                ).map(($) => {
+                  const B = $.id === n[n.length - 1].id;
+                  return /* @__PURE__ */ N.jsx(
+                    MV,
+                    {
+                      message: $,
+                      personaOptions: _,
+                      widgetProps: e,
+                      isLastMessage: B,
+                      isTyping: i && B
+                    },
+                    $.id
+                  );
+                }),
+                /* @__PURE__ */ N.jsx("div", { ref: x, className: "h-1" }),
+                !I && /* @__PURE__ */ N.jsx("div", { className: "sticky bottom-4 w-full flex justify-center mt-2 mb-2", children: /* @__PURE__ */ N.jsx(
+                  "button",
+                  {
+                    onClick: g,
+                    className: "cursor-pointer z-10 rounded-full bg-clip-padding border text-token-text-secondary border-neutral-800 bg-neutral-900 w-10 h-10 flex items-center justify-center shadow-lg hover:bg-neutral-800 transition-all duration-200",
+                    "aria-label": "Scroll to bottom",
+                    children: /* @__PURE__ */ N.jsx(
+                      "svg",
+                      {
+                        width: "24",
+                        height: "24",
+                        viewBox: "0 0 24 24",
+                        fill: "none",
+                        xmlns: "http://www.w3.org/2000/svg",
+                        className: "icon-md text-white",
+                        children: /* @__PURE__ */ N.jsx(
+                          "path",
+                          {
+                            fillRule: "evenodd",
+                            clipRule: "evenodd",
+                            d: "M12 21C11.7348 21 11.4804 20.8946 11.2929 20.7071L4.29289 13.7071C3.90237 13.3166 3.90237 12.6834 4.29289 12.2929C4.68342 11.9024 5.31658 11.9024 5.70711 12.2929L11 17.5858V4C11 3.44772 11.4477 3 12 3C12.5523 3 13 3.44772 13 4V17.5858L18.2929 12.2929C18.6834 11.9024 19.3166 11.9024 19.7071 12.2929C20.0976 12.6834 20.0976 13.3166 19.7071 13.7071L12.7071 20.7071C12.5196 20.8946 12.2652 21 12 21Z",
+                            fill: "currentColor"
+                          }
+                        )
+                      }
+                    )
+                  }
+                ) })
+              ] }),
+              o && /* @__PURE__ */ N.jsxs("div", { className: "bg-neutral-900 border border-red-500/30 flex p-3 rounded-lg items-center justify-between mb-4 shadow-md animate-fadeIn", children: [
+                /* @__PURE__ */ N.jsxs("div", { className: "flex flex-1 items-center gap-2", children: [
+                  /* @__PURE__ */ N.jsx(
+                    "svg",
+                    {
+                      xmlns: "http://www.w3.org/2000/svg",
+                      viewBox: "0 0 24 24",
+                      fill: "currentColor",
+                      className: "w-5 h-5 text-red-500 flex-shrink-0",
+                      children: /* @__PURE__ */ N.jsx(
+                        "path",
+                        {
+                          fillRule: "evenodd",
+                          d: "M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z",
+                          clipRule: "evenodd"
+                        }
+                      )
+                    }
+                  ),
+                  /* @__PURE__ */ N.jsx("span", { className: "text-red-400 text-sm break-words", children: o })
+                ] }),
+                /* @__PURE__ */ N.jsx(
+                  lC,
+                  {
+                    onClick: ($) => {
+                      $.stopPropagation(), $.preventDefault(), s(void 0);
+                    },
+                    className: "h-5 w-5 text-neutral-400 hover:text-white hover:cursor-pointer transition-colors duration-200 ml-2 flex-shrink-0"
+                  }
+                )
+              ] })
+            ]
           }
-        ) })
-      ] }),
-      o && /* @__PURE__ */ N.jsxs("div", { className: "bg-neutral-900 border border-red-500/30 flex p-3 rounded-lg items-center justify-between mb-4 shadow-md animate-fadeIn", children: [
-        /* @__PURE__ */ N.jsxs("div", { className: "flex flex-1 items-center gap-2", children: [
-          /* @__PURE__ */ N.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", className: "w-5 h-5 text-red-500 flex-shrink-0", children: /* @__PURE__ */ N.jsx("path", { fillRule: "evenodd", d: "M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z", clipRule: "evenodd" }) }),
-          /* @__PURE__ */ N.jsx("span", { className: "text-red-400 text-sm break-words", children: o })
-        ] }),
-        /* @__PURE__ */ N.jsx(
-          lC,
+        ),
+        !h && /* @__PURE__ */ N.jsx(
+          rG,
           {
-            onClick: ($) => {
-              $.stopPropagation(), $.preventDefault(), s(void 0);
-            },
-            className: "h-5 w-5 text-neutral-400 hover:text-white hover:cursor-pointer transition-colors duration-200 ml-2 flex-shrink-0"
+            searchToolEnabled: e.searchToolEnabled,
+            toggleSearchTool: e.toggleSearchTool,
+            onSubmit: ($) => (lt.emit("langdb_input_chatSubmit", $), a(""), Promise.resolve()),
+            currentInput: r,
+            setCurrentInput: a
           }
         )
-      ] })
-    ] }),
-    !h && /* @__PURE__ */ N.jsx(
-      rG,
-      {
-        searchToolEnabled: e.searchToolEnabled,
-        toggleSearchTool: e.toggleSearchTool,
-        onSubmit: ($) => (lt.emit("langdb_input_chatSubmit", $), a(""), Promise.resolve()),
-        currentInput: r,
-        setCurrentInput: a
-      }
-    )
-  ] }, e.widgetId);
+      ]
+    },
+    e.widgetId
+  );
 }, BV = ({ starters: e, onStarterClick: t }) => /* @__PURE__ */ N.jsxs("div", { className: "flex  h-full self-center flex-1 flex-col justify-center items-center", children: [
   /* @__PURE__ */ N.jsxs("div", { className: "flex flex-2 gap-3 flex-col justify-center items-center", children: [
     /* @__PURE__ */ N.jsx(Cm, { width: 48, height: 48 }),
     /* @__PURE__ */ N.jsx("span", { className: "font-bold", children: "LangDB" }),
     /* @__PURE__ */ N.jsx("div", { className: "flex flex-col justify-center items-center", children: /* @__PURE__ */ N.jsx("span", { className: "text-sm", children: "Easily build and deploy AI agents" }) })
   ] }),
-  /* @__PURE__ */ N.jsx("div", { className: "flex p-8 justify-end items-end", children: /* @__PURE__ */ N.jsx("div", { className: "flex  flex-row gap-4", children: e && e.map((n, r) => /* @__PURE__ */ N.jsx("button", { onClick: () => {
-    t(n.prompt);
-  }, className: "bg-zinc-100 starter-button border bg-opacity-10  h-[101px] w-[160px] line-clamp-2 flex p-[12px] rounded-lg mb-2", children: /* @__PURE__ */ N.jsx("div", { className: "", children: n.prompt }) }, r)) }) })
+  /* @__PURE__ */ N.jsx("div", { className: "flex p-8 justify-end items-end", children: /* @__PURE__ */ N.jsx("div", { className: "flex  flex-row gap-4", children: e && e.map((n, r) => /* @__PURE__ */ N.jsx(
+    "button",
+    {
+      onClick: () => {
+        t(n.prompt);
+      },
+      className: "bg-zinc-100 starter-button border bg-opacity-10  h-[101px] w-[160px] line-clamp-2 flex p-[12px] rounded-lg mb-2",
+      children: /* @__PURE__ */ N.jsx("div", { className: "", children: n.prompt })
+    },
+    r
+  )) }) })
 ] });
 function uw(e, t) {
   return function() {
@@ -55166,11 +55659,9 @@ const {
       getAccessToken: a,
       threadId: t,
       apiKey: r
-    });
-    let u = (await Dt.get(`${o}/threads/${t}/messages`, {
+    }), u = (await Dt.get(`${o}/threads/${t}/messages`, {
       headers: s
-    })).data;
-    const c = [];
+    })).data, c = [];
     for (const d of u)
       c.push({
         id: d.id,
@@ -55190,7 +55681,20 @@ const {
     return console.error("Error fetching messages:", t), [];
   }
 }, VY = mn.memo((e) => {
-  const t = e.theme === "dark" ? "dark-theme" : "light-theme", { threadId: n, projectId: r, getAccessToken: a, publicId: i, apiKey: o, messages: s, autoRefreshThread: l, renderLoading: u } = e, { run: c, loading: d, data: p } = NV(gY, {
+  const t = e.theme === "dark" ? "dark-theme" : "light-theme", {
+    threadId: n,
+    projectId: r,
+    getAccessToken: a,
+    publicId: i,
+    apiKey: o,
+    messages: s,
+    autoRefreshThread: l,
+    renderLoading: u
+  } = e, {
+    run: c,
+    loading: d,
+    data: p
+  } = NV(gY, {
     manual: !0
   }), f = dt(() => {
     n && r && (a || i || o) && (s === void 0 || s.length === 0) && c({
@@ -55201,14 +55705,28 @@ const {
       serverUrl: e.serverUrl || wm,
       apiKey: e.apiKey
     });
-  }, [n, r, i, o, a, c, s]);
+  }, [
+    n,
+    r,
+    i,
+    o,
+    a,
+    c,
+    s
+  ]);
   return lw(() => {
     f();
   }), Fi(() => {
     f();
   }, [r]), Fi(() => {
     l && f();
-  }, [n, l]), d && (!s || s.length < 1) ? /* @__PURE__ */ N.jsx("div", { className: `${t} dark-theme w-full h-full justify-center items-center flex`, children: u ? u() : /* @__PURE__ */ N.jsx("span", { className: "animate-pulse", children: " Loading..." }) }) : /* @__PURE__ */ N.jsx("div", { className: `${t} w-full h-full`, children: /* @__PURE__ */ N.jsx(FV, { ...e, messages: s || p || [] }) });
+  }, [n, l]), d && (!s || s.length < 1) ? /* @__PURE__ */ N.jsx(
+    "div",
+    {
+      className: `${t} dark-theme w-full h-full justify-center items-center flex`,
+      children: u ? u() : /* @__PURE__ */ N.jsx("span", { className: "animate-pulse", children: " Loading..." })
+    }
+  ) : /* @__PURE__ */ N.jsx("div", { className: `${t} w-full h-full`, children: /* @__PURE__ */ N.jsx(FV, { ...e, messages: s || p || [] }) });
 });
 function Cf(...e) {
   return e.filter(Boolean).join(" ");
@@ -55225,7 +55743,9 @@ const WY = (e) => {
     maximizedPanelStyle: l,
     showFullScreen: u,
     controls: c
-  } = e, [d, p] = ht(!1), [f, h] = ht(u || !1), b = dt(() => {
+  } = e, [d, p] = ht(!1), [f, h] = ht(
+    u || !1
+  ), b = dt(() => {
     p((_) => !_);
   }, []);
   return /* @__PURE__ */ N.jsxs("div", { className: Cf(a === "dark" ? "floating-dark" : ""), children: [
@@ -55239,35 +55759,29 @@ const WY = (e) => {
           f ? s || "h-full w-full bottom-0 right-0" : "rounded border border-border shadow-md h-[60vh] w-[45vw] min-h-[500px] bottom-16 right-16"
         ),
         children: [
-          /* @__PURE__ */ N.jsxs(
-            "div",
-            {
-              className: "border-b py-[5px] flex justify-center items-center",
-              children: [
-                /* @__PURE__ */ N.jsxs("div", { className: "flex gap-2", children: [
-                  /* @__PURE__ */ N.jsx(
-                    "button",
-                    {
-                      onClick: () => {
-                        p(!1), t && t();
-                      },
-                      children: /* @__PURE__ */ N.jsx(bY, {})
-                    }
-                  ),
-                  !(c != null && c.hideMaximise) && /* @__PURE__ */ N.jsx(
-                    "button",
-                    {
-                      onClick: () => {
-                        h((_) => !_), n && n();
-                      },
-                      children: f ? /* @__PURE__ */ N.jsx(yY, {}) : /* @__PURE__ */ N.jsx(EY, {})
-                    }
-                  )
-                ] }),
-                /* @__PURE__ */ N.jsx("div", { className: "flex flex-1 justify-center header-title", children: o })
-              ]
-            }
-          ),
+          /* @__PURE__ */ N.jsxs("div", { className: "border-b py-[5px] flex justify-center items-center", children: [
+            /* @__PURE__ */ N.jsxs("div", { className: "flex gap-2", children: [
+              /* @__PURE__ */ N.jsx(
+                "button",
+                {
+                  onClick: () => {
+                    p(!1), t && t();
+                  },
+                  children: /* @__PURE__ */ N.jsx(bY, {})
+                }
+              ),
+              !(c != null && c.hideMaximise) && /* @__PURE__ */ N.jsx(
+                "button",
+                {
+                  onClick: () => {
+                    h((_) => !_), n && n();
+                  },
+                  children: f ? /* @__PURE__ */ N.jsx(yY, {}) : /* @__PURE__ */ N.jsx(EY, {})
+                }
+              )
+            ] }),
+            /* @__PURE__ */ N.jsx("div", { className: "flex flex-1 justify-center header-title", children: o })
+          ] }),
           /* @__PURE__ */ N.jsx("div", { className: "flex flex-1 overflow-scroll", children: i })
         ]
       }
@@ -55297,7 +55811,7 @@ const WY = (e) => {
       "path",
       {
         strokeLinecap: "round",
-        "stroke-linejoin": "round",
+        strokeLinejoin: "round",
         d: "M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"
       }
     )

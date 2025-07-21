@@ -1,4 +1,4 @@
 export declare const useScrollToBottom: () => {
-  messagesEndRef: import("react").RefObject<HTMLDivElement | null>;
-  scrollToBottom: () => void;
+    messagesEndRef: import('react').RefObject<HTMLDivElement | null>;
+    scrollToBottom: () => void;
 };
