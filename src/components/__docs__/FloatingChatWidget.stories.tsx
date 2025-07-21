@@ -19,7 +19,7 @@ export const DarkFloatingChatWidget: Story = {
   args: {
     theme: "dark",
   },
-}
+};
 
 export const StartersFloatingChatWidget: Story = {
   args: {

@@ -105,9 +105,9 @@ export const onSubmit = async (submitProps: SubmitProps) => {
       apiKey: widgetProps.apiKey,
     });
 
-    let previous: ChatCompletionMessage[] = convert_to(previousMessages);
+    const previous: ChatCompletionMessage[] = convert_to(previousMessages);
 
-    let submitMessage: ChatCompletionMessage = await createSubmitMessage({
+    const submitMessage: ChatCompletionMessage = await createSubmitMessage({
       files,
       message,
       resizeOptions,
@@ -126,7 +126,7 @@ export const onSubmit = async (submitProps: SubmitProps) => {
     if (initialPrompts && initialPrompts.length > 0) {
       messages = [...initialPrompts, ...messages];
     }
-    let mcp_servers = mcpTools || [];
+    const mcp_servers = mcpTools || [];
     if (searchToolEnabled) {
       mcp_servers.push({
         name: "websearch",
@@ -143,7 +143,7 @@ export const onSubmit = async (submitProps: SubmitProps) => {
     const guard_slug = widgetProps.guards_slug || [];
     const cacheConfig: CacheConfig =
       (widgetProps.cacheConfig as CacheConfig) || {};
-    let extraConfig: { cache?: CacheConfig; guards?: string[] } = {};
+    const extraConfig: { cache?: CacheConfig; guards?: string[] } = {};
     if (cacheConfig && Object.keys(cacheConfig).length > 0) {
       extraConfig.cache = cacheConfig;
     }
@@ -176,8 +176,12 @@ export const onSubmit = async (submitProps: SubmitProps) => {
             extra: extraConfig,
           }
         : {}),
-      ...(widgetProps.fallback && widgetProps.fallback.length > 0 ? { fallback: widgetProps.fallback } : {}),
-      ...(widgetProps.maxRetries && widgetProps.maxRetries > 0 ? { max_retries: widgetProps.maxRetries } : {}),
+      ...(widgetProps.fallback && widgetProps.fallback.length > 0
+        ? { fallback: widgetProps.fallback }
+        : {}),
+      ...(widgetProps.maxRetries && widgetProps.maxRetries > 0
+        ? { max_retries: widgetProps.maxRetries }
+        : {}),
     };
     if (dynamicBody) {
       request = {

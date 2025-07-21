@@ -1,11 +1,11 @@
 export type ModelEventType =
-  | { type: 'llm_start'; data: LLMStartEvent }
-  | { type: 'llm_content'; data: LLMContentEvent }
-  | { type: 'llm_stop'; data: LLMFinishEvent }
-  | { type: 'tool_start'; data: ToolStartEvent }
-  | { type: 'tool_result'; data: ToolResultEvent }
-  | { type: 'model_error'; data: string }
-  | { type: 'unknown_error'; data: string };
+  | { type: "llm_start"; data: LLMStartEvent }
+  | { type: "llm_content"; data: LLMContentEvent }
+  | { type: "llm_stop"; data: LLMFinishEvent }
+  | { type: "tool_start"; data: ToolStartEvent }
+  | { type: "tool_result"; data: ToolResultEvent }
+  | { type: "model_error"; data: string }
+  | { type: "unknown_error"; data: string };
 
 export interface ChatCompletionChunk {
   id: string;
@@ -32,18 +32,18 @@ export interface FunctionCall {
   arguments: string;
 }
 export interface ChatCompletionChunkChoice {
-  delta: ChatCompletionDelta,
-  index: number
+  delta: ChatCompletionDelta;
+  index: number;
 
-  finish_reason?: string
-  logprobs?: any
+  finish_reason?: string;
+  logprobs?: any;
 }
 
 export interface ModelUsage {
   prompt_tokens: number;
   completion_tokens: number;
   total_tokens: number;
-  cost: number
+  cost: number;
 }
 
 export interface LLMContentEvent {
@@ -72,13 +72,13 @@ export interface ModelToolCall {
 }
 
 export enum ModelFinishReason {
-  Stop = 'stop',
-  StopSequence = 'stop_sequence',
-  Length = 'length',
-  ToolCalls = 'tool_calls',
-  ContentFilter = 'content_filter',
-  Guardrail = 'guardrail',
-  Other = 'other'
+  Stop = "stop",
+  StopSequence = "stop_sequence",
+  Length = "length",
+  ToolCalls = "tool_calls",
+  ContentFilter = "content_filter",
+  Guardrail = "guardrail",
+  Other = "other",
 }
 
 export interface ToolStartEvent {

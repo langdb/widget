@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import './FloatWidget.css';
+import "./FloatWidget.css";
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
@@ -13,10 +13,10 @@ export const FloatingChatWidget = (props: {
   title?: any;
   maximizedPanelClassName?: string;
   maximizedPanelStyle?: React.CSSProperties;
-  showFullScreen?: boolean,
+  showFullScreen?: boolean;
   controls?: {
-    hideMaximise?: boolean
-  }
+    hideMaximise?: boolean;
+  };
 }) => {
   const {
     onMinimize,
@@ -28,31 +28,31 @@ export const FloatingChatWidget = (props: {
     maximizedPanelClassName,
     maximizedPanelStyle,
     showFullScreen: maximised,
-    controls
+    controls,
   } = props;
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [isMaximized, setIsMaximized] = useState<boolean>(maximised ? maximised : false);
+  const [isMaximized, setIsMaximized] = useState<boolean>(
+    maximised ? maximised : false,
+  );
 
   const handleChatToggle = useCallback(() => {
     setIsChatOpen((prev) => !prev);
   }, []);
 
   return (
-    <div className={classNames( theme === 'dark' ? 'floating-dark' : '')}>
+    <div className={classNames(theme === "dark" ? "floating-dark" : "")}>
       {isChatOpen && (
         <div
           style={isMaximized ? maximizedPanelStyle : {}}
           className={classNames(
-            'langdb-floating-widget',
+            "langdb-floating-widget",
             "flex flex-1 flex-col absolute p-[10px] pt-[0px]",
             isMaximized
               ? maximizedPanelClassName || "h-full w-full bottom-0 right-0"
               : "rounded border border-border shadow-md h-[60vh] w-[45vw] min-h-[500px] bottom-16 right-16",
           )}
         >
-          <div
-            className="border-b py-[5px] flex justify-center items-center"
-          >
+          <div className="border-b py-[5px] flex justify-center items-center">
             <div className="flex gap-2">
               <button
                 onClick={() => {
@@ -62,16 +62,22 @@ export const FloatingChatWidget = (props: {
               >
                 <MinusIcon />
               </button>
-              {!controls?.hideMaximise && <button
-                onClick={() => {
-                  setIsMaximized((prev) => !prev);
-                  onMaximize && onMaximize();
-                }}
-              >
-                {isMaximized ? <MinimizeIcon /> : <MaximizeIcon />}
-              </button>}
+              {!controls?.hideMaximise && (
+                <button
+                  onClick={() => {
+                    setIsMaximized((prev) => !prev);
+                    onMaximize && onMaximize();
+                  }}
+                >
+                  {isMaximized ? <MinimizeIcon /> : <MaximizeIcon />}
+                </button>
+              )}
             </div>
-            {<div className="flex flex-1 justify-center header-title">{title}</div>}
+            {
+              <div className="flex flex-1 justify-center header-title">
+                {title}
+              </div>
+            }
           </div>
           <div className="flex flex-1 overflow-scroll">{children}</div>
         </div>
@@ -101,7 +107,7 @@ export const ChatIcon = () => (
   >
     <path
       strokeLinecap="round"
-      stroke-linejoin="round"
+      strokeLinejoin="round"
       d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"
     />
   </svg>

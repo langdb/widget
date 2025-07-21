@@ -14,13 +14,13 @@ type Story = StoryObj<typeof WidgetExample>;
 
 export const Simple: Story = {
   args: {
-    theme: 'light'
+    theme: "light",
   },
 };
 
 export const Dark: Story = {
   args: {
-    theme: 'dark'
+    theme: "dark",
   },
 };
 export const Starters: Story = {
@@ -35,6 +35,6 @@ export const Starters: Story = {
       {
         prompt: "Give me some interesting cities to visit.",
       },
-    ]
+    ],
   },
 };

@@ -1,5 +1,5 @@
 import "../tailwind.css";
-import './Widget.css';
+import "./Widget.css";
 import { AdapterProps, DEV_SERVER_URL, getHeaders } from "./adapter";
 import React, { useCallback } from "react";
 import { ChatComponent } from "./ChatComponent";
@@ -14,41 +14,40 @@ export interface WidgetProps extends AdapterProps {
   personaOptions?: PersonaOptions;
   messages?: ChatMessage[];
   initialPrompts?: InititalPrompt[];
-  variables?: Record<string, any>
-  mcpTools?: MCPTools[],
-  cacheConfig?: CacheConfig,
+  variables?: Record<string, any>;
+  mcpTools?: MCPTools[];
+  cacheConfig?: CacheConfig;
   style?: React.CSSProperties;
   className?: string;
   controls?: {
     enableFiles?: boolean;
   };
   theme?: "light" | "dark";
-  starters?: ConversationStarter[]
+  starters?: ConversationStarter[];
   threadId?: string;
   projectId?: string;
   getAccessToken?: () => Promise<string>;
   apiKey?: string;
   publicId?: string;
   serverUrl?: string;
-  hideChatInput?: boolean,
-  autoRefreshThread?: boolean,
-  renderLoading?: () => React.ReactNode,
-  searchToolEnabled?: boolean,
-  toggleSearchTool?: (enabled: boolean) => void,
-  renderStarter?: () => React.ReactNode,
+  hideChatInput?: boolean;
+  autoRefreshThread?: boolean;
+  renderLoading?: () => React.ReactNode;
+  searchToolEnabled?: boolean;
+  toggleSearchTool?: (enabled: boolean) => void;
+  renderStarter?: () => React.ReactNode;
   renderProviderAvatar?: (props: {
     modelName: string;
     messageType: string;
-  }) => React.ReactNode,
-  widgetId?: string,
-  maxRetries?: number,
-  fallback?:  any[],
-  lastAiMessageClass?: string,
-  guards_slug?: string[],
+  }) => React.ReactNode;
+  widgetId?: string;
+  maxRetries?: number;
+  fallback?: any[];
+  lastAiMessageClass?: string;
+  guards_slug?: string[];
   // when using dynamic body, other params will be ignored
-  dynamicBody?: any
+  dynamicBody?: any;
 }
-
 
 const getMessagesFromThread = async (props: {
   threadId: string;
@@ -56,21 +55,22 @@ const getMessagesFromThread = async (props: {
   getAccessToken?: () => Promise<string>;
   publicId?: string;
   serverUrl: string;
-  apiKey?: string
+  apiKey?: string;
 }) => {
   try {
-    const { threadId, projectId, apiKey, getAccessToken, publicId, serverUrl } = props;
+    const { threadId, projectId, apiKey, getAccessToken, publicId, serverUrl } =
+      props;
     const headers = await getHeaders({
       projectId,
       publicId,
       getAccessToken,
       threadId,
-      apiKey
+      apiKey,
     });
     const res = await axios.get(`${serverUrl}/threads/${threadId}/messages`, {
       headers,
     });
-    let responseData = res.data as MessageWithId[];
+    const responseData = res.data as MessageWithId[];
     // convert to ChatMessage
     const messages: ChatMessage[] = [];
     for (const message of responseData) {
@@ -85,35 +85,60 @@ const getMessagesFromThread = async (props: {
         tool_calls: message.tool_calls,
         model_name: message.model_name,
         user_id: message.user_id,
-        created_at: message.created_at
+        created_at: message.created_at,
       });
     }
     return messages;
-
   } catch (error) {
     console.error("Error fetching messages:", error);
     return [];
   }
-}
+};
 
 export const Widget: React.FC<WidgetProps> = React.memo((props) => {
   const themeClass = props.theme === "dark" ? "dark-theme" : "light-theme";
-  const { threadId, projectId, getAccessToken, publicId, apiKey, messages, autoRefreshThread, renderLoading } = props;
-  const { run: triggerGetMessages, loading: messagesLoading, data } = useRequest(getMessagesFromThread, {
-    manual: true
+  const {
+    threadId,
+    projectId,
+    getAccessToken,
+    publicId,
+    apiKey,
+    messages,
+    autoRefreshThread,
+    renderLoading,
+  } = props;
+  const {
+    run: triggerGetMessages,
+    loading: messagesLoading,
+    data,
+  } = useRequest(getMessagesFromThread, {
+    manual: true,
   });
   const refreshMessages = useCallback(() => {
-    if (threadId && projectId && (getAccessToken || publicId || apiKey) && (messages === undefined || messages.length === 0)) {
+    if (
+      threadId &&
+      projectId &&
+      (getAccessToken || publicId || apiKey) &&
+      (messages === undefined || messages.length === 0)
+    ) {
       triggerGetMessages({
         threadId,
         projectId,
         getAccessToken,
         publicId,
         serverUrl: props.serverUrl || DEV_SERVER_URL,
-        apiKey: props.apiKey
+        apiKey: props.apiKey,
       });
     }
-  }, [threadId, projectId, publicId, apiKey, getAccessToken, triggerGetMessages, messages]);
+  }, [
+    threadId,
+    projectId,
+    publicId,
+    apiKey,
+    getAccessToken,
+    triggerGetMessages,
+    messages,
+  ]);
 
   useMount(() => {
     refreshMessages();
@@ -122,16 +147,23 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
     refreshMessages();
   }, [projectId]);
 
-
   useUpdateEffect(() => {
     if (autoRefreshThread) {
       refreshMessages();
     }
   }, [threadId, autoRefreshThread]);
   if (messagesLoading && (!messages || messages.length < 1)) {
-    return <div className={`${themeClass} dark-theme w-full h-full justify-center items-center flex`}>
-      {renderLoading ? renderLoading() : <span className="animate-pulse"> Loading...</span>}
-    </div>;
+    return (
+      <div
+        className={`${themeClass} dark-theme w-full h-full justify-center items-center flex`}
+      >
+        {renderLoading ? (
+          renderLoading()
+        ) : (
+          <span className="animate-pulse"> Loading...</span>
+        )}
+      </div>
+    );
   }
 
   return (

@@ -10,11 +10,11 @@ export interface ChatMessage {
   type: MessageType;
   threadId?: string;
   tool_call_id?: string;
-  trace_id?: string
+  trace_id?: string;
   tool_calls?: ToolCall[];
   files?: FileWithPreview[];
-  user_id?: string
-  run_id?: string
+  user_id?: string;
+  run_id?: string;
 }
 export interface MessageWithId {
   id: string;
@@ -27,7 +27,7 @@ export interface MessageWithId {
   user_id: string;
   thread_id: string;
   tool_call_id?: string;
-  tool_calls?: ToolCall[]
+  tool_calls?: ToolCall[];
 }
 export interface ToolCall {
   id: string;
@@ -43,7 +43,7 @@ export interface FunctionCall {
 export type MessageContentPart = [
   MessageContentType,
   TextType | ImageUrlType,
-  object | null
+  object | null,
 ];
 
 export type TextType = string;
@@ -51,11 +51,11 @@ export type ImageUrlType = string;
 
 export enum MessageContentType {
   Text = "Text",
-  ImageUrl = "ImageUrl"
+  ImageUrl = "ImageUrl",
 }
 export enum MessageType {
   SystemMessage = "system",
   AIMessage = "ai",
   HumanMessage = "human",
-  ToolMessage = "tool"
+  ToolMessage = "tool",
 }

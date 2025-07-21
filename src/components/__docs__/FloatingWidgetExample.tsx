@@ -4,9 +4,8 @@ import { Widget, WidgetProps } from "../Widget";
 const FloatingChatWidgetExample: FC<WidgetProps> = ({
   publicId = "445e863b-83a9-4ec9-8041-aa0514239472",
   modelName = "thu_super_assistant",
-  theme = 'light',
+  theme = "light",
   starters = [],
-
 }) => {
   return (
     <div className="flex flex-col p-[20px] h-[90vh]">
