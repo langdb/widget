@@ -53814,7 +53814,7 @@ const DV = ({
   }, [i, g]), /* @__PURE__ */ N.jsxs(
     "div",
     {
-      className: "langdb-chat mx-auto flex flex-1 flex-col lg:max-w-[40rem] xl:max-w-[48rem] w-full h-full",
+      className: "langdb-chat flex flex-1 flex-col w-full h-full",
       children: [
         /* @__PURE__ */ N.jsxs(
           "div",

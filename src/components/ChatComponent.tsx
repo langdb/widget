@@ -621,7 +621,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
   return (
     <div
       key={props.widgetId}
-      className="langdb-chat mx-auto flex flex-1 flex-col lg:max-w-[40rem] xl:max-w-[48rem] w-full h-full"
+      className="langdb-chat flex flex-1 flex-col w-full h-full"
     >
       <div
         {...getRootProps()}
