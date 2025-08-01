@@ -9,6 +9,11 @@ export const CopyToClipboard: React.FC<
   const handleCopy = useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
       event.preventDefault();
+      // Guard browser APIs for SSR
+      if (typeof navigator === 'undefined' || !navigator.clipboard) {
+        console.warn('Clipboard API not available');
+        return;
+      }
       navigator.clipboard.writeText(content);
       setCopied(true);
       setTimeout(() => setCopied(false), 3000);

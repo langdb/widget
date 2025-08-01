@@ -100,6 +100,11 @@ export const SystemMessage: React.FC<SystemMessageProps> = ({
             <button
               onClick={(e) => {
                 e.stopPropagation();
+                // Guard browser APIs for SSR
+                if (typeof navigator === 'undefined' || !navigator.clipboard) {
+                  console.warn('Clipboard API not available');
+                  return;
+                }
                 if (msg.message) {
                   navigator.clipboard
                     .writeText(msg.message)

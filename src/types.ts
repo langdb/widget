@@ -286,6 +286,12 @@ const resizeImage = async (
   file: FileWithPreview,
   options?: ResizeOptions,
 ): Promise<Blob | null> => {
+  // Guard browser APIs for SSR
+  if (typeof document === 'undefined') {
+    console.warn('Canvas API not available on server');
+    return null;
+  }
+  
   const size = options?.maxSize || 256;
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
@@ -300,6 +306,11 @@ const resizeImage = async (
   // Check if the file is an SVG
   if (raw_file.type === "image/svg+xml") {
     const svgText = await raw_file.text();
+    // Guard browser APIs for SSR
+    if (typeof DOMParser === 'undefined') {
+      console.warn('DOMParser not available on server');
+      return null;
+    }
     const parser = new DOMParser();
     const svgDoc = parser.parseFromString(svgText, "image/svg+xml");
     const svgElement = svgDoc.documentElement;
