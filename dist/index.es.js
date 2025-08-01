@@ -393,7 +393,7 @@ async function BY(e) {
   }
 }
 const xm = async (e, t) => {
-  if (typeof document > "u")
+  if (typeof document > "u" || typeof window > "u")
     return console.warn("Canvas API not available on server"), null;
   const n = (t == null ? void 0 : t.maxSize) || 256, r = document.createElement("canvas"), a = r.getContext("2d");
   if (!a) throw new Error("ctx is not available");
@@ -402,13 +402,15 @@ const xm = async (e, t) => {
     return null;
   if (i.type === "image/svg+xml") {
     const p = await i.text();
-    if (typeof DOMParser > "u")
-      return console.warn("DOMParser not available on server"), null;
+    if (typeof DOMParser > "u" || typeof XMLSerializer > "u" || typeof Blob > "u")
+      return console.warn("DOMParser/XMLSerializer/Blob not available on server"), null;
     const b = new DOMParser().parseFromString(p, "image/svg+xml").documentElement;
     b.setAttribute("width", n.toString()), b.setAttribute("height", n.toString());
     const A = new XMLSerializer().serializeToString(b);
     return new Blob([A], { type: "image/svg+xml" });
   }
+  if (typeof createImageBitmap > "u")
+    return console.warn("createImageBitmap not available on server"), null;
   const o = await createImageBitmap(i), { width: s, height: l } = o;
   if (s < n && l < n)
     return i;

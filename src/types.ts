@@ -287,7 +287,7 @@ const resizeImage = async (
   options?: ResizeOptions,
 ): Promise<Blob | null> => {
   // Guard browser APIs for SSR
-  if (typeof document === 'undefined') {
+  if (typeof document === 'undefined' || typeof window === 'undefined') {
     console.warn('Canvas API not available on server');
     return null;
   }
@@ -307,8 +307,8 @@ const resizeImage = async (
   if (raw_file.type === "image/svg+xml") {
     const svgText = await raw_file.text();
     // Guard browser APIs for SSR
-    if (typeof DOMParser === 'undefined') {
-      console.warn('DOMParser not available on server');
+    if (typeof DOMParser === 'undefined' || typeof XMLSerializer === 'undefined' || typeof Blob === 'undefined') {
+      console.warn('DOMParser/XMLSerializer/Blob not available on server');
       return null;
     }
     const parser = new DOMParser();
@@ -322,6 +322,12 @@ const resizeImage = async (
     const serializer = new XMLSerializer();
     const resizedSvgText = serializer.serializeToString(svgElement);
     return new Blob([resizedSvgText], { type: "image/svg+xml" });
+  }
+
+  // Guard createImageBitmap for SSR
+  if (typeof createImageBitmap === 'undefined') {
+    console.warn('createImageBitmap not available on server');
+    return null;
   }
 
   const bitmap = await createImageBitmap(raw_file);
