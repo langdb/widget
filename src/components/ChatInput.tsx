@@ -146,6 +146,12 @@ export const ChatInput: React.FC<{
   });
 
   const startListening = useCallback(() => {
+    // Guard browser APIs for SSR
+    if (typeof window === 'undefined') {
+      setError("Speech recognition is not available on server.");
+      return;
+    }
+    
     if (
       !("webkitSpeechRecognition" in window || "SpeechRecognition" in window)
     ) {

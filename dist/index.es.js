@@ -393,13 +393,18 @@ async function BY(e) {
   }
 }
 const xm = async (e, t) => {
+  if (typeof document > "u")
+    return console.warn("Canvas API not available on server"), null;
   const n = (t == null ? void 0 : t.maxSize) || 256, r = document.createElement("canvas"), a = r.getContext("2d");
   if (!a) throw new Error("ctx is not available");
   const i = e.raw_file;
   if (!(i instanceof Blob))
     return null;
   if (i.type === "image/svg+xml") {
-    const p = await i.text(), b = new DOMParser().parseFromString(p, "image/svg+xml").documentElement;
+    const p = await i.text();
+    if (typeof DOMParser > "u")
+      return console.warn("DOMParser not available on server"), null;
+    const b = new DOMParser().parseFromString(p, "image/svg+xml").documentElement;
     b.setAttribute("width", n.toString()), b.setAttribute("height", n.toString());
     const A = new XMLSerializer().serializeToString(b);
     return new Blob([A], { type: "image/svg+xml" });
@@ -40895,7 +40900,11 @@ function J7({
 const eH = /* @__PURE__ */ K.forwardRef(J7), tH = ({ content: e, className: t, ...n }) => {
   const [r, a] = ht(!1), i = dt(
     (o) => {
-      o.preventDefault(), navigator.clipboard.writeText(e), a(!0), setTimeout(() => a(!1), 3e3);
+      if (o.preventDefault(), typeof navigator > "u" || !navigator.clipboard) {
+        console.warn("Clipboard API not available");
+        return;
+      }
+      navigator.clipboard.writeText(e), a(!0), setTimeout(() => a(!1), 3e3);
     },
     [e]
   );
@@ -48883,7 +48892,11 @@ const Wo = (e) => {
             "button",
             {
               onClick: (h) => {
-                if (h.stopPropagation(), e.message)
+                if (h.stopPropagation(), typeof navigator > "u" || !navigator.clipboard) {
+                  console.warn("Clipboard API not available");
+                  return;
+                }
+                if (e.message)
                   navigator.clipboard.writeText(e.message).then(() => {
                     i(!0), setTimeout(() => i(!1), 2e3);
                   }).catch((b) => console.error("Failed to copy:", b));
@@ -48951,7 +48964,11 @@ const Wo = (e) => {
             "button",
             {
               onClick: (h) => {
-                h.stopPropagation(), n && navigator.clipboard.writeText(n).then(() => {
+                if (h.stopPropagation(), typeof navigator > "u" || !navigator.clipboard) {
+                  console.warn("Clipboard API not available");
+                  return;
+                }
+                n && navigator.clipboard.writeText(n).then(() => {
                   i(!0), setTimeout(() => i(!1), 2e3);
                 }).catch((b) => console.error("Failed to copy:", b));
               },
@@ -49084,7 +49101,11 @@ const lt = dq(), pq = ({ msg: e, persona: t, widgetProps: n, isTyping: r }) => {
               "button",
               {
                 onClick: (_) => {
-                  _.stopPropagation(), e != null && e.message && navigator.clipboard.writeText(e.message).then(() => {
+                  if (_.stopPropagation(), typeof navigator > "u" || !navigator.clipboard) {
+                    console.warn("Clipboard API not available");
+                    return;
+                  }
+                  e != null && e.message && navigator.clipboard.writeText(e.message).then(() => {
                     d(!0), setTimeout(() => d(!1), 2e3);
                   }).catch((A) => console.error("Failed to copy:", A));
                 },
@@ -49106,6 +49127,10 @@ const lt = dq(), pq = ({ msg: e, persona: t, widgetProps: n, isTyping: r }) => {
             /* @__PURE__ */ N.jsx("div", { className: "divide-y divide-neutral-700", children: e.tool_calls.map((_, A) => {
               if (_.function) {
                 const x = _.function, g = _.function.name.replace(/([A-Z])/g, " $1").replace(/_/g, " ").trim().replace(/^./, (R) => R.toUpperCase()), E = () => {
+                  if (typeof navigator > "u" || !navigator.clipboard) {
+                    console.warn("Clipboard API not available");
+                    return;
+                  }
                   _.function && navigator.clipboard.writeText(JSON.stringify(_.function, null, 2)).then(() => {
                     f((R) => ({
                       ...R,
@@ -52246,6 +52271,10 @@ const aw = (e) => new Promise((t, n) => {
       "audio/*": []
     }
   }), g = dt(() => {
+    if (typeof window > "u") {
+      c("Speech recognition is not available on server.");
+      return;
+    }
     if (!("webkitSpeechRecognition" in window || "SpeechRecognition" in window)) {
       c("Speech recognition is not supported in this browser.");
       return;
@@ -53407,7 +53436,11 @@ const KV = ({
           "button",
           {
             onClick: (f) => {
-              f.stopPropagation(), e.message && navigator.clipboard.writeText(e.message).then(() => {
+              if (f.stopPropagation(), typeof navigator > "u" || !navigator.clipboard) {
+                console.warn("Clipboard API not available");
+                return;
+              }
+              e.message && navigator.clipboard.writeText(e.message).then(() => {
                 o(!0), setTimeout(() => o(!1), 2e3);
               }).catch((h) => console.error("Failed to copy:", h));
             },

@@ -147,6 +147,11 @@ export const AiMessage: React.FC<{
             <button
               onClick={(e) => {
                 e.stopPropagation();
+                // Guard browser APIs for SSR
+                if (typeof navigator === 'undefined' || !navigator.clipboard) {
+                  console.warn('Clipboard API not available');
+                  return;
+                }
                 if (msg?.message) {
                   navigator.clipboard
                     .writeText(msg.message)
@@ -193,6 +198,11 @@ export const AiMessage: React.FC<{
 
                   // Handle copy function
                   const handleCopyToolCall = () => {
+                    // Guard browser APIs for SSR
+                    if (typeof navigator === 'undefined' || !navigator.clipboard) {
+                      console.warn('Clipboard API not available');
+                      return;
+                    }
                     if (tool_call.function) {
                       navigator.clipboard
                         .writeText(JSON.stringify(tool_call.function, null, 2))

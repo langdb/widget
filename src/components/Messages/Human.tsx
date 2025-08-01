@@ -59,6 +59,11 @@ export const HumanMessage: React.FC<{
               <button
                 onClick={(e) => {
                   e.stopPropagation();
+                  // Guard browser APIs for SSR
+                  if (typeof navigator === 'undefined' || !navigator.clipboard) {
+                    console.warn('Clipboard API not available');
+                    return;
+                  }
                   if (msg.message) {
                     navigator.clipboard
                       .writeText(msg.message)
@@ -176,6 +181,11 @@ export const HumanMessage: React.FC<{
             <button
               onClick={(e) => {
                 e.stopPropagation();
+                // Guard browser APIs for SSR
+                if (typeof navigator === 'undefined' || !navigator.clipboard) {
+                  console.warn('Clipboard API not available');
+                  return;
+                }
                 if (message) {
                   navigator.clipboard
                     .writeText(message)
