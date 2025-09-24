@@ -664,6 +664,32 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
                 />
               );
             })}
+          {typing &&
+            (messages.length === 0 ||
+              messages[messages.length - 1].type !== MessageType.AIMessage) && (
+              <article
+                className={`flex mb-4 group justify-start items-start transition-all duration-200 ease-in-out`}
+                role="status"
+                aria-label="Assistant is thinking"
+              >
+                <div className="max-w-[85%] sm:max-w-[75%] text-sm order-2">
+                  <div className="inline-flex items-center gap-2 px-1 py-1">
+                    <div className="flex items-center gap-1" aria-hidden>
+                      <span className="inline-block h-2 w-2 rounded-full bg-neutral-400 animate-bounce" />
+                      <span
+                        className="inline-block h-2 w-2 rounded-full bg-neutral-500 animate-bounce"
+                        style={{ animationDelay: "150ms" }}
+                      />
+                      <span
+                        className="inline-block h-2 w-2 rounded-full bg-neutral-600 animate-bounce"
+                        style={{ animationDelay: "300ms" }}
+                      />
+                    </div>
+                    <span className="text-sm text-neutral-400">Thinking…</span>
+                  </div>
+                </div>
+              </article>
+            )}
           <div ref={messagesEndRef} className="h-1" />
           {!inViewport && (
             <div className="sticky bottom-4 w-full flex justify-center mt-2 mb-2">

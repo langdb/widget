@@ -149,8 +149,8 @@ export const AiMessage: React.FC<{
               onClick={(e) => {
                 e.stopPropagation();
                 // Guard browser APIs for SSR
-                if (typeof navigator === 'undefined' || !navigator.clipboard) {
-                  console.warn('Clipboard API not available');
+                if (typeof navigator === "undefined" || !navigator.clipboard) {
+                  console.warn("Clipboard API not available");
                   return;
                 }
                 if (msg?.message) {
@@ -200,8 +200,8 @@ export const AiMessage: React.FC<{
                   // Handle copy function
                   const handleCopyToolCall = () => {
                     // Guard browser APIs for SSR
-                    if (typeof navigator === 'undefined' || !navigator.clipboard) {
-                      console.warn('Clipboard API not available');
+                    if (typeof navigator === "undefined" || !navigator.clipboard) {
+                      console.warn("Clipboard API not available");
                       return;
                     }
                     if (tool_call.function) {
@@ -339,7 +339,7 @@ export const AiMessage: React.FC<{
         {isTyping && (
           <div className="rounded-md p-2 flex items-center gap-2 animate-pulse mt-2">
             <PencilIcon className="h-4 w-4 text-white animate-pulse" />
-            <span className="text-sm">Typing...</span>
+            <span className="text-sm">Thinking...</span>
           </div>
         )}
       </div>
