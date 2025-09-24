@@ -128,7 +128,7 @@ const useMessageSubmission = (
         }
       }
     },
-    [props, setMessageId, setThreadId],
+    [props],
   );
 
   const handleMessage = useCallback(
@@ -172,6 +172,7 @@ const useMessageSubmission = (
                   message: event.choices
                     .map((choice) => choice.delta.content)
                     .join(""),
+                  model_name: event.model,
                   type: MessageType.AIMessage,
                   content_type: MessageContentType.Text,
                   threadId: currentThreadId,
@@ -209,18 +210,11 @@ const useMessageSubmission = (
             return [...prevMessages.slice(0, -1), updatedLastMessage];
           });
         }
-      } catch (error) {}
+      } catch (error) {
+        console.error("Error processing event:", error);
+      }
     },
-    [
-      props,
-      setTyping,
-      setError,
-      setMessageId,
-      setThreadId,
-      appendUsage,
-      messageId,
-      setMessages,
-    ],
+    [props, setTyping, setError, appendUsage, setMessages],
   );
   const { messagesEndRef, scrollToBottom } = useScrollToBottom();
 
@@ -407,20 +401,21 @@ const useMessageSubmission = (
       }
     },
     [
-      props,
       threadId,
-      traceId,
-      setTraceId,
       setMessages,
       setCurrentInput,
       setTyping,
       setError,
-      setMessageId,
-      setThreadId,
-      messageId,
-      messages,
-      messagesEndRef,
       scrollToBottom,
+      props,
+      messageId,
+      traceId,
+      messages,
+      handleOpen,
+      setThreadId,
+      setMessageId,
+      setTraceId,
+      handleMessage,
     ],
   );
 
@@ -546,7 +541,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
     return () => {
       emitter.off("langdb_chatTerminate", handleTerminate);
     };
-  }, [terminateChat, setError, threadId]);
+  }, [terminateChat, setError, threadId, props.widgetId]);
 
   useEffect(() => {
     const handleClearChat = (input: {
@@ -657,7 +652,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
             )
             .map((msg: ChatMessage) => {
               const isLastMessage = msg.id === messages[messages.length - 1].id;
-
+              console.log("===== msg ====", msg);
               return (
                 <MessageRenderer
                   key={msg.id}

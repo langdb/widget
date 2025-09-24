@@ -47,8 +47,7 @@ export const AiMessage: React.FC<{
   }>({});
   const handleScore = useCallback(
     async (score: number) => {
-      let scoreRequest;
-      scoreRequest = {
+      const scoreRequest = {
         thread_id: threadId,
         message_id: id,
         score: score,
@@ -120,7 +119,9 @@ export const AiMessage: React.FC<{
                 )}
               </TooltipTrigger>
               <TooltipContent>
-                <p>AI Message</p>
+                <p>
+                  {msg?.model_name ? `Model: ${msg.model_name}` : "AI Message"}
+                </p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>

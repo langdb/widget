@@ -1,0 +1,308 @@
+[14:19:05.578] [INFO] Storybook Upgrade - v9.1.8
+[14:19:05.587] [INFO] detect-projects-spinner-start: Detecting projects...
+[14:19:05.589] [DEBUG] Finding Storybook projects...
+[14:19:05.695] [DEBUG] Found 1 Storybook projects
+[14:19:05.696] [INFO] detect-projects-spinner: Detecting projects: 1 projects
+[14:19:05.696] [DEBUG] Getting Storybook data...
+[14:19:05.696] [DEBUG] Getting Storybook info...
+[14:19:05.696] [DEBUG] Loading main config...
+[14:19:05.725] [DEBUG] Getting stories paths...
+[14:19:05.739] [DEBUG] Getting package manager...
+[14:19:06.118] [DEBUG] Getting Storybook version...
+[14:19:06.119] [DEBUG] /.storybook - Validating before version... 8.6.14
+[14:19:06.119] [DEBUG] /.storybook - Validating upgrade compatibility...
+[14:19:06.119] [DEBUG] /.storybook - Fetching NPM version information...
+[14:19:06.119] [DEBUG] Getting CLI versions from NPM for storybook...
+[14:19:06.121] [DEBUG] Getting CLI versions from NPM for storybook@next...
+[14:19:06.819] [DEBUG] /.storybook - Evaluating blockers...
+[14:19:06.820] [DEBUG] Getting installed version for @storybook/experimental-addon-test...
+[14:19:07.057] [INFO] detect-projects-spinner-stop: 1 project detected
+[14:19:07.057] [DEBUG] Found 1 valid projects and 0 error projects
+[14:19:07.058] [INFO] Upgrading from 8.6.14 to 9.1.8
+[14:19:07.065] [INFO] upgrade-dependencies-task-start: Fetching versions to update package.json files..
+[14:19:07.065] [DEBUG] Updating dependencies in /.storybook...
+[14:19:07.070] [INFO] upgrade-dependencies-task: /package.json
+[14:19:07.071] [DEBUG] Getting CLI versions from NPM for @chromatic-com/storybook...
+[14:19:07.598] [DEBUG] {
+  "upgradedDependencies": []
+}
+[14:19:07.598] [DEBUG] {
+  "upgradedDevDependencies": [
+    "@storybook/addon-links@^9.1.8",
+    "@storybook/addon-onboarding@^9.1.8",
+    "@storybook/addon-themes@^9.1.8",
+    "@storybook/react@^9.1.8",
+    "@storybook/react-vite@^9.1.8",
+    "eslint-plugin-storybook@^9.1.8",
+    "storybook@^9.1.8",
+    "@chromatic-com/storybook@^4.1.1"
+  ]
+}
+[14:19:07.599] [DEBUG] {
+  "upgradedPeerDependencies": []
+}
+[14:19:07.599] [DEBUG] Getting CLI versions from NPM for @storybook/addon-links...
+[14:19:08.318] [DEBUG] Getting CLI versions from NPM for @storybook/addon-onboarding...
+[14:19:08.922] [DEBUG] Getting CLI versions from NPM for @storybook/addon-themes...
+[14:19:10.874] [DEBUG] Getting CLI versions from NPM for @storybook/react...
+[14:19:11.597] [DEBUG] Getting CLI versions from NPM for @storybook/react-vite...
+[14:19:12.237] [DEBUG] Getting CLI versions from NPM for eslint-plugin-storybook...
+[14:19:12.763] [DEBUG] Using cached version for storybook...
+[14:19:12.763] [DEBUG] Using cached version for @chromatic-com/storybook...
+[14:19:12.763] [INFO] upgrade-dependencies-task-success: Updated package versions in package.json files
+[14:19:12.764] [INFO] detect-automigrations-task-start: Detecting automigrations...
+[14:19:12.764] [DEBUG] Starting automigration collection across 1 projects and 15 fixes...
+[14:19:12.771] [INFO] detect-automigrations-task: Checking automigrations for /.storybook...
+[14:19:12.771] [DEBUG] Processing project: /.storybook
+[14:19:12.771] [DEBUG] Checking fix eslintPlugin for project /.storybook...
+[14:19:12.773] [DEBUG] Checking fix addon-mdx-gfm-remove for project /.storybook...
+[14:19:12.773] [DEBUG] Checking fix addon-storysource-code-panel for project /.storybook...
+[14:19:12.773] [DEBUG] Checking fix upgrade-storybook-related-dependencies for project /.storybook...
+[14:19:12.773] [DEBUG] Checking for incompatible storybook packages...
+[14:19:12.777] [DEBUG] Getting installed version for @storybook/addon-essentials...
+[14:19:12.777] [DEBUG] Getting installed version for @storybook/addon-interactions...
+[14:19:12.778] [DEBUG] Getting installed version for @storybook/addon-styling-webpack...
+[14:19:12.778] [DEBUG] Getting installed version for @storybook/blocks...
+[14:19:12.778] [DEBUG] Getting installed version for @storybook/manager-api...
+[14:19:12.778] [DEBUG] Getting installed version for @storybook/test...
+[14:19:12.779] [DEBUG] Getting installed version for @storybook/theming...
+[14:19:12.779] [DEBUG] Getting installed version for @chromatic-com/storybook...
+[14:19:13.161] [DEBUG] Getting CLI versions from NPM for @storybook/addon-styling-webpack...
+[14:19:13.166] [DEBUG] Getting CLI versions from NPM for @storybook/addon-essentials...
+[14:19:13.176] [DEBUG] Getting CLI versions from NPM for @storybook/theming...
+[14:19:13.176] [DEBUG] Getting CLI versions from NPM for @storybook/manager-api...
+[14:19:13.192] [DEBUG] Getting CLI versions from NPM for @storybook/blocks...
+[14:19:13.215] [DEBUG] Getting CLI versions from NPM for @storybook/addon-interactions...
+[14:19:13.230] [DEBUG] Getting CLI versions from NPM for @storybook/test...
+[14:19:13.234] [DEBUG] Using cached version for @chromatic-com/storybook...
+[14:19:15.109] [DEBUG] Checking fix initial-globals for project /.storybook...
+[14:19:15.121] [DEBUG] Checking fix addon-a11y-addon-test for project /.storybook...
+[14:19:15.121] [DEBUG] Checking fix consolidated-imports for project /.storybook...
+[14:19:15.121] [DEBUG] Checking fix addon-experimental-test for project /.storybook...
+[14:19:15.121] [DEBUG] Using cached installed version for @storybook/experimental-addon-test...
+[14:19:15.121] [DEBUG] Checking fix rnstorybook-config for project /.storybook...
+[14:19:15.122] [DEBUG] Checking fix remove-addon-interactions for project /.storybook...
+[14:19:15.122] [DEBUG] Checking fix renderer-to-framework for project /.storybook...
+[14:19:15.122] [DEBUG] Checking fix remove-essential-addons for project /.storybook...
+[14:19:15.122] [DEBUG] Checking fix addon-a11y-parameters for project /.storybook...
+[14:19:15.122] [DEBUG] Checking fix remove-docs-autodocs for project /.storybook...
+[14:19:15.125] [DEBUG] Checking fix wrap-require for project /.storybook...
+[14:19:15.135] [INFO] detect-automigrations-task: 
+Automigrations detected:
+[14:19:15.142] [INFO] detect-automigrations-task: ✔ upgrade-storybook-related-dependencies
+[14:19:15.149] [INFO] detect-automigrations-task: ✔ consolidated-imports
+[14:19:15.156] [INFO] detect-automigrations-task: ✔ remove-addon-interactions
+[14:19:15.163] [INFO] detect-automigrations-task: ✔ renderer-to-framework
+[14:19:15.169] [INFO] detect-automigrations-task: ✔ remove-essential-addons
+[14:19:15.169] [INFO] detect-automigrations-task-success: 5 automigration(s) detected
+[14:19:47.285] [PROMPT] Select automigrations to run {"choice":["consolidated-imports","remove-addon-interactions","renderer-to-framework","remove-essential-addons"]}
+[14:19:47.286] [INFO] automigrate-/.storybook-task-start: Running automigrations for /.storybook
+[14:19:47.309] [INFO] automigrate-/.storybook-task: ✔ consolidated-imports
+[14:19:47.312] [DEBUG] Uninstalling @storybook/addon-interactions
+[14:19:47.312] [DEBUG] Removing '@storybook/addon-interactions' from main.js addons field.
+[14:19:47.327] [INFO] automigrate-/.storybook-task: ✔ remove-addon-interactions
+[14:19:47.327] [DEBUG] 
+Migrating @storybook/react to @storybook/react-vite
+[14:19:47.328] [DEBUG] Updating package.json files...
+[14:19:47.336] [INFO] automigrate-/.storybook-task: ✔ renderer-to-framework
+[14:19:47.337] [DEBUG] Uninstalling @storybook/addon-essentials
+[14:19:47.337] [DEBUG] Removing '@storybook/addon-essentials' from main.js addons field.
+[14:19:47.339] [DEBUG] Getting Storybook info...
+[14:19:47.340] [DEBUG] Loading main config...
+[14:19:47.342] [DEBUG] Getting stories paths...
+[14:19:47.342] [DEBUG] Getting package manager...
+[14:19:47.345] [DEBUG] Getting Storybook version...
+[14:19:47.353] [INFO] automigrate-/.storybook-task: Verifying @storybook/addon-docs
+[14:19:47.360] [INFO] automigrate-/.storybook-task: Installing @storybook/addon-docs@^9.1.8
+[14:19:47.361] [DEBUG] Getting CLI versions from NPM for @storybook/addon-docs...
+[14:19:48.190] [INFO] automigrate-/.storybook-task: Adding '@storybook/addon-docs' to the "addons" field in
+/Users/anhthuduong/Documents/GitHub/widget/.storybook/main.ts
+[14:19:48.199] [INFO] automigrate-/.storybook-task: ✔ remove-essential-addons
+[14:19:48.200] [INFO] automigrate-/.storybook-task-success: Completed automigrations for /.storybook
+[14:19:48.200] [INFO] Installing dependencies...
+[14:19:48.200] [INFO] install-dependencies-task-start: Installing dependencies...
+[14:19:48.491] [INFO] Progress: resolved 0, reused 1, downloaded 0, added 0
+[14:19:48.499] [INFO] install-dependencies-task: Progress: resolved 0, reused 1, downloaded 0, added 0
+[14:19:48.499] [INFO] WARN  deprecated @types/react-dropzone@5.1.0: This is a stub types definition. react-dropzone provides its own type definitions, so you do not need this installed.
+[14:19:48.508] [INFO] install-dependencies-task: WARN  deprecated @types/react-dropzone@5.1.0: This is a stub types definition.
+react-dropzone provides its own type definitions, so you do not need this
+installed.
+[14:19:48.537] [INFO] WARN  deprecated react-tailwindcss-datepicker@1.7.4: This version is only compatible with react 19 and not retro compatible with earlier versions. Please use a more recent version. I.e. from 2.x onwards. But if you use react 18 on your project, please install version 1.7.3: npm install react-tailwindcss-datepicker@1.7.3
+[14:19:48.545] [INFO] install-dependencies-task: WARN  deprecated react-tailwindcss-datepicker@1.7.4: This version is only
+compatible with react 19 and not retro compatible with earlier versions. Please
+use a more recent version. I.e. from 2.x onwards. But if you use react 18 on
+your project, please install version 1.7.3: npm install
+react-tailwindcss-datepicker@1.7.3
+[14:19:48.562] [INFO] WARN  deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+[14:19:48.571] [INFO] install-dependencies-task: WARN  deprecated eslint@8.57.1: This version is no longer supported. Please see
+https://eslint.org/version-support for other options.
+[14:19:48.726] [INFO] ╭──────────────────────────────────────────╮
+   │                                          │
+   │   Update available! 10.11.0 → 10.17.1.   │
+   │   Changelog: https://pnpm.io/v/10.17.1   │
+   │     To update, run: pnpm self-update     │
+   │                                          │
+   ╰──────────────────────────────────────────╯
+[14:19:48.734] [INFO] install-dependencies-task: ╭──────────────────────────────────────────╮
+│                                          │
+│   Update available! 10.11.0 → 10.17.1.   │
+│   Changelog: https://pnpm.io/v/10.17.1   │
+│     To update, run: pnpm self-update     │
+│                                          │
+╰──────────────────────────────────────────╯
+[14:19:49.492] [INFO] Progress: resolved 59, reused 55, downloaded 3, added 0
+[14:19:49.500] [INFO] install-dependencies-task: Progress: resolved 59, reused 55, downloaded 3, added 0
+[14:19:50.493] [INFO] Progress: resolved 675, reused 660, downloaded 8, added 0
+[14:19:50.500] [INFO] install-dependencies-task: Progress: resolved 675, reused 660, downloaded 8, added 0
+[14:19:51.493] [INFO] Progress: resolved 793, reused 706, downloaded 20, added 0
+[14:19:51.503] [INFO] install-dependencies-task: Progress: resolved 793, reused 706, downloaded 20, added 0
+[14:19:52.494] [INFO] Progress: resolved 830, reused 735, downloaded 29, added 0
+[14:19:52.511] [INFO] install-dependencies-task: Progress: resolved 830, reused 735, downloaded 29, added 0
+[14:19:53.507] [INFO] Progress: resolved 912, reused 816, downloaded 29, added 0
+[14:19:53.515] [INFO] install-dependencies-task: Progress: resolved 912, reused 816, downloaded 29, added 0
+[14:19:54.364] [INFO] WARN  7 deprecated subdependencies found: @humanwhocodes/config-array@0.13.0, @humanwhocodes/object-schema@2.0.3, glob@7.2.3, inflight@1.0.6, lodash.get@4.4.2, lodash.isequal@4.5.0, rimraf@3.0.2
+[14:19:54.373] [INFO] install-dependencies-task: WARN  7 deprecated subdependencies found: @humanwhocodes/config-array@0.13.0,
+@humanwhocodes/object-schema@2.0.3, glob@7.2.3, inflight@1.0.6,
+lodash.get@4.4.2, lodash.isequal@4.5.0, rimraf@3.0.2
+[14:19:54.507] [INFO] Progress: resolved 929, reused 834, downloaded 29, added 0
+[14:19:54.515] [INFO] install-dependencies-task: Progress: resolved 929, reused 834, downloaded 29, added 0
+[14:19:54.544] [INFO] Packages: +36 -1
+++++++++++++++++++++++++++++++++++++-
+[14:19:54.551] [INFO] install-dependencies-task: Packages: +36 -1
+++++++++++++++++++++++++++++++++++++-
+[14:19:54.648] [INFO] Progress: resolved 929, reused 834, downloaded 29, added 36, done
+[14:19:54.655] [INFO] install-dependencies-task: Progress: resolved 929, reused 834, downloaded 29, added 36, done
+[14:19:54.838] [INFO] WARN  Issues with peer dependencies found
+.
+├─┬ @storybook/addon-styling-webpack 1.0.1
+│ └─┬ @storybook/node-logger 8.6.14
+│   └── ✕ unmet peer storybook@"^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0": found 9.1.8
+├─┬ @ai-sdk/react 0.0.10
+│ └─┬ swr 2.2.0
+│   └── ✕ unmet peer react@"^16.11.0 || ^17.0.0 || ^18.0.0": found 19.1.1
+├─┬ @nlux/react 2.17.1
+│ ├── ✕ unmet peer react@^18: found 19.1.1
+│ └── ✕ unmet peer react-dom@^18: found 19.1.1
+└─┬ react-json-view 1.21.3
+  ├── ✕ unmet peer react@"^17.0.0 || ^16.3.0 || ^15.5.4": found 19.1.1
+  ├── ✕ unmet peer react-dom@"^17.0.0 || ^16.3.0 || ^15.5.4": found 19.1.1
+  └─┬ flux 4.0.4
+    └── ✕ unmet peer react@"^15.0.2 || ^16.0.0 || ^17.0.0": found 19.1.1
+[14:19:54.847] [INFO] install-dependencies-task: WARN  Issues with peer dependencies found
+.
+├─┬ @storybook/addon-styling-webpack 1.0.1
+│ └─┬ @storybook/node-logger 8.6.14
+│   └── ✕ unmet peer storybook@"^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 ||
+^8.6.0-0": found 9.1.8
+├─┬ @ai-sdk/react 0.0.10
+│ └─┬ swr 2.2.0
+│   └── ✕ unmet peer react@"^16.11.0 || ^17.0.0 || ^18.0.0": found 19.1.1
+├─┬ @nlux/react 2.17.1
+│ ├── ✕ unmet peer react@^18: found 19.1.1
+│ └── ✕ unmet peer react-dom@^18: found 19.1.1
+└─┬ react-json-view 1.21.3
+├── ✕ unmet peer react@"^17.0.0 || ^16.3.0 || ^15.5.4": found 19.1.1
+├── ✕ unmet peer react-dom@"^17.0.0 || ^16.3.0 || ^15.5.4": found 19.1.1
+└─┬ flux 4.0.4
+└── ✕ unmet peer react@"^15.0.2 || ^16.0.0 || ^17.0.0": found 19.1.1
+[14:19:54.847] [INFO] devDependencies:
+- @chromatic-com/storybook 3.2.7
++ @chromatic-com/storybook 4.1.1
++ @storybook/addon-docs 9.1.8
+- @storybook/addon-essentials 8.6.14
+- @storybook/addon-interactions 8.6.14
+- @storybook/addon-links 8.6.14
++ @storybook/addon-links 9.1.8
+- @storybook/addon-onboarding 8.6.14
++ @storybook/addon-onboarding 9.1.8
+- @storybook/addon-themes 8.6.14
++ @storybook/addon-themes 9.1.8
+- @storybook/blocks 8.6.14
+- @storybook/manager-api 8.6.14
+- @storybook/react 8.6.14
+- @storybook/react-vite 8.6.14
++ @storybook/react-vite 9.1.8
+- @storybook/test 8.6.14
+- @storybook/theming 8.6.14
+- eslint-plugin-storybook 0.11.6
++ eslint-plugin-storybook 9.1.8
+- storybook 8.6.14
++ storybook 9.1.8
+
+╭ Warning ─────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│   Ignored build scripts: esbuild.                                            │
+│   Run "pnpm approve-builds" to pick which dependencies should be allowed     │
+│   to run scripts.                                                            │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+[14:19:54.855] [INFO] install-dependencies-task: devDependencies:
+- @chromatic-com/storybook 3.2.7
++ @chromatic-com/storybook 4.1.1
++ @storybook/addon-docs 9.1.8
+- @storybook/addon-essentials 8.6.14
+- @storybook/addon-interactions 8.6.14
+- @storybook/addon-links 8.6.14
++ @storybook/addon-links 9.1.8
+- @storybook/addon-onboarding 8.6.14
++ @storybook/addon-onboarding 9.1.8
+- @storybook/addon-themes 8.6.14
++ @storybook/addon-themes 9.1.8
+- @storybook/blocks 8.6.14
+- @storybook/manager-api 8.6.14
+- @storybook/react 8.6.14
+- @storybook/react-vite 8.6.14
++ @storybook/react-vite 9.1.8
+- @storybook/test 8.6.14
+- @storybook/theming 8.6.14
+- eslint-plugin-storybook 0.11.6
++ eslint-plugin-storybook 9.1.8
+- storybook 8.6.14
++ storybook 9.1.8
+
+╭ Warning ─────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│   Ignored build scripts: esbuild.                                            │
+│   Run "pnpm approve-builds" to pick which dependencies should be allowed     │
+│   to run scripts.                                                            │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+[14:19:54.855] [INFO] Done in 6.6s using pnpm v10.11.0
+[14:19:54.861] [INFO] install-dependencies-task: Done in 6.6s using pnpm v10.11.0
+[14:19:54.867] [INFO] Dependencies installed
+[14:19:54.867] [INFO] install-dependencies-task-success: Dependencies installed
+[14:19:54.868] [INFO] Checking the health of your project(s)..
+[14:19:55.100] [WARN] /.storybook: 1 issue found
+[14:19:55.107] [INFO] You are currently using Storybook 9.1.8 but you have packages which are incompatible with it:
+
+- @storybook/addon-styling-webpack@1.0.1 which depends on ^8.0.0-alpha.10
+
+Please consider updating your packages or contacting the maintainers for compatibility details.
+
+For more on Storybook 9 compatibility, see the linked GitHub issue:
+https://github.com/storybookjs/storybook/issues/30944
+[14:19:55.107] [INFO] Incompatible Packages
+[14:19:55.112] [INFO] You are currently using Storybook 9.1.8 but you have packages which are incompatible with it:
+
+- @storybook/addon-styling-webpack@1.0.1 which depends on ^8.0.0-alpha.10
+
+Please consider updating your packages or contacting the maintainers for compatibility details.
+
+For more on Storybook 9 compatibility, see the linked GitHub issue:
+https://github.com/storybookjs/storybook/issues/30944
+[14:19:55.117] [INFO] Storybook doctor is complete!
+[14:19:55.124] [INFO] You can always recheck the health of your project(s) by running:
+npx storybook doctor
+[14:19:55.130] [INFO] The upgrade is complete!
+[14:19:55.136] [INFO] Your project(s) have been upgraded successfully, but some issues were found which need your attention, please check Storybook doctor logs above.
+[14:19:55.166] [INFO] If you want to learn more about the automigrations that executed in your project(s), please check the following links:
+
+• consolidated-imports
+• remove-addon-interactions
+• renderer-to-framework
+• remove-essential-addons
+[14:19:55.171] [INFO] For a full list of changes, please check our migration guide: https://storybook.js.org/docs/migration-guide?ref=upgrade
+[14:19:55.178] [INFO] Attention: Storybook now collects completely anonymous telemetry regarding usage. This information is used to shape Storybook's roadmap and prioritize features.
+[14:19:55.183] [INFO] You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+[14:19:55.189] [INFO] https://storybook.js.org/telemetry
+[14:19:55.195] [INFO] 

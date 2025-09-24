@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import FloatingChatWidgetExample from "./FloatingWidgetExample";
 const meta: Meta<typeof FloatingChatWidgetExample> = {
   title: "FloatingChatWidget",
