@@ -8,7 +8,6 @@ type Events = {
     };
     langdb_refreshMessage: {
         threadId: string;
-        widgetId: string;
     };
     langdb_chatWindow: {
         widgetId: string;

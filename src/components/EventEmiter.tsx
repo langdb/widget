@@ -4,7 +4,7 @@ import { ModelUsage } from "../events";
 
 type Events = {
   langdb_chatTerminate: { threadId: string; widgetId: string };
-  langdb_refreshMessage: { threadId: string; widgetId: string };
+  langdb_refreshMessage: { threadId: string };
   langdb_chatWindow: {
     widgetId: string;
     state: "Processing" | "SubmitStart" | "SubmitEnd" | "SubmitError";
