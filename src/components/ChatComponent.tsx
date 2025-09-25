@@ -644,25 +644,19 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
             />
           ))}
         <div className="langdb-message-render flex-1 overflow-auto">
-          {messages
-            .filter(
-              (m) =>
-                m.type === MessageType.HumanMessage ||
-                m.type !== MessageType.ToolMessage,
-            )
-            .map((msg: ChatMessage) => {
-              const isLastMessage = msg.id === messages[messages.length - 1].id;
-              return (
-                <MessageRenderer
-                  key={msg.id}
-                  message={msg}
-                  personaOptions={personaOptions}
-                  widgetProps={props}
-                  isLastMessage={isLastMessage}
-                  isTyping={typing && isLastMessage}
-                />
-              );
-            })}
+          {messages.map((msg: ChatMessage) => {
+            const isLastMessage = msg.id === messages[messages.length - 1].id;
+            return (
+              <MessageRenderer
+                key={msg.id}
+                message={msg}
+                personaOptions={personaOptions}
+                widgetProps={props}
+                isLastMessage={isLastMessage}
+                isTyping={typing && isLastMessage}
+              />
+            );
+          })}
           {typing &&
             (messages.length === 0 ||
               messages[messages.length - 1].type !== MessageType.AIMessage) && (

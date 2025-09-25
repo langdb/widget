@@ -135,7 +135,9 @@ export const AiMessage: React.FC<{
                 ? "Assistant"
                 : msg?.type === "human"
                   ? "You"
-                  : "System"}
+                  : msg?.type === "tool"
+                    ? "Tool"
+                    : "System"}
             </span>
             {msg?.created_at && (
               <div className="flex items-center text-xs text-neutral-500 ml-2">
