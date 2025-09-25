@@ -45,6 +45,7 @@ export const AiMessage: React.FC<{
   const [toolCopiedStates, setToolCopiedStates] = useState<{
     [key: string]: boolean;
   }>({});
+
   const handleScore = useCallback(
     async (score: number) => {
       const scoreRequest = {
@@ -136,7 +137,7 @@ export const AiMessage: React.FC<{
                 : msg?.type === "human"
                   ? "You"
                   : msg?.type === "tool"
-                    ? "Tool"
+                    ? "Tool Response"
                     : "System"}
             </span>
             {msg?.created_at && (
@@ -202,7 +203,10 @@ export const AiMessage: React.FC<{
                   // Handle copy function
                   const handleCopyToolCall = () => {
                     // Guard browser APIs for SSR
-                    if (typeof navigator === "undefined" || !navigator.clipboard) {
+                    if (
+                      typeof navigator === "undefined" ||
+                      !navigator.clipboard
+                    ) {
                       console.warn("Clipboard API not available");
                       return;
                     }
@@ -302,9 +306,25 @@ export const AiMessage: React.FC<{
             </div>
           </div>
         )}
-        <div className="whitespace-normal flex flex-col gap-[15px] text-gray-100 break-words overflow-wrap break-all">
-          <MessageDisplay message={msg?.message || ""} />
-        </div>
+        {msg?.type === "tool" && msg?.tool_call_id && (
+          <div className="mb-3 border border-neutral-700 rounded-md overflow-hidden bg-neutral-800/50">
+            <div className="px-3 py-1.5 border-b border-neutral-700">
+              <span className="text-xs text-neutral-500">
+                ID: {msg.tool_call_id}
+              </span>
+            </div>
+            <div className="px-3 py-2">
+              <div className="whitespace-normal text-gray-100 break-words overflow-wrap break-all">
+                <MessageDisplay message={msg?.message || ""} />
+              </div>
+            </div>
+          </div>
+        )}
+        {msg?.type !== "tool" && (
+          <div className="whitespace-normal flex flex-col gap-[15px] text-gray-100 break-words overflow-wrap break-all">
+            <MessageDisplay message={msg?.message || ""} />
+          </div>
+        )}
         {!isTyping && threadId && id && (
           <div className="mt-3 flex items-center justify-start space-x-2">
             <button
