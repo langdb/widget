@@ -53878,7 +53878,7 @@ const KV = ({
                   (H) => H.type === Zn.HumanMessage || H.type !== Zn.ToolMessage
                 ).map((H) => {
                   const B = H.id === n[n.length - 1].id;
-                  return console.log("===== msg ====", H), /* @__PURE__ */ N.jsx(
+                  return /* @__PURE__ */ N.jsx(
                     XV,
                     {
                       message: H,

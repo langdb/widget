@@ -652,7 +652,6 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
             )
             .map((msg: ChatMessage) => {
               const isLastMessage = msg.id === messages[messages.length - 1].id;
-              console.log("===== msg ====", msg);
               return (
                 <MessageRenderer
                   key={msg.id}
