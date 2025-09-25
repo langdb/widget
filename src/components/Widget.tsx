@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/display-name */
 import "../tailwind.css";
 import "./Widget.css";
 import { AdapterProps, DEV_SERVER_URL, getHeaders } from "./adapter";
@@ -9,6 +11,7 @@ import { ConversationStarter } from "../dto/ConversationStarter";
 import axios from "axios";
 import { useMount, useRequest, useUpdateEffect } from "ahooks";
 import { CacheConfig, InititalPrompt, MCPTools } from "../dto/ParamInput";
+import { emitter } from "./EventEmiter";
 // Types
 export interface WidgetProps extends AdapterProps {
   personaOptions?: PersonaOptions;
@@ -133,11 +136,13 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
   }, [
     threadId,
     projectId,
+    getAccessToken,
     publicId,
     apiKey,
-    getAccessToken,
-    triggerGetMessages,
     messages,
+    triggerGetMessages,
+    props.serverUrl,
+    props.apiKey,
   ]);
 
   useMount(() => {
@@ -152,6 +157,19 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
       refreshMessages();
     }
   }, [threadId, autoRefreshThread]);
+
+  useUpdateEffect(() => {
+    const handlerRefreshMessage = (props: { threadId: string }) => {
+      if (props.threadId === threadId) {
+        refreshMessages();
+      }
+    };
+    emitter.on("langdb_refreshMessage", handlerRefreshMessage);
+    return () => {
+      emitter.off("langdb_refreshMessage", handlerRefreshMessage);
+    };
+  }, [threadId, refreshMessages]);
+
   if (messagesLoading && (!messages || messages.length < 1)) {
     return (
       <div

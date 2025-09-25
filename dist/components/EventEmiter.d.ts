@@ -6,6 +6,10 @@ type Events = {
         threadId: string;
         widgetId: string;
     };
+    langdb_refreshMessage: {
+        threadId: string;
+        widgetId: string;
+    };
     langdb_chatWindow: {
         widgetId: string;
         state: "Processing" | "SubmitStart" | "SubmitEnd" | "SubmitError";
@@ -29,8 +33,8 @@ type Events = {
     langdb_input_fileAdded: {
         files: FileWithPreview[];
     };
-    langdb_input_speechRecognitionStart: {};
-    langdb_input_speechRecognitionEnd: {};
+    langdb_input_speechRecognitionStart: Record<string, never>;
+    langdb_input_speechRecognitionEnd: Record<string, never>;
     langdb_aiMessageClicked: {
         threadId: string | undefined;
         messageId: string | undefined;
