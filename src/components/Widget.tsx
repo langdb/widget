@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/display-name */
 import "../tailwind.css";
 import "./Widget.css";
 import { AdapterProps, DEV_SERVER_URL, getHeaders } from "./adapter";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { ChatComponent } from "./ChatComponent";
 import { ChatMessage, MessageWithId } from "../dto/ChatMessage";
 import { PersonaOptions } from "../dto/PersonaOptions";
@@ -110,13 +111,21 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
     autoRefreshThread,
     renderLoading,
   } = props;
-  const {
-    run: triggerGetMessages,
-    loading: messagesLoading,
-    data,
-  } = useRequest(getMessagesFromThread, {
-    manual: true,
-  });
+
+  const [messagesData, setMessagesData] = useState<ChatMessage[]>(
+    messages || [],
+  );
+  const [newMessageIds, setNewMessageIds] = useState<Set<string>>(new Set());
+  const { run: triggerGetMessages, loading: messagesLoading } = useRequest(
+    getMessagesFromThread,
+    {
+      manual: true,
+      onSuccess: (data) => {
+        setMessagesData(data);
+      },
+    },
+  );
+
   const refreshMessages = useCallback(() => {
     if (
       threadId &&
@@ -124,7 +133,7 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
       (getAccessToken || publicId || apiKey) &&
       (messages === undefined || messages.length === 0)
     ) {
-      triggerGetMessages({
+      return triggerGetMessages({
         threadId,
         projectId,
         getAccessToken,
@@ -170,7 +179,49 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
     };
   }, [threadId, refreshMessages]);
 
-  if (messagesLoading && (!messages || messages.length < 1)) {
+  useUpdateEffect(() => {
+    const handlerNewMessageAdded = async (props: {
+      threadId?: string;
+      messageId?: string;
+    }) => {
+      if (props.threadId && props.messageId && props.threadId === threadId) {
+        // Check if message already exists
+        const existingMessage = messagesData.find(
+          (msg: ChatMessage) => msg.id === props.messageId,
+        );
+
+        if (existingMessage) {
+          // Message already exists, just add animation
+          setNewMessageIds((prev) => new Set(prev).add(props.messageId!));
+          setTimeout(() => {
+            setNewMessageIds((prev) => {
+              const updated = new Set(prev);
+              updated.delete(props.messageId!);
+              return updated;
+            });
+          }, 2000);
+        } else {
+          // Message doesn't exist, fetch fresh messages
+          refreshMessages();
+          // Add animation for the new message
+          setNewMessageIds((prev) => new Set(prev).add(props.messageId!));
+          setTimeout(() => {
+            setNewMessageIds((prev) => {
+              const updated = new Set(prev);
+              updated.delete(props.messageId!);
+              return updated;
+            });
+          }, 2000);
+        }
+      }
+    };
+    emitter.on("langdb_newMessageAdded", handlerNewMessageAdded);
+    return () => {
+      emitter.off("langdb_newMessageAdded", handlerNewMessageAdded);
+    };
+  }, [threadId, refreshMessages, messagesData]);
+
+  if (messagesLoading && (!messagesData || messagesData.length < 1)) {
     return (
       <div
         className={`${themeClass} dark-theme w-full h-full justify-center items-center flex`}
@@ -186,7 +237,11 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
 
   return (
     <div className={`${themeClass} w-full h-full`}>
-      <ChatComponent {...props} messages={messages || data || []} />
+      <ChatComponent
+        {...props}
+        messages={messagesData}
+        newMessageIds={newMessageIds}
+      />
     </div>
   );
 });

@@ -33,7 +33,15 @@ const MessageRenderer: React.FC<{
   isLastMessage?: boolean;
   isTyping?: boolean;
   widgetProps: WidgetProps;
-}> = ({ message, personaOptions, widgetProps, isLastMessage, isTyping }) => {
+  isNewMessage?: boolean;
+}> = ({
+  message,
+  personaOptions,
+  widgetProps,
+  isLastMessage,
+  isTyping,
+  isNewMessage,
+}) => {
   // Determine if this is a human message for styling purposes
   const isHumanMessage = message.type === MessageType.HumanMessage;
   const isSystemMessage = message.type === MessageType.SystemMessage;
@@ -42,10 +50,11 @@ const MessageRenderer: React.FC<{
     <article
       className={`
         flex mb-4 group
-        ${isHumanMessage ? "justify-end" : "justify-start"} 
+        ${isHumanMessage ? "justify-end" : "justify-start"}
         ${isLastMessage && !message.created_at ? `min-h-[40vh] items-start justify-start ${widgetProps.lastAiMessageClass || ""}` : "items-start"}
         transition-all duration-200 ease-in-out
         ${isSystemMessage ? "px-2" : ""}
+        ${isNewMessage ? "animate-slideIn" : ""}
       `}
       role="listitem"
       aria-label={`${isHumanMessage ? "Your" : isSystemMessage ? "System" : "Assistant"} message`}
@@ -55,8 +64,12 @@ const MessageRenderer: React.FC<{
           max-w-[85%] sm:max-w-[75%] text-sm
           ${isHumanMessage ? "order-1" : "order-2"}
           ${isSystemMessage ? "w-full" : ""}
+          ${isNewMessage && !isHumanMessage ? "relative" : ""}
         `}
       >
+        {isNewMessage && !isHumanMessage && (
+          <div className="absolute -left-2 top-0 w-1 h-full bg-gradient-to-b from-blue-500 to-transparent rounded-full animate-pulse" />
+        )}
         {isHumanMessage ? (
           <HumanMessage msg={message} persona={personaOptions.user} />
         ) : message.type === MessageType.SystemMessage ? (
@@ -436,7 +449,11 @@ const useMessageSubmission = (
   };
 };
 
-export const ChatComponent: React.FC<WidgetProps> = (props) => {
+interface ChatComponentProps extends WidgetProps {
+  newMessageIds?: Set<string>;
+}
+
+export const ChatComponent: React.FC<ChatComponentProps> = (props) => {
   const chatState = useChatState({ initialMessages: props.messages || [] });
 
   const {
@@ -646,6 +663,8 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
         <div className="langdb-message-render flex-1 overflow-auto">
           {messages.map((msg: ChatMessage) => {
             const isLastMessage = msg.id === messages[messages.length - 1].id;
+            const isNewMessage =
+              props.newMessageIds?.has(msg.id || "") || false;
             return (
               <MessageRenderer
                 key={msg.id}
@@ -654,6 +673,7 @@ export const ChatComponent: React.FC<WidgetProps> = (props) => {
                 widgetProps={props}
                 isLastMessage={isLastMessage}
                 isTyping={typing && isLastMessage}
+                isNewMessage={isNewMessage}
               />
             );
           })}

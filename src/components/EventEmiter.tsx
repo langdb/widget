@@ -42,8 +42,8 @@ type Events = {
   };
   langdb_clearChat: { threadId?: string; widgetId?: string };
   langdb_newMessageAdded: {
-    threadId: string;
-    messageId: string;
+    threadId?: string;
+    messageId?: string;
   };
 };
 

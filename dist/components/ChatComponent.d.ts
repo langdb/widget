@@ -1,4 +1,8 @@
 import { default as React } from 'react';
 import { WidgetProps } from './Widget';
 
-export declare const ChatComponent: React.FC<WidgetProps>;
+interface ChatComponentProps extends WidgetProps {
+    newMessageIds?: Set<string>;
+}
+export declare const ChatComponent: React.FC<ChatComponentProps>;
+export {};
