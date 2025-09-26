@@ -49,6 +49,10 @@ type Events = {
         threadId?: string;
         widgetId?: string;
     };
+    langdb_newMessageAdded: {
+        threadId: string;
+        messageId: string;
+    };
 };
 export declare const emitter: import('mitt').Emitter<Events>;
 export {};

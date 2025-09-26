@@ -41,6 +41,10 @@ type Events = {
     widgetId: string | undefined;
   };
   langdb_clearChat: { threadId?: string; widgetId?: string };
+  langdb_newMessageAdded: {
+    threadId: string;
+    messageId: string;
+  };
 };
 
 export const emitter = mitt<Events>();
