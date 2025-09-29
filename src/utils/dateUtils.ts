@@ -32,11 +32,28 @@ export const formatMessageTime = (dateString?: string): string => {
       hour12: false,
     });
   }
+  // For traces within the last week, show day and time
+  const daysAgo = Math.floor(
+    (now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24),
+  );
+  if (daysAgo <= 7) {
+    const dayName = date.toLocaleDateString("en-US", { weekday: "short" });
+    const time = date.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
+    return `${dayName} ${time}`;
+  }
 
-  return date.toLocaleString("en-US", {
+  // For older traces, show month/day and time
+  const month = date.toLocaleDateString("en-US", { month: "short" });
+  const day = date.getDate();
+  const time = date.toLocaleTimeString("en-US", {
     hour: "2-digit",
     minute: "2-digit",
-    second: "2-digit",
     hour12: false,
   });
+
+  return `${month} ${day} ${time}`;
 };

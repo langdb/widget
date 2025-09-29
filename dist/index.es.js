@@ -53571,17 +53571,31 @@ const ns = (e) => {
   const t = e.replace(" ", "T"), n = /* @__PURE__ */ new Date(t + "Z");
   if (isNaN(n.getTime())) return "";
   const r = /* @__PURE__ */ new Date();
-  return dW(r, n) < 60 ? ZW(n, { addSuffix: !0 }) : r.toDateString() === n.toDateString() ? n.toLocaleTimeString("en-US", {
+  if (dW(r, n) < 60)
+    return ZW(n, { addSuffix: !0 });
+  if (r.toDateString() === n.toDateString())
+    return n.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: !1
+    });
+  if (Math.floor(
+    (r.getTime() - n.getTime()) / (1e3 * 60 * 60 * 24)
+  ) <= 7) {
+    const u = n.toLocaleDateString("en-US", { weekday: "short" }), c = n.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: !1
+    });
+    return `${u} ${c}`;
+  }
+  const o = n.toLocaleDateString("en-US", { month: "short" }), s = n.getDate(), l = n.toLocaleTimeString("en-US", {
     hour: "2-digit",
     minute: "2-digit",
-    second: "2-digit",
-    hour12: !1
-  }) : n.toLocaleString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
     hour12: !1
   });
+  return `${o} ${s} ${l}`;
 }, QW = ({ msg: e, persona: t }) => {
   const { content: n, files: r } = e, [a, i] = ut(!1), [o, s] = ut(!1), l = (h) => h ? h.split(`
 `).length : 0, u = (h, b) => h ? h.split(`
