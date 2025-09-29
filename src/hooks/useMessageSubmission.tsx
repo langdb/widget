@@ -142,10 +142,17 @@ export const useMessageSubmission = (
               run_id: currentRunId || undefined,
             };
             if (!updatedLastMessage.metrics && event.usage) {
+              const customUsage: any = { ...event.usage };
+              if (customUsage.prompt_tokens) {
+                customUsage.input_tokens = customUsage.prompt_tokens;
+              }
+              if (customUsage.completion_tokens) {
+                customUsage.output_tokens = customUsage.completion_tokens;
+              }
               const metricsTemp: MessageMetrics = {
                 run_id: currentRunId || undefined,
                 trace_id: currentTraceId || undefined,
-                usage: event.usage,
+                usage: customUsage,
                 cost: event.usage?.cost,
               };
               updatedLastMessage.metrics = [metricsTemp];

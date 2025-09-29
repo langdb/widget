@@ -24,7 +24,7 @@ const Example: FC<WidgetProps> = ({ theme = "light", starters = [] }) => {
   const projectId = "b97c20ff-ff11-429e-b97f-137b22042d3d";
   const apiKey = "langdb_YmZzRGp6NWR5UXFraHA=";
   const api_url = "https://api.staging.langdb.ai";
-  const threadId = "52ded5ec-fde6-473d-8b6d-c70a10c3b5a1";
+  const threadId = "0bf9e1a7-f781-49ef-81ab-217e083d4ff1";
   const [currentInput, setCurrentInput] = React.useState("");
   useEffect(() => {
     emitter.on(

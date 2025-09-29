@@ -125,7 +125,7 @@ export const MessageMetrics: React.FC<MessageMetricsProps> = ({
             {cost && (
               <div className="flex justify-between items-center gap-8">
                 <span className="text-xs text-neutral-500">Cost:</span>
-                <span className="text-xs font-mono">{formatCost(cost)}</span>
+                <span className="text-xs font-mono">{formatCost(cost, 6)}</span>
               </div>
             )}
             {usage && (
