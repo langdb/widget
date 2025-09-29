@@ -17,7 +17,7 @@ import { ChatMessage, MessageWithId } from "../../dto/ChatMessage";
 import React, { useState } from "react";
 import { WidgetProps } from "../Widget";
 import ReactJson from "react-json-view";
-import { emitter } from "../EventEmiter";
+// import { emitter } from "../EventEmiter";
 import { MessageDisplay } from "./MessageDisplay";
 import { formatMessageTime } from "../../utils/dateUtils";
 import { MessageFeedback } from "./MessageFeedback";
@@ -41,15 +41,15 @@ export const AiMessage: React.FC<{
   return (
     <div
       onClick={() => {
-        thread_id &&
-          id &&
-          emitter.emit("langdb_aiMessageClicked", {
-            threadId: thread_id,
-            messageId: id,
-            traceId: msg?.trace_id,
-            widgetId: widgetProps.widgetId,
-            runId: msg?.run_id,
-          });
+        // thread_id &&
+        //   id &&
+        //   emitter.emit("langdb_aiMessageClicked", {
+        //     threadId: thread_id,
+        //     messageId: id,
+        //     traceId: msg?,
+        //     widgetId: widgetProps.widgetId,
+        //     runId: msg?.run_id,
+        //   });
       }}
       className={`flex gap-2 items-start`}
     >

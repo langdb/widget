@@ -9,7 +9,7 @@ import { useChatState } from "./ChatState";
 import { useScrollToBottom } from "./ScrollToBottom";
 import { InititalPrompt, MCPTools } from "../dto/ParamInput";
 import { onSubmit } from "../components/adapter";
-import { ChatMessage } from "../dto/ChatMessage";
+import { ChatMessage, MessageMetrics } from "../dto/ChatMessage";
 
 // Custom hook for handling message submission
 export const useMessageSubmission = (
@@ -140,8 +140,16 @@ export const useMessageSubmission = (
                 event.choices.map((choice) => choice.delta.content).join(""),
               tool_calls: lastMessageToolCalls,
               run_id: currentRunId || undefined,
-              usage: event?.usage,
             };
+            if (!updatedLastMessage.metrics && event.usage) {
+              const metricsTemp: MessageMetrics = {
+                run_id: currentRunId || undefined,
+                trace_id: currentTraceId || undefined,
+                usage: event.usage,
+                cost: event.usage?.cost,
+              };
+              updatedLastMessage.metrics = [metricsTemp];
+            }
 
             return [...prevMessages.slice(0, -1), updatedLastMessage];
           });

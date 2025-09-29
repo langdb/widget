@@ -21,11 +21,10 @@ const Example: FC<WidgetProps> = ({ theme = "light", starters = [] }) => {
   // const apiKey = 'langdb_N1p5cVZvVi9kL1JJOExOeFJKNU1GbHdKbXNNRkxNL1lPemJ3eXhzeGN0K3FPTGxRbi8rN1J6YVhFSVE4ZmdTQjBuUmNQOHlCU1VxRTduam9aM1BHVkhXL3FycTBITXNxa1VhTUdkSXhUanZ0QnpxZklDTmVlVDFPOXZIZTgwRzAyeFZDRWx6MUhIdHBTYzdhS3QvT3B4cisxVFJ1WlcvNERWeWhMcTJ0KzVZZ0wzSjBOY21YQ3pzaDZvQlRQRXFadE1zbzpBQUFBQUFBQUFBQUFBQUFB'
   // const apiKey = 'langdb_NWkzYWRmMHJ1ajJiNXRsNWc1ZWlldm1saG4='
   // const projectId = '9c7ac2c8-b76f-453b-914d-39eaaccec092'
-  // const api_url = 'https://api.us-east-1.langdb.ai'
-  const projectId = "fb31f9e8-e1d5-45a3-a385-1d34786b9a77";
-  const apiKey = "langdb_NmpsbXNyZmZvNHFlZWs5MjMyMnJ1dDJia3A=";
+  const projectId = "b97c20ff-ff11-429e-b97f-137b22042d3d";
+  const apiKey = "langdb_YmZzRGp6NWR5UXFraHA=";
   const api_url = "https://api.staging.langdb.ai";
-  const threadId = "86fef116-8094-4533-b09e-6210462a2174";
+  const threadId = "52ded5ec-fde6-473d-8b6d-c70a10c3b5a1";
   const [currentInput, setCurrentInput] = React.useState("");
   useEffect(() => {
     emitter.on(
@@ -66,7 +65,6 @@ const Example: FC<WidgetProps> = ({ theme = "light", starters = [] }) => {
       emitter.off("langdb_aiMessageClicked");
     };
   }, []);
-  const [searchToolEnabled, setSearchToolEnabled] = React.useState(false);
   return (
     <div
       style={{
@@ -78,53 +76,19 @@ const Example: FC<WidgetProps> = ({ theme = "light", starters = [] }) => {
     >
       <div className="flex flex-1 max-h-[calc(100vh-200px)] bg-black">
         <Widget
+          modelName="openai/gpt-4o-mini"
           autoRefreshThread={true}
-          //threadId={threadId}
+          threadId={threadId}
           //widgetId={threadId}
           //threadId="38a5a61b-9a28-43d3-99c9-215cc773bb59"
           // threadId="3289ddba-00f1-406f-95ae-9cf472010e95"
-          modelName="router/auto"
-          projectId={"fbaacd1a-1781-4c1b-9208-39145efe4eeb"}
-          apiKey={"langdb_YmZzRGp6NWR5UXFraHA="}
-          serverUrl={api_url}
-          theme={theme}
-          starters={starters}
-        />
-
-        {/* <Widget
-          modelName="openai/gpt-4o-mini"
           projectId={projectId}
           apiKey={apiKey}
           serverUrl={api_url}
           theme={theme}
-          hideChatInput={true}
           starters={starters}
         />
-
-<Widget
-          modelName="openai/o1-mini"
-          projectId={projectId}
-          apiKey={apiKey}
-          serverUrl={api_url}
-          theme={theme}
-          hideChatInput={true}
-          starters={starters}
-        /> */}
       </div>
-      {/* <div className={`dark-theme  w-full flex justify-center items-center`}>
-        <div className="langdb-chat bg-inherit sticky bottom-0 pt-1 px-4 w-[50vw]">
-          <ChatInput
-            currentInput={currentInput}
-            setCurrentInput={setCurrentInput}
-            searchToolEnabled={searchToolEnabled}
-            toggleSearchTool={() => setSearchToolEnabled(prev => !prev)}
-            onSubmit={(props: { inputText: string, files: FileWithPreview[], searchToolEnabled?: boolean, otherTools?: string[] }) => {
-              emitter.emit('langdb_input_chatSubmit', props)
-              setCurrentInput('')
-              return Promise.resolve();
-            }} />
-        </div>
-      </div> */}
     </div>
   );
 };

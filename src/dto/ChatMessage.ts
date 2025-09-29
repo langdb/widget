@@ -10,14 +10,13 @@ export interface ChatMessage {
   type: MessageType;
   thread_id?: string;
   tool_call_id?: string;
-  trace_id?: string;
   tool_calls?: ToolCall[];
   files?: FileWithPreview[];
   user_id?: string;
   run_id?: string;
-  ttft?: number;
-  usage?: MessageUsage;
+  metrics?: MessageMetrics[];
 }
+
 export interface MessageWithId {
   id: string;
   created_at: string;
@@ -26,24 +25,33 @@ export interface MessageWithId {
   type: MessageType;
   content_type: MessageContentType;
   content_array: MessageContentPart[];
-  duration?: number;
-  span_id?: string;
   run_id?: string;
   trace_id?: string;
   user_id: string;
-  ttft?: number;
-  usage?: MessageUsage;
   thread_id: string;
   tool_call_id?: string;
   tool_calls?: ToolCall[];
+  metrics?: MessageMetrics[];
 }
 
+export interface MessageMetrics {
+  duration?: number;
+  run_id?: string;
+  span_id?: string;
+  start_time_us?: number;
+  trace_id?: string;
+  ttft?: number;
+  cost?: number;
+  usage?: MessageUsage;
+}
 export interface MessageUsage {
   is_cache_used?: boolean;
   output_tokens?: number;
   total_tokens?: number;
   input_tokens?: number;
-  cost?: number;
+  prompt_tokens_details?: {
+    [key: string]: number;
+  };
   completion_tokens_details?: MessageCompletionTokensDetails;
   [key: string]: any;
 }
