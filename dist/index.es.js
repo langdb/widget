@@ -53583,7 +53583,7 @@ const nW = [
             /* @__PURE__ */ w.jsx("div", { className: "px-3 py-2", children: /* @__PURE__ */ w.jsx("div", { className: "whitespace-normal text-gray-100 break-words overflow-wrap break-all", children: /* @__PURE__ */ w.jsx(Mi, { message: (e == null ? void 0 : e.content) || "" }) }) })
           ] }),
           (e == null ? void 0 : e.type) !== "tool" && /* @__PURE__ */ w.jsx("div", { className: "whitespace-normal flex flex-col gap-[15px] text-gray-100 break-words overflow-wrap break-all", children: /* @__PURE__ */ w.jsx(Mi, { message: (e == null ? void 0 : e.content) || "" }) }),
-          /* @__PURE__ */ w.jsxs("div", { className: "flex items-center justify-between gap-3 mt-2", children: [
+          /* @__PURE__ */ w.jsxs("div", { className: "flex items-center justify-between gap-3 mt-2 flex-wrap", children: [
             /* @__PURE__ */ w.jsx(aW, { message: e }),
             /* @__PURE__ */ w.jsx(
               YV,

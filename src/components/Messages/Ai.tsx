@@ -284,7 +284,7 @@ export const AiMessage: React.FC<{
             <MessageDisplay message={msg?.content || ""} />
           </div>
         )}
-        <div className="flex items-center justify-between gap-3 mt-2">
+        <div className="flex items-center justify-between gap-3 mt-2 flex-wrap">
           <MessageMetrics message={msg} />
           <MessageFeedback
             threadId={thread_id}
