@@ -3,6 +3,8 @@
  * @param dateString ISO date string to format
  * @returns Formatted time string (e.g., "2:30 PM" or "Jun 26, 2:30 PM")
  */
+import { formatDistanceToNow, differenceInMinutes } from "date-fns";
+
 export const formatMessageTime = (dateString?: string): string => {
   if (!dateString) return "";
 
@@ -15,25 +17,26 @@ export const formatMessageTime = (dateString?: string): string => {
   if (isNaN(date.getTime())) return "";
 
   const now = new Date();
-  const isToday = date.toDateString() === now.toDateString();
+  const minutesAgo = differenceInMinutes(now, date);
 
-  // Format: hours:minutes AM/PM
-  const timeOptions: Intl.DateTimeFormatOptions = {
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-  };
-
-  // If not today, add month and day
-  if (!isToday) {
-    return date.toLocaleString("en-US", {
-      month: "short",
-      day: "numeric",
-      hour: "numeric",
+  // For recent traces (< 60 minutes), show relative time
+  if (minutesAgo < 60) {
+    return formatDistanceToNow(date, { addSuffix: true });
+  }
+  // For traces from today, show time only
+  if (now.toDateString() === date.toDateString()) {
+    return date.toLocaleTimeString("en-US", {
+      hour: "2-digit",
       minute: "2-digit",
-      hour12: true,
+      second: "2-digit",
+      hour12: false,
     });
   }
 
-  return date.toLocaleString("en-US", timeOptions);
+  return date.toLocaleString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  });
 };
