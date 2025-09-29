@@ -206,6 +206,12 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
           // Add animation for the new message
           setNewMessageIds((prev) => new Set(prev).add(props.messageId!));
           setTimeout(() => {
+            emitter.emit("langdb_chat_scrollToBottom", {
+              threadId,
+              widgetId: threadId,
+            });
+          }, 500);
+          setTimeout(() => {
             setNewMessageIds((prev) => {
               const updated = new Set(prev);
               updated.delete(props.messageId!);
