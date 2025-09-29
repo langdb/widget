@@ -26,7 +26,7 @@ export const HumanMessage: React.FC<{
   msg: ChatMessage;
   persona?: Persona;
 }> = ({ msg, persona }) => {
-  const { message, files } = msg;
+  const { content: message, files } = msg;
   const [copied, setCopied] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
@@ -64,9 +64,9 @@ export const HumanMessage: React.FC<{
                     console.warn('Clipboard API not available');
                     return;
                   }
-                  if (msg.message) {
+                  if (msg.content) {
                     navigator.clipboard
-                      .writeText(msg.message)
+                      .writeText(msg.content)
                       .then(() => {
                         setCopied(true);
                         setTimeout(() => setCopied(false), 2000);

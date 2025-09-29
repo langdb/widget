@@ -13,79 +13,38 @@ import {
 import { Persona } from "../../dto/PersonaOptions";
 import { Avatar } from "../Icons";
 import { AvatarItem } from "./AvatarItem";
-import { ChatMessage } from "../../dto/ChatMessage";
-import {
-  HandThumbDownIcon as SHandThumbDownIcon,
-  HandThumbUpIcon as SHandThumbUpIcon,
-} from "@heroicons/react/24/solid";
-import {
-  HandThumbDownIcon,
-  HandThumbUpIcon,
-} from "@heroicons/react/24/outline";
-import React, { useCallback, useState } from "react";
+import { ChatMessage, MessageWithId } from "../../dto/ChatMessage";
+import React, { useState } from "react";
 import { WidgetProps } from "../Widget";
-import { DEV_SERVER_URL, getHeaders } from "../adapter";
 import ReactJson from "react-json-view";
 import { emitter } from "../EventEmiter";
 import { MessageDisplay } from "./MessageDisplay";
 import { formatMessageTime } from "../../utils/dateUtils";
+import { MessageFeedback } from "./MessageFeedback";
+import { MessageMetrics } from "./MessageMetrics";
 
 export const AiMessage: React.FC<{
-  msg?: ChatMessage;
+  msg?: ChatMessage | MessageWithId;
   persona?: Persona;
   widgetProps: WidgetProps;
   isLastMessage?: boolean;
   isTyping?: boolean;
 }> = ({ msg, persona, widgetProps, isTyping }) => {
-  const { threadId, id } = msg || {};
+  const { thread_id, id } = msg || {};
 
-  const [score, setScore] = useState<number | undefined>();
-  const [error, setError] = useState<string | undefined>();
   const [copied, setCopied] = useState(false);
   const [toolCopiedStates, setToolCopiedStates] = useState<{
     [key: string]: boolean;
   }>({});
 
-  const handleScore = useCallback(
-    async (score: number) => {
-      const scoreRequest = {
-        thread_id: threadId,
-        message_id: id,
-        score: score,
-      };
-      // New messages threadId from state
-
-      try {
-        const headers = await getHeaders(widgetProps);
-        const serverUrl = widgetProps.serverUrl || DEV_SERVER_URL;
-        const response = await fetch(`${serverUrl}/threads/score`, {
-          method: "POST",
-          headers,
-          body: JSON.stringify(scoreRequest),
-        });
-
-        if (!response.ok) {
-          // get the error message from the response
-          const error = await response.text();
-          const errorJson = JSON.parse(error);
-          throw new Error(errorJson.error);
-        }
-        setScore(score);
-      } catch (error: any) {
-        setError(error.toString());
-        console.error("Error recording score:", error);
-      }
-    },
-    [threadId, id, widgetProps],
-  );
   const renderProviderAvatar = widgetProps.renderProviderAvatar;
   return (
     <div
       onClick={() => {
-        threadId &&
+        thread_id &&
           id &&
           emitter.emit("langdb_aiMessageClicked", {
-            threadId: threadId,
+            threadId: thread_id,
             messageId: id,
             traceId: msg?.trace_id,
             widgetId: widgetProps.widgetId,
@@ -147,7 +106,7 @@ export const AiMessage: React.FC<{
               </div>
             )}
           </div>
-          {msg?.message && (
+          {msg?.content && (
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -156,9 +115,9 @@ export const AiMessage: React.FC<{
                   console.warn("Clipboard API not available");
                   return;
                 }
-                if (msg?.message) {
+                if (msg?.content) {
                   navigator.clipboard
-                    .writeText(msg.message)
+                    .writeText(msg.content)
                     .then(() => {
                       setCopied(true);
                       setTimeout(() => setCopied(false), 2000);
@@ -315,49 +274,26 @@ export const AiMessage: React.FC<{
             </div>
             <div className="px-3 py-2">
               <div className="whitespace-normal text-gray-100 break-words overflow-wrap break-all">
-                <MessageDisplay message={msg?.message || ""} />
+                <MessageDisplay message={msg?.content || ""} />
               </div>
             </div>
           </div>
         )}
         {msg?.type !== "tool" && (
           <div className="whitespace-normal flex flex-col gap-[15px] text-gray-100 break-words overflow-wrap break-all">
-            <MessageDisplay message={msg?.message || ""} />
+            <MessageDisplay message={msg?.content || ""} />
           </div>
         )}
-        {!isTyping && threadId && id && (
-          <div className="mt-3 flex items-center justify-start space-x-2">
-            <button
-              className="rounded-full p-1 focus:outline-none hover:bg-gray-700/30 transition-colors duration-150"
-              title="Thumbs up"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                handleScore(1);
-              }}
-            >
-              {score === undefined && <HandThumbUpIcon className="h-4 w-4" />}
-              {score === 1 && (
-                <SHandThumbUpIcon className="h-4 w-4 text-green-500 animate-fadeIn" />
-              )}
-            </button>
-            <button
-              className="rounded focus:outline-none hover:text-primary-500"
-              title="Thumbs down"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                handleScore(-1);
-              }}
-            >
-              {score === undefined && <HandThumbDownIcon className="h-4 w-4" />}
-              {score === -1 && (
-                <SHandThumbDownIcon className="h-4 w-4 animate-fadeIn" />
-              )}
-            </button>
-            {error && <div className="text-red-500">{error}</div>}
-          </div>
-        )}
+        <div className="flex items-center justify-between gap-3 mt-2">
+          <MessageMetrics message={msg} />
+          <MessageFeedback
+            threadId={thread_id}
+            messageId={id}
+            widgetProps={widgetProps}
+            isTyping={isTyping}
+          />
+        </div>
+
         {isTyping && (
           <div className="rounded-md p-2 flex items-center gap-2 animate-pulse mt-2">
             <PencilIcon className="h-4 w-4 text-white animate-pulse" />

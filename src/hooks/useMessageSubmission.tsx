@@ -98,16 +98,16 @@ export const useMessageSubmission = (
             if (lastMessage && lastMessage.type === MessageType.HumanMessage) {
               return [
                 ...prevMessages.slice(0, -1),
-                { ...lastMessage, threadId: currentThreadId },
+                { ...lastMessage, thread_id: currentThreadId },
                 {
                   id: currentMessageId || uuidv4(),
-                  message: event.choices
+                  content: event.choices
                     .map((choice) => choice.delta.content)
                     .join(""),
                   model_name: event.model,
                   type: MessageType.AIMessage,
                   content_type: MessageContentType.Text,
-                  threadId: currentThreadId,
+                  thread_id: currentThreadId,
                   trace_id: currentTraceId || undefined,
                 },
               ];
@@ -133,7 +133,7 @@ export const useMessageSubmission = (
             const updatedLastMessage = {
               ...lastMessage,
               message:
-                lastMessage.message +
+                lastMessage.content +
                 event.choices.map((choice) => choice.delta.content).join(""),
               tool_calls: lastMessageToolCalls,
               run_id: currentRunId || undefined,

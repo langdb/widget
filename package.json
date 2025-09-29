@@ -21,6 +21,7 @@
   "license": "MIT",
   "devDependencies": {
     "@chromatic-com/storybook": "^4.1.1",
+    "@storybook/addon-docs": "^9.1.8",
     "@storybook/addon-links": "^9.1.8",
     "@storybook/addon-onboarding": "^9.1.8",
     "@storybook/addon-styling-webpack": "^2.0.0",
@@ -47,8 +48,7 @@
     "tslib": "^2.6.3",
     "typescript": "^5.5.4",
     "vite": "^5.3.1",
-    "vite-plugin-dts": "^3.9.1",
-    "@storybook/addon-docs": "^9.1.8"
+    "vite-plugin-dts": "^3.9.1"
   },
   "dependencies": {
     "@ai-sdk/openai": "^0.0.33",
@@ -68,6 +68,7 @@
     "clsx": "^2.1.1",
     "dayjs": "^1.11.13",
     "highlightjs-copy": "^1.0.5",
+    "lucide-react": "^0.544.0",
     "mitt": "^3.0.1",
     "react-dropzone": "^14.3.8",
     "react-icons": "^5.2.1",

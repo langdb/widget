@@ -2,32 +2,57 @@ import { FileWithPreview } from "../types";
 
 export interface ChatMessage {
   id: string;
-  message?: string;
+  content?: string;
   created_at?: string;
   model_name?: string;
   content_array?: MessageContentPart[];
   content_type: MessageContentType;
   type: MessageType;
-  threadId?: string;
+  thread_id?: string;
   tool_call_id?: string;
   trace_id?: string;
   tool_calls?: ToolCall[];
   files?: FileWithPreview[];
   user_id?: string;
   run_id?: string;
+  ttft?: number;
+  usage?: MessageUsage;
 }
 export interface MessageWithId {
   id: string;
   created_at: string;
   model_name: string;
   content: string;
+  type: MessageType;
   content_type: MessageContentType;
   content_array: MessageContentPart[];
-  type: MessageType;
+  duration?: number;
+  span_id?: string;
+  run_id?: string;
+  trace_id?: string;
   user_id: string;
+  ttft?: number;
+  usage?: MessageUsage;
   thread_id: string;
   tool_call_id?: string;
   tool_calls?: ToolCall[];
+}
+
+export interface MessageUsage {
+  is_cache_used?: boolean;
+  output_tokens?: number;
+  total_tokens?: number;
+  input_tokens?: number;
+  completion_tokens_details?: MessageCompletionTokensDetails;
+  [key: string]: any;
+}
+
+export interface MessageCompletionTokensDetails {
+  accepted_prediction_tokens?: number;
+  audio_tokens?: number;
+  reasoning_tokens?: number;
+  rejected_prediction_tokens?: number;
+  [key: string]: any;
 }
 export interface ToolCall {
   id: string;

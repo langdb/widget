@@ -48,7 +48,7 @@ export const SystemMessage: React.FC<SystemMessageProps> = ({
     return lines.slice(0, n).join("\n");
   };
 
-  const message = msg.message || "";
+  const message = msg.content || "";
   const lineCount = countLines(message);
   const hasMoreLines = lineCount > 5;
   const displayMessage =
@@ -105,9 +105,9 @@ export const SystemMessage: React.FC<SystemMessageProps> = ({
                   console.warn('Clipboard API not available');
                   return;
                 }
-                if (msg.message) {
+                if (msg.content) {
                   navigator.clipboard
-                    .writeText(msg.message)
+                    .writeText(msg.content)
                     .then(() => {
                       setCopied(true);
                       setTimeout(() => setCopied(false), 2000);

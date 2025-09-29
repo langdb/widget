@@ -1,13 +1,13 @@
 import { AdapterProps } from './adapter';
 import { default as React } from 'react';
-import { ChatMessage } from '../dto/ChatMessage';
+import { ChatMessage, MessageWithId } from '../dto/ChatMessage';
 import { PersonaOptions } from '../dto/PersonaOptions';
 import { ConversationStarter } from '../dto/ConversationStarter';
 import { CacheConfig, InititalPrompt, MCPTools } from '../dto/ParamInput';
 
 export interface WidgetProps extends AdapterProps {
     personaOptions?: PersonaOptions;
-    messages?: ChatMessage[];
+    messages?: (ChatMessage | MessageWithId)[];
     initialPrompts?: InititalPrompt[];
     variables?: Record<string, any>;
     mcpTools?: MCPTools[];

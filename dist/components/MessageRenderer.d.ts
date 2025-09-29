@@ -1,10 +1,10 @@
 import { default as React } from 'react';
-import { ChatMessage } from '../dto/ChatMessage';
+import { ChatMessage, MessageWithId } from '../dto/ChatMessage';
 import { PersonaOptions } from '../dto/PersonaOptions';
 import { WidgetProps } from './Widget';
 
 interface MessageRendererProps {
-    message: ChatMessage;
+    message: ChatMessage | MessageWithId;
     personaOptions: PersonaOptions;
     isLastMessage?: boolean;
     isTyping?: boolean;

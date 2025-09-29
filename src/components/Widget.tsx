@@ -16,7 +16,7 @@ import { emitter } from "./EventEmiter";
 // Types
 export interface WidgetProps extends AdapterProps {
   personaOptions?: PersonaOptions;
-  messages?: ChatMessage[];
+  messages?: (ChatMessage | MessageWithId)[];
   initialPrompts?: InititalPrompt[];
   variables?: Record<string, any>;
   mcpTools?: MCPTools[];
@@ -75,24 +75,7 @@ const getMessagesFromThread = async (props: {
       headers,
     });
     const responseData = res.data as MessageWithId[];
-    // convert to ChatMessage
-    const messages: ChatMessage[] = [];
-    for (const message of responseData) {
-      messages.push({
-        id: message.id,
-        message: message.content,
-        type: message.type,
-        content_type: message.content_type,
-        content_array: message.content_array,
-        threadId: message.thread_id,
-        tool_call_id: message.tool_call_id,
-        tool_calls: message.tool_calls,
-        model_name: message.model_name,
-        user_id: message.user_id,
-        created_at: message.created_at,
-      });
-    }
-    return messages;
+    return responseData;
   } catch (error) {
     console.error("Error fetching messages:", error);
     return [];
@@ -112,9 +95,9 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
     renderLoading,
   } = props;
 
-  const [messagesData, setMessagesData] = useState<ChatMessage[]>(
-    messages || [],
-  );
+  const [messagesData, setMessagesData] = useState<
+    (MessageWithId | ChatMessage)[]
+  >(messages || []);
   const [newMessageIds, setNewMessageIds] = useState<Set<string>>(new Set());
   const { run: triggerGetMessages, loading: messagesLoading } = useRequest(
     getMessagesFromThread,

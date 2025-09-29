@@ -1,5 +1,5 @@
 import React from "react";
-import { ChatMessage, MessageType } from "../dto/ChatMessage";
+import { ChatMessage, MessageType, MessageWithId } from "../dto/ChatMessage";
 import { PersonaOptions } from "../dto/PersonaOptions";
 import { HumanMessage } from "./Messages/Human";
 import { AiMessage } from "./Messages/Ai";
@@ -7,7 +7,7 @@ import { SystemMessage } from "./Messages/System";
 import { WidgetProps } from "./Widget";
 
 interface MessageRendererProps {
-  message: ChatMessage;
+  message: ChatMessage | MessageWithId;
   personaOptions: PersonaOptions;
   isLastMessage?: boolean;
   isTyping?: boolean;

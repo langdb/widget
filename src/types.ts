@@ -124,7 +124,7 @@ export function convert_to(input: ChatMessage[]): ChatCompletionMessage[] {
     if (!m.content_array || m.content_array.length === 0) {
       return {
         role: m.type,
-        content: m.message || "",
+        content: m.content || "",
       };
     }
     const content: ChatMessageContent[] = m.content_array
