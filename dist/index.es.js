@@ -53696,7 +53696,7 @@ const ns = (e) => {
                   i(!0), setTimeout(() => i(!1), 2e3);
                 }).catch((b) => console.error("Failed to copy:", b));
               },
-              className: "text-zinc-500 hover:text-zinc-300 transition-colors",
+              className: "text-zinc-500 hover:text-zinc-300 transition-colors ml-1.5",
               title: a ? "Copied!" : "Copy message",
               children: a ? /* @__PURE__ */ w.jsx(Ra, { className: "h-3.5 w-3.5 text-green-500" }) : /* @__PURE__ */ w.jsx(Ca, { className: "h-3.5 w-3.5" })
             }

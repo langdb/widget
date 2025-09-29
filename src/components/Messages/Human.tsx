@@ -199,7 +199,7 @@ export const HumanMessage: React.FC<{
                     .catch((err) => console.error("Failed to copy:", err));
                 }
               }}
-              className="text-zinc-500 hover:text-zinc-300 transition-colors"
+              className="text-zinc-500 hover:text-zinc-300 transition-colors ml-1.5"
               title={copied ? "Copied!" : "Copy message"}
             >
               {copied ? (
