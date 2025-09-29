@@ -76,9 +76,12 @@ const getMessagesFromThread = async (props: {
     });
     const responseData = res.data as MessageWithId[];
     return responseData;
-  } catch (error) {
-    console.error("Error fetching messages:", error);
-    return [];
+  } catch (error: any) {
+    if (error.response && error.response.data && error.response.data.error) {
+      throw new Error(error.response.data.error);
+    } else {
+      throw new Error(error.message);
+    }
   }
 };
 
@@ -99,12 +102,18 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
     (MessageWithId | ChatMessage)[]
   >(messages || []);
   const [newMessageIds, setNewMessageIds] = useState<Set<string>>(new Set());
+  const [errorFetchMessages, setErrorFetchMessages] = useState<
+    string | undefined
+  >(undefined);
   const { run: triggerGetMessages, loading: messagesLoading } = useRequest(
     getMessagesFromThread,
     {
       manual: true,
       onSuccess: (data) => {
         setMessagesData(data);
+      },
+      onError: (error) => {
+        setErrorFetchMessages(error.message);
       },
     },
   );
@@ -229,6 +238,8 @@ export const Widget: React.FC<WidgetProps> = React.memo((props) => {
       <ChatComponent
         {...props}
         messages={messagesData}
+        errorRefreshMessage={errorFetchMessages}
+        onClearErrorRefreshMessage={() => setErrorFetchMessages(undefined)}
         newMessageIds={newMessageIds}
       />
     </div>
