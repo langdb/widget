@@ -6,7 +6,12 @@
 export const formatMessageTime = (dateString?: string): string => {
   if (!dateString) return "";
 
-  const date = new Date(dateString);
+  // Convert format "2025-09-29 14:11:50.395000" to ISO format
+  // Replace space with 'T' and ensure proper format
+  const isoString = dateString.replace(" ", "T");
+
+  // Parse as UTC time (assuming input is UTC)
+  const date = new Date(isoString + "Z");
   if (isNaN(date.getTime())) return "";
 
   const now = new Date();

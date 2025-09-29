@@ -53005,14 +53005,14 @@ const La = uV, Da = cV, Ma = dV, Jr = X.forwardRef(({ className: e, sideOffset: 
 Jr.displayName = pw.displayName;
 const Zo = (e) => {
   if (!e) return "";
-  const t = new Date(e);
-  if (isNaN(t.getTime())) return "";
-  const n = /* @__PURE__ */ new Date(), r = t.toDateString() === n.toDateString(), a = {
+  const t = e.replace(" ", "T"), n = /* @__PURE__ */ new Date(t + "Z");
+  if (isNaN(n.getTime())) return "";
+  const r = /* @__PURE__ */ new Date(), a = n.toDateString() === r.toDateString(), i = {
     hour: "numeric",
     minute: "2-digit",
     hour12: !0
   };
-  return r ? t.toLocaleString("en-US", a) : t.toLocaleString("en-US", {
+  return a ? n.toLocaleString("en-US", i) : n.toLocaleString("en-US", {
     month: "short",
     day: "numeric",
     hour: "numeric",
