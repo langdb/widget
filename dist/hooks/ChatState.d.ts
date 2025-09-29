@@ -1,11 +1,11 @@
-import { ChatMessage } from '../dto/ChatMessage';
+import { ChatMessage, MessageWithId } from '../dto/ChatMessage';
 import { ModelUsage } from '../events';
 
 export declare const useChatState: (props: {
-    initialMessages: ChatMessage[];
+    initialMessages: (ChatMessage | MessageWithId)[];
 }) => {
-    messages: ChatMessage[];
-    setMessages: import('react').Dispatch<import('react').SetStateAction<ChatMessage[]>>;
+    messages: (ChatMessage | MessageWithId)[];
+    setMessages: import('react').Dispatch<import('react').SetStateAction<(ChatMessage | MessageWithId)[]>>;
     currentInput: string;
     setCurrentInput: import('react').Dispatch<import('react').SetStateAction<string>>;
     threadId: string | undefined;
@@ -20,5 +20,5 @@ export declare const useChatState: (props: {
     setError: import('react').Dispatch<import('react').SetStateAction<string | undefined>>;
     usageInfo: ModelUsage[];
     appendUsage: (usage: ModelUsage) => void;
-    initialMessages: ChatMessage[];
+    initialMessages: (ChatMessage | MessageWithId)[];
 };

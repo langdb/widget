@@ -43,6 +43,7 @@ export interface MessageUsage {
   output_tokens?: number;
   total_tokens?: number;
   input_tokens?: number;
+  cost?: number;
   completion_tokens_details?: MessageCompletionTokensDetails;
   [key: string]: any;
 }

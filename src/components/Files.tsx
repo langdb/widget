@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { FileWithPreview } from "../types";
 interface FilesProps {

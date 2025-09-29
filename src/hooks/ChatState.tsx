@@ -1,10 +1,12 @@
 import { useCallback, useState } from "react";
-import { ChatMessage } from "../dto/ChatMessage";
+import { ChatMessage, MessageWithId } from "../dto/ChatMessage";
 import { ModelUsage } from "../events";
 
-export const useChatState = (props: { initialMessages: ChatMessage[] }) => {
+export const useChatState = (props: {
+  initialMessages: (ChatMessage | MessageWithId)[];
+}) => {
   const { initialMessages } = props;
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [messages, setMessages] = useState<(ChatMessage | MessageWithId)[]>([]);
   const [currentInput, setCurrentInput] = useState<string>("");
   const [threadId, setThreadId] = useState<string | undefined>();
   const [messageId, setMessageId] = useState<string | undefined>();
@@ -27,7 +29,7 @@ export const useChatState = (props: { initialMessages: ChatMessage[] }) => {
     .map((id) => {
       return displayMessages.find((msg) => msg.id === id);
     })
-    .filter((msg) => msg !== undefined) as ChatMessage[];
+    .filter((msg) => msg !== undefined) as (ChatMessage | MessageWithId)[];
   return {
     messages: uniqueMessages,
     setMessages,

@@ -8,6 +8,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
+import { formatCost } from "../../utils/formatCost";
 
 interface MessageMetricsProps {
   message?: ChatMessage | MessageWithId;
@@ -22,17 +23,17 @@ export const MessageMetrics: React.FC<MessageMetricsProps> = ({
 
   const usage = message.usage;
   const ttft = message.ttft;
+  const cost = message.usage?.cost;
   const duration = (message as MessageWithId).duration;
 
   // Only show metrics if at least one value exists
-  if (!usage && !ttft && !duration) return null;
+  if (!usage && !ttft && !duration && !cost) return null;
 
   // Helper function to format milliseconds to seconds
   const formatToSeconds = (ms: number) => {
     const seconds = ms / 1000;
     return seconds < 1 ? `${seconds.toFixed(2)}s` : `${seconds.toFixed(1)}s`;
   };
-
   return (
     <TooltipProvider>
       <Tooltip>
@@ -68,6 +69,12 @@ export const MessageMetrics: React.FC<MessageMetricsProps> = ({
                     <span>{usage.output_tokens}</span>
                   </div>
                 )}
+                {cost && (
+                  <div className="flex gap-1 items-center">
+                    <span>Cost:</span>
+                    <span>{formatCost(cost)}</span>
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -80,17 +87,27 @@ export const MessageMetrics: React.FC<MessageMetricsProps> = ({
 
             {(ttft !== undefined || duration !== undefined) && (
               <div className="space-y-1">
-                <div className="text-xs font-medium text-neutral-400">Timing</div>
+                <div className="text-xs font-medium text-neutral-400">
+                  Timing
+                </div>
                 {ttft !== undefined && (
                   <div className="flex justify-between items-center gap-8">
-                    <span className="text-xs text-neutral-500">Time to First Token:</span>
-                    <span className="text-xs font-mono">{ttft.toLocaleString()}ms</span>
+                    <span className="text-xs text-neutral-500">
+                      Time to First Token:
+                    </span>
+                    <span className="text-xs font-mono">
+                      {ttft.toLocaleString()}ms
+                    </span>
                   </div>
                 )}
                 {duration !== undefined && (
                   <div className="flex justify-between items-center gap-8">
-                    <span className="text-xs text-neutral-500">Total Duration:</span>
-                    <span className="text-xs font-mono">{duration.toLocaleString()}ms</span>
+                    <span className="text-xs text-neutral-500">
+                      Total Duration:
+                    </span>
+                    <span className="text-xs font-mono">
+                      {duration.toLocaleString()}ms
+                    </span>
                   </div>
                 )}
               </div>
@@ -98,42 +115,66 @@ export const MessageMetrics: React.FC<MessageMetricsProps> = ({
 
             {usage && (
               <div className="space-y-1 pt-1">
-                <div className="text-xs font-medium text-neutral-400">Token Usage</div>
+                <div className="text-xs font-medium text-neutral-400">
+                  Token Usage
+                </div>
                 {usage.input_tokens && (
                   <div className="flex justify-between items-center gap-8">
                     <span className="text-xs text-neutral-500">Input:</span>
-                    <span className="text-xs font-mono">{usage.input_tokens.toLocaleString()}</span>
+                    <span className="text-xs font-mono">
+                      {usage.input_tokens.toLocaleString()}
+                    </span>
                   </div>
                 )}
                 {usage.output_tokens && (
                   <div className="flex justify-between items-center gap-8">
                     <span className="text-xs text-neutral-500">Output:</span>
-                    <span className="text-xs font-mono">{usage.output_tokens.toLocaleString()}</span>
+                    <span className="text-xs font-mono">
+                      {usage.output_tokens.toLocaleString()}
+                    </span>
                   </div>
                 )}
                 {usage.total_tokens && (
                   <div className="flex justify-between items-center gap-8 pt-1 border-t border-neutral-800">
-                    <span className="text-xs text-neutral-500 font-medium">Total:</span>
-                    <span className="text-xs font-mono font-medium">{usage.total_tokens.toLocaleString()}</span>
+                    <span className="text-xs text-neutral-500 font-medium">
+                      Total:
+                    </span>
+                    <span className="text-xs font-mono font-medium">
+                      {usage.total_tokens.toLocaleString()}
+                    </span>
                   </div>
                 )}
                 {usage.completion_tokens_details?.reasoning_tokens && (
                   <div className="flex justify-between items-center gap-8">
                     <span className="text-xs text-purple-400">Reasoning:</span>
-                    <span className="text-xs font-mono text-purple-400">{usage.completion_tokens_details.reasoning_tokens.toLocaleString()}</span>
+                    <span className="text-xs font-mono text-purple-400">
+                      {usage.completion_tokens_details.reasoning_tokens.toLocaleString()}
+                    </span>
                   </div>
                 )}
                 {usage.is_cache_used && (
                   <div className="flex items-center gap-1 pt-1">
                     <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    <span className="text-xs text-green-500">Cache hit - faster response</span>
+                    <span className="text-xs text-green-500">
+                      Cache hit - faster response
+                    </span>
+                  </div>
+                )}
+                {cost && (
+                  <div className="flex justify-between items-center gap-8">
+                    <span className="text-xs text-neutral-500">Cost:</span>
+                    <span className="text-xs font-mono">
+                      {formatCost(cost)}
+                    </span>
                   </div>
                 )}
               </div>
             )}
 
-            {(!ttft && !duration && !usage) && (
-              <div className="text-xs text-neutral-500 italic">No metrics available</div>
+            {!ttft && !duration && !usage && (
+              <div className="text-xs text-neutral-500 italic">
+                No metrics available
+              </div>
             )}
           </div>
         </TooltipContent>

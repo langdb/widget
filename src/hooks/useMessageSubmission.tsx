@@ -9,6 +9,7 @@ import { useChatState } from "./ChatState";
 import { useScrollToBottom } from "./ScrollToBottom";
 import { InititalPrompt, MCPTools } from "../dto/ParamInput";
 import { onSubmit } from "../components/adapter";
+import { ChatMessage } from "../dto/ChatMessage";
 
 // Custom hook for handling message submission
 export const useMessageSubmission = (
@@ -75,8 +76,10 @@ export const useMessageSubmission = (
         if (msg.data === "[DONE]") {
           return;
         }
-        const jsonMsg = JSON.parse(msg.data);
-
+        const jsonMsg = tryParseJson(msg.data);
+        if (!jsonMsg) {
+          return;
+        }
         if (jsonMsg.error) {
           setError(jsonMsg.error);
           setTyping(false);
@@ -130,13 +133,14 @@ export const useMessageSubmission = (
               }
             }
 
-            const updatedLastMessage = {
+            const updatedLastMessage: ChatMessage = {
               ...lastMessage,
-              message:
+              content:
                 lastMessage.content +
                 event.choices.map((choice) => choice.delta.content).join(""),
               tool_calls: lastMessageToolCalls,
               run_id: currentRunId || undefined,
+              usage: event?.usage,
             };
 
             return [...prevMessages.slice(0, -1), updatedLastMessage];
@@ -175,13 +179,12 @@ export const useMessageSubmission = (
 
       if (inputText.trim() === "") return;
 
-      const newMessage = {
+      const newMessage: ChatMessage = {
         id: uuidv4(),
-        message: inputText,
+        content: inputText,
         type: MessageType.HumanMessage,
         content_type: MessageContentType.Text,
-        role: "user",
-        threadId,
+        thread_id: threadId,
         files,
       };
 
@@ -367,3 +370,10 @@ export const useMessageSubmission = (
     terminateChat,
   };
 };
+function tryParseJson(data: string) {
+  try {
+    return JSON.parse(data);
+  } catch (error) {
+    return undefined;
+  }
+}
